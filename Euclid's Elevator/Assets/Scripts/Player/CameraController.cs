@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(FpsController))]
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] new Transform camera;
+    public Transform Camera;
     [SerializeField] Vector2 sensitivities;
 
     FpsController controller;
@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
 
         rotation.x = Mathf.Clamp(rotation.x, -80, 80);
 
-        camera.localEulerAngles = new Vector3(rotation.x, 0, 0);
+        Camera.localEulerAngles = new Vector3(rotation.x, 0, 0);
         transform.localEulerAngles = new Vector3(0, rotation.y, 0);
     }
 }

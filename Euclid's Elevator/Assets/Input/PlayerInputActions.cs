@@ -53,6 +53,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""3090a30a-6d4d-4514-be15-1bf11ae32c2f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ae1ed73-7f5a-497b-9811-534d4ba8d874"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +150,61 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04d3fc32-d211-4587-b8ee-8546fc27a83e"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""172ea0b9-354a-4118-8b1d-21edf749b9b5"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8fe6c189-7ff1-4f9a-9bb4-fd21689b1e9c"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e9d1507-4675-4681-8c9a-8ae06fc33941"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56a97daa-3cb7-4218-9ece-8473ab619c5f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +216,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_General_Interact = m_General.FindAction("Interact", throwIfNotFound: true);
         m_General_Movement = m_General.FindAction("Movement", throwIfNotFound: true);
         m_General_Look = m_General.FindAction("Look", throwIfNotFound: true);
+        m_General_Inventory = m_General.FindAction("Inventory", throwIfNotFound: true);
+        m_General_Drop = m_General.FindAction("Drop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,6 +280,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Interact;
     private readonly InputAction m_General_Movement;
     private readonly InputAction m_General_Look;
+    private readonly InputAction m_General_Inventory;
+    private readonly InputAction m_General_Drop;
     public struct GeneralActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -212,6 +289,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_General_Interact;
         public InputAction @Movement => m_Wrapper.m_General_Movement;
         public InputAction @Look => m_Wrapper.m_General_Look;
+        public InputAction @Inventory => m_Wrapper.m_General_Inventory;
+        public InputAction @Drop => m_Wrapper.m_General_Drop;
         public InputActionMap Get() { return m_Wrapper.m_General; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -230,6 +309,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
+                @Inventory.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory;
+                @Drop.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
+                @Drop.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
+                @Drop.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
             }
             m_Wrapper.m_GeneralActionsCallbackInterface = instance;
             if (instance != null)
@@ -243,6 +328,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+                @Drop.started += instance.OnDrop;
+                @Drop.performed += instance.OnDrop;
+                @Drop.canceled += instance.OnDrop;
             }
         }
     }
@@ -252,5 +343,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
     }
 }

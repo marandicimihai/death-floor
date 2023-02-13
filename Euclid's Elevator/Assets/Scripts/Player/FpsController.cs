@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController)), RequireComponent(typeof(Inventory)), RequireComponent(typeof(CameraController))]
 public class FpsController : MonoBehaviour
 {
     [Header("Movement")]
@@ -22,6 +22,7 @@ public class FpsController : MonoBehaviour
     [SerializeField] float maxSlopeAngle;
 
     [Header("Other Settings")]
+    [SerializeField] LayerMask interactionMask;
     [SerializeField] int interactionDistance;
 
 
@@ -30,7 +31,10 @@ public class FpsController : MonoBehaviour
     [System.NonSerialized] public static FpsController singleton;
 
     PlayerInputActions playerInputActions;
+    CameraController cameraController;
     CharacterController controller;
+    Inventory inventory;
+    Camera cam;
 
     Vector3 verticalVelocity;
     Vector3 velocity;
@@ -40,11 +44,18 @@ public class FpsController : MonoBehaviour
     private void OnEnable()
     {
         controller = GetComponent<CharacterController>();
+        cameraController = GetComponent<CameraController>();
+        inventory = GetComponent<Inventory>();
+
+        cam = cameraController.Camera.GetComponent<Camera>();
 
         #region Input
 
         playerInputActions = new PlayerInputActions();
         PlayerInputActions.Enable();
+
+        PlayerInputActions.General.Interact.performed += Interact;
+        PlayerInputActions.General.Drop.performed += DropItem;
 
         #endregion
 
@@ -121,6 +132,17 @@ public class FpsController : MonoBehaviour
 
     private void Interact(InputAction.CallbackContext context)
     {
-        
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, interactionDistance, interactionMask))
+        {
+            if (hit.transform.TryGetComponent(out Item item))
+            {
+                inventory.PickUpItem(item);
+            }
+        }
+    }
+
+    private void DropItem(InputAction.CallbackContext context)
+    {
+        inventory.DropItem(cam.transform.position, cam.transform.forward);
     }
 }
