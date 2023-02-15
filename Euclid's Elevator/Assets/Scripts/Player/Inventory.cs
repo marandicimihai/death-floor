@@ -55,8 +55,7 @@ public class Inventory : MonoBehaviour
     {
         if (items[ActiveSlot] != null)
         {
-            Instantiate(items[ActiveSlot].prefab, throwPoint, Quaternion.identity).TryGetComponent<Rigidbody>(out Rigidbody rb);
-            if (rb != null)
+            if (Instantiate(items[ActiveSlot].prefab, throwPoint, Quaternion.identity).TryGetComponent(out Rigidbody rb))
             {
                 rb.AddForce(throwForward * throwForce, ForceMode.Impulse);
             }
