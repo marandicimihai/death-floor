@@ -71,6 +71,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sneak"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc63cb1b-4504-4e48-8902-13b4e0b95a9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -205,6 +214,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Drop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80b9e5e9-d483-42b1-8d6a-222f2ae04ad1"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sneak"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -218,6 +238,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_General_Look = m_General.FindAction("Look", throwIfNotFound: true);
         m_General_Inventory = m_General.FindAction("Inventory", throwIfNotFound: true);
         m_General_Drop = m_General.FindAction("Drop", throwIfNotFound: true);
+        m_General_Sneak = m_General.FindAction("Sneak", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -282,6 +303,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Look;
     private readonly InputAction m_General_Inventory;
     private readonly InputAction m_General_Drop;
+    private readonly InputAction m_General_Sneak;
     public struct GeneralActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -291,6 +313,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_General_Look;
         public InputAction @Inventory => m_Wrapper.m_General_Inventory;
         public InputAction @Drop => m_Wrapper.m_General_Drop;
+        public InputAction @Sneak => m_Wrapper.m_General_Sneak;
         public InputActionMap Get() { return m_Wrapper.m_General; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -315,6 +338,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Drop.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
                 @Drop.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
                 @Drop.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
+                @Sneak.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
+                @Sneak.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
+                @Sneak.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
             }
             m_Wrapper.m_GeneralActionsCallbackInterface = instance;
             if (instance != null)
@@ -334,6 +360,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Drop.started += instance.OnDrop;
                 @Drop.performed += instance.OnDrop;
                 @Drop.canceled += instance.OnDrop;
+                @Sneak.started += instance.OnSneak;
+                @Sneak.performed += instance.OnSneak;
+                @Sneak.canceled += instance.OnSneak;
             }
         }
     }
@@ -345,5 +374,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
+        void OnSneak(InputAction.CallbackContext context);
     }
 }

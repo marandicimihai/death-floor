@@ -872,8 +872,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardScale: 1.1
   strafeScale: 0.8
-  walkSpeed: 4
+  walkSpeed: 5
   accelStep: 20
+  sneakSpeed: 3
+  sneakAccelStep: 12
   gravity: -9.81
   groundCheckExtension: 0.3
   whatIsGround:

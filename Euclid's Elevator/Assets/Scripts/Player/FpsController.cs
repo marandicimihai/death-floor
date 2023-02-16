@@ -10,6 +10,10 @@ public class FpsController : MonoBehaviour
     [SerializeField] float walkSpeed;
     [SerializeField] float accelStep;
 
+    [Header("Sneaking")]
+    [SerializeField] float sneakSpeed;
+    [SerializeField] float sneakAccelStep;
+
     [Header("Gravity")]
     [SerializeField] float gravity;
 
@@ -40,8 +44,9 @@ public class FpsController : MonoBehaviour
     Vector3 velocity;
 
     bool grounded;
+    bool sneaking;
 
-    private void OnEnable()
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
         cameraController = GetComponent<CameraController>();
@@ -56,6 +61,9 @@ public class FpsController : MonoBehaviour
 
         PlayerInputActions.General.Interact.performed += Interact;
         PlayerInputActions.General.Drop.performed += DropItem;
+
+        PlayerInputActions.General.Sneak.started += (InputAction.CallbackContext context) => { sneaking = true; };
+        PlayerInputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => { sneaking = false; };
 
         #endregion
 
@@ -99,9 +107,9 @@ public class FpsController : MonoBehaviour
     private void Accelerate(Vector2 input, ref Vector3 velocity)
     {
         Vector3 inputDirection = transform.right * input.x + transform.forward * input.y;
-        Vector3 wishVel = inputDirection.normalized * walkSpeed;
+        Vector3 wishVel = inputDirection.normalized * (sneaking ? sneakSpeed : walkSpeed);
 
-        Vector3 addVel = (wishVel - velocity).normalized * accelStep * Time.deltaTime;
+        Vector3 addVel = (sneaking ? sneakAccelStep : accelStep) * Time.deltaTime * (wishVel - velocity).normalized;
 
         if (addVel.magnitude > velocity.magnitude && input == Vector2.zero)
         {
