@@ -26,13 +26,17 @@ public class FpsController : MonoBehaviour
     [SerializeField] float maxSlopeAngle;
 
     [Header("Other Settings")]
+    [SerializeField] float distancePerFootstep;
+    [SerializeField] AudioSource footstepSource;
+    [Header("")]
+    [SerializeField] AudioSource jumpScareSource;
+    [Header("")]
     [SerializeField] LayerMask interactionMask;
     [SerializeField] int interactionDistance;
 
 
     public PlayerInputActions PlayerInputActions { get { return playerInputActions; } }
-
-    [System.NonSerialized] public static FpsController singleton;
+    public bool Dead { get; private set; }
 
     PlayerInputActions playerInputActions;
     CameraController cameraController;
@@ -42,6 +46,9 @@ public class FpsController : MonoBehaviour
 
     Vector3 verticalVelocity;
     Vector3 velocity;
+
+    float walked;
+    uint steps;
 
     bool grounded;
     bool sneaking;
@@ -73,6 +80,9 @@ public class FpsController : MonoBehaviour
 
     private void Update()
     {
+        if (Dead)
+            return;
+        
         Move();
     }
 
@@ -91,6 +101,20 @@ public class FpsController : MonoBehaviour
         HandleSlope(ref velocity);
 
         controller.Move(velocity * Time.deltaTime);
+
+        walked += (velocity * Time.deltaTime).magnitude;
+
+        float prev = steps;
+        steps = (uint)Mathf.RoundToInt(walked / distancePerFootstep);
+
+        if (steps > prev && !sneaking && input != Vector2.zero)
+        {
+            footstepSource.Play();
+            if(GameManager.instance.enemy.TryGetComponent(out Enemy enemy))
+            {
+                enemy.NoiseHeardNav(transform.position);
+            }
+        }
 
         #region Gravity
         if (!grounded)
@@ -152,5 +176,15 @@ public class FpsController : MonoBehaviour
     private void DropItem(InputAction.CallbackContext context)
     {
         inventory.DropItem(cam.transform.position, cam.transform.forward);
+    }
+
+    public void Die(Vector3 enemyPosition)
+    {
+        if (Dead)
+            return;
+
+        jumpScareSource.Play();
+        cameraController.JumpscareTurn(enemyPosition);
+        Dead = true;
     }
 }

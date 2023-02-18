@@ -12,10 +12,10 @@ enum EnemyState
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] Transform player;
     [SerializeField] LayerMask rayMask;
 
-    [SerializeField] float footstepHearingDistance;
+    [SerializeField] float noiseHearingDistance;
+
     [SerializeField] float patrolStepDistance;
     [SerializeField] float patrolStepTime;
 
@@ -23,19 +23,27 @@ public class Enemy : MonoBehaviour
     [SerializeField] float noiseHeardThreshold;
 
     [SerializeField] float attackStopDistance;
+    [SerializeField] float attackRange;
+
+    [SerializeField] float distancePerFootstep;
+    [SerializeField] AudioSource footstepSource;
 
     NavMeshAgent agent;
+    Transform player;
     EnemyState state;
 
     Vector3 destination;
 
+    float walked;
+    uint steps;
+
     bool patrolling;
     bool wasAttacking;
 
-    private void Awake()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        NoiseHeardNav(new Vector3(10, 1, 0));
+        player = GameManager.instance.player;
     }
 
     private void Update()
@@ -60,7 +68,6 @@ public class Enemy : MonoBehaviour
             }
         }
         
-
         switch (state)
         {
             case EnemyState.Patrol:
@@ -69,6 +76,24 @@ public class Enemy : MonoBehaviour
             case EnemyState.Attack:
                 Attack();
                 break;
+        }
+
+        /*walked += agent.velocity.magnitude * Time.deltaTime;
+
+        float prev = steps;
+        steps = (uint)Mathf.RoundToInt(walked / distancePerFootstep);
+
+        if (steps > prev)
+        {
+            footstepSource.Play();
+        }*/
+    }
+
+    private void OnValidate()
+    {
+        if (attackRange < attackStopDistance)
+        {
+            attackRange = attackStopDistance;
         }
     }
 
@@ -106,12 +131,24 @@ public class Enemy : MonoBehaviour
         agent.stoppingDistance = attackStopDistance;
         destination = player.position;
         agent.SetDestination(destination);
+
+        if (Vector3.Distance(destination, transform.position) < attackRange 
+            && GameManager.instance.player.TryGetComponent(out FpsController cont))
+        {
+            cont.Die(transform.position + (Vector3.up / 2));
+            agent.isStopped = true;
+        }
     }
 
-    void NoiseHeardNav(Vector3 noisePosition, bool overrideAttack = false)
+    public void NoiseHeardNav(Vector3 noisePosition, bool overrideAttack = false)
     {
         if (!overrideAttack && state == EnemyState.Attack)
             return;
+        else if (Vector3.Distance(noisePosition, transform.position) > noiseHearingDistance)
+            return;
+
+        StopAllCoroutines();
+        patrolling = false;
 
         state = EnemyState.NoiseHeard;
 
