@@ -1,12 +1,11 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using System;
 using TMPro;
 
 public class LineManager : MonoBehaviour
 {
-    static LineManager instance;
+    public static LineManager instance;
 
     [SerializeField] TMP_Text textBox;
     [SerializeField] float timeInBetweenLetters;

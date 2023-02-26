@@ -107,7 +107,7 @@ public class FpsController : MonoBehaviour
         float prev = steps;
         steps = (uint)Mathf.RoundToInt(walked / distancePerFootstep);
 
-        if (steps > prev && !sneaking && input != Vector2.zero)
+        if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.1f)
         {
             footstepSource.Play();
             if(GameManager.instance.enemy.TryGetComponent(out Enemy enemy))
@@ -164,27 +164,63 @@ public class FpsController : MonoBehaviour
 
     private void Interact(InputAction.CallbackContext context)
     {
+        if (Dead)
+            return;
+
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, interactionDistance, interactionMask))
         {
             if (hit.transform.TryGetComponent(out Item item))
             {
                 inventory.PickUpItem(item);
             }
+            else if (hit.transform.CompareTag("Door"))
+            {
+                Door door = hit.transform.GetComponentInParent<Door>();
+
+                if (door == null)
+                    return;
+
+                if (door.Toggle() && GameManager.instance.enemy.TryGetComponent(out Enemy enemy))
+                {
+                    enemy.NoiseHeardNav(door.transform.position);
+                }
+                else if (!door.Toggle())
+                {
+                    LineManager.instance.SayLine("Door locked");
+                }
+            }
         }
     }
 
     private void DropItem(InputAction.CallbackContext context)
     {
+        if (Dead)
+            return;
+
         inventory.DropItem(cam.transform.position, cam.transform.forward);
     }
 
-    public void Die(Vector3 enemyPosition)
+    public void Die(Vector3? enemyPosition = null)
     {
         if (Dead)
             return;
 
-        jumpScareSource.Play();
-        cameraController.JumpscareTurn(enemyPosition);
         Dead = true;
+
+        if (enemyPosition != null)
+        {
+            jumpScareSource.Play();
+            cameraController.JumpscareTurn((Vector3)enemyPosition);
+        }
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.Die();
+        }
+    }
+
+    public void Respawn()
+    {
+        Dead = false;
     }
 }

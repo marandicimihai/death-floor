@@ -12,6 +12,7 @@ enum EnemyState
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] NavMeshAgent agent;
     [SerializeField] LayerMask rayMask;
 
     [SerializeField] float noiseHearingDistance;
@@ -25,24 +26,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] float attackStopDistance;
     [SerializeField] float attackRange;
 
-    [SerializeField] float distancePerFootstep;
-    [SerializeField] AudioSource footstepSource;
-
-    NavMeshAgent agent;
     Transform player;
     EnemyState state;
 
     Vector3 destination;
-
-    float walked;
-    uint steps;
 
     bool patrolling;
     bool wasAttacking;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
         player = GameManager.instance.player;
     }
 
@@ -77,16 +70,6 @@ public class Enemy : MonoBehaviour
                 Attack();
                 break;
         }
-
-        /*walked += agent.velocity.magnitude * Time.deltaTime;
-
-        float prev = steps;
-        steps = (uint)Mathf.RoundToInt(walked / distancePerFootstep);
-
-        if (steps > prev)
-        {
-            footstepSource.Play();
-        }*/
     }
 
     private void OnValidate()
@@ -168,5 +151,19 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(noiseHeardToPatrolTransitionTime);
 
         state = EnemyState.Patrol;
+    }
+
+    public void Respawn()
+    {
+        agent.velocity = Vector3.zero;
+        agent.ResetPath();
+        state = EnemyState.Patrol;
+        agent.isStopped = false;
+    }
+
+    public void Stop()
+    {
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
     }
 }
