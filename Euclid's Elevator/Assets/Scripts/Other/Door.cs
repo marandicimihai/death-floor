@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Door : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Door : MonoBehaviour
     [SerializeField] Transform panel;
     [SerializeField] Animator doorHandle;
     [SerializeField] bool locked;
+
+    [SerializeField] ItemObject requiredItem;
 
     float t;
 
@@ -39,8 +42,11 @@ public class Door : MonoBehaviour
         }
     }
 
-    public bool Toggle()
+    public bool Toggle(ItemObject requirement = null)
     {
+        if (requiredItem != null && requirement != null && requirement.itemName == requiredItem.itemName)
+            locked = false;
+
         if (locked)
             return false;
 

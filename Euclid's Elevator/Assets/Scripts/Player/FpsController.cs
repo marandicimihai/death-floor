@@ -186,7 +186,17 @@ public class FpsController : MonoBehaviour
                 }
                 else if (!door.Toggle())
                 {
-                    LineManager.instance.SayLine("Door locked");
+                    bool a = false;
+                    foreach(ItemObject i in inventory.Items)
+                    {
+                        if (door.Toggle(i))
+                        {
+                            a = true;
+                            break;
+                        }
+                    }
+                    if (!a)
+                        LineManager.instance.SayLine("Door locked");
                 }
             }
         }
@@ -207,6 +217,8 @@ public class FpsController : MonoBehaviour
 
         Dead = true;
 
+        velocity = Vector3.zero;
+
         if (enemyPosition != null)
         {
             jumpScareSource.Play();
@@ -221,6 +233,7 @@ public class FpsController : MonoBehaviour
 
     public void Respawn()
     {
+        cameraController.Reset();
         Dead = false;
     }
 }

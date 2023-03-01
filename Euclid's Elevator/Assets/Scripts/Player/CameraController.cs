@@ -4,10 +4,10 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform Camera;
+    [SerializeField]FpsController controller;
     [SerializeField] Vector2 sensitivities;
     [SerializeField] float jumpscareTurnTime;
 
-    FpsController controller;
 
     Vector2 rotation;
 
@@ -18,10 +18,6 @@ public class CameraController : MonoBehaviour
 
     bool rotating;
 
-    private void Awake()
-    {
-        controller = GetComponent<FpsController>();
-    }
 
     private void Update()
     {
@@ -64,5 +60,10 @@ public class CameraController : MonoBehaviour
         from = Quaternion.Euler(new Vector3(Camera.localEulerAngles.x, transform.localEulerAngles.y, 0));
         rotating = true;
         t = 0;
+    }
+
+    public void Reset()
+    {
+        rotation = Vector2.zero;
     }
 }

@@ -4,19 +4,20 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(FpsController))]
 public class Inventory : MonoBehaviour
 {
+    public ItemObject[] Items { get => items; }
+
+    [SerializeField] FpsController controller;
     [SerializeField] ItemObject[] items;
     [SerializeField] int inventoryCapacity;
     [SerializeField] float throwForce;
 
     public int ActiveSlot { get; private set; }
 
-    FpsController controller;
 
     private void Start()
     {
         items = new ItemObject[inventoryCapacity];
 
-        controller = GetComponent<FpsController>();
         PlayerInputActions actions = controller.PlayerInputActions;
         actions.General.Inventory.started += InventoryPerformed;
     }

@@ -90,8 +90,7 @@ public class Enemy : MonoBehaviour
             destination = transform.position + NewDirection();
             agent.SetDestination(destination);
         }
-        while (agent.pathStatus == NavMeshPathStatus.PathInvalid
-            || agent.pathStatus == NavMeshPathStatus.PathPartial);
+        while (agent.pathStatus == NavMeshPathStatus.PathInvalid);
 
         if (!patrolling)
             StartCoroutine(PatrolStep(patrolStepTime));
@@ -153,8 +152,9 @@ public class Enemy : MonoBehaviour
         state = EnemyState.Patrol;
     }
 
-    public void Respawn()
+    public void Respawn(Vector3 position)
     {
+        agent.Warp(position);
         agent.velocity = Vector3.zero;
         agent.ResetPath();
         state = EnemyState.Patrol;

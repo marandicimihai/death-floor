@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] float timeUntilOpenElevator;
     [SerializeField] float unlockPlayerTime;
     [SerializeField] Transform playerSpawn;
-    [SerializeField] Vector3 playerSpawnEulers;
     [SerializeField] Transform[] oogaManSpawns;
 
     [SerializeField] Animator elevator;
 
     [SerializeField] int maxDeaths;
+
+    public EventHandler OnSpawn;
+    public EventHandler<DeathArgs> OnDeath;
 
     int deaths;
 
@@ -26,6 +28,11 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         SpawnPlayerAndEnemy();
+    }
+
+    private void Start()
+    {
+        OnSpawn?.Invoke(this, new EventArgs());
     }
 
     public void Die()
@@ -38,17 +45,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitAndExec(timeAfterDeath, () =>
         {
             deaths++;
+            OnDeath?.Invoke(this, new DeathArgs(deaths));
             SpawnPlayerAndEnemy();
             if (deaths >= maxDeaths)
             {
-                Application.Quit();
+                Debug.Log("GAMAJ OVAH");
             }
         }));
     }
 
     void SpawnPlayerAndEnemy()
     {
-        player.SetPositionAndRotation(playerSpawn.position, Quaternion.Euler(playerSpawnEulers));
+        player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
 
         StartCoroutine(WaitAndExec(unlockPlayerTime, () =>
         {
@@ -58,17 +66,11 @@ public class GameManager : MonoBehaviour
             }
         }));
 
-        if (oogaManSpawns.Length > 0)
-        {
-            enemy.position = oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position;
-        }
-
-
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
             if (enemy.TryGetComponent(out Enemy enemyC))
             {
-                enemyC.Respawn();
+                enemyC.Respawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
             }
             elevator.SetBool("Open", true);
         }));
@@ -83,5 +85,15 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(WaitAndExec(time, exec, repeat));
         }
+    }
+}
+
+public class DeathArgs : EventArgs
+{
+    public int death;
+
+    public DeathArgs(int i)
+    {
+        death = i;
     }
 }
