@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     public EventHandler OnSpawn;
     public EventHandler<DeathArgs> OnDeath;
+    public EventHandler OnEnd;
 
     int deaths;
 
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
             SpawnPlayerAndEnemy();
             if (deaths >= maxDeaths)
             {
+                OnEnd?.Invoke(this, new EventArgs());
                 Debug.Log("GAMAJ OVAH");
             }
         }));

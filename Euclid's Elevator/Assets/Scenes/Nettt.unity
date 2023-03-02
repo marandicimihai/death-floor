@@ -782,7 +782,6 @@ MonoBehaviour:
   timeUntilOpenElevator: 3
   unlockPlayerTime: 0.5
   playerSpawn: {fileID: 1719553233}
-  playerSpawnEulers: {x: 0, y: 90, z: 0}
   oogaManSpawns:
   - {fileID: 46313607}
   - {fileID: 1574781897}
@@ -1572,6 +1571,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d1ae7a999f72cea45b866af5963764bb, type: 2}
   - {fileID: 11400000, guid: 9a81c5ecca88a404d8e8eeba286fd794, type: 2}
   - {fileID: 11400000, guid: 82d25167609c7934482d243d62b09318, type: 2}
+  - {fileID: 11400000, guid: 70a79ab08de467142a0b87a1e443c457, type: 2}
 --- !u!82 &1288032390
 AudioSource:
   m_ObjectHideFlags: 0

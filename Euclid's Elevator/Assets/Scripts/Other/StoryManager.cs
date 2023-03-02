@@ -27,5 +27,6 @@ public class StoryManager : MonoBehaviour
     {
         manager.OnSpawn += (object sender, EventArgs args) => LineManager.instance.SayLine(events[0].lineName);
         manager.OnDeath += (object sender, DeathArgs args) => LineManager.instance.SayLine(events[args.death].lineName);
+        manager.OnEnd += (object sender, EventArgs args) => LineManager.instance.SayLine(events[5].lineName);
     }
 }
