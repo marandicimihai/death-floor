@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33514e90af670d429e181fa136feadb, type: 3}
+  m_Name: BlackKeycard
+  m_EditorClassIdentifier: 
+  itemName: BlackKeycard
+  inventoryIcon: {fileID: 0}
+  prefab: {fileID: 1317956691342977299, guid: d4a714ef561b40f48972397eaa3f2c3d, type: 3}

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33514e90af670d429e181fa136feadb, type: 3}
+  m_Name: BlueKeycard
+  m_EditorClassIdentifier: 
+  itemName: BlueKeycard
+  inventoryIcon: {fileID: 0}
+  prefab: {fileID: 2379593115547114203, guid: 91f9a29e15ec7ef41a159650a0c28385, type: 3}
