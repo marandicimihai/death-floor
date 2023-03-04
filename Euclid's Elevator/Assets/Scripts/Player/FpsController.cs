@@ -4,6 +4,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController)), RequireComponent(typeof(Inventory)), RequireComponent(typeof(CameraController))]
 public class FpsController : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] CameraController cameraController;
+    [SerializeField] CharacterController controller;
+    [SerializeField] Inventory inventory;
+
     [Header("Movement")]
     [SerializeField] float forwardScale;
     [SerializeField] float strafeScale;
@@ -33,15 +38,14 @@ public class FpsController : MonoBehaviour
     [Header("")]
     [SerializeField] LayerMask interactionMask;
     [SerializeField] int interactionDistance;
+    [Header("")]
+    [SerializeField] float spawnYRot;
 
 
     public PlayerInputActions PlayerInputActions { get { return playerInputActions; } }
-    public bool Dead { get; private set; }
+    public bool Paralized { get; private set; }
 
     PlayerInputActions playerInputActions;
-    CameraController cameraController;
-    CharacterController controller;
-    Inventory inventory;
     Camera cam;
 
     Vector3 verticalVelocity;
@@ -55,10 +59,6 @@ public class FpsController : MonoBehaviour
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
-        cameraController = GetComponent<CameraController>();
-        inventory = GetComponent<Inventory>();
-
         cam = cameraController.Camera.GetComponent<Camera>();
 
         #region Input
@@ -80,7 +80,7 @@ public class FpsController : MonoBehaviour
 
     private void Update()
     {
-        if (Dead)
+        if (Paralized)
             return;
         
         Move();
@@ -164,7 +164,7 @@ public class FpsController : MonoBehaviour
 
     private void Interact(InputAction.CallbackContext context)
     {
-        if (Dead)
+        if (Paralized)
             return;
 
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, interactionDistance, interactionMask))
@@ -180,22 +180,19 @@ public class FpsController : MonoBehaviour
                 if (door == null)
                     return;
 
-                if (door.Toggle() && GameManager.instance.enemy.TryGetComponent(out Enemy enemy))
-                {
-                    enemy.NoiseHeardNav(door.transform.position);
-                }
                 else if (!door.Toggle())
                 {
-                    bool a = false;
-                    foreach(ItemObject i in inventory.Items)
+                    bool gate = false;
+                    for(int i = 0; i < inventory.Items.Length - 1; i++)
                     {
-                        if (door.Toggle(i))
+                        if (door.Toggle(inventory.Items[i].itemObj))
                         {
-                            a = true;
+                            inventory.UseItem(i);
+                            gate = true;
                             break;
                         }
                     }
-                    if (!a)
+                    if (!gate)
                         LineManager.instance.SayLine("Door locked");
                 }
             }
@@ -204,7 +201,7 @@ public class FpsController : MonoBehaviour
 
     private void DropItem(InputAction.CallbackContext context)
     {
-        if (Dead)
+        if (Paralized)
             return;
 
         inventory.DropItem(cam.transform.position, cam.transform.forward);
@@ -212,10 +209,10 @@ public class FpsController : MonoBehaviour
 
     public void Die(Vector3? enemyPosition = null)
     {
-        if (Dead)
+        if (Paralized)
             return;
 
-        Dead = true;
+        Paralized = true;
 
         velocity = Vector3.zero;
 
@@ -225,15 +222,22 @@ public class FpsController : MonoBehaviour
             cameraController.JumpscareTurn((Vector3)enemyPosition);
         }
 
+        if (inventory != null)
+            inventory.Die();
+
         if (GameManager.instance != null)
-        {
             GameManager.instance.Die();
-        }
     }
 
-    public void Respawn()
+    public void Lock()
     {
-        cameraController.Reset();
-        Dead = false;
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, spawnYRot, transform.eulerAngles.z);
+        Paralized = true;
+    }
+
+    public void Unlock()
+    {
+        cameraController.ResetAngle(spawnYRot);
+        Paralized = false;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ItemObject : ScriptableObject
 {
     public string itemName;
+    public int uses;
     public Image inventoryIcon;
     public GameObject prefab;
 }

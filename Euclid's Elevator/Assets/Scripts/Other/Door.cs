@@ -50,6 +50,9 @@ public class Door : MonoBehaviour
         if (locked)
             return false;
 
+        if (GameManager.instance.enemy.TryGetComponent(out Enemy enemy))
+            enemy.NoiseHeardNav(transform.position);
+
         open = !open;
         doorHandle.SetTrigger("PullHandle");
 

@@ -4,10 +4,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(FpsController))]
 public class Inventory : MonoBehaviour
 {
-    public ItemObject[] Items { get => items; }
+    public Item[] Items { get => items; }
 
     [SerializeField] FpsController controller;
-    [SerializeField] ItemObject[] items;
+    [SerializeField] Item[] items;
+    [SerializeField] GameObject inventoryParent;
     [SerializeField] int inventoryCapacity;
     [SerializeField] float throwForce;
 
@@ -16,7 +17,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        items = new ItemObject[inventoryCapacity];
+        items = new Item[inventoryCapacity];
 
         PlayerInputActions actions = controller.PlayerInputActions;
         actions.General.Inventory.started += InventoryPerformed;
@@ -43,7 +44,9 @@ public class Inventory : MonoBehaviour
     {
         if (FindSlot(out int index))
         {
-            items[index] = item.itemObj;
+            Item newItem = inventoryParent.AddComponent<Item>();
+            newItem.SetValues(item);
+            items[index] = newItem;
             Destroy(item.gameObject);
         }
         else
@@ -56,10 +59,13 @@ public class Inventory : MonoBehaviour
     {
         if (items[ActiveSlot] != null)
         {
-            if (Instantiate(items[ActiveSlot].prefab, throwPoint, Quaternion.identity).TryGetComponent(out Rigidbody rb))
+            GameObject newItem = Instantiate(items[ActiveSlot].itemObj.prefab, throwPoint, Quaternion.identity);
+            newItem.GetComponent<Item>().SetValues(items[ActiveSlot]);
+            if (newItem.TryGetComponent(out Rigidbody rb))
             {
                 rb.AddForce(throwForward * throwForce, ForceMode.Impulse);
             }
+            Destroy(items[ActiveSlot]);
             items[ActiveSlot] = null;
         }
     }
@@ -68,7 +74,7 @@ public class Inventory : MonoBehaviour
     {
         slotIndex = 0;
 
-        foreach(ItemObject item in items)
+        foreach (Item item in items)
         {
             if (item == null)
             {
@@ -78,5 +84,20 @@ public class Inventory : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Die()
+    {
+        items = new Item[inventoryCapacity];
+        ActiveSlot = 0;
+    }
+
+    public void UseItem(int i)
+    {
+        items[i].uses -= 1;
+        if (items[i].uses <= 0)
+        {
+            Destroy(items[i]);
+        }
     }
 }

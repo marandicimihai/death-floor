@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: YellowKeycard
   m_EditorClassIdentifier: 
   itemName: YellowKeycard
+  uses: 3
   inventoryIcon: {fileID: 0}
   prefab: {fileID: 7421602243918301444, guid: 060a53f3ae583164bb087eb5b2413e62, type: 3}

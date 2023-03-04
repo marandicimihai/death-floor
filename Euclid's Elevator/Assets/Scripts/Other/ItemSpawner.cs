@@ -10,7 +10,9 @@ public class ItemSpawner : MonoBehaviour
     {
         if (Array.Find(possibleItems, (ItemObject current) => current.name == item.name))
         {
-            Instantiate(item.prefab, transform.position, Quaternion.identity);
+            if (Instantiate(item.prefab, transform.position, Quaternion.identity).TryGetComponent<Item>(out Item itemc))
+                itemc.uses = itemc.itemObj.uses;
+
             hasItem = true;
             return true;
         }

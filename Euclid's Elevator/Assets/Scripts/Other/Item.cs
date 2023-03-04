@@ -1,6 +1,5 @@
-using UnityEngine;
-
-public class Item : MonoBehaviour
+public class Item : ItemBase
 {
     public ItemObject itemObj;
+    public int uses;
 }

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: BlackKeycard
   m_EditorClassIdentifier: 
   itemName: BlackKeycard
+  uses: 3
   inventoryIcon: {fileID: 0}
   prefab: {fileID: 1317956691342977299, guid: d4a714ef561b40f48972397eaa3f2c3d, type: 3}

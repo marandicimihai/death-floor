@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        if (controller.Dead)
+        if (controller.Paralized)
             return;
 
         Vector2 input = controller.PlayerInputActions.General.Look.ReadValue<Vector2>();
@@ -62,8 +62,10 @@ public class CameraController : MonoBehaviour
         t = 0;
     }
 
-    public void Reset()
+    public void ResetAngle(float yrotation)
     {
-        rotation = Vector2.zero;
+        rotating = false;
+        rotation.x = 0;
+        rotation.y = yrotation;
     }
 }

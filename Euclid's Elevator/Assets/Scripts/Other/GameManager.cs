@@ -28,11 +28,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        SpawnPlayerAndEnemy();
     }
 
     private void Start()
     {
+        SpawnPlayerAndEnemy();
         OnSpawn?.Invoke(this, new EventArgs());
     }
 
@@ -60,11 +60,16 @@ public class GameManager : MonoBehaviour
     {
         player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
 
+        if (player.TryGetComponent(out FpsController controller))
+        {
+            controller.Lock();
+        }
+
         StartCoroutine(WaitAndExec(unlockPlayerTime, () =>
         {
             if (player.TryGetComponent(out FpsController controller))
             {
-                controller.Respawn();
+                controller.Unlock();
             }
         }));
 

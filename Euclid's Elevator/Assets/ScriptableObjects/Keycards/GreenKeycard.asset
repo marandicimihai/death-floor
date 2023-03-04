@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: GreenKeycard
   m_EditorClassIdentifier: 
   itemName: GreenKeycard
+  uses: 3
   inventoryIcon: {fileID: 0}
   prefab: {fileID: 8458747821554200251, guid: 65726a0120527d449b162ae12e23304f, type: 3}
