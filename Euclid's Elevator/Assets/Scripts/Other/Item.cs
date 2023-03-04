@@ -1,5 +1,11 @@
 public class Item : ItemBase
 {
     public ItemObject itemObj;
-    public int uses;
+    public int uses = -1;
+
+    private void Awake()
+    {
+        if (uses == -1 && itemObj != null)
+            uses = itemObj.uses;
+    }
 }

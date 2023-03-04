@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: RedKeycard
   m_EditorClassIdentifier: 
   itemName: RedKeycard
-  uses: 3
+  uses: 1
   inventoryIcon: {fileID: 0}
   prefab: {fileID: 3446426323504533169, guid: f372ca0f809fed443b86cc89377ce332, type: 3}

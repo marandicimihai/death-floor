@@ -15,6 +15,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
     [SerializeField] LayerMask rayMask;
 
+    [SerializeField] float patrolSpeed;
+    [SerializeField] float noiseHeardSpeed;
+    [SerializeField] float attackSpeed;
+
     [SerializeField] float noiseHearingDistance;
 
     [SerializeField] float patrolStepDistance;
@@ -41,6 +45,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.elevatorOpen)
+        {
+            wasAttacking = false;
+            return;
+        }
+
         if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player"))
         {
             state = EnemyState.Attack;
@@ -85,6 +95,8 @@ public class Enemy : MonoBehaviour
         if (patrolling)
             return;
 
+        agent.speed = patrolSpeed;
+
         do
         {
             destination = transform.position + NewDirection();
@@ -110,6 +122,7 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
+        agent.speed = attackSpeed;
         agent.stoppingDistance = attackStopDistance;
         destination = player.position;
         agent.SetDestination(destination);
@@ -118,7 +131,7 @@ public class Enemy : MonoBehaviour
             && GameManager.instance.player.TryGetComponent(out FpsController cont))
         {
             cont.Die(transform.position + (Vector3.up / 2));
-            agent.isStopped = true;
+            Stop();
         }
     }
 
@@ -129,6 +142,7 @@ public class Enemy : MonoBehaviour
         else if (Vector3.Distance(noisePosition, transform.position) > noiseHearingDistance)
             return;
 
+        agent.speed = noiseHeardSpeed;
         StopAllCoroutines();
         patrolling = false;
 
@@ -155,9 +169,9 @@ public class Enemy : MonoBehaviour
     public void Respawn(Vector3 position)
     {
         agent.Warp(position);
-        agent.velocity = Vector3.zero;
         agent.ResetPath();
         state = EnemyState.Patrol;
+        agent.velocity = Vector3.zero;
         agent.isStopped = false;
     }
 
@@ -165,5 +179,10 @@ public class Enemy : MonoBehaviour
     {
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
+    }
+
+    public void Continue()
+    {
+        agent.isStopped = false;
     }
 }

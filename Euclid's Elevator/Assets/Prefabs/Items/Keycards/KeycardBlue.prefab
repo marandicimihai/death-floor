@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7421602243918301444
+--- !u!1 &2379593115547114203
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7421602243918301464}
-  - component: {fileID: 7421602243918301465}
-  - component: {fileID: 7421602243918301466}
-  - component: {fileID: 7421602243918301467}
-  - component: {fileID: 7421602243918301471}
-  - component: {fileID: 5272300712381547744}
+  - component: {fileID: 2379593115547114183}
+  - component: {fileID: 2379593115547114182}
+  - component: {fileID: 2379593115547114181}
+  - component: {fileID: 2379593115547114180}
+  - component: {fileID: 2379593115547114176}
+  - component: {fileID: 1067961346572818239}
   m_Layer: 6
-  m_Name: KeycardYellow
+  m_Name: KeycardBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7421602243918301464
+--- !u!4 &2379593115547114183
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421602243918301444}
+  m_GameObject: {fileID: 2379593115547114203}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.241348, y: 0.46, z: 1.882695}
+  m_LocalPosition: {x: 7.241348, y: 0.46, z: 2.132695}
   m_LocalScale: {x: 0.2, y: 0.05, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7421602243918301465
+--- !u!33 &2379593115547114182
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421602243918301444}
+  m_GameObject: {fileID: 2379593115547114203}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7421602243918301466
+--- !u!23 &2379593115547114181
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421602243918301444}
+  m_GameObject: {fileID: 2379593115547114203}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 84d3717e2cebc2144a328c60725d719e, type: 2}
+  - {fileID: 2100000, guid: 55576b28fb624ba4eb9ce19442cdad06, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,26 +86,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7421602243918301467
+--- !u!65 &2379593115547114180
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421602243918301444}
+  m_GameObject: {fileID: 2379593115547114203}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7421602243918301471
+--- !u!54 &2379593115547114176
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421602243918301444}
+  m_GameObject: {fileID: 2379593115547114203}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -115,16 +115,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &5272300712381547744
+--- !u!114 &1067961346572818239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421602243918301444}
+  m_GameObject: {fileID: 2379593115547114203}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68fde37d8a8a4d9498eff6cc1d5966d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 11400000, guid: f9f3fd72ffb8aaa4688f9cc3aeba8b96, type: 2}
+  itemObj: {fileID: 11400000, guid: acb9ec82f097a104abecf094d4ee4450, type: 2}
+  uses: -1

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Transform player;
     public Transform enemy;
+    public bool elevatorOpen;
 
     [SerializeField] float timeAfterDeath;
     [SerializeField] float timeUntilOpenElevator;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     public void Die()
     {
         elevator.SetBool("Open", false);
+        elevatorOpen = false;
         if (enemy.TryGetComponent(out Enemy enemyC))
         {
             enemyC.Stop();
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
                 enemyC.Respawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
             }
             elevator.SetBool("Open", true);
+            elevatorOpen = true;
         }));
     }
 

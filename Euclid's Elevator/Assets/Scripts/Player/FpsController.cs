@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController)), RequireComponent(typeof(Inventory)), RequireComponent(typeof(CameraController))]
+[RequireComponent(typeof(CharacterController)), RequireComponent(typeof(Inventory)), RequireComponent(typeof(CameraController)), RequireComponent(typeof(Insanity))]
 public class FpsController : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] Insanity insanity;
     [SerializeField] CameraController cameraController;
     [SerializeField] CharacterController controller;
     [SerializeField] Inventory inventory;
@@ -185,7 +186,7 @@ public class FpsController : MonoBehaviour
                     bool gate = false;
                     for(int i = 0; i < inventory.Items.Length - 1; i++)
                     {
-                        if (door.Toggle(inventory.Items[i].itemObj))
+                        if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
                         {
                             inventory.UseItem(i);
                             gate = true;
@@ -222,8 +223,8 @@ public class FpsController : MonoBehaviour
             cameraController.JumpscareTurn((Vector3)enemyPosition);
         }
 
-        if (inventory != null)
-            inventory.Die();
+        insanity.Die();
+        inventory.Die();
 
         if (GameManager.instance != null)
             GameManager.instance.Die();
