@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 244593413944599809}
   - component: {fileID: 3735843337706261082}
   - component: {fileID: 882413183001843105}
-  m_Layer: 0
+  - component: {fileID: 479248040}
+  m_Layer: 10
   m_Name: ElevDoor_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +98,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.119999886, y: 2.42, z: 1.1}
   m_Center: {x: 3.87057e-40, y: 0.000000059604645, z: -0.52683526}
+--- !u!208 &479248040
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882413183001843104}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.060000002, y: 1.21, z: 0.55}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -0.527}
+  m_TimeToStationary: 0.5
 --- !u!1 &6287981321349059631
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +126,7 @@ GameObject:
   - component: {fileID: 7878488850358640696}
   - component: {fileID: 7918998158615004516}
   - component: {fileID: 6287981321349059628}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ElevatorMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +233,7 @@ GameObject:
   - component: {fileID: 2934375395485431181}
   - component: {fileID: 6728060371292736155}
   - component: {fileID: 6728060371292736152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ElevCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +289,8 @@ GameObject:
   - component: {fileID: 6414095769456331407}
   - component: {fileID: 4439911693083081073}
   - component: {fileID: 6414095769456331404}
-  m_Layer: 0
+  - component: {fileID: 637161292}
+  m_Layer: 10
   m_Name: ElevDoor_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,3 +375,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.119999886, y: 2.42, z: 1.1}
   m_Center: {x: -4.04076e-40, y: 0.000000059604645, z: 0.55}
+--- !u!208 &637161292
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8994318851049944019}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.060000002, y: 1.21, z: 0.55}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.55}
+  m_TimeToStationary: 0.5

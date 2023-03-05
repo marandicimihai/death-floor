@@ -3,7 +3,19 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(CharacterController)), RequireComponent(typeof(Inventory)), RequireComponent(typeof(CameraController)), RequireComponent(typeof(Insanity))]
+[Serializable]
+public struct InteractionSettings
+{
+    public Camera cam;
+    public LayerMask interactionMask;
+    public int interactionDistance;
+}
+
+[RequireComponent(typeof(CharacterController)), 
+    RequireComponent(typeof(Inventory)), 
+    RequireComponent(typeof(CameraController)), 
+    RequireComponent(typeof(Insanity)), 
+    RequireComponent(typeof(Lockpick))]
 public class FpsController : MonoBehaviour
 {
     [Header("Components")]
@@ -11,6 +23,7 @@ public class FpsController : MonoBehaviour
     [SerializeField] CameraController cameraController;
     [SerializeField] CharacterController controller;
     [SerializeField] Inventory inventory;
+    [SerializeField] Lockpick lockpick;
 
     [Header("Movement")]
     [SerializeField] float forwardScale;
@@ -34,13 +47,14 @@ public class FpsController : MonoBehaviour
     [SerializeField] float maxSlopeAngle;
 
     [Header("Other Settings")]
+    [SerializeField] LayerMask walls;
+    [Header("")]
     [SerializeField] float distancePerFootstep;
     [SerializeField] AudioSource footstepSource;
     [Header("")]
     [SerializeField] AudioSource jumpScareSource;
     [Header("")]
-    [SerializeField] LayerMask interactionMask;
-    [SerializeField] int interactionDistance;
+    [SerializeField] InteractionSettings settings;
     [Header("")]
     [SerializeField] float spawnYRot;
 
@@ -64,6 +78,7 @@ public class FpsController : MonoBehaviour
     private void Awake()
     {
         cam = cameraController.Camera.GetComponent<Camera>();
+        settings.cam = cam;
 
         speedMultiplier = 1;
 
@@ -73,11 +88,12 @@ public class FpsController : MonoBehaviour
         PlayerInputActions.Enable();
 
         PlayerInputActions.General.Interact.performed += Interact;
+        PlayerInputActions.General.Interact.canceled += context => lockpick.StopPicking();
         playerInputActions.General.Use.performed += UseItem;
         PlayerInputActions.General.Drop.performed += DropItem;
 
-        PlayerInputActions.General.Sneak.started += (InputAction.CallbackContext context) => { sneaking = true; };
-        PlayerInputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => { sneaking = false; };
+        PlayerInputActions.General.Sneak.started += context => sneaking = true;
+        PlayerInputActions.General.Sneak.canceled += context => sneaking = false;
 
         #endregion
 
@@ -174,7 +190,7 @@ public class FpsController : MonoBehaviour
         if (Paralized)
             return;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, interactionDistance, interactionMask))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask))
         {
             if (hit.transform.TryGetComponent(out Item item))
             {
@@ -187,7 +203,7 @@ public class FpsController : MonoBehaviour
                 if (door == null)
                     return;
 
-                else if (!door.Toggle())
+                if (!door.Toggle())
                 {
                     bool gate = false;
                     for(int i = 0; i < inventory.Items.Length - 1; i++)
@@ -201,7 +217,11 @@ public class FpsController : MonoBehaviour
                     }
                     if (!gate)
                         LineManager.instance.SayLine("Door locked");
+                    else
+                        return;
                 }
+
+                lockpick.PickLock(door, settings);
             }
         }
     }
@@ -279,6 +299,9 @@ public class FpsController : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (((1 << hit.collider.gameObject.layer) & walls.value) <= 0)
+            return;
+
         float angle = Vector3.Angle(Vector3.up, hit.normal);
         if (angle > maxSlopeAngle)
         {

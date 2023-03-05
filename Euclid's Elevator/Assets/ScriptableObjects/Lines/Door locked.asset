@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Door locked
   m_EditorClassIdentifier: 
   name: Door locked
-  text: The door is locked. I could use a lock breaker.
+  text: The door is locked. I could use a key or I can pick the lock with this old
+    lock picker.
   timeLastingAfterTyping: 3

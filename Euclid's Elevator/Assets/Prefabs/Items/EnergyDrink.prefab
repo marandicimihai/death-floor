@@ -131,4 +131,5 @@ MonoBehaviour:
   itemObj: {fileID: 11400000, guid: 3d7146097d411ba4faea96b9609b64f2, type: 2}
   uses: -1
   speedMultiplier: 2
+  lockPickMultiplier: 2
   effectTime: 8

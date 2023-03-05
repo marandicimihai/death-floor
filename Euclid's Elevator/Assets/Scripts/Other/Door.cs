@@ -1,16 +1,15 @@
 using UnityEngine;
-using System;
 
 public class Door : MonoBehaviour
 {
-    public bool open;
+    public bool locked;
 
+    [SerializeField] bool open;
     [SerializeField] float closedYRot;
     [SerializeField] float openedYRot;
     [SerializeField] float openTime;
     [SerializeField] Transform panel;
     [SerializeField] Animator doorHandle;
-    [SerializeField] bool locked;
 
     [SerializeField] ItemObject requiredItem;
 
@@ -57,5 +56,11 @@ public class Door : MonoBehaviour
         doorHandle.SetTrigger("PullHandle");
 
         return true;
+    }
+
+    public void ForceOpen()
+    {
+        locked = false;
+        Toggle();
     }
 }

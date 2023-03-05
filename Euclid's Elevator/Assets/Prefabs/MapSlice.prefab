@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 4230915245838959371}
   - component: {fileID: 2113258831819896769}
   - component: {fileID: 9042413448024127314}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Map_A_Corridor_Fix
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &943751970152975534
 Transform:
@@ -114,7 +114,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6492766398731473882
 Transform:
@@ -193,12 +193,12 @@ GameObject:
   - component: {fileID: 8651998684721887891}
   - component: {fileID: 285182720908851124}
   - component: {fileID: 8651998684721887888}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: A_LongOffice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3400894346219081231
 Transform:
@@ -293,7 +293,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3458387129347484995
 Transform:
@@ -332,12 +332,12 @@ GameObject:
   - component: {fileID: 5013745149505449540}
   - component: {fileID: 1251603810747703795}
   - component: {fileID: 5013745149505449541}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: A_Entrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1963914157658221917
 Transform:
@@ -430,12 +430,12 @@ GameObject:
   - component: {fileID: 5635225979682710301}
   - component: {fileID: 2195993472667958529}
   - component: {fileID: 5635225979682710290}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: A_LeasureRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3196299362032512054
 Transform:
@@ -532,7 +532,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8792873797358346716
 Transform:
@@ -615,7 +615,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7195051462277923007
 Transform:
@@ -694,12 +694,12 @@ GameObject:
   - component: {fileID: 5371363904632737258}
   - component: {fileID: 3607564299645336146}
   - component: {fileID: 8437317072344427963}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: A_WorkOffice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &83666462291338262
 Transform:
@@ -796,7 +796,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3248053515975691817
 Transform:
@@ -879,7 +879,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2468901791615876419
 Transform:
