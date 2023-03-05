@@ -64,14 +64,14 @@ public class GameManager : MonoBehaviour
 
         if (player.TryGetComponent(out FpsController controller))
         {
-            controller.Lock();
+            controller.SpawnFreeze();
         }
 
         StartCoroutine(WaitAndExec(unlockPlayerTime, () =>
         {
             if (player.TryGetComponent(out FpsController controller))
             {
-                controller.Unlock();
+                controller.SpawnUnlock();
             }
         }));
 

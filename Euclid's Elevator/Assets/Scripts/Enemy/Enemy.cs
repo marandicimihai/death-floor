@@ -131,7 +131,6 @@ public class Enemy : MonoBehaviour
             && GameManager.instance.player.TryGetComponent(out FpsController cont))
         {
             cont.Die(transform.position + (Vector3.up / 2));
-            Stop();
         }
     }
 

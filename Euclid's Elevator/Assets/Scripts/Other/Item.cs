@@ -8,4 +8,9 @@ public class Item : ItemBase
         if (uses == -1 && itemObj != null)
             uses = itemObj.uses;
     }
+
+    public virtual void UseItem(FpsController controller)
+    {
+
+    }
 }

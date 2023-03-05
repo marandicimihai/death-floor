@@ -18,7 +18,7 @@ public abstract class ItemBase : MonoBehaviour
     //gets values as objects, depends on GetFields()
     public List<object> GetValues()
     {
-        FieldInfo[] fields = GetType().GetFields();
+        FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
         List<object> values = new();
 
         foreach (FieldInfo field in fields)
@@ -30,16 +30,8 @@ public abstract class ItemBase : MonoBehaviour
     }
 
     //gets values as FieldInfos
-    List<FieldInfo> GetFields()
+    FieldInfo[] GetFields()
     {
-        FieldInfo[] fields = GetType().GetFields();
-        List<FieldInfo> values = new();
-
-        foreach (FieldInfo field in fields)
-        {
-            values.Add(field);
-        }
-
-        return values;
+        return GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
     }
 }

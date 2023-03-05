@@ -1,5 +1,7 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using UnityEngine;
+using System;
 
 [RequireComponent(typeof(CharacterController)), RequireComponent(typeof(Inventory)), RequireComponent(typeof(CameraController)), RequireComponent(typeof(Insanity))]
 public class FpsController : MonoBehaviour
@@ -52,6 +54,7 @@ public class FpsController : MonoBehaviour
     Vector3 verticalVelocity;
     Vector3 velocity;
 
+    float speedMultiplier;
     float walked;
     uint steps;
 
@@ -62,12 +65,15 @@ public class FpsController : MonoBehaviour
     {
         cam = cameraController.Camera.GetComponent<Camera>();
 
+        speedMultiplier = 1;
+
         #region Input
 
         playerInputActions = new PlayerInputActions();
         PlayerInputActions.Enable();
 
         PlayerInputActions.General.Interact.performed += Interact;
+        playerInputActions.General.Use.performed += UseItem;
         PlayerInputActions.General.Drop.performed += DropItem;
 
         PlayerInputActions.General.Sneak.started += (InputAction.CallbackContext context) => { sneaking = true; };
@@ -83,7 +89,7 @@ public class FpsController : MonoBehaviour
     {
         if (Paralized)
             return;
-        
+
         Move();
     }
 
@@ -107,8 +113,8 @@ public class FpsController : MonoBehaviour
 
         float prev = steps;
         steps = (uint)Mathf.RoundToInt(walked / distancePerFootstep);
-
-        if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.1f)
+        
+        if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.2f)
         {
             footstepSource.Play();
             if(GameManager.instance.enemy.TryGetComponent(out Enemy enemy))
@@ -132,9 +138,9 @@ public class FpsController : MonoBehaviour
     private void Accelerate(Vector2 input, ref Vector3 velocity)
     {
         Vector3 inputDirection = transform.right * input.x + transform.forward * input.y;
-        Vector3 wishVel = inputDirection.normalized * (sneaking ? sneakSpeed : walkSpeed);
+        Vector3 wishVel = (sneaking ? sneakSpeed : walkSpeed) * speedMultiplier * inputDirection.normalized;
 
-        Vector3 addVel = (sneaking ? sneakAccelStep : accelStep) * Time.deltaTime * (wishVel - velocity).normalized;
+        Vector3 addVel = (sneaking ? sneakAccelStep : accelStep) * speedMultiplier * Time.deltaTime * (wishVel - velocity).normalized;
 
         if (addVel.magnitude > velocity.magnitude && input == Vector2.zero)
         {
@@ -208,6 +214,24 @@ public class FpsController : MonoBehaviour
         inventory.DropItem(cam.transform.position, cam.transform.forward);
     }
 
+    private void UseItem(InputAction.CallbackContext context)
+    {
+        if (inventory.Items[inventory.ActiveSlot] == null)
+            return;
+
+        inventory.Items[inventory.ActiveSlot].UseItem(this);
+        inventory.UseItem(inventory.ActiveSlot);
+    }
+
+    public void IncreaseSpeed(float multiplier, float time)
+    {
+        speedMultiplier = multiplier;
+        StartCoroutine(WaitAndExec(time, () =>
+        {
+            speedMultiplier = 1;
+        }));
+    }
+
     public void Die(Vector3? enemyPosition = null)
     {
         if (Paralized)
@@ -230,15 +254,35 @@ public class FpsController : MonoBehaviour
             GameManager.instance.Die();
     }
 
-    public void Lock()
+    public void SpawnFreeze()
     {
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, spawnYRot, transform.eulerAngles.z);
         Paralized = true;
     }
 
-    public void Unlock()
+    public void SpawnUnlock()
     {
         cameraController.ResetAngle(spawnYRot);
         Paralized = false;
+    }
+
+    IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)
+    {
+        yield return new WaitForSeconds(time);
+        exec?.Invoke();
+
+        if (repeat)
+        {
+            StartCoroutine(WaitAndExec(time, exec, repeat));
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        float angle = Vector3.Angle(Vector3.up, hit.normal);
+        if (angle > maxSlopeAngle)
+        {
+            velocity = Vector3.ProjectOnPlane(velocity, hit.normal);
+        }
     }
 }

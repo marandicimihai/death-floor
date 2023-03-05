@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour
     {
         if (FindSlot(out int index))
         {
-            Item newItem = inventoryParent.AddComponent<Item>();
+            Item newItem = inventoryParent.AddComponent(item.GetType()) as Item;
             newItem.SetValues(item);
             items[index] = newItem;
             Destroy(item.gameObject);

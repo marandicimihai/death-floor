@@ -3,6 +3,18 @@ using UnityEngine;
 [RequireComponent(typeof(FpsController))]
 public class Insanity : MonoBehaviour
 {
+    public float InsanityMeter 
+    {
+        get
+        {
+            return insanity;
+        }
+        set
+        {
+            insanity = Mathf.Clamp(value, minInsanity, maxInsanity);
+        }
+    }
+
     [SerializeField] FpsController controller;
     [SerializeField] CameraController camCon;
 
