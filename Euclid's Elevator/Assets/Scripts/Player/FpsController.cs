@@ -143,7 +143,7 @@ public class FpsController : MonoBehaviour
 
         #region Sound
 
-        walked += (transform.position - lastPosition).magnitude;
+        walked += Vector3.Scale(transform.position - lastPosition, new Vector3(1, 0, 1)).magnitude;
         lastPosition = transform.position;
 
         float prev = steps;
@@ -305,6 +305,9 @@ public class FpsController : MonoBehaviour
     public void SpawnUnlock()
     {
         cameraController.ResetAngle(spawnYRot);
+        lastPosition = transform.position;
+        walked = 0;
+        steps = 0;
         Paralized = false;
     }
 

@@ -18,7 +18,8 @@ public class Insanity : MonoBehaviour
     [SerializeField] FpsController controller;
     [SerializeField] CameraController camCon;
 
-    [SerializeField] float insanityPerSecondWhenLooking;
+    [SerializeField] float insanityTime;
+    [SerializeField] AnimationCurve insanityCurve;
 
     [SerializeField] LayerMask visionMask;
 
@@ -26,6 +27,7 @@ public class Insanity : MonoBehaviour
     [SerializeField] float maxInsanity;
 
     float insanity;
+    float t;
 
     private void Update()
     {
@@ -36,10 +38,12 @@ public class Insanity : MonoBehaviour
         {
             GameManager.instance.enemyController.Stop();
             
-            insanity += insanityPerSecondWhenLooking * Time.deltaTime;
-            insanity = Mathf.Clamp(insanity, minInsanity, maxInsanity);
+            if (t < insanityTime)
+                t += Time.deltaTime;
 
-            if (insanity >= maxInsanity)
+            InsanityMeter = GetInsanity(t);
+
+            if (InsanityMeter >= maxInsanity)
             {
                 controller.Die();
             }
@@ -47,11 +51,22 @@ public class Insanity : MonoBehaviour
         else if (!controller.Paralized)
         {
             GameManager.instance.enemyController.Continue();
+            t = 0;
+        }
+        else
+        {
+            t = 0;
         }
     }
 
     public void Die()
     {
-        insanity = minInsanity;
+        InsanityMeter = minInsanity;
+    }
+
+    public float GetInsanity(float n)
+    {
+        n /= insanityTime;
+        return insanityCurve.Evaluate(n) * maxInsanity;
     }
 }

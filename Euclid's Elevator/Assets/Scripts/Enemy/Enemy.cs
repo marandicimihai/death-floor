@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour
         if (!GameManager.instance.elevatorOpen)
         {
             state = EnemyState.Patrol;
+            chasing = false;
             return;
         }
 
