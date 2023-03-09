@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Transform player;
+    public FpsController playerController;
     public Transform enemy;
+    public Enemy enemyController;
     public bool elevatorOpen;
 
     [SerializeField] float timeAfterDeath;
@@ -41,10 +43,7 @@ public class GameManager : MonoBehaviour
     {
         elevator.SetBool("Open", false);
         elevatorOpen = false;
-        if (enemy.TryGetComponent(out Enemy enemyC))
-        {
-            enemyC.Stop();
-        }
+        enemyController.Stop();
         StartCoroutine(WaitAndExec(timeAfterDeath, () =>
         {
             deaths++;
@@ -62,25 +61,16 @@ public class GameManager : MonoBehaviour
     {
         player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
 
-        if (player.TryGetComponent(out FpsController controller))
-        {
-            controller.SpawnFreeze();
-        }
+        playerController.SpawnFreeze();
 
         StartCoroutine(WaitAndExec(unlockPlayerTime, () =>
         {
-            if (player.TryGetComponent(out FpsController controller))
-            {
-                controller.SpawnUnlock();
-            }
+            playerController.SpawnUnlock();
         }));
 
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
-            if (enemy.TryGetComponent(out Enemy enemyC))
-            {
-                enemyC.Respawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
-            }
+            enemyController.Respawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
             elevator.SetBool("Open", true);
             elevatorOpen = true;
         }));

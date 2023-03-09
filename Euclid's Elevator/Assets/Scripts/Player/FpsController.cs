@@ -65,6 +65,10 @@ public class FpsController : MonoBehaviour
     PlayerInputActions playerInputActions;
     Camera cam;
 
+    Vector3 lastPosition;
+
+    Vector3 moveDir;
+    Vector3 forces;
     Vector3 verticalVelocity;
     Vector3 velocity;
 
@@ -72,7 +76,13 @@ public class FpsController : MonoBehaviour
     float walked;
     uint steps;
 
-    bool grounded;
+    bool Grounded
+    {
+        get
+        {
+            return Physics.CheckSphere(transform.position + controller.center - new Vector3(0, controller.height / 2 - controller.radius + groundCheckExtension, 0), controller.radius - 0.1f, whatIsGround);
+        }
+    }
     bool sneaking;
 
     private void Awake()
@@ -81,6 +91,7 @@ public class FpsController : MonoBehaviour
         settings.cam = cam;
 
         speedMultiplier = 1;
+        lastPosition = transform.position;
 
         #region Input
 
@@ -104,28 +115,36 @@ public class FpsController : MonoBehaviour
     private void Update()
     {
         if (Paralized)
+        {
+            forces = Vector3.zero;
             return;
-
-        Move();
+        }
+        ComputeVelocity();
+        moveDir = forces + velocity + verticalVelocity;
+        controller.Move(moveDir * Time.deltaTime);
+        forces = Vector3.zero;
     }
 
-    private void Move()
+    private void ComputeVelocity()
     {
-        grounded = Physics.CheckSphere(transform.position + controller.center - new Vector3(0, controller.height / 2 - controller.radius + groundCheckExtension, 0), controller.radius - 0.1f, whatIsGround);
-        
         Vector2 input = PlayerInputActions.General.Movement.ReadValue<Vector2>();
         input.x *= strafeScale;
         input.y *= forwardScale;
         input.Normalize();
 
-        if (grounded)
+        if (Grounded)
+        {
             Accelerate(input, ref velocity);
+            HandleSlope(ref velocity);
+        }
 
-        HandleSlope(ref velocity);
+        if (input == Vector2.zero)
+            walked = 0;
 
-        controller.Move(velocity * Time.deltaTime);
+        #region Sound
 
-        walked += (velocity * Time.deltaTime).magnitude;
+        walked += (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
 
         float prev = steps;
         steps = (uint)Mathf.RoundToInt(walked / distancePerFootstep);
@@ -133,21 +152,18 @@ public class FpsController : MonoBehaviour
         if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.2f)
         {
             footstepSource.Play();
-            if(GameManager.instance.enemy.TryGetComponent(out Enemy enemy))
-            {
-                enemy.NoiseHeardNav(transform.position);
-            }
+            GameManager.instance.enemyController.NoiseHeardNav(transform.position);
         }
 
+        #endregion
+
         #region Gravity
-        if (!grounded)
+        if (!Grounded)
         {
             verticalVelocity.y += gravity * Time.deltaTime;
         }
         else
             verticalVelocity.y = -1f;
-
-        controller.Move(verticalVelocity * Time.deltaTime);
         #endregion
     }
 
@@ -156,32 +172,33 @@ public class FpsController : MonoBehaviour
         Vector3 inputDirection = transform.right * input.x + transform.forward * input.y;
         Vector3 wishVel = (sneaking ? sneakSpeed : walkSpeed) * speedMultiplier * inputDirection.normalized;
 
-        Vector3 addVel = (sneaking ? sneakAccelStep : accelStep) * speedMultiplier * Time.deltaTime * (wishVel - velocity).normalized;
+        Vector3 addVel = (sneaking ? sneakAccelStep : accelStep) * speedMultiplier * (wishVel - velocity).normalized;
 
         if (addVel.magnitude > velocity.magnitude && input == Vector2.zero)
         {
             velocity = Vector3.zero;
         }
-        else if ((velocity + addVel).magnitude > wishVel.magnitude && input != Vector2.zero)
-        {
-            velocity = wishVel;
-        }
         else
             velocity += addVel;
+
+        if (velocity.magnitude > wishVel.magnitude && input != Vector2.zero)
+        {
+            velocity = velocity.normalized * wishVel.magnitude;
+        }
     }
 
-    private void HandleSlope(ref Vector3 direction)
+    private void HandleSlope(ref Vector3 velocity)
     {
         if (Physics.Raycast(new Ray(transform.position + controller.center, Vector3.down), out RaycastHit slopeHit, controller.height / 2 + slopeCheckExtension, whatIsGround))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             if (angle < maxSlopeAngle && angle != 0)
             {
-                direction = Vector3.ProjectOnPlane(direction, slopeHit.normal);
+                velocity = Vector3.ProjectOnPlane(velocity, slopeHit.normal);
                 return;
             }
         }
-        direction = Vector3.ProjectOnPlane(direction, Vector3.up);
+        velocity = Vector3.ProjectOnPlane(velocity, Vector3.up);
         return;
     }
 
@@ -252,6 +269,11 @@ public class FpsController : MonoBehaviour
         }));
     }
 
+    public void AddForce(Vector3 direction, float forceStrength)
+    {
+        forces += forceStrength * Vector3.Scale(direction, new Vector3(1, 0, 1)).normalized;
+    }
+
     public void Die(Vector3? enemyPosition = null)
     {
         if (Paralized)
@@ -299,13 +321,14 @@ public class FpsController : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (((1 << hit.collider.gameObject.layer) & walls.value) <= 0)
+        if (((1 << hit.collider.gameObject.layer) & walls.value) <= 0 || forces != Vector3.zero)
             return;
 
         float angle = Vector3.Angle(Vector3.up, hit.normal);
         if (angle > maxSlopeAngle)
         {
             velocity = Vector3.ProjectOnPlane(velocity, hit.normal);
+            forces = Vector3.ProjectOnPlane(forces, hit.normal);
         }
     }
 }

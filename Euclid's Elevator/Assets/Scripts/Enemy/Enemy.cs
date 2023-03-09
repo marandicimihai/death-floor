@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine;
+using System;
 
 enum EnemyState
 {
     Patrol,
-    Attack,
-    NoiseHeard,
+    Inspect,
+    Chase,
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -15,28 +16,32 @@ public class Enemy : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
     [SerializeField] LayerMask rayMask;
 
+    [Header("Patrol")]
     [SerializeField] float patrolSpeed;
-    [SerializeField] float noiseHeardSpeed;
-    [SerializeField] float attackSpeed;
-
-    [SerializeField] float noiseHearingDistance;
-
     [SerializeField] float patrolStepDistance;
     [SerializeField] float patrolStepTime;
-
-    [SerializeField] float noiseHeardToPatrolTransitionTime;
-    [SerializeField] float noiseHeardThreshold;
-
-    [SerializeField] float attackStopDistance;
-    [SerializeField] float attackRange;
+    [Header("Inspect")]
+    [SerializeField] float inspectSpeed;
+    [SerializeField] float inspectDistance;
+    [SerializeField] float inspectToPatrolTransitionTime;
+    [SerializeField] float inspectThreshold;
+    [Header("Chase")]
+    [SerializeField] float chaseSpeed;
+    [SerializeField] float chaseVisualContactTime;
+    [SerializeField] float chaseStopDistance;
+    [SerializeField] float chaseRange;
 
     Transform player;
     EnemyState state;
 
+    IEnumerator patrolCoroutine, inspectCoroutine;
+
     Vector3 destination;
 
-    bool patrolling;
-    bool wasAttacking;
+    float eyeContact;
+
+    bool patrolStep;
+    bool chasing;
 
     private void Start()
     {
@@ -47,52 +52,46 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance.elevatorOpen)
         {
-            wasAttacking = false;
+            state = EnemyState.Patrol;
             return;
         }
 
         if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player"))
         {
-            state = EnemyState.Attack;
-            wasAttacking = true;
-        }
-        else
-        {
-            agent.stoppingDistance = 0;
-
-            if (wasAttacking)
+            if (eyeContact < chaseVisualContactTime)
             {
-                NoiseHeardNav(destination, true);
-                wasAttacking = false;
+                eyeContact += Time.deltaTime;
+                NoiseHeardNav(player.position);
             }
-            else if (state != EnemyState.NoiseHeard)
+            else
             {
-                state = EnemyState.Patrol;
+                Chase();
             }
         }
-        
-        switch (state)
+        else if (chasing)
         {
-            case EnemyState.Patrol:
-                Patrol();
-                break;
-            case EnemyState.Attack:
-                Attack();
-                break;
+            NoiseHeardNav(player.position, true);
+            eyeContact = 0;
+        }
+        else if (state != EnemyState.Inspect)
+        {
+            Patrol();
         }
     }
 
     private void OnValidate()
     {
-        if (attackRange < attackStopDistance)
+        if (chaseRange < chaseStopDistance)
         {
-            attackRange = attackStopDistance;
+            chaseRange = chaseStopDistance;
         }
     }
 
+    #region PATROL
+
     void Patrol()
     {
-        if (patrolling)
+        if (patrolStep)
             return;
 
         agent.speed = patrolSpeed;
@@ -104,66 +103,96 @@ public class Enemy : MonoBehaviour
         }
         while (agent.pathStatus == NavMeshPathStatus.PathInvalid);
 
-        if (!patrolling)
-            StartCoroutine(PatrolStep(patrolStepTime));
+        state = EnemyState.Patrol;
+
+        patrolCoroutine = PatrolStep(patrolStepTime);
+        StartCoroutine(patrolCoroutine);
     }
 
     Vector3 NewDirection()
     {
-        return Vector3.Scale(Random.insideUnitSphere, new Vector3(1, 0, 1)).normalized * patrolStepDistance;
+        return Vector3.Scale(UnityEngine.Random.insideUnitSphere, new Vector3(1, 0, 1)).normalized * patrolStepDistance;
     }
 
     IEnumerator PatrolStep(float time)
     {
-        patrolling = true;
+        patrolStep = true;
         yield return new WaitForSeconds(time);
-        patrolling = false;
+        patrolStep = false;
     }
 
-    void Attack()
+    #endregion
+
+    void Chase()
     {
-        agent.speed = attackSpeed;
-        agent.stoppingDistance = attackStopDistance;
+        state = EnemyState.Chase;
+
+        agent.speed = chaseSpeed;
+        agent.stoppingDistance = chaseStopDistance;
+
         destination = player.position;
         agent.SetDestination(destination);
 
-        if (Vector3.Distance(destination, transform.position) < attackRange 
-            && GameManager.instance.player.TryGetComponent(out FpsController cont))
+        if (!chasing && patrolCoroutine != null)
+            StopCoroutine(patrolCoroutine);
+
+        chasing = true;
+
+        if (Vector3.Distance(destination, transform.position) < chaseRange)
         {
-            cont.Die(transform.position + (Vector3.up / 2));
+            GameManager.instance.playerController.Die(transform.position + (Vector3.up / 2));
         }
     }
 
+    #region INSPECT
+
     public void NoiseHeardNav(Vector3 noisePosition, bool overrideAttack = false)
     {
-        if (!overrideAttack && state == EnemyState.Attack)
+        if ((!overrideAttack && state == EnemyState.Chase) || Vector3.Distance(noisePosition, transform.position) > inspectDistance)
+        {
             return;
-        else if (Vector3.Distance(noisePosition, transform.position) > noiseHearingDistance)
-            return;
+        }
 
-        agent.speed = noiseHeardSpeed;
-        StopAllCoroutines();
-        patrolling = false;
+        chasing = false;
 
-        state = EnemyState.NoiseHeard;
+        if (patrolCoroutine != null)
+            StopCoroutine(patrolCoroutine);
+        if (inspectCoroutine != null)
+            StopCoroutine(inspectCoroutine);
+
+        state = EnemyState.Inspect;
+        agent.speed = inspectSpeed;
+        patrolStep = false;
 
         destination = noisePosition;
         agent.SetDestination(destination);
 
-        StartCoroutine(NoiseHeard(destination, noiseHeardThreshold));
+        bool partial;
+
+        if (agent.pathStatus == NavMeshPathStatus.PathPartial || agent.pathStatus == NavMeshPathStatus.PathInvalid)
+            partial = true;
+        else
+            partial = false;
+
+        inspectCoroutine = NoiseHeard(destination, inspectThreshold, partial);
+        StartCoroutine(inspectCoroutine);
     }
 
-    IEnumerator NoiseHeard(Vector3 position, float threshold)
+    IEnumerator NoiseHeard(Vector3 position, float threshold, bool partial)
     {
-        yield return new WaitUntil(() => 
-        { 
-            return Vector3.Distance(position, transform.position) < threshold; 
-        });
-
-        yield return new WaitForSeconds(noiseHeardToPatrolTransitionTime);
+        if (!partial)
+        {
+            yield return new WaitUntil(() =>
+            {
+                return Vector3.Distance(position, transform.position) < threshold;
+            });
+        }
+        yield return new WaitForSeconds(inspectToPatrolTransitionTime);
 
         state = EnemyState.Patrol;
     }
+
+    #endregion
 
     public void Respawn(Vector3 position)
     {

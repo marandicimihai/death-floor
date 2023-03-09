@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7836763694097587789}
   - component: {fileID: 1692654697}
   - component: {fileID: 1658977798140987274}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DoorPanel
   m_TagString: Door
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 2731822125511978552}
   - component: {fileID: 5629452194691271926}
   - component: {fileID: 5538453519942585639}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DoorKnob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 7100121045914011132}
   - component: {fileID: 699835758}
   - component: {fileID: 1956808615034369226}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,12 +269,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e91d3cc491a2f147a25fbc5c9a8141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locked: 0
+  open: 0
   closedYRot: -180
   openedYRot: 0
   openTime: 0.5
   panel: {fileID: 8352001464784779838}
   doorHandle: {fileID: 699835758}
-  locked: 0
+  requiredItem: {fileID: 0}
 --- !u!1 &3438150209931975202
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +288,7 @@ GameObject:
   - component: {fileID: 8958346082819149599}
   - component: {fileID: 1172836564587411332}
   - component: {fileID: 6119741681886222167}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DoorKnob (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +371,7 @@ GameObject:
   - component: {fileID: 1058960449829162171}
   - component: {fileID: 7561978864776446228}
   - component: {fileID: 8682887598064101246}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +455,7 @@ GameObject:
   - component: {fileID: 8960115856994178322}
   - component: {fileID: 7072323922346076308}
   - component: {fileID: 556326385}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DoorFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +552,7 @@ GameObject:
   - component: {fileID: 9117689066041096460}
   - component: {fileID: 8445760131104864404}
   - component: {fileID: 4815493442032881482}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DoorKnob (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -29,14 +29,12 @@ public class Insanity : MonoBehaviour
 
     private void Update()
     {
-        GameManager.instance.enemy.TryGetComponent(out Enemy enemyC);
-
         if (!Physics.Raycast(camCon.Camera.position, GameManager.instance.enemy.position - camCon.Camera.position, 
             Vector3.Distance(GameManager.instance.enemy.position, transform.position), visionMask) &&
             !controller.Paralized && camCon.Camera.TryGetComponent(out Camera camera) && GameManager.instance.enemy.TryGetComponent(out Collider col) && 
             GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds))
         {
-            enemyC.Stop();
+            GameManager.instance.enemyController.Stop();
             
             insanity += insanityPerSecondWhenLooking * Time.deltaTime;
             insanity = Mathf.Clamp(insanity, minInsanity, maxInsanity);
@@ -48,7 +46,7 @@ public class Insanity : MonoBehaviour
         }
         else if (!controller.Paralized)
         {
-            enemyC.Continue();
+            GameManager.instance.enemyController.Continue();
         }
     }
 
