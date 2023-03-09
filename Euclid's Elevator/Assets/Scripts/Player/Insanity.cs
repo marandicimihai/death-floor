@@ -20,14 +20,18 @@ public class Insanity : MonoBehaviour
 
     [SerializeField] float insanityTime;
     [SerializeField] AnimationCurve insanityCurve;
-
-    [SerializeField] LayerMask visionMask;
-
+    
     [SerializeField] float minInsanity;
     [SerializeField] float maxInsanity;
 
+    LayerMask visionMask;
     float insanity;
     float t;
+
+    private void Awake()
+    {
+        visionMask = controller.settings.visionMask;
+    }
 
     private void Update()
     {

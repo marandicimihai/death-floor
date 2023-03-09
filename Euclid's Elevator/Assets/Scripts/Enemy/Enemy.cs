@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
 
     float eyeContact;
 
+    bool paralized;
     bool patrolStep;
     bool chasing;
 
@@ -204,14 +205,39 @@ public class Enemy : MonoBehaviour
         agent.isStopped = false;
     }
 
-    public void Stop()
+    // The function, when called without specifying the time, will stop the agent, until it is let to continue;
+    // When specifying the time, the function will not allow the enemy to move for the given time
+    public void Stop(float time = 0)
     {
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
+        if (time != 0)
+        {
+            paralized = true;
+            StartCoroutine(WaitAndExec(time, () =>
+            {
+                paralized = false;
+                Continue();
+            }));
+        }
     }
 
     public void Continue()
     {
+        if (paralized)
+            return;
+
         agent.isStopped = false;
+    }
+
+    IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)
+    {
+        yield return new WaitForSeconds(time);
+        exec?.Invoke();
+
+        if (repeat)
+        {
+            StartCoroutine(WaitAndExec(time, exec, repeat));
+        }
     }
 }

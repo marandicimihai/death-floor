@@ -8,6 +8,7 @@ public struct InteractionSettings
 {
     public Camera cam;
     public LayerMask interactionMask;
+    public LayerMask visionMask;
     public int interactionDistance;
 }
 
@@ -54,7 +55,7 @@ public class FpsController : MonoBehaviour
     [Header("")]
     [SerializeField] AudioSource jumpScareSource;
     [Header("")]
-    [SerializeField] InteractionSettings settings;
+    public InteractionSettings settings;
     [Header("")]
     [SerializeField] float spawnYRot;
 
@@ -63,7 +64,6 @@ public class FpsController : MonoBehaviour
     public bool Paralized { get; private set; }
 
     PlayerInputActions playerInputActions;
-    Camera cam;
 
     Vector3 lastPosition;
 
@@ -87,9 +87,6 @@ public class FpsController : MonoBehaviour
 
     private void Awake()
     {
-        cam = cameraController.Camera.GetComponent<Camera>();
-        settings.cam = cam;
-
         speedMultiplier = 1;
         lastPosition = transform.position;
 
@@ -207,7 +204,7 @@ public class FpsController : MonoBehaviour
         if (Paralized)
             return;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask))
+        if (Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask))
         {
             if (hit.transform.TryGetComponent(out Item item))
             {
@@ -248,12 +245,12 @@ public class FpsController : MonoBehaviour
         if (Paralized)
             return;
 
-        inventory.DropItem(cam.transform.position, cam.transform.forward);
+        inventory.DropItem(settings.cam.transform.position, settings.cam.transform.forward);
     }
 
     private void UseItem(InputAction.CallbackContext context)
     {
-        if (inventory.Items[inventory.ActiveSlot] == null)
+        if (inventory.Items[inventory.ActiveSlot] == null || inventory.Items[inventory.ActiveSlot].GetType() == typeof(Item))
             return;
 
         inventory.Items[inventory.ActiveSlot].UseItem(this);
