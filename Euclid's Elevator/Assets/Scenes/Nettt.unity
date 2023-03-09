@@ -947,7 +947,7 @@ MonoBehaviour:
   enemyController: {fileID: 2086231058}
   elevatorOpen: 0
   timeAfterDeath: 3
-  timeUntilOpenElevator: 1
+  timeUntilOpenElevator: 3
   unlockPlayerTime: 0.5
   playerSpawn: {fileID: 1719553233}
   oogaManSpawns:
@@ -955,6 +955,8 @@ MonoBehaviour:
   - {fileID: 1574781897}
   elevator: {fileID: 2497906011412337140}
   maxDeaths: 4
+  shakeTime: 3.5
+  shakeMag: 0.01
 --- !u!114 &708698801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,9 +1922,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   insanity: {fileID: 1288032392}
   cameraController: {fileID: 1288032385}
+  lockpick: {fileID: 1288032393}
   controller: {fileID: 1288032387}
   inventory: {fileID: 1288032388}
-  lockpick: {fileID: 1288032393}
   forwardScale: 1
   strafeScale: 1
   walkSpeed: 5

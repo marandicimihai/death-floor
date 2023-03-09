@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(FpsController))]
@@ -67,5 +68,22 @@ public class CameraController : MonoBehaviour
         rotating = false;
         rotation.x = 0;
         rotation.y = yrotation;
+    }
+
+    public IEnumerator Shake(float duration, float magnitude)
+    {
+        Vector3 initial = Camera.localPosition;
+        float elapsed = 0;
+
+        while (elapsed < duration)
+        {
+            Camera.localPosition = initial + Random.insideUnitSphere * magnitude;
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        Camera.localPosition = initial;
     }
 }

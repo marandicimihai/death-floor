@@ -20,11 +20,11 @@ public struct InteractionSettings
 public class FpsController : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] Insanity insanity;
-    [SerializeField] CameraController cameraController;
+    public Insanity insanity;
+    public CameraController cameraController;
+    public Lockpick lockpick;
     [SerializeField] CharacterController controller;
     [SerializeField] Inventory inventory;
-    [SerializeField] Lockpick lockpick;
 
     [Header("Movement")]
     [SerializeField] float forwardScale;

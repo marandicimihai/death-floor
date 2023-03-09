@@ -6,9 +6,6 @@ public class Pills : Item
 
     public override void UseItem(FpsController controller)
     {
-        if (controller.TryGetComponent(out Insanity insanity))
-        {
-            insanity.InsanityMeter -= insanityDecrease;
-        }
+        controller.insanity.InsanityMeter -= insanityDecrease;
     }
 }

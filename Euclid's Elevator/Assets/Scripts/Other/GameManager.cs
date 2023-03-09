@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int maxDeaths;
 
+    [Header("Player Spawn Settings")]
+    [SerializeField] float shakeTime;
+    [SerializeField] float shakeMag;
+
     public EventHandler OnSpawn;
     public EventHandler<DeathArgs> OnDeath;
     public EventHandler OnEnd;
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour
     {
         player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
 
+        StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
         playerController.SpawnFreeze();
 
         StartCoroutine(WaitAndExec(unlockPlayerTime, () =>

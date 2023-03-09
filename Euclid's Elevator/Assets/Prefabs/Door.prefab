@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 2731822125511978552}
   - component: {fileID: 5629452194691271926}
   - component: {fileID: 5538453519942585639}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DoorKnob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 7100121045914011132}
   - component: {fileID: 699835758}
   - component: {fileID: 1956808615034369226}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 8958346082819149599}
   - component: {fileID: 1172836564587411332}
   - component: {fileID: 6119741681886222167}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DoorKnob (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 8960115856994178322}
   - component: {fileID: 7072323922346076308}
   - component: {fileID: 556326385}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DoorFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 9117689066041096460}
   - component: {fileID: 8445760131104864404}
   - component: {fileID: 4815493442032881482}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DoorKnob (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

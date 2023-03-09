@@ -10,7 +10,6 @@ public class EnergyDrink : Item
     {
         controller.IncreaseSpeed(speedMultiplier, effectTime);
 
-        if (controller.TryGetComponent(out Lockpick pick))
-            pick.BoostLockPick(lockPickMultiplier, effectTime);
+        controller.lockpick.BoostLockPick(lockPickMultiplier, effectTime);
     }
 }
