@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3376620549982359832}
   - component: {fileID: 5298830681575470111}
   m_Layer: 0
-  m_Name: SouthWestOffice
+  m_Name: C_SouthWestOffice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 18
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3376620549982359832
 MeshFilter:
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2395967472854141288}
   - component: {fileID: 7880430138005471869}
   m_Layer: 0
-  m_Name: MeetingsRoomCeil
+  m_Name: B_MeetingsRoomCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 9
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2395967472854141288
 MeshFilter:
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 8314464582365512915}
   - component: {fileID: 1768061109887023559}
   m_Layer: 0
-  m_Name: Ceiling.346
+  m_Name: C_RelaxoRoomCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +197,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 4
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8314464582365512915
 MeshFilter:
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 2493181082375692697}
   - component: {fileID: 5296019498075679396}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: B_Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +280,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 15
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2493181082375692697
 MeshFilter:
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 959179295418147936}
   - component: {fileID: 7925111858034692105}
   m_Layer: 0
-  m_Name: LongBigCorridorCeil
+  m_Name: B_LongBigCorridorCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +363,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 7
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &959179295418147936
 MeshFilter:
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 3072972832018058676}
   - component: {fileID: 3838370219265004971}
   m_Layer: 0
-  m_Name: TinyTunnel
+  m_Name: C_TinyTunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,7 +446,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 19
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3072972832018058676
 MeshFilter:
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 6296792734034404422}
   - component: {fileID: 3687182999113589264}
   m_Layer: 0
-  m_Name: Ceiling.176
+  m_Name: C_TinyTunnelCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -529,7 +529,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 0
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6296792734034404422
 MeshFilter:
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 6986275068435357579}
   - component: {fileID: 4935886298820697814}
   m_Layer: 0
-  m_Name: CursedCorner
+  m_Name: C_CursedCorner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +612,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 5
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6986275068435357579
 MeshFilter:
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 3900886467657208050}
   - component: {fileID: 6831651598284171277}
   m_Layer: 0
-  m_Name: QuadCeil
+  m_Name: B_QuadCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,7 +695,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 16
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3900886467657208050
 MeshFilter:
@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 6562888697864626607}
   - component: {fileID: 2882979459514722408}
   m_Layer: 0
-  m_Name: Ceiling.272
+  m_Name: C_SouthWestOfficeCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -778,7 +778,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 2
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6562888697864626607
 MeshFilter:
@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 1771847036258170195}
   - component: {fileID: 1217734544674610595}
   m_Layer: 0
-  m_Name: LongBigCorridor
+  m_Name: B_LongBigCorridor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -861,7 +861,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1771847036258170195
 MeshFilter:
@@ -941,12 +941,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4415060179659944726}
-  - {fileID: 4287913099367147414}
-  - {fileID: 7960905224272326097}
-  - {fileID: 5204611155643024989}
-  - {fileID: 171842180485560384}
-  - {fileID: 356942102491161585}
   - {fileID: 5921507697103861259}
   - {fileID: 8712557104641201663}
   - {fileID: 4904759984836852948}
@@ -955,12 +949,18 @@ Transform:
   - {fileID: 6276885577989909667}
   - {fileID: 5052779255221489515}
   - {fileID: 4005671090109882223}
-  - {fileID: 4436810096193152042}
   - {fileID: 7416446965093804575}
   - {fileID: 1862194615948663840}
+  - {fileID: 4436810096193152042}
+  - {fileID: 4287913099367147414}
   - {fileID: 8287639690712983273}
+  - {fileID: 171842180485560384}
   - {fileID: 2799136216212457764}
+  - {fileID: 7960905224272326097}
   - {fileID: 7156270066435532790}
+  - {fileID: 4415060179659944726}
+  - {fileID: 356942102491161585}
+  - {fileID: 5204611155643024989}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -976,7 +976,7 @@ GameObject:
   - component: {fileID: 2700313526833835864}
   - component: {fileID: 1017866081092305899}
   m_Layer: 0
-  m_Name: NorthOfficeCeil
+  m_Name: B_NorthOfficeCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -995,7 +995,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 13
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2700313526833835864
 MeshFilter:
@@ -1059,7 +1059,7 @@ GameObject:
   - component: {fileID: 8436039436769957679}
   - component: {fileID: 4999310312414498716}
   m_Layer: 0
-  m_Name: NorthWestOffice
+  m_Name: C_NorthWestOffice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1078,7 +1078,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 14
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8436039436769957679
 MeshFilter:
@@ -1142,7 +1142,7 @@ GameObject:
   - component: {fileID: 2864195607525311070}
   - component: {fileID: 464611133831406059}
   m_Layer: 0
-  m_Name: MonkeyBusinessCeil
+  m_Name: B_MonkeyBusinessCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1161,7 +1161,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 11
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2864195607525311070
 MeshFilter:
@@ -1225,7 +1225,7 @@ GameObject:
   - component: {fileID: 6356103943962786282}
   - component: {fileID: 1566618005578317837}
   m_Layer: 0
-  m_Name: MeetingsRoom
+  m_Name: B_MeetingsRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1244,7 +1244,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 8
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6356103943962786282
 MeshFilter:
@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 4833316303157559574}
   - component: {fileID: 4571182104560407233}
   m_Layer: 0
-  m_Name: Ceiling.329
+  m_Name: C_CursedCornerCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1327,7 +1327,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 3
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4833316303157559574
 MeshFilter:
@@ -1391,7 +1391,7 @@ GameObject:
   - component: {fileID: 1638855316389964691}
   - component: {fileID: 3455632493810321046}
   m_Layer: 0
-  m_Name: MonkeyBusiness
+  m_Name: B_MonkeyBusiness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1410,7 +1410,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 10
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1638855316389964691
 MeshFilter:
@@ -1474,7 +1474,7 @@ GameObject:
   - component: {fileID: 1775903786377087533}
   - component: {fileID: 1422074208573043242}
   m_Layer: 0
-  m_Name: NorthOffice
+  m_Name: B_NorthOffice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1493,7 +1493,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 12
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1775903786377087533
 MeshFilter:
@@ -1557,7 +1557,7 @@ GameObject:
   - component: {fileID: 4185121032839688526}
   - component: {fileID: 1499349735817913885}
   m_Layer: 0
-  m_Name: RelaxoRoom
+  m_Name: C_RelaxoRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1576,7 +1576,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 17
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4185121032839688526
 MeshFilter:
@@ -1640,7 +1640,7 @@ GameObject:
   - component: {fileID: 2044200083452895684}
   - component: {fileID: 361195010193911718}
   m_Layer: 0
-  m_Name: Ceiling.225
+  m_Name: C_NorthWestOfficeCeil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1659,7 +1659,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4889423795992214709}
-  m_RootOrder: 1
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2044200083452895684
 MeshFilter:

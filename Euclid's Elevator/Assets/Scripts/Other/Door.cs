@@ -26,18 +26,18 @@ public class Door : MonoBehaviour
             t -= 1 / openTime * Time.deltaTime;
         }
         t = Mathf.Clamp01(t);
-        panel.rotation = Quaternion.Slerp(Quaternion.Euler(0, closedYRot, 0), Quaternion.Euler(0, openedYRot, 0), t);
+        panel.localRotation = Quaternion.Slerp(Quaternion.Euler(0, closedYRot, 0), Quaternion.Euler(0, openedYRot, 0), t);
     }
 
     private void OnValidate()
     {
         if (open)
         {
-            panel.rotation = Quaternion.Euler(0, openedYRot, 0);
+            panel.localRotation = Quaternion.Euler(0, openedYRot, 0);
         }
         else
         {
-            panel.rotation = Quaternion.Euler(0, closedYRot, 0);
+            panel.localRotation = Quaternion.Euler(0, closedYRot, 0);
         }
     }
 

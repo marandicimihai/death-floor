@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508254039709716092}
-  m_LocalRotation: {x: -0, y: -1, z: 0, w: -0.00000004371139}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: 0.10908651, y: 0.9453229, z: 0.024405964}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -271,8 +271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: 0
   open: 0
-  closedYRot: -180
-  openedYRot: 0
+  closedYRot: 180
+  openedYRot: 20
   openTime: 0.5
   panel: {fileID: 8352001464784779838}
   doorHandle: {fileID: 699835758}
