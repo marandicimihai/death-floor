@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1155383422430447959}
   - component: {fileID: 2447898881573738666}
   - component: {fileID: 1126508676981849442}
-  m_Layer: 12
+  m_Layer: 6
   m_Name: ToolboxHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4520981361508125291}
   - component: {fileID: 7024196990557625151}
   - component: {fileID: 6992157035592996792}
-  m_Layer: 12
+  m_Layer: 6
   m_Name: Toolbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

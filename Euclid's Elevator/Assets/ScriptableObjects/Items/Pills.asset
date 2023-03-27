@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Pills
   uses: 1
   inventoryIcon: {fileID: 0}
-  prefab: {fileID: 9222286965566028185, guid: 567d05a8959e712498edc97a4b18cafc, type: 3}
+  prefab: {fileID: 5096525209911580625, guid: 4140e56d4c069cd419fcea6d4c0fe8f0, type: 3}

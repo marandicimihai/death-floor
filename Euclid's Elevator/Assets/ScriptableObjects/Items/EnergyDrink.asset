@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: EnergyDrink
   uses: 1
   inventoryIcon: {fileID: 0}
-  prefab: {fileID: 5527344288812165756, guid: 58ae876984febfa49a18d15d7e36c538, type: 3}
+  prefab: {fileID: 6503248264520234454, guid: 4b81ac040b1fdca449164d08607e64f7, type: 3}

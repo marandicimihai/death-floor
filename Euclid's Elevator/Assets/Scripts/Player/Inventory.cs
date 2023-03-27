@@ -88,6 +88,13 @@ public class Inventory : MonoBehaviour
 
     public void Die()
     {
+        foreach (Item item in items)
+        {
+            if (item != null)
+            {
+                Destroy(item);
+            }
+        }
         items = new Item[inventoryCapacity];
         ActiveSlot = 0;
     }

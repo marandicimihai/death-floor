@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Coffee
   uses: 1
   inventoryIcon: {fileID: 0}
-  prefab: {fileID: 3972490066762998577, guid: 605815267a93d46499b8c1d297687b1f, type: 3}
+  prefab: {fileID: 4024848576558708582, guid: 940d5d83f332f7540849c1a7426eac4b, type: 3}

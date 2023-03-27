@@ -1,7 +1,7 @@
 public class Item : ItemBase
 {
     public ItemObject itemObj;
-    public int uses = -1;
+    [System.NonSerialized] public int uses = -1;
 
     private void Awake()
     {

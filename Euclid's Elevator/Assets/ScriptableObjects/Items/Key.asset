@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Key
   uses: 4
   inventoryIcon: {fileID: 0}
-  prefab: {fileID: 5769447571892121928, guid: 8344a8a45113f2b468dbf60436c478d0, type: 3}
+  prefab: {fileID: 7178980861119937168, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}

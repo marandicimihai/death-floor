@@ -149,7 +149,8 @@ public class FpsController : MonoBehaviour
         if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.2f)
         {
             footstepSource.Play();
-            GameManager.instance.enemyController.NoiseHeardNav(transform.position);
+            if (GameManager.instance.spawnEnemy)
+                GameManager.instance.enemyController.NoiseHeardNav(transform.position);
         }
 
         #endregion
@@ -219,23 +220,30 @@ public class FpsController : MonoBehaviour
 
                 if (!door.Toggle())
                 {
-                    bool gate = false;
                     for(int i = 0; i < inventory.Items.Length - 1; i++)
                     {
                         if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
                         {
                             inventory.UseItem(i);
-                            gate = true;
-                            break;
+                            return;
                         }
                     }
-                    if (!gate)
-                        LineManager.instance.SayLine("Door locked");
-                    else
-                        return;
+                    LineManager.instance.SayLine("Door locked");
                 }
 
                 lockpick.PickLock(door, settings);
+            }
+            else if (hit.transform.CompareTag("ItemHole"))
+            {
+                for (int i = 0; i < inventory.Items.Length - 1; i++)
+                {
+                    if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && GameManager.instance.InsertItem(inventory.Items[i].itemObj))
+                    {
+                        inventory.UseItem(i);
+                        return;
+                    }
+                }
+                LineManager.instance.SayLine("Missing Keycard");
             }
         }
     }

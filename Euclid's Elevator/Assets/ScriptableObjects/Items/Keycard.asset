@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f33514e90af670d429e181fa136feadb, type: 3}
-  m_Name: GreenKeycard
+  m_Name: Keycard
   m_EditorClassIdentifier: 
-  itemName: GreenKeycard
+  itemName: Keycard
   uses: 1
   inventoryIcon: {fileID: 0}
-  prefab: {fileID: 8458747821554200251, guid: 65726a0120527d449b162ae12e23304f, type: 3}
+  prefab: {fileID: 7906055416897973875, guid: 09d72d0bb74e5894a9d71655368de661, type: 3}

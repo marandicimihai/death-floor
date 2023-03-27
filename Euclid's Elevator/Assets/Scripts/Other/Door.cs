@@ -13,8 +13,27 @@ public class Door : MonoBehaviour
 
     [SerializeField] ItemObject requiredItem;
 
+    [Header("Stage settings")]
+
+    [SerializeField] int stageUnlock;
+
+    bool stageLocked;
     float t;
 
+    private void Awake()
+    {
+        stageLocked = true;
+    }
+    private void Start()
+    {
+        GameManager.instance.OnStageStart += (object sender, StageArgs args) =>
+        {
+            if (args.stage >= stageUnlock && stageLocked)
+            {
+                stageLocked = false;
+            }
+        };
+    }
     private void Update()
     {
         if (open)
@@ -46,10 +65,11 @@ public class Door : MonoBehaviour
         if (requiredItem != null && requirement != null && requirement.itemName == requiredItem.itemName)
             locked = false;
 
-        if (locked)
+        if (locked || stageLocked)
             return false;
 
-        GameManager.instance.enemyController.NoiseHeardNav(transform.position);
+        if (GameManager.instance.spawnEnemy)
+            GameManager.instance.enemyController.NoiseHeardNav(transform.position);
 
         open = !open;
         doorHandle.SetTrigger("PullHandle");
