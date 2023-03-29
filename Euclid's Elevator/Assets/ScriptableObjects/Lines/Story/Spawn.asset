@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Spawn
   m_EditorClassIdentifier: 
   name: Spawn
-  text: What? What is going on? Where am I? What is that sound? This must be a dream.
+  text: 
   timeLastingAfterTyping: 6
