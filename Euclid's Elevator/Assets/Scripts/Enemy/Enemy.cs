@@ -27,9 +27,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] float inspectThreshold;
     [Header("Chase")]
     [SerializeField] float chaseSpeed;
-    [SerializeField] float chaseVisualContactTime;
     [SerializeField] float chaseStopDistance;
     [SerializeField] float chaseRange;
+    [SerializeField] float doorOpenDistance;
 
     Transform player;
     EnemyState state;
@@ -37,8 +37,6 @@ public class Enemy : MonoBehaviour
     IEnumerator patrolCoroutine, inspectCoroutine;
 
     Vector3 destination;
-
-    float eyeContact;
 
     bool paralized;
     bool patrolStep;
@@ -60,24 +58,22 @@ public class Enemy : MonoBehaviour
 
         if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player"))
         {
-            if (eyeContact < chaseVisualContactTime)
-            {
-                eyeContact += Time.deltaTime;
-                NoiseHeardNav(player.position);
-            }
-            else
-            {
-                Chase();
-            }
+            Chase();
         }
         else if (chasing)
         {
             NoiseHeardNav(player.position, true);
-            eyeContact = 0;
         }
         else if (state != EnemyState.Inspect)
         {
             Patrol();
+        }
+
+        if (state != EnemyState.Patrol && Physics.Raycast(transform.position, transform.forward, out RaycastHit doorHit, doorOpenDistance)
+            && doorHit.transform.CompareTag("Door"))
+        {
+            Door door = doorHit.transform.GetComponentInParent<Door>();
+            door.ForceOpen();
         }
     }
 

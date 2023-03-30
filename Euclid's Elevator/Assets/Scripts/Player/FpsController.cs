@@ -215,7 +215,7 @@ public class FpsController : MonoBehaviour
             {
                 Door door = hit.transform.GetComponentInParent<Door>();
 
-                if (door == null)
+                if (door == null || door.StageLocked)
                     return;
 
                 if (!door.Toggle())

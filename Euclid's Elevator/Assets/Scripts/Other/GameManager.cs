@@ -6,6 +6,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
     [Header("References")]
     public Transform player;
     public FpsController playerController;
@@ -125,6 +126,43 @@ public class GameManager : MonoBehaviour
             }
         }));
     }
+    //moves on to next stage
+    IEnumerator NextStage()
+    {
+        while (Vector3.Distance(elevatorPoint, player.position) > elevatorRadius)
+        {
+            yield return null;
+        }
+
+        elevator.CloseElevator();
+        StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
+
+        stage++;
+        OnStageStart?.Invoke(this, new StageArgs(stage));
+
+        SpawnEnemy();
+        StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
+        {
+            elevator.OpenElevator();
+        }));
+    }
+
+    //used to check if player has keycard to move on to next stage
+    public bool InsertItem(ItemObject requirement)
+    {
+        if (requirement.name == stageRequirements[stage - 1].name)
+        {
+            StartCoroutine(NextStage());
+            return true;
+        }
+        return false;
+    }
+
+    [MenuItem("Developer/Next Stage")]
+    public static void NextStageDev()
+    {
+        instance.StartCoroutine(instance.NextStage());
+    }
 
     void SpawnPlayer()
     {
@@ -148,42 +186,6 @@ public class GameManager : MonoBehaviour
         {
             enemyController.Respawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
         }));
-    }
-
-    [MenuItem("Developer/Next Stage")]
-    public static void NextStageDev()
-    {
-        instance.StartCoroutine(instance.NextStage());
-    }
-    //moves on to next stage
-    IEnumerator NextStage()
-    {
-        while (Vector3.Distance(elevatorPoint, player.position) > elevatorRadius)
-        {
-            yield return null;
-        }
-
-        elevator.CloseElevator();
-        StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
-
-        stage++;
-        OnStageStart?.Invoke(this, new StageArgs(stage));
-
-        SpawnEnemy();
-        StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
-        {
-            elevator.OpenElevator();
-        }));
-    }
-    //used to check if player ahs keycard to move on to next stage
-    public bool InsertItem(ItemObject requirement)
-    {
-        if (requirement.name == stageRequirements[stage - 1].name)
-        {
-            StartCoroutine(NextStage());
-            return true;
-        }
-        return false;
     }
 
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)

@@ -17,20 +17,20 @@ public class Door : MonoBehaviour
 
     [SerializeField] int stageUnlock;
 
-    bool stageLocked;
+    public bool StageLocked { get; private set; }
     float t;
 
     private void Awake()
     {
-        stageLocked = true;
+        StageLocked = true;
     }
     private void Start()
     {
         GameManager.instance.OnStageStart += (object sender, StageArgs args) =>
         {
-            if (args.stage >= stageUnlock && stageLocked)
+            if (args.stage >= stageUnlock && StageLocked)
             {
-                stageLocked = false;
+                StageLocked = false;
             }
         };
     }
@@ -65,7 +65,7 @@ public class Door : MonoBehaviour
         if (requiredItem != null && requirement != null && requirement.itemName == requiredItem.itemName)
             locked = false;
 
-        if (locked || stageLocked)
+        if (locked || StageLocked)
             return false;
 
         if (GameManager.instance.spawnEnemy)
@@ -80,6 +80,7 @@ public class Door : MonoBehaviour
     public void ForceOpen()
     {
         locked = false;
-        Toggle();
+        if (!open)
+            Toggle();
     }
 }
