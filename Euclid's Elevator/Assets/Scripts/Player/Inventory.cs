@@ -1,16 +1,31 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(FpsController))]
 public class Inventory : MonoBehaviour
 {
-    public Item[] Items { get => items; }
+    public Item[] Items 
+    {
+        get
+        {
+            return items;
+        }
+    }
 
     [SerializeField] FpsController controller;
-    [SerializeField] Item[] items;
     [SerializeField] GameObject inventoryParent;
+    [SerializeField] Item[] items;
     [SerializeField] int inventoryCapacity;
     [SerializeField] float throwForce;
+
+    [Header("UI")]
+    [SerializeField] Image[] frames;
+    [SerializeField] GameObject[] itemImagesObjects;
+    [SerializeField] Image[] itemImages;
+    [SerializeField] Sprite emptyFrame;
+    [SerializeField] Sprite selectedFrame;
 
     public int ActiveSlot { get; private set; }
 
@@ -20,7 +35,11 @@ public class Inventory : MonoBehaviour
         items = new Item[inventoryCapacity];
 
         PlayerInputActions actions = controller.PlayerInputActions;
-        actions.General.Inventory.started += InventoryPerformed;
+        actions.General.Inventory1.started += InventoryPerformed;
+        actions.General.Inventory2.started += InventoryPerformed;
+        actions.General.Inventory3.started += InventoryPerformed;
+        actions.General.Inventory4.started += InventoryPerformed;
+        RefreshInventoryScreen();
     }
 
     private void InventoryPerformed(InputAction.CallbackContext context)
@@ -38,6 +57,7 @@ public class Inventory : MonoBehaviour
         }
 
         ActiveSlot = input;
+        RefreshInventoryScreen();
     }
 
     public void PickUpItem(Item item)
@@ -48,6 +68,7 @@ public class Inventory : MonoBehaviour
             newItem.SetValues(item);
             items[index] = newItem;
             Destroy(item.gameObject);
+            RefreshInventoryScreen();
         }
         else
         {
@@ -67,6 +88,7 @@ public class Inventory : MonoBehaviour
             }
             Destroy(items[ActiveSlot]);
             items[ActiveSlot] = null;
+            RefreshInventoryScreen();
         }
     }
 
@@ -97,6 +119,7 @@ public class Inventory : MonoBehaviour
         }
         items = new Item[inventoryCapacity];
         ActiveSlot = 0;
+        RefreshInventoryScreen();
     }
 
     public void UseItem(int i)
@@ -105,6 +128,41 @@ public class Inventory : MonoBehaviour
         if (items[i].uses <= 0)
         {
             Destroy(items[i]);
+        }
+        RefreshInventoryScreen();
+    }
+
+    void RefreshInventoryScreen()
+    {
+        for (int i = 0; i < frames.Length; i++)
+        {
+            if (i == ActiveSlot)
+            {
+                frames[i].sprite = selectedFrame; 
+            }
+            else
+            {
+                frames[i].sprite = emptyFrame;
+            }
+        }
+        StartCoroutine(RefreshItems());
+    }
+    
+    IEnumerator RefreshItems()
+    {
+        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < itemImages.Length; i++)
+        {
+            if (items[i] != null)
+            {
+                itemImagesObjects[i].SetActive(true);
+                itemImages[i].sprite = items[i].itemObj.inventoryIcon;
+            }
+            else
+            {
+                itemImagesObjects[i].SetActive(false);
+                itemImages[i].sprite = null;
+            }
         }
     }
 }

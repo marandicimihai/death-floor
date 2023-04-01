@@ -55,9 +55,36 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Inventory"",
+                    ""name"": ""Inventory 1"",
                     ""type"": ""Button"",
                     ""id"": ""3090a30a-6d4d-4514-be15-1bf11ae32c2f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""8189ab00-7b29-45c4-a3f8-fb725a3cdcaa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory 3"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ea143ad-4b4b-41ba-b7e4-f6d58d74c955"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory 4"",
+                    ""type"": ""Button"",
+                    ""id"": ""66aad85e-f851-4d54-aa69-e3ccc9579236"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -176,40 +203,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""172ea0b9-354a-4118-8b1d-21edf749b9b5"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8fe6c189-7ff1-4f9a-9bb4-fd21689b1e9c"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3e9d1507-4675-4681-8c9a-8ae06fc33941"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory"",
+                    ""action"": ""Inventory 1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -245,6 +239,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60f7a42c-1570-4b12-bee7-59d07ccca7ef"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory 2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6ae5ee8-3c42-47c9-beb0-eac759f6e971"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory 3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc8f0396-8e69-4ef8-9b48-0b8dd1578c75"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory 4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -256,7 +283,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_General_Interact = m_General.FindAction("Interact", throwIfNotFound: true);
         m_General_Movement = m_General.FindAction("Movement", throwIfNotFound: true);
         m_General_Look = m_General.FindAction("Look", throwIfNotFound: true);
-        m_General_Inventory = m_General.FindAction("Inventory", throwIfNotFound: true);
+        m_General_Inventory1 = m_General.FindAction("Inventory 1", throwIfNotFound: true);
+        m_General_Inventory2 = m_General.FindAction("Inventory 2", throwIfNotFound: true);
+        m_General_Inventory3 = m_General.FindAction("Inventory 3", throwIfNotFound: true);
+        m_General_Inventory4 = m_General.FindAction("Inventory 4", throwIfNotFound: true);
         m_General_Drop = m_General.FindAction("Drop", throwIfNotFound: true);
         m_General_Sneak = m_General.FindAction("Sneak", throwIfNotFound: true);
         m_General_Use = m_General.FindAction("Use", throwIfNotFound: true);
@@ -322,7 +352,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Interact;
     private readonly InputAction m_General_Movement;
     private readonly InputAction m_General_Look;
-    private readonly InputAction m_General_Inventory;
+    private readonly InputAction m_General_Inventory1;
+    private readonly InputAction m_General_Inventory2;
+    private readonly InputAction m_General_Inventory3;
+    private readonly InputAction m_General_Inventory4;
     private readonly InputAction m_General_Drop;
     private readonly InputAction m_General_Sneak;
     private readonly InputAction m_General_Use;
@@ -333,7 +366,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_General_Interact;
         public InputAction @Movement => m_Wrapper.m_General_Movement;
         public InputAction @Look => m_Wrapper.m_General_Look;
-        public InputAction @Inventory => m_Wrapper.m_General_Inventory;
+        public InputAction @Inventory1 => m_Wrapper.m_General_Inventory1;
+        public InputAction @Inventory2 => m_Wrapper.m_General_Inventory2;
+        public InputAction @Inventory3 => m_Wrapper.m_General_Inventory3;
+        public InputAction @Inventory4 => m_Wrapper.m_General_Inventory4;
         public InputAction @Drop => m_Wrapper.m_General_Drop;
         public InputAction @Sneak => m_Wrapper.m_General_Sneak;
         public InputAction @Use => m_Wrapper.m_General_Use;
@@ -355,9 +391,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
-                @Inventory.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory;
-                @Inventory.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory;
-                @Inventory.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory;
+                @Inventory1.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory1;
+                @Inventory1.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory1;
+                @Inventory1.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory1;
+                @Inventory2.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory2;
+                @Inventory2.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory2;
+                @Inventory2.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory2;
+                @Inventory3.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory3;
+                @Inventory3.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory3;
+                @Inventory3.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory3;
+                @Inventory4.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
+                @Inventory4.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
+                @Inventory4.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
                 @Drop.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
                 @Drop.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
                 @Drop.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
@@ -380,9 +425,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Inventory.started += instance.OnInventory;
-                @Inventory.performed += instance.OnInventory;
-                @Inventory.canceled += instance.OnInventory;
+                @Inventory1.started += instance.OnInventory1;
+                @Inventory1.performed += instance.OnInventory1;
+                @Inventory1.canceled += instance.OnInventory1;
+                @Inventory2.started += instance.OnInventory2;
+                @Inventory2.performed += instance.OnInventory2;
+                @Inventory2.canceled += instance.OnInventory2;
+                @Inventory3.started += instance.OnInventory3;
+                @Inventory3.performed += instance.OnInventory3;
+                @Inventory3.canceled += instance.OnInventory3;
+                @Inventory4.started += instance.OnInventory4;
+                @Inventory4.performed += instance.OnInventory4;
+                @Inventory4.canceled += instance.OnInventory4;
                 @Drop.started += instance.OnDrop;
                 @Drop.performed += instance.OnDrop;
                 @Drop.canceled += instance.OnDrop;
@@ -401,7 +455,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnInventory(InputAction.CallbackContext context);
+        void OnInventory1(InputAction.CallbackContext context);
+        void OnInventory2(InputAction.CallbackContext context);
+        void OnInventory3(InputAction.CallbackContext context);
+        void OnInventory4(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
         void OnSneak(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);

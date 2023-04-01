@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public FpsController playerController;
     public Transform enemy;
     public Enemy enemyController;
+    public Elevator elevator;
     public bool ElevatorOpen 
     {
         get
@@ -28,7 +29,6 @@ public class GameManager : MonoBehaviour
     [Header("Elevator")]
     [SerializeField] Vector3 elevatorPoint;
     [SerializeField] float elevatorRadius;
-    [SerializeField] Elevator elevator;
 
     [Header("Spawn Settings")]
     [SerializeField] int maxDeaths;
@@ -40,13 +40,14 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     public bool spawnEnemy;
     [SerializeField] int stages;
-    [SerializeField] ItemObject[] stageRequirements;
 
     public event EventHandler<StageArgs> OnStageStart;
     
     public EventHandler OnSpawn;
     public EventHandler<DeathArgs> OnDeath;
     public EventHandler OnEnd;
+
+    bool waitingForPlayer;
 
     int stage;
     int deaths;
@@ -76,17 +77,6 @@ public class GameManager : MonoBehaviour
     //called once
     void StartGame()
     {
-        if (stageRequirements.Length > stages)
-        {
-            stageRequirements = new ItemObject[]
-            {
-                stageRequirements[0],
-                stageRequirements[1],
-                stageRequirements[2],
-                stageRequirements[3]
-            };
-        }
-
         SpawnPlayer();
         SpawnEnemy();
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
@@ -103,8 +93,8 @@ public class GameManager : MonoBehaviour
     public void Die()
     {
         elevator.CloseElevator();
-        if (enemyController != null)
-            enemyController.Stop();
+        elevator.BreakDown();
+        enemyController.Stop();
 
         StartCoroutine(WaitAndExec(timeAfterDeath, () =>
         {
@@ -129,6 +119,7 @@ public class GameManager : MonoBehaviour
     //moves on to next stage
     IEnumerator NextStage()
     {
+        waitingForPlayer = true;
         while (Vector3.Distance(elevatorPoint, player.position) > elevatorRadius)
         {
             yield return null;
@@ -145,17 +136,22 @@ public class GameManager : MonoBehaviour
         {
             elevator.OpenElevator();
         }));
+        waitingForPlayer = false;
     }
 
     //used to check if player has keycard to move on to next stage
     public bool InsertItem(ItemObject requirement)
     {
-        if (requirement.name == stageRequirements[stage - 1].name)
+        if (waitingForPlayer)
+        {
+            return false;
+        }
+        bool a = elevator.InsertItem(requirement);
+        if (a)
         {
             StartCoroutine(NextStage());
-            return true;
         }
-        return false;
+        return a;
     }
 
     [MenuItem("Developer/Next Stage")]

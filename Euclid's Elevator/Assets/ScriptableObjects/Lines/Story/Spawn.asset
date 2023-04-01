@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Spawn
   m_EditorClassIdentifier: 
   name: Spawn
-  text: 
+  text: Where am I?
   timeLastingAfterTyping: 6

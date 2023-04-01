@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Coffee
   uses: 1
-  inventoryIcon: {fileID: 0}
+  inventoryIcon: {fileID: 21300000, guid: 0d0afac35a13c8f428983d0d0276813d, type: 3}
   prefab: {fileID: 4024848576558708582, guid: 940d5d83f332f7540849c1a7426eac4b, type: 3}

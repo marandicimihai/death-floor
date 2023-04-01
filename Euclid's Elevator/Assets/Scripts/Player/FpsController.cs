@@ -243,7 +243,10 @@ public class FpsController : MonoBehaviour
                         return;
                     }
                 }
-                LineManager.instance.SayLine("Missing Keycard");
+                if (!GameManager.instance.elevator.Broken)
+                {
+                    LineManager.instance.SayLine("Missing Keycard");
+                }
             }
         }
     }

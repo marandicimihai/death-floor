@@ -6,6 +6,6 @@ public class ItemObject : ScriptableObject
 {
     public string itemName;
     public int uses;
-    public Image inventoryIcon;
+    public Sprite inventoryIcon;
     public GameObject prefab;
 }

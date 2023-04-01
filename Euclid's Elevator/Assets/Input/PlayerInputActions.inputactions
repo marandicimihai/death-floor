@@ -33,9 +33,36 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Inventory",
+                    "name": "Inventory 1",
                     "type": "Button",
                     "id": "3090a30a-6d4d-4514-be15-1bf11ae32c2f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory 2",
+                    "type": "Button",
+                    "id": "8189ab00-7b29-45c4-a3f8-fb725a3cdcaa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory 3",
+                    "type": "Button",
+                    "id": "4ea143ad-4b4b-41ba-b7e4-f6d58d74c955",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory 4",
+                    "type": "Button",
+                    "id": "66aad85e-f851-4d54-aa69-e3ccc9579236",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -154,40 +181,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "172ea0b9-354a-4118-8b1d-21edf749b9b5",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8fe6c189-7ff1-4f9a-9bb4-fd21689b1e9c",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3e9d1507-4675-4681-8c9a-8ae06fc33941",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
+                    "action": "Inventory 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -221,6 +215,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60f7a42c-1570-4b12-bee7-59d07ccca7ef",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6ae5ee8-3c42-47c9-beb0-eac759f6e971",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory 3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc8f0396-8e69-4ef8-9b48-0b8dd1578c75",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory 4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
