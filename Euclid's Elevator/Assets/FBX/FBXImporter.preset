@@ -1,0 +1,2359 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FBXImporter
+  m_TargetType:
+    m_NativeTypeID: 1041
+    m_ManagedTypePPtr: {fileID: 0}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_ExternalObjects.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_MaterialImportMode
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_MaterialName
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_MaterialSearch
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_MaterialLocation
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LegacyGenerateAnimations
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_BakeSimulation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ResampleCurves
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_OptimizeGameObjects
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RemoveConstantScaleCurves
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_MotionNodeName
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RigImportErrors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RigImportWarnings
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationImportErrors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationImportWarnings
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationRetargetingWarnings
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationDoRetargetingWarnings
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ImportAnimatedCustomProperties
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ImportConstraints
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationCompression
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationRotationError
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationPositionError
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationScaleError
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationWrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ExtraExposedTransformPaths.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ExtraUserProperties.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.size
+    value: 12
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].name
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].internalID
+    value: 8635502377935241260
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].firstFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].lastFrame
+    value: 104
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[0].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].name
+    value: Enemy_Pose_Run1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].internalID
+    value: -2963760102631759352
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].firstFrame
+    value: 10
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].lastFrame
+    value: 15
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[1].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].name
+    value: Enemy_Pose_Run2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].internalID
+    value: -7866424413005398205
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].firstFrame
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].lastFrame
+    value: 25
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[2].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].name
+    value: Enemy_Pose_Run3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].internalID
+    value: 3989499204907593687
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].firstFrame
+    value: 30
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].lastFrame
+    value: 35
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[3].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].name
+    value: Enemy_Pose_Run4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].internalID
+    value: 6449010443579355186
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].firstFrame
+    value: 40
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].lastFrame
+    value: 45
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[4].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].name
+    value: Enemy_Pose_Run5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].internalID
+    value: -2754513593206059210
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].firstFrame
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].lastFrame
+    value: 55
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[5].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].name
+    value: Enemy_Pose_Run6
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].internalID
+    value: 3105070933216097497
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].firstFrame
+    value: 60
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].lastFrame
+    value: 65
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[6].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].name
+    value: Enemy_Pose_Misc1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].internalID
+    value: 5190396032695128799
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].firstFrame
+    value: 70
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].lastFrame
+    value: 75
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[7].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].name
+    value: Enemy_Pose_Misc2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].internalID
+    value: -7160782238413689992
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].firstFrame
+    value: 80
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].lastFrame
+    value: 85
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[8].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].name
+    value: Enemy_Pose_Misc3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].internalID
+    value: 5607213142899850020
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].firstFrame
+    value: 90
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].lastFrame
+    value: 95
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[9].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].name
+    value: Enemy_Pose_Misc4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].internalID
+    value: -694765379434003594
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].firstFrame
+    value: 100
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].lastFrame
+    value: 104
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[10].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].name
+    value: Enemy_T-pose
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].takeName
+    value: EnemyAll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].internalID
+    value: -4474531695985322460
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].firstFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].lastFrame
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].wrapMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].orientationOffsetY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].level
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].cycleOffset
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].hasAdditiveReferencePose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].loopTime
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].loopBlend
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].loopBlendOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].loopBlendPositionY
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].loopBlendPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].keepOriginalOrientation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].keepOriginalPositionY
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].keepOriginalPositionXZ
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].heightFromFeet
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].mirror
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[0]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[1]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[2]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[3]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[4]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[5]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[6]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[7]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[8]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[9]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[10]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[11]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].bodyMask.Array.data[12]
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].curves.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].events.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].transformMask.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].maskType
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].maskSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ClipAnimations.Array.data[11].additiveReferencePoseFrame
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_IsReadable
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LODScreenPercentages.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_GlobalScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_MeshCompression
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AddColliders
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UseSRGBMaterialColor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SortHierarchyByName
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ImportVisibility
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ImportBlendShapes
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ImportCameras
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ImportLights
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_NodeNameCollisionStrategy
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: swapUVChannels
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: generateSecondaryUV
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UseFileUnits
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: keepQuads
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: weldVertices
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: bakeAxisConversion
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PreserveHierarchy
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: skinWeightsMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: maxBonesPerVertex
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: minBoneWeight
+    value: 0.001
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: optimizeBones
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: meshOptimizationFlags
+    value: -1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: indexFormat
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: secondaryUVAngleDistortion
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: secondaryUVAreaDistortion
+    value: 15.000001
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: secondaryUVHardAngle
+    value: 88
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: secondaryUVMarginMethod
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: secondaryUVMinLightmapResolution
+    value: 40
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: secondaryUVMinObjectScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: secondaryUVPackMargin
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UseFileScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: normalSmoothAngle
+    value: 60
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: normalImportMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: tangentImportMode
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: normalCalculationMode
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: blendShapeNormalImportMode
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: normalSmoothingSource
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ReferencedClips.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ImportAnimation
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_Human.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_Skeleton.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_ArmTwist
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_ForeArmTwist
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_UpperLegTwist
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_LegTwist
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_ArmStretch
+    value: 0.05
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_LegStretch
+    value: 0.05
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_FeetSpacing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_GlobalScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_RootMotionBoneName
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_HasTranslationDoF
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_HasExtraRoot
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanDescription.m_SkeletonHasParents
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_LastHumanDescriptionAvatarSource
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AutoGenerateAvatarMappingIfUnspecified
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AnimationType
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_HumanoidOversampling
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AvatarSetup
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AddHumanoidExtraRootOnlyWhenUsingAvatar
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RemapMaterialsIfMaterialImportModeIsNone
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AdditionalBone
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UserData
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AssetBundleName
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_AssetBundleVariant
+    value: 
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
