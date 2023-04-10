@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Door : MonoBehaviour
 {
@@ -8,10 +9,15 @@ public class Door : MonoBehaviour
     [SerializeField] float closedYRot;
     [SerializeField] float openedYRot;
     [SerializeField] float openTime;
+    [SerializeField] float closedSoundThreshold;
     [SerializeField] Transform panel;
     [SerializeField] Animator doorHandle;
 
     [SerializeField] ItemObject requiredItem;
+
+    [SerializeField] AudioSource doorOpen;
+    [SerializeField] AudioSource doorClose;
+    [SerializeField] AudioSource doorHandleS;
 
     [Header("Stage settings")]
 
@@ -19,6 +25,8 @@ public class Door : MonoBehaviour
 
     public bool StageLocked { get; private set; }
     float t;
+
+    IEnumerator doorCloseC;
 
     private void Awake()
     {
@@ -39,6 +47,7 @@ public class Door : MonoBehaviour
         if (open)
         {
             t += 1 / openTime * Time.deltaTime;
+            doorOpen.volume = (panel.localEulerAngles.y - openedYRot) / (closedYRot - openedYRot);
         }
         else
         {
@@ -68,13 +77,35 @@ public class Door : MonoBehaviour
         if (locked || StageLocked)
             return false;
 
-        if (GameManager.instance.spawnEnemy)
-            GameManager.instance.enemyController.NoiseHeardNav(transform.position);
+        GameManager.instance.enemyController.NoiseHeardNav(transform.position);
 
         open = !open;
+        if (open)
+        {
+            doorOpen.Play();
+            doorHandleS.Play();
+        }
+        else
+        {
+            if (doorCloseC == null)
+            {
+                doorCloseC = DoorCloseSound();
+                StartCoroutine(doorCloseC);
+            }
+        }
         doorHandle.SetTrigger("PullHandle");
 
         return true;
+    }
+
+    IEnumerator DoorCloseSound()
+    {
+        yield return new WaitUntil(() => 
+        {
+            return Mathf.Abs(panel.localEulerAngles.y - closedYRot) < closedSoundThreshold;
+        });
+        doorClose.Play();
+        doorCloseC = null;
     }
 
     public void ForceOpen()

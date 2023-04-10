@@ -15,6 +15,8 @@ public class Elevator : MonoBehaviour
 
     public void OpenElevator()
     {
+        SoundManager.instance.PlaySound("Hum");
+        SoundManager.instance.PlaySound("ElevatorOpen");
         collider.enabled = false;
         elevator.SetBool("Open", true);
         Open = true;
@@ -22,6 +24,7 @@ public class Elevator : MonoBehaviour
 
     public void CloseElevator()
     {
+        SoundManager.instance.PlaySound("ElevatorClose");
         collider.enabled = true;
         elevator.SetBool("Open", false);
         Open = false;

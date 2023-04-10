@@ -24,24 +24,13 @@ public class Insanity : MonoBehaviour
     [SerializeField] float minInsanity;
     [SerializeField] float maxInsanity;
 
-    LayerMask visionMask;
     float insanity;
     float t;
 
-    private void Awake()
-    {
-        visionMask = controller.settings.visionMask;
-    }
-
     private void Update()
     {
-        if (GameManager.instance.spawnEnemy && !Physics.Raycast(camCon.Camera.position, GameManager.instance.enemy.position - camCon.Camera.position, 
-            Vector3.Distance(GameManager.instance.enemy.position, transform.position), visionMask) &&
-            !controller.Paralized && camCon.Camera.TryGetComponent(out Camera camera) && GameManager.instance.enemy.TryGetComponent(out Collider col) && 
-            GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds))
+        if (GameManager.instance.enemyController.visibleToPlayer)
         {
-            GameManager.instance.enemyController.Stop();
-            
             if (t < insanityTime)
                 t += Time.deltaTime;
 
@@ -51,11 +40,6 @@ public class Insanity : MonoBehaviour
             {
                 controller.Die();
             }
-        }
-        else if (!controller.Paralized && GameManager.instance.spawnEnemy)
-        {
-            GameManager.instance.enemyController.Continue();
-            t = 0;
         }
         else
         {

@@ -15,3 +15,4 @@ MonoBehaviour:
   name: Spawn
   text: Where am I?
   timeLastingAfterTyping: 6
+  oneTime: 1

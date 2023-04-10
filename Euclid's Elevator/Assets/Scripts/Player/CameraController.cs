@@ -18,7 +18,12 @@ public class CameraController : MonoBehaviour
     float t;
 
     bool rotating;
+    [System.NonSerialized] public bool canLook;
 
+    private void Awake()
+    {
+        canLook = true;
+    }
 
     private void Update()
     {
@@ -41,7 +46,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        if (controller.Paralized)
+        if (!canLook)
             return;
 
         Vector2 input = controller.PlayerInputActions.General.Look.ReadValue<Vector2>();

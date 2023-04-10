@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] LayerMask rayMask;
+    [SerializeField] Transform rig;
 
     [Header("Patrol")]
     [SerializeField] float patrolSpeed;
@@ -31,30 +32,57 @@ public class Enemy : MonoBehaviour
     [SerializeField] float chaseRange;
     [SerializeField] float doorOpenDistance;
 
+    [Header("Animation Properties")]
+    [SerializeField] Animator animator;
+    [SerializeField] int firstRun;
+    [SerializeField] int lastRun;
+    [SerializeField] int firstPose;
+    [SerializeField] int lastPose;
+    [SerializeField] float timeBetweenPoses;
+
+    [System.NonSerialized] public bool visibleToPlayer;
+
     Transform player;
+    CameraController camCon;
     EnemyState state;
 
     IEnumerator patrolCoroutine, inspectCoroutine;
 
     Vector3 destination;
 
-    bool paralized;
+    bool fullyStopped;
     bool patrolStep;
     bool chasing;
 
     private void Start()
     {
         player = GameManager.instance.player;
+        camCon = player.GetComponent<CameraController>();
+        StartCoroutine(ChangePose());
     }
 
     private void Update()
     {
-        if (!GameManager.instance.ElevatorOpen)
+        if ((!Physics.Raycast(camCon.Camera.position, transform.position - camCon.Camera.position,
+            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
+            !Physics.Raycast(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.187f, transform.position - camCon.Camera.position,
+            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
+            !Physics.Raycast(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.187f, transform.position - camCon.Camera.position,
+            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask)) &&
+            camCon.Camera.TryGetComponent(out Camera camera) && TryGetComponent(out Collider col) &&
+            GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds))
         {
-            state = EnemyState.Patrol;
-            chasing = false;
-            return;
+            Stop();
+            visibleToPlayer = true;
         }
+        else
+        {
+            Continue();
+            visibleToPlayer = false;
+        }
+
+        Quaternion rotation = Quaternion.LookRotation((GameManager.instance.player.position - transform.position).normalized, Vector3.up);
+        rig.rotation = rotation * Quaternion.Euler(0, -90, 0);
 
         if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player"))
         {
@@ -62,7 +90,10 @@ public class Enemy : MonoBehaviour
         }
         else if (chasing)
         {
-            NoiseHeardNav(player.position, true);
+            chasing = false;
+            patrolStep = false;
+            state = EnemyState.Inspect;
+            NoiseHeardNav(player.position);
         }
         else if (state != EnemyState.Inspect)
         {
@@ -84,8 +115,6 @@ public class Enemy : MonoBehaviour
             chaseRange = chaseStopDistance;
         }
     }
-
-    #region PATROL
 
     void Patrol()
     {
@@ -119,8 +148,6 @@ public class Enemy : MonoBehaviour
         patrolStep = false;
     }
 
-    #endregion
-
     void Chase()
     {
         state = EnemyState.Chase;
@@ -142,16 +169,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    #region INSPECT
-
-    public void NoiseHeardNav(Vector3 noisePosition, bool overrideAttack = false)
+    public void NoiseHeardNav(Vector3 noisePosition)
     {
-        if ((!overrideAttack && state == EnemyState.Chase) || Vector3.Distance(noisePosition, transform.position) > inspectDistance)
+        if (Vector3.Distance(noisePosition, transform.position) > inspectDistance)
         {
             return;
         }
-
-        chasing = false;
 
         if (patrolCoroutine != null)
             StopCoroutine(patrolCoroutine);
@@ -160,59 +183,46 @@ public class Enemy : MonoBehaviour
 
         state = EnemyState.Inspect;
         agent.speed = inspectSpeed;
-        patrolStep = false;
 
         destination = noisePosition;
         agent.SetDestination(destination);
 
-        bool partial;
-
-        if (agent.pathStatus == NavMeshPathStatus.PathPartial || agent.pathStatus == NavMeshPathStatus.PathInvalid)
-            partial = true;
-        else
-            partial = false;
-
-        inspectCoroutine = NoiseHeard(destination, inspectThreshold, partial);
+        inspectCoroutine = NoiseHeard(destination, inspectThreshold);
         StartCoroutine(inspectCoroutine);
     }
 
-    IEnumerator NoiseHeard(Vector3 position, float threshold, bool partial)
+    IEnumerator NoiseHeard(Vector3 position, float threshold)
     {
-        if (!partial)
+        yield return new WaitUntil(() =>
         {
-            yield return new WaitUntil(() =>
-            {
-                return Vector3.Distance(position, transform.position) < threshold;
-            });
-        }
-        yield return new WaitForSeconds(inspectToPatrolTransitionTime);
+            return Vector3.Distance(position, transform.position) < threshold;
+        });
 
         state = EnemyState.Patrol;
     }
 
-    #endregion
-
-    public void Respawn(Vector3 position)
+    public void Spawn(Vector3 position)
     {
         agent.Warp(position);
         agent.ResetPath();
         state = EnemyState.Patrol;
         agent.velocity = Vector3.zero;
-        agent.isStopped = false;
     }
 
     // The function, when called without specifying the time, will stop the agent, until it is let to continue;
     // When specifying the time, the function will not allow the enemy to move for the given time
     public void Stop(float time = 0)
     {
+        patrolStep = false;
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
+        StopCoroutine(patrolCoroutine);
         if (time != 0)
         {
-            paralized = true;
+            fullyStopped = true;
             StartCoroutine(WaitAndExec(time, () =>
             {
-                paralized = false;
+                fullyStopped = false;
                 Continue();
             }));
         }
@@ -220,10 +230,32 @@ public class Enemy : MonoBehaviour
 
     public void Continue()
     {
-        if (paralized)
+        if (fullyStopped || !GameManager.instance.ElevatorOpen)
             return;
 
         agent.isStopped = false;
+    }
+
+    IEnumerator ChangePose()
+    {
+        yield return new WaitUntil(() => 
+        {
+            return visibleToPlayer == false;
+        });
+        yield return new WaitForSeconds(timeBetweenPoses);
+        if (state == EnemyState.Chase || state == EnemyState.Inspect)
+        {
+            animator.SetInteger("State", UnityEngine.Random.Range(firstRun, lastRun + 1));
+        }
+        else
+        {
+            animator.SetInteger("State", UnityEngine.Random.Range(firstPose, lastPose + 1));
+        }
+        yield return new WaitUntil(() =>
+        {
+            return visibleToPlayer == true;
+        });
+        StartCoroutine(ChangePose());
     }
 
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)

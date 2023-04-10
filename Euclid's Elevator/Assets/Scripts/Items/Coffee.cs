@@ -7,7 +7,7 @@ public class Coffee : Item
 
     public override void UseItem(FpsController controller)
     {
-        if (GameManager.instance.spawnEnemy && !Physics.Raycast(controller.settings.cam.transform.position, GameManager.instance.enemy.position - controller.settings.cam.transform.position,
+        if (!Physics.Raycast(controller.settings.cam.transform.position, GameManager.instance.enemy.position - controller.settings.cam.transform.position,
             Vector3.Distance(GameManager.instance.enemy.position, transform.position), controller.settings.visionMask) &&
             controller.settings.cam.TryGetComponent(out Camera camera) && GameManager.instance.enemy.TryGetComponent(out Collider col) &&
             GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds) && 

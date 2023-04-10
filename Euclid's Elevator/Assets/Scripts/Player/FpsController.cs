@@ -51,9 +51,6 @@ public class FpsController : MonoBehaviour
     [SerializeField] LayerMask walls;
     [Header("")]
     [SerializeField] float distancePerFootstep;
-    [SerializeField] AudioSource footstepSource;
-    [Header("")]
-    [SerializeField] AudioSource jumpScareSource;
     [Header("")]
     public InteractionSettings settings;
     [Header("")]
@@ -61,7 +58,8 @@ public class FpsController : MonoBehaviour
 
 
     public PlayerInputActions PlayerInputActions { get { return playerInputActions; } }
-    public bool Paralized { get; private set; }
+    public bool Dead { get; private set; }
+    public bool Freezed { get; private set; }
 
     PlayerInputActions playerInputActions;
 
@@ -111,7 +109,7 @@ public class FpsController : MonoBehaviour
 
     private void Update()
     {
-        if (Paralized)
+        if (Freezed)
         {
             forces = Vector3.zero;
             return;
@@ -148,9 +146,8 @@ public class FpsController : MonoBehaviour
         
         if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.2f)
         {
-            footstepSource.Play();
-            if (GameManager.instance.spawnEnemy)
-                GameManager.instance.enemyController.NoiseHeardNav(transform.position);
+            SoundManager.instance.PlaySound($"Footstep{(steps % 4) + 1}");;
+            GameManager.instance.enemyController.NoiseHeardNav(transform.position);
         }
 
         #endregion
@@ -202,7 +199,7 @@ public class FpsController : MonoBehaviour
 
     private void Interact(InputAction.CallbackContext context)
     {
-        if (Paralized)
+        if (Dead || Freezed)
             return;
 
         if (Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask))
@@ -253,7 +250,7 @@ public class FpsController : MonoBehaviour
 
     private void DropItem(InputAction.CallbackContext context)
     {
-        if (Paralized)
+        if (Dead || Freezed)
             return;
 
         inventory.DropItem(settings.cam.transform.position, settings.cam.transform.forward);
@@ -284,16 +281,18 @@ public class FpsController : MonoBehaviour
 
     public void Die(Vector3? enemyPosition = null)
     {
-        if (Paralized)
+        if (Dead)
             return;
 
-        Paralized = true;
+        Dead = true;
+        Freezed = true;
+        cameraController.canLook = false;
 
         velocity = Vector3.zero;
 
         if (enemyPosition != null)
         {
-            jumpScareSource.Play();
+            SoundManager.instance.PlaySound("Jumpscare");
             cameraController.JumpscareTurn((Vector3)enemyPosition);
         }
 
@@ -307,7 +306,9 @@ public class FpsController : MonoBehaviour
     public void SpawnFreeze()
     {
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, spawnYRot, transform.eulerAngles.z);
-        Paralized = true;
+        Dead = false;
+        Freezed = true;
+        cameraController.canLook = false;
     }
 
     public void SpawnUnlock()
@@ -316,7 +317,8 @@ public class FpsController : MonoBehaviour
         lastPosition = transform.position;
         walked = 0;
         steps = 0;
-        Paralized = false;
+        Freezed = false;
+        cameraController.canLook = true;
     }
 
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)

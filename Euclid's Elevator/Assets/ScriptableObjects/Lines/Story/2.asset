@@ -15,3 +15,4 @@ MonoBehaviour:
   name: 2
   text: 2
   timeLastingAfterTyping: 4
+  oneTime: 1

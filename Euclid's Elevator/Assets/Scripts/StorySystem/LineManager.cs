@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using System;
 using TMPro;
 
 public class LineManager : MonoBehaviour
@@ -10,17 +9,40 @@ public class LineManager : MonoBehaviour
     [SerializeField] TMP_Text textBox;
     [SerializeField] float timeInBetweenLetters;
     [SerializeField] Line[] lines;
-    
+
+    [SerializeField] bool[] used;
+
     Line currentLine;
 
     private void Awake()
     {
         instance = this;
+        used = new bool[lines.Length];
     }
 
     public void SayLine (string name)
     {
-        Line line = Array.Find(lines, line => line.name == name);
+        Line line = null;
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (lines[i].name == name)
+            {
+                if (lines[i].oneTime)
+                {
+                    if (used[i])
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        used[i] = true;
+                    }
+                }
+                used[i] = true;
+                line = lines[i];
+                break;
+            }
+        }
 
         if (line == null)
         {

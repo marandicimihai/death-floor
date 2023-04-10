@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] float shakeMag;
 
     [Header("Game Settings")]
-    public bool spawnEnemy;
     [SerializeField] int stages;
 
     public event EventHandler<StageArgs> OnStageStart;
@@ -62,18 +61,6 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    private void OnValidate()
-    {
-        if (!spawnEnemy)
-        {
-            enemy.gameObject.SetActive(false);
-        }
-        else
-        {
-            enemy.gameObject.SetActive(true);
-        }
-    }
-
     //called once
     void StartGame()
     {
@@ -81,6 +68,8 @@ public class GameManager : MonoBehaviour
         SpawnEnemy();
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
+            SoundManager.instance.PlaySound("ElevatorStop");
+            SoundManager.instance.StopSound("ElevatorHum");
             elevator.OpenElevator();
         }));
 
@@ -102,7 +91,7 @@ public class GameManager : MonoBehaviour
             if (deaths >= maxDeaths)
             {
                 OnEnd?.Invoke(this, new EventArgs());
-                Debug.Log("GAMAJ OVAH");
+                //END MENU
             }
             else
             {
@@ -111,6 +100,8 @@ public class GameManager : MonoBehaviour
                 SpawnEnemy();
                 StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
                 {
+                    SoundManager.instance.PlaySound("ElevatorStop");
+                    SoundManager.instance.StopSound("ElevatorHum");
                     elevator.OpenElevator();
                 }));
             }
@@ -126,6 +117,8 @@ public class GameManager : MonoBehaviour
         }
 
         elevator.CloseElevator();
+        SoundManager.instance.PlaySound("ElevatorHum");
+        SoundManager.instance.StopSound("Hum");
         StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
 
         stage++;
@@ -134,6 +127,8 @@ public class GameManager : MonoBehaviour
         SpawnEnemy();
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
+            SoundManager.instance.PlaySound("ElevatorStop");
+            SoundManager.instance.StopSound("ElevatorHum");
             elevator.OpenElevator();
         }));
         waitingForPlayer = false;
@@ -164,6 +159,8 @@ public class GameManager : MonoBehaviour
     {
         player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
 
+        SoundManager.instance.StopSound("Hum");
+        SoundManager.instance.PlaySound("ElevatorHum");
         StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
         playerController.SpawnFreeze();
 
@@ -175,12 +172,9 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        if (!spawnEnemy)
-            return;
-
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
-            enemyController.Respawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
+            enemyController.Spawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
         }));
     }
 
