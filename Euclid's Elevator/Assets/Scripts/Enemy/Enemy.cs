@@ -63,11 +63,13 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if ((!Physics.Raycast(camCon.Camera.position, transform.position - camCon.Camera.position,
+        if ((!Physics.Raycast(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position,
             Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
-            !Physics.Raycast(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.187f, transform.position - camCon.Camera.position,
+            !Physics.Raycast(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position,
             Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
-            !Physics.Raycast(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.187f, transform.position - camCon.Camera.position,
+            !Physics.Raycast(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position,
+            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
+            !Physics.Raycast(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position,
             Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask)) &&
             camCon.Camera.TryGetComponent(out Camera camera) && TryGetComponent(out Collider col) &&
             GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds))
@@ -81,10 +83,15 @@ public class Enemy : MonoBehaviour
             visibleToPlayer = false;
         }
 
+        Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
+        Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
+        Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);
+        Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);
+
         Quaternion rotation = Quaternion.LookRotation((GameManager.instance.player.position - transform.position).normalized, Vector3.up);
         rig.rotation = rotation * Quaternion.Euler(0, -90, 0);
 
-        if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player") || visibleToPlayer)
         {
             Chase();
         }
@@ -160,6 +167,8 @@ public class Enemy : MonoBehaviour
 
         if (!chasing && patrolCoroutine != null)
             StopCoroutine(patrolCoroutine);
+        if (!chasing && inspectCoroutine != null)
+            StopCoroutine(inspectCoroutine);
 
         chasing = true;
 
@@ -198,6 +207,7 @@ public class Enemy : MonoBehaviour
             return Vector3.Distance(position, transform.position) < threshold;
         });
 
+        patrolStep = false;
         state = EnemyState.Patrol;
     }
 
@@ -206,6 +216,7 @@ public class Enemy : MonoBehaviour
         agent.Warp(position);
         agent.ResetPath();
         state = EnemyState.Patrol;
+        patrolStep = false;
         agent.velocity = Vector3.zero;
     }
 
@@ -240,9 +251,8 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitUntil(() => 
         {
-            return visibleToPlayer == false;
+            return !visibleToPlayer;
         });
-        yield return new WaitForSeconds(timeBetweenPoses);
         if (state == EnemyState.Chase || state == EnemyState.Inspect)
         {
             animator.SetInteger("State", UnityEngine.Random.Range(firstRun, lastRun + 1));
@@ -250,10 +260,17 @@ public class Enemy : MonoBehaviour
         else
         {
             animator.SetInteger("State", UnityEngine.Random.Range(firstPose, lastPose + 1));
+            yield return new WaitUntil(() =>
+            {
+                return state != EnemyState.Patrol;
+            });
+            StartCoroutine(ChangePose());
+            yield break;
         }
+        yield return new WaitForSeconds(timeBetweenPoses);
         yield return new WaitUntil(() =>
         {
-            return visibleToPlayer == true;
+            return visibleToPlayer;
         });
         StartCoroutine(ChangePose());
     }

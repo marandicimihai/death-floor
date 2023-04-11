@@ -4,6 +4,7 @@ using System.Collections;
 public class Door : MonoBehaviour
 {
     public bool locked;
+    public Transform middle;
 
     [SerializeField] bool open;
     [SerializeField] float closedYRot;
@@ -76,8 +77,6 @@ public class Door : MonoBehaviour
 
         if (locked || StageLocked)
             return false;
-
-        GameManager.instance.enemyController.NoiseHeardNav(transform.position);
 
         open = !open;
         if (open)

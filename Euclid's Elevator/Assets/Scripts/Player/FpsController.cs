@@ -222,10 +222,15 @@ public class FpsController : MonoBehaviour
                         if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
                         {
                             inventory.UseItem(i);
+                            GameManager.instance.enemyController.NoiseHeardNav(door.middle.position);
                             return;
                         }
                     }
                     LineManager.instance.SayLine("Door locked");
+                }
+                else
+                {
+                    GameManager.instance.enemyController.NoiseHeardNav(door.middle.position);
                 }
 
                 lockpick.PickLock(door, settings);
