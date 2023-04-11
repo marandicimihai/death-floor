@@ -83,10 +83,10 @@ public class Enemy : MonoBehaviour
             visibleToPlayer = false;
         }
 
-        Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
+        /*Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
         Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
         Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);
-        Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);
+        Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);*/
 
         Quaternion rotation = Quaternion.LookRotation((GameManager.instance.player.position - transform.position).normalized, Vector3.up);
         rig.rotation = rotation * Quaternion.Euler(0, -90, 0);
@@ -256,23 +256,25 @@ public class Enemy : MonoBehaviour
         if (state == EnemyState.Chase || state == EnemyState.Inspect)
         {
             animator.SetInteger("State", UnityEngine.Random.Range(firstRun, lastRun + 1));
-        }
-        else
-        {
-            animator.SetInteger("State", UnityEngine.Random.Range(firstPose, lastPose + 1));
+            yield return new WaitForSeconds(timeBetweenPoses);
             yield return new WaitUntil(() =>
             {
-                return state != EnemyState.Patrol;
+                return visibleToPlayer || state == EnemyState.Patrol;
             });
             StartCoroutine(ChangePose());
             yield break;
         }
-        yield return new WaitForSeconds(timeBetweenPoses);
-        yield return new WaitUntil(() =>
+        else
         {
-            return visibleToPlayer;
-        });
-        StartCoroutine(ChangePose());
+            animator.SetInteger("State", UnityEngine.Random.Range(firstPose, lastPose + 1));
+            yield return new WaitForSeconds(timeBetweenPoses);
+            yield return new WaitUntil(() =>
+            {
+                return visibleToPlayer || state != EnemyState.Patrol;
+            });
+            StartCoroutine(ChangePose());
+            yield break;
+        }
     }
 
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)

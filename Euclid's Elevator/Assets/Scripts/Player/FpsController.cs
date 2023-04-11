@@ -25,7 +25,8 @@ public class FpsController : MonoBehaviour
     public Lockpick lockpick;
     [SerializeField] CharacterController controller;
     [SerializeField] Inventory inventory;
-
+    [SerializeField] ActionBar bar;
+ 
     [Header("Movement")]
     [SerializeField] float forwardScale;
     [SerializeField] float strafeScale;
@@ -109,6 +110,7 @@ public class FpsController : MonoBehaviour
 
     private void Update()
     {
+        GetLooking();
         if (Freezed)
         {
             forces = Vector3.zero;
@@ -251,6 +253,29 @@ public class FpsController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void GetLooking()
+    {
+        if (Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask))
+        {
+            if (hit.transform.TryGetComponent(out Item item))
+            {
+                bar.SetActionText("Pick up item (E)");
+                return;
+            }
+            else if (hit.transform.CompareTag("Door"))
+            {
+                bar.SetActionText("Open door (E)");
+                return;
+            }
+            else if (hit.transform.CompareTag("ItemHole"))
+            {
+                bar.SetActionText("Insert keycard (E)");
+                return;
+            }
+        }
+        bar.SetActionText("");
     }
 
     private void DropItem(InputAction.CallbackContext context)
