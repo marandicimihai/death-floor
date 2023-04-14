@@ -16,3 +16,11 @@ MonoBehaviour:
   uses: 4
   inventoryIcon: {fileID: 21300000, guid: 2200dcd6377c0cd468b11881202ca654, type: 3}
   prefab: {fileID: 7178980861119937168, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
+  pickUpSounds:
+  - KeyPickUp1
+  - KeyPickUp2
+  drawSounds:
+  - KeyDraw
+  useSounds:
+  - KeyPickUp1
+  - KeyPickUp2

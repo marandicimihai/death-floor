@@ -16,3 +16,9 @@ MonoBehaviour:
   uses: 1
   inventoryIcon: {fileID: 21300000, guid: 2d350027a16374543bcd8e3111d907fa, type: 3}
   prefab: {fileID: 7906055416897973875, guid: 09d72d0bb74e5894a9d71655368de661, type: 3}
+  pickUpSounds:
+  - ItemPickUp
+  drawSounds:
+  - ItemDraw1
+  - ItemDraw2
+  useSounds: []

@@ -56,21 +56,22 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        player = GameManager.instance.player;
+        player = GameManager.Instance.player;
         camCon = player.GetComponent<CameraController>();
+        GameManager.MakePausable(this);
         StartCoroutine(ChangePose());
     }
 
     private void Update()
     {
         if ((!Physics.Raycast(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position,
-            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
+            Vector3.Distance(GameManager.Instance.player.position, transform.position), GameManager.Instance.playerController.settings.visionMask) ||
             !Physics.Raycast(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position,
-            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
+            Vector3.Distance(GameManager.Instance.player.position, transform.position), GameManager.Instance.playerController.settings.visionMask) ||
             !Physics.Raycast(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position,
-            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask) ||
+            Vector3.Distance(GameManager.Instance.player.position, transform.position), GameManager.Instance.playerController.settings.visionMask) ||
             !Physics.Raycast(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position,
-            Vector3.Distance(GameManager.instance.player.position, transform.position), GameManager.instance.playerController.settings.visionMask)) &&
+            Vector3.Distance(GameManager.Instance.player.position, transform.position), GameManager.Instance.playerController.settings.visionMask)) &&
             camCon.Camera.TryGetComponent(out Camera camera) && TryGetComponent(out Collider col) &&
             GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds))
         {
@@ -88,7 +89,7 @@ public class Enemy : MonoBehaviour
         Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);
         Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);*/
 
-        Quaternion rotation = Quaternion.LookRotation((GameManager.instance.player.position - transform.position).normalized, Vector3.up);
+        Quaternion rotation = Quaternion.LookRotation((GameManager.Instance.player.position - transform.position).normalized, Vector3.up);
         rig.rotation = rotation * Quaternion.Euler(0, -90, 0);
 
         if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player") || visibleToPlayer)
@@ -174,7 +175,7 @@ public class Enemy : MonoBehaviour
 
         if (Vector3.Distance(destination, transform.position) < chaseRange)
         {
-            GameManager.instance.playerController.Die(transform.position + (Vector3.up / 2));
+            GameManager.Instance.playerController.Die(transform.position + (Vector3.up / 2));
         }
     }
 
@@ -241,7 +242,7 @@ public class Enemy : MonoBehaviour
 
     public void Continue()
     {
-        if (fullyStopped || !GameManager.instance.ElevatorOpen)
+        if (fullyStopped || !GameManager.Instance.ElevatorOpen)
             return;
 
         agent.isStopped = false;

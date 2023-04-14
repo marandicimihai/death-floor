@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio;
 
 [Serializable]
 struct Sound
@@ -11,15 +11,20 @@ struct Sound
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
+    public static SoundManager Instance { get; private set; }
     [SerializeField] Sound[] sounds;
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
-    public void PlaySound(string name)
+    void Start()
+    {
+        GameManager.MakePausable(this);
+    }
+
+    public void PlaySound(string name, float playbackSpeed = 1)
     {
         Sound sound = Array.Find(sounds, (Sound current) => current.name == name);
 
@@ -29,6 +34,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
+        sound.source.pitch = playbackSpeed;
         sound.source.Play();
     }
 
@@ -43,5 +49,45 @@ public class SoundManager : MonoBehaviour
         }
 
         sound.source.Stop();
+    }
+
+    public void PlaySound(string[] randomSounds)
+    {
+        int index = UnityEngine.Random.Range(0, randomSounds.Length);
+
+        for (int i = 0; i < randomSounds.Length; i++)
+        {
+            Sound sound = Array.Find(sounds, (Sound current) => current.name == randomSounds[index]);
+
+            if (sound.name == null)
+            {
+                index = (index + 1) % randomSounds.Length;
+                continue;
+            }
+
+            sound.source.Play();
+            return;
+        }
+    }
+
+    public void PlaySounds(string[] soundsInOrder)
+    {
+        StartCoroutine(PlaySoundsInOrder(soundsInOrder));
+    }
+
+    IEnumerator PlaySoundsInOrder(string[] soundsInOrder)
+    {
+        for (int i = 0; i < soundsInOrder.Length; i++)
+        {
+            Sound sound = Array.Find(sounds, (Sound current) => current.name == soundsInOrder[i]);
+
+            if (sound.name == null)
+            {
+                continue;
+            }
+
+            sound.source.Play();
+            yield return new WaitForSeconds(sound.source.clip.length);
+        }
     }
 }

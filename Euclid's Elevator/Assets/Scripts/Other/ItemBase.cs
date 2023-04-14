@@ -10,12 +10,16 @@ public abstract class ItemBase : MonoBehaviour
         int i = 0;
         foreach (FieldInfo field in GetFields())
         {
+            if (field.GetCustomAttribute<ConstantAttribute>() != null)
+            {
+                i++;
+                continue;
+            }
             field.SetValue(this, values[i]);
             i++;
         }
     }
 
-    //gets values as objects, depends on GetFields()
     public List<object> GetValues()
     {
         FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);

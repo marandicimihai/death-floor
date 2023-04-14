@@ -20,11 +20,11 @@ public class EnemyTrap : MonoBehaviour
     {
         if (pull)
         {
-            GameManager.instance.playerController.AddForce(transform.position - GameManager.instance.player.position, forceStrength);
-            GameManager.instance.enemyController.NoiseHeardNav(transform.position);
-            if (Vector3.Distance(GameManager.instance.player.position, transform.position) < enemyTPRadius)
+            GameManager.Instance.playerController.AddForce(transform.position - GameManager.Instance.player.position, forceStrength);
+            GameManager.Instance.enemyController.NoiseHeardNav(transform.position);
+            if (Vector3.Distance(GameManager.Instance.player.position, transform.position) < enemyTPRadius)
             {
-                GameManager.instance.playerController.Die();
+                GameManager.Instance.playerController.Die();
             }
         }
     }

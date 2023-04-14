@@ -56,6 +56,10 @@ public class Inventory : MonoBehaviour
             return;
         }
 
+        if (ActiveSlot != input && items[input] != null && items[input].itemObj != null && items[input].itemObj.drawSounds != null)
+        {
+            SoundManager.Instance.PlaySound(items[input].itemObj.drawSounds);
+        }
         ActiveSlot = input;
         RefreshInventoryScreen();
     }
@@ -68,6 +72,10 @@ public class Inventory : MonoBehaviour
             newItem.SetValues(item);
             items[index] = newItem;
             Destroy(item.gameObject);
+            if (newItem.itemObj != null && newItem.itemObj.pickUpSounds != null)
+            {
+                SoundManager.Instance.PlaySound(newItem.itemObj.pickUpSounds);
+            }
             RefreshInventoryScreen();
         }
         else
@@ -82,6 +90,7 @@ public class Inventory : MonoBehaviour
         {
             GameObject newItem = Instantiate(items[ActiveSlot].itemObj.prefab, throwPoint, Quaternion.identity);
             newItem.GetComponent<Item>().SetValues(items[ActiveSlot]);
+            newItem.GetComponent<Item>().PlayDropSound();
             if (newItem.TryGetComponent(out Rigidbody rb))
             {
                 rb.AddForce(throwForward * throwForce, ForceMode.Impulse);
@@ -125,6 +134,17 @@ public class Inventory : MonoBehaviour
     public void UseItem(int i)
     {
         items[i].uses -= 1;
+        if (items[i].itemObj.useSounds != null)
+        {
+            if (items[i] != null && items[i].itemObj != null && items[i].itemObj.useSoundsInOrder)
+            {
+                SoundManager.Instance.PlaySounds(items[i].itemObj.useSounds);
+            }
+            else if (items[i] != null && items[i].itemObj != null)
+            {
+                SoundManager.Instance.PlaySound(items[i].itemObj.useSounds);
+            }
+        }
         if (items[i].uses <= 0)
         {
             Destroy(items[i]);

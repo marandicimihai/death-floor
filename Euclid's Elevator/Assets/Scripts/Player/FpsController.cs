@@ -19,10 +19,13 @@ public struct InteractionSettings
     RequireComponent(typeof(Lockpick))]
 public class FpsController : MonoBehaviour
 {
+    public bool invincible;
+
     [Header("Components")]
     public Insanity insanity;
     public CameraController cameraController;
     public Lockpick lockpick;
+    public Journal journal;
     [SerializeField] CharacterController controller;
     [SerializeField] Inventory inventory;
     [SerializeField] ActionBar bar;
@@ -56,7 +59,6 @@ public class FpsController : MonoBehaviour
     public InteractionSettings settings;
     [Header("")]
     [SerializeField] float spawnYRot;
-
 
     public PlayerInputActions PlayerInputActions { get { return playerInputActions; } }
     public bool Dead { get; private set; }
@@ -108,6 +110,11 @@ public class FpsController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void Start()
+    {
+        GameManager.MakePausable(this);
+    }
+
     private void Update()
     {
         GetLooking();
@@ -148,8 +155,8 @@ public class FpsController : MonoBehaviour
         
         if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.2f)
         {
-            SoundManager.instance.PlaySound($"Footstep{(steps % 4) + 1}");;
-            GameManager.instance.enemyController.NoiseHeardNav(transform.position);
+            SoundManager.Instance.PlaySound($"Footstep{(steps % 4) + 1}");;
+            GameManager.Instance.enemyController.NoiseHeardNav(transform.position);
         }
 
         #endregion
@@ -224,7 +231,7 @@ public class FpsController : MonoBehaviour
                         if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
                         {
                             inventory.UseItem(i);
-                            GameManager.instance.enemyController.NoiseHeardNav(door.middle.position);
+                            GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
                             return;
                         }
                     }
@@ -232,25 +239,37 @@ public class FpsController : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.instance.enemyController.NoiseHeardNav(door.middle.position);
+                    GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
                 }
 
                 lockpick.PickLock(door, settings);
             }
-            else if (hit.transform.CompareTag("ItemHole"))
+            else if (hit.transform.CompareTag("ItemHole") && !GameManager.Instance.elevator.Broken)
             {
                 for (int i = 0; i < inventory.Items.Length - 1; i++)
                 {
-                    if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && GameManager.instance.InsertItem(inventory.Items[i].itemObj))
+                    if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && GameManager.Instance.InsertItem(inventory.Items[i].itemObj))
                     {
                         inventory.UseItem(i);
                         return;
                     }
                 }
-                if (!GameManager.instance.elevator.Broken)
+                if (!GameManager.Instance.elevator.Broken)
                 {
                     LineManager.instance.SayLine("Missing Keycard");
                 }
+            }
+            else if (hit.transform.CompareTag("ItemHole") && GameManager.Instance.elevator.Broken)
+            {
+                for (int i = 0; i < inventory.Items.Length - 1; i++)
+                {
+                    if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && GameManager.Instance.elevator.Repair(inventory.Items[i].itemObj))
+                    {
+                        inventory.UseItem(i);
+                        return;
+                    }
+                }
+                LineManager.instance.SayLine("Elevator Broken");
             }
         }
     }
@@ -269,9 +288,14 @@ public class FpsController : MonoBehaviour
                 bar.SetActionText("Open door (E)");
                 return;
             }
-            else if (hit.transform.CompareTag("ItemHole"))
+            else if (hit.transform.CompareTag("ItemHole") && !GameManager.Instance.elevator.Broken)
             {
                 bar.SetActionText("Insert keycard (E)");
+                return;
+            }
+            else if (hit.transform.CompareTag("ItemHole") && GameManager.Instance.elevator.Broken)
+            {
+                bar.SetActionText("Repair elevator (E)");
                 return;
             }
         }
@@ -311,7 +335,7 @@ public class FpsController : MonoBehaviour
 
     public void Die(Vector3? enemyPosition = null)
     {
-        if (Dead)
+        if (Dead || invincible)
             return;
 
         Dead = true;
@@ -322,15 +346,15 @@ public class FpsController : MonoBehaviour
 
         if (enemyPosition != null)
         {
-            SoundManager.instance.PlaySound("Jumpscare");
+            SoundManager.Instance.PlaySound("Jumpscare");
             cameraController.JumpscareTurn((Vector3)enemyPosition);
         }
 
         insanity.Die();
         inventory.Die();
 
-        if (GameManager.instance != null)
-            GameManager.instance.Die();
+        if (GameManager.Instance != null)
+            GameManager.Instance.PlayerDied();
     }
 
     public void SpawnFreeze()

@@ -32,9 +32,9 @@ public class Lockpick : MonoBehaviour
             bar.SetSliderValue(pickPercent);
             if (time < time - pickDuration + timeElapsed)
             {
+                StopPicking();
                 door.ForceOpen();
                 pickPercent = 100;
-                StopPicking();
             }
             else if (!Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, dist, mask) ||
                      !hit.transform.CompareTag("Door"))
@@ -73,12 +73,14 @@ public class Lockpick : MonoBehaviour
         dist = settings.interactionDistance;
         mask = settings.interactionMask;
 
+        SoundManager.Instance.PlaySound("LockPick", pickTimeBoost);
         picking = true;
     }
 
     public void StopPicking()
     {
         bar.StopAction();
+        SoundManager.Instance.StopSound("LockPick");
         picking = false;
     }
     

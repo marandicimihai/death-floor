@@ -25,6 +25,11 @@ public class CameraController : MonoBehaviour
         canLook = true;
     }
 
+    private void Start()
+    {
+        GameManager.MakePausable(this);
+    }
+
     private void Update()
     {
         if (rotating)
@@ -82,7 +87,7 @@ public class CameraController : MonoBehaviour
 
         while (elapsed < duration)
         {
-            Camera.localPosition = initial + Random.insideUnitSphere * magnitude;
+            Camera.localPosition = initial + Random.insideUnitSphere * magnitude * Time.timeScale;
 
             elapsed += Time.deltaTime;
 

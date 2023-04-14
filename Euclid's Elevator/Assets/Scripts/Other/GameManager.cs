@@ -1,11 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance { get; private set; }
+    public static bool Paused { get; private set; }
+    static List<MonoBehaviour> pausable;
 
     [Header("References")]
     public Transform player;
@@ -40,6 +44,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] int stages;
 
+
     public event EventHandler<StageArgs> OnStageStart;
     
     public EventHandler OnSpawn;
@@ -53,11 +58,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
+        pausable = new List<MonoBehaviour>();
     }
 
     private void Start()
     {
+        playerController.PlayerInputActions.General.Pause.performed += TogglePause;
         StartGame();
     }
 
@@ -68,8 +75,8 @@ public class GameManager : MonoBehaviour
         SpawnEnemy();
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
-            SoundManager.instance.PlaySound("ElevatorStop");
-            SoundManager.instance.StopSound("ElevatorHum");
+            SoundManager.Instance.PlaySound("ElevatorStop");
+            SoundManager.Instance.StopSound("ElevatorHum");
             elevator.OpenElevator();
         }));
 
@@ -79,7 +86,7 @@ public class GameManager : MonoBehaviour
         OnSpawn?.Invoke(this, new EventArgs());
     }
     //respawns player and enemy
-    public void Die()
+    public void PlayerDied()
     {
         elevator.CloseElevator();
         elevator.BreakDown();
@@ -100,8 +107,8 @@ public class GameManager : MonoBehaviour
                 SpawnEnemy();
                 StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
                 {
-                    SoundManager.instance.PlaySound("ElevatorStop");
-                    SoundManager.instance.StopSound("ElevatorHum");
+                    SoundManager.Instance.PlaySound("ElevatorStop");
+                    SoundManager.Instance.StopSound("ElevatorHum");
                     elevator.OpenElevator();
                 }));
             }
@@ -117,8 +124,8 @@ public class GameManager : MonoBehaviour
         }
 
         elevator.CloseElevator();
-        SoundManager.instance.PlaySound("ElevatorHum");
-        SoundManager.instance.StopSound("Hum");
+        SoundManager.Instance.PlaySound("ElevatorHum");
+        SoundManager.Instance.StopSound("Hum");
         StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
 
         stage++;
@@ -127,8 +134,8 @@ public class GameManager : MonoBehaviour
         SpawnEnemy();
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
-            SoundManager.instance.PlaySound("ElevatorStop");
-            SoundManager.instance.StopSound("ElevatorHum");
+            SoundManager.Instance.PlaySound("ElevatorStop");
+            SoundManager.Instance.StopSound("ElevatorHum");
             elevator.OpenElevator();
         }));
         waitingForPlayer = false;
@@ -152,15 +159,27 @@ public class GameManager : MonoBehaviour
     [MenuItem("Developer/Next Stage")]
     public static void NextStageDev()
     {
-        instance.StartCoroutine(instance.NextStage());
+        Instance.StartCoroutine(Instance.NextStage());
+    }
+    
+    [MenuItem("Developer/Pause")]
+    public static void PauseDev()
+    {
+        Instance.Pause();
+    }
+
+    [MenuItem("Developer/Unpause")]
+    public static void UnpauseDev()
+    {
+        Instance.Unpause();
     }
 
     void SpawnPlayer()
     {
         player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
 
-        SoundManager.instance.StopSound("Hum");
-        SoundManager.instance.PlaySound("ElevatorHum");
+        SoundManager.Instance.StopSound("Hum");
+        SoundManager.Instance.PlaySound("ElevatorHum");
         StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
         playerController.SpawnFreeze();
 
@@ -176,6 +195,61 @@ public class GameManager : MonoBehaviour
         {
             enemyController.Spawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
         }));
+    }
+
+    /// <summary>
+    /// Use method in Start() or later
+    /// </summary>
+    /// <param name="behaviour"></param>
+    public static void MakePausable(MonoBehaviour beh)
+    {
+        pausable.Add(beh);
+    }
+
+    public static void MakeUnpausable(MonoBehaviour beh)
+    {
+        pausable.Remove(beh);
+    }
+
+    void TogglePause(InputAction.CallbackContext context)
+    {
+        if (Paused)
+        {
+            Unpause();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        Paused = true;
+        foreach (MonoBehaviour beh in pausable)
+        {
+            beh.enabled = false;
+        }
+        foreach(AudioSource s in FindObjectsOfType<AudioSource>())
+        {
+            s.Pause();
+        }
+        Time.timeScale = 0;
+    }
+
+    public void Unpause()
+    {
+        Paused = false;
+        foreach (MonoBehaviour beh in pausable)
+        {
+            beh.enabled = true;
+        }
+        foreach (AudioSource s in FindObjectsOfType<AudioSource>())
+        {
+            s.UnPause();
+        }
+        playerController.journal.ExitJournalView();
+        Time.timeScale = 1;
     }
 
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)

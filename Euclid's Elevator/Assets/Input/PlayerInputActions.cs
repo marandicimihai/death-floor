@@ -116,6 +116,42 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""03423efb-c307-44f0-917c-45df0853937b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Journal"",
+                    ""type"": ""Button"",
+                    ""id"": ""bf0fca54-e872-4898-b949-751d9b543e42"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PageRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""60fe3d19-47c8-4711-9cff-846d32ab7a7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PageLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""b994b851-fb87-4312-a41d-aa2ed29b7eae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +308,50 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Inventory 4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bea0231-23ad-4fa0-9536-c30866d702f3"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14d84b70-10c7-4c23-b051-55dcc6fc1f65"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Journal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6d8da10-e1db-441c-b904-dc1a33a30708"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PageRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a56583d-a07f-4633-9bbd-da680493bd05"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PageLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +370,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_General_Drop = m_General.FindAction("Drop", throwIfNotFound: true);
         m_General_Sneak = m_General.FindAction("Sneak", throwIfNotFound: true);
         m_General_Use = m_General.FindAction("Use", throwIfNotFound: true);
+        m_General_Pause = m_General.FindAction("Pause", throwIfNotFound: true);
+        m_General_Journal = m_General.FindAction("Journal", throwIfNotFound: true);
+        m_General_PageRight = m_General.FindAction("PageRight", throwIfNotFound: true);
+        m_General_PageLeft = m_General.FindAction("PageLeft", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -359,6 +443,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Drop;
     private readonly InputAction m_General_Sneak;
     private readonly InputAction m_General_Use;
+    private readonly InputAction m_General_Pause;
+    private readonly InputAction m_General_Journal;
+    private readonly InputAction m_General_PageRight;
+    private readonly InputAction m_General_PageLeft;
     public struct GeneralActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -373,6 +461,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Drop => m_Wrapper.m_General_Drop;
         public InputAction @Sneak => m_Wrapper.m_General_Sneak;
         public InputAction @Use => m_Wrapper.m_General_Use;
+        public InputAction @Pause => m_Wrapper.m_General_Pause;
+        public InputAction @Journal => m_Wrapper.m_General_Journal;
+        public InputAction @PageRight => m_Wrapper.m_General_PageRight;
+        public InputAction @PageLeft => m_Wrapper.m_General_PageLeft;
         public InputActionMap Get() { return m_Wrapper.m_General; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -412,6 +504,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Use.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
                 @Use.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
                 @Use.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
+                @Pause.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPause;
+                @Journal.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
+                @Journal.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
+                @Journal.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
+                @PageRight.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
+                @PageRight.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
+                @PageRight.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
+                @PageLeft.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
+                @PageLeft.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
+                @PageLeft.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
             }
             m_Wrapper.m_GeneralActionsCallbackInterface = instance;
             if (instance != null)
@@ -446,6 +550,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Use.started += instance.OnUse;
                 @Use.performed += instance.OnUse;
                 @Use.canceled += instance.OnUse;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+                @Journal.started += instance.OnJournal;
+                @Journal.performed += instance.OnJournal;
+                @Journal.canceled += instance.OnJournal;
+                @PageRight.started += instance.OnPageRight;
+                @PageRight.performed += instance.OnPageRight;
+                @PageRight.canceled += instance.OnPageRight;
+                @PageLeft.started += instance.OnPageLeft;
+                @PageLeft.performed += instance.OnPageLeft;
+                @PageLeft.canceled += instance.OnPageLeft;
             }
         }
     }
@@ -462,5 +578,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
         void OnSneak(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnJournal(InputAction.CallbackContext context);
+        void OnPageRight(InputAction.CallbackContext context);
+        void OnPageLeft(InputAction.CallbackContext context);
     }
 }

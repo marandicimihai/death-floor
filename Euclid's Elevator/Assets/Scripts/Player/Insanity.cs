@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(FpsController))]
 public class Insanity : MonoBehaviour
@@ -24,12 +25,21 @@ public class Insanity : MonoBehaviour
     [SerializeField] float minInsanity;
     [SerializeField] float maxInsanity;
 
+    [SerializeField] Volume volume;
+    [SerializeField] float timeForFullWeight;
+    [SerializeField] float timeForNoWeight;
+
     float insanity;
     float t;
 
+    private void Start()
+    {
+        GameManager.MakePausable(this);
+    }
+
     private void Update()
     {
-        if (GameManager.instance.enemyController.visibleToPlayer)
+        if (GameManager.Instance.enemyController.visibleToPlayer)
         {
             if (t < insanityTime)
                 t += Time.deltaTime;
@@ -40,10 +50,13 @@ public class Insanity : MonoBehaviour
             {
                 controller.Die();
             }
+
+            volume.weight = Mathf.Clamp01(t / timeForFullWeight);
         }
         else
         {
             t = 0;
+            volume.weight = Mathf.Clamp01(volume.weight - timeForNoWeight * Time.deltaTime);
         }
     }
 

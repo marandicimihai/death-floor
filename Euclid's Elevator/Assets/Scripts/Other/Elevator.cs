@@ -7,6 +7,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] new Collider collider;
     [SerializeField] Animator elevator;
     [SerializeField] ItemObject keyCard;
+    [SerializeField] ItemObject toolbox;
 
     private void Awake()
     {
@@ -15,8 +16,8 @@ public class Elevator : MonoBehaviour
 
     public void OpenElevator()
     {
-        SoundManager.instance.PlaySound("Hum");
-        SoundManager.instance.PlaySound("ElevatorOpen");
+        SoundManager.Instance.PlaySound("Hum");
+        SoundManager.Instance.PlaySound("ElevatorOpen");
         collider.enabled = false;
         elevator.SetBool("Open", true);
         Open = true;
@@ -24,7 +25,7 @@ public class Elevator : MonoBehaviour
 
     public void CloseElevator()
     {
-        SoundManager.instance.PlaySound("ElevatorClose");
+        SoundManager.Instance.PlaySound("ElevatorClose");
         collider.enabled = true;
         elevator.SetBool("Open", false);
         Open = false;
@@ -36,16 +37,18 @@ public class Elevator : MonoBehaviour
         {
             return true;
         }
-        else if (Broken)
-        {
-            LineManager.instance.SayLine("Elevator Broken");
-        }
         return false;
     }
 
-    public void Repair()
+    public bool Repair(ItemObject obj)
     {
-        Broken = false;
+        if (Broken && obj.name == toolbox.name)
+        {
+            Broken = false;
+            return true;
+        }
+
+        return false;
     }
 
     public void BreakDown()

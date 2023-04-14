@@ -16,3 +16,9 @@ MonoBehaviour:
   uses: 1
   inventoryIcon: {fileID: 21300000, guid: 20927fd9e7122d24cb8efaf6fbc30dc2, type: 3}
   prefab: {fileID: 5096525209911580625, guid: 4140e56d4c069cd419fcea6d4c0fe8f0, type: 3}
+  pickUpSounds:
+  - PillJarPickUp
+  drawSounds:
+  - PillJarDraw
+  useSounds:
+  - Swallow

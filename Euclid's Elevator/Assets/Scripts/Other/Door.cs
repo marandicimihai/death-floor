@@ -19,6 +19,7 @@ public class Door : MonoBehaviour
     [SerializeField] AudioSource doorOpen;
     [SerializeField] AudioSource doorClose;
     [SerializeField] AudioSource doorHandleS;
+    [SerializeField] AudioSource unlock;
 
     [Header("Stage settings")]
 
@@ -35,7 +36,7 @@ public class Door : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.instance.OnStageStart += (object sender, StageArgs args) =>
+        GameManager.Instance.OnStageStart += (object sender, StageArgs args) =>
         {
             if (args.stage >= stageUnlock && StageLocked)
             {
@@ -72,6 +73,7 @@ public class Door : MonoBehaviour
 
     public bool Toggle(ItemObject requirement = null)
     {
+        doorHandle.SetTrigger("PullHandle");
         if (requiredItem != null && requirement != null && requirement.itemName == requiredItem.itemName)
             locked = false;
 
@@ -92,7 +94,6 @@ public class Door : MonoBehaviour
                 StartCoroutine(doorCloseC);
             }
         }
-        doorHandle.SetTrigger("PullHandle");
 
         return true;
     }
@@ -111,6 +112,9 @@ public class Door : MonoBehaviour
     {
         locked = false;
         if (!open)
+        {
             Toggle();
+            unlock.Play();
+        }
     }
 }

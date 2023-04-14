@@ -8,7 +8,7 @@ public class JumpscareTest : JumpscareBase
 
     protected override bool CheckContext()
     {
-        if (Physics.OverlapSphere(GameManager.instance.player.position, 0f).ToList().Contains(collider))
+        if (Physics.OverlapSphere(GameManager.Instance.player.position, 0f).ToList().Contains(collider))
         {
             return true;
         }
@@ -17,7 +17,7 @@ public class JumpscareTest : JumpscareBase
 
     protected override void OnJumpscareTriggered()
     {
-        GameManager.instance.enemyController.Spawn(enemySpawn);
+        GameManager.Instance.enemyController.Spawn(enemySpawn);
         Debug.Log("Boo!");
     }
 }
