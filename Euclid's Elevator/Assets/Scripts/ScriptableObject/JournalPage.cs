@@ -4,4 +4,5 @@
 public class JournalPage : ScriptableObject
 {
     public new string name;
+    public GameObject pageUIPrefab;
 }

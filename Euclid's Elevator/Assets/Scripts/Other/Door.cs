@@ -6,7 +6,7 @@ public class Door : MonoBehaviour
     public bool locked;
     public Transform middle;
 
-    [SerializeField] bool open;
+    public bool Open { get; private set; }
     [SerializeField] float closedYRot;
     [SerializeField] float openedYRot;
     [SerializeField] float openTime;
@@ -15,6 +15,7 @@ public class Door : MonoBehaviour
     [SerializeField] Animator doorHandle;
 
     [SerializeField] ItemObject requiredItem;
+    [SerializeField] ItemObject lockItem;
 
     [SerializeField] AudioSource doorOpen;
     [SerializeField] AudioSource doorClose;
@@ -36,6 +37,7 @@ public class Door : MonoBehaviour
     }
     private void Start()
     {
+        GameManager.MakePausable(this);
         GameManager.Instance.OnStageStart += (object sender, StageArgs args) =>
         {
             if (args.stage >= stageUnlock && StageLocked)
@@ -46,7 +48,7 @@ public class Door : MonoBehaviour
     }
     private void Update()
     {
-        if (open)
+        if (Open)
         {
             t += 1 / openTime * Time.deltaTime;
             doorOpen.volume = (panel.localEulerAngles.y - openedYRot) / (closedYRot - openedYRot);
@@ -61,7 +63,7 @@ public class Door : MonoBehaviour
 
     private void OnValidate()
     {
-        if (open)
+        if (Open)
         {
             panel.localRotation = Quaternion.Euler(0, openedYRot, 0);
         }
@@ -80,8 +82,8 @@ public class Door : MonoBehaviour
         if (locked || StageLocked)
             return false;
 
-        open = !open;
-        if (open)
+        Open = !Open;
+        if (Open)
         {
             doorOpen.Play();
             doorHandleS.Play();
@@ -108,13 +110,31 @@ public class Door : MonoBehaviour
         doorCloseC = null;
     }
 
+    public bool TryLockItem(ItemObject item)
+    {
+        if (lockItem != null && item != null && lockItem.name == item.name)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void ForceOpen()
     {
         locked = false;
-        if (!open)
+        if (!Open)
         {
             Toggle();
             unlock.Play();
         }
+    }
+
+    public void ForceLock()
+    {
+        if (Open)
+        {
+            Toggle();
+        }
+        locked = true;
     }
 }

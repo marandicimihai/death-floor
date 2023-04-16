@@ -256,7 +256,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.89100003, y: 0.94500005, z: 0.115}
+  m_Extents: {x: 0.89100003, y: 0.94500005, z: 0.3}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 0
@@ -422,7 +422,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: 0
   middle: {fileID: 5222541290318704433}
-  open: 0
   closedYRot: 180
   openedYRot: 20
   openTime: 0.5
@@ -430,6 +429,7 @@ MonoBehaviour:
   panel: {fileID: 3616655169289104357}
   doorHandle: {fileID: 699835758}
   requiredItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
+  lockItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
   doorOpen: {fileID: 8483060333850443791}
   doorClose: {fileID: 3834154230176374541}
   doorHandleS: {fileID: 2988887404296050176}

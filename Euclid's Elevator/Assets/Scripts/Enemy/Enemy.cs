@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float chaseSpeed;
     [SerializeField] float chaseStopDistance;
     [SerializeField] float chaseRange;
+    [SerializeField] float openDoorTime;
     [SerializeField] float doorOpenDistance;
 
     [Header("Animation Properties")]
@@ -82,15 +83,14 @@ public class Enemy : MonoBehaviour
         {
             Continue();
             visibleToPlayer = false;
+            Quaternion rotation = Quaternion.LookRotation((GameManager.Instance.player.position - transform.position).normalized, Vector3.up);
+            rig.rotation = rotation * Quaternion.Euler(0, -90, 0);
         }
 
         /*Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
         Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
         Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);
         Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);*/
-
-        Quaternion rotation = Quaternion.LookRotation((GameManager.Instance.player.position - transform.position).normalized, Vector3.up);
-        rig.rotation = rotation * Quaternion.Euler(0, -90, 0);
 
         if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player") || visibleToPlayer)
         {
@@ -111,8 +111,23 @@ public class Enemy : MonoBehaviour
         if (state != EnemyState.Patrol && Physics.Raycast(transform.position, transform.forward, out RaycastHit doorHit, doorOpenDistance)
             && doorHit.transform.CompareTag("Door"))
         {
-            Door door = doorHit.transform.GetComponentInParent<Door>();
-            door.ForceOpen();
+            Door door1 = doorHit.transform.GetComponentInParent<Door>();
+            if (door1.locked)
+            {
+                StartCoroutine(WaitAndExec(openDoorTime, () =>
+                {
+                    if (state != EnemyState.Patrol && Physics.Raycast(transform.position, transform.forward, out RaycastHit rayHit, doorOpenDistance)
+                        && rayHit.transform.CompareTag("Door"))
+                    {
+                        Door door = rayHit.transform.GetComponentInParent<Door>();
+                        door.ForceOpen();
+                    }
+                }));
+            }
+            else
+            {
+                door1.ForceOpen();
+            }
         }
     }
 
@@ -228,7 +243,8 @@ public class Enemy : MonoBehaviour
         patrolStep = false;
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
-        StopCoroutine(patrolCoroutine);
+        if (patrolCoroutine != null)
+            StopCoroutine(patrolCoroutine);
         if (time != 0)
         {
             fullyStopped = true;

@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
     public EventHandler<DeathArgs> OnDeath;
     public EventHandler OnEnd;
 
+    public EventHandler<PauseArgs> OnPause;
+    public EventHandler OnUnpause;
+
     bool waitingForPlayer;
 
     int stage;
@@ -191,6 +194,7 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
+        enemyController.Stop(timeUntilOpenElevator);
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
             enemyController.Spawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
@@ -198,7 +202,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Use method in Start() or later
+    /// Use method in OnEnable() or later
     /// </summary>
     /// <param name="behaviour"></param>
     public static void MakePausable(MonoBehaviour beh)
@@ -219,12 +223,18 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Pause();
+            Pause(true);
         }
     }
 
-    public void Pause()
+
+    /// <summary>
+    /// Pauses game
+    /// </summary>
+    /// <param name="UI">Specifies whether the UI should be turned off</param>
+    public void Pause(bool UI = false)
     {
+        OnPause?.Invoke(this, new PauseArgs(UI));
         Paused = true;
         foreach (MonoBehaviour beh in pausable)
         {
@@ -239,6 +249,7 @@ public class GameManager : MonoBehaviour
 
     public void Unpause()
     {
+        OnUnpause?.Invoke(this, new EventArgs());
         Paused = false;
         foreach (MonoBehaviour beh in pausable)
         {
@@ -281,5 +292,15 @@ public class StageArgs : EventArgs
     public StageArgs(int i)
     {
         stage = i;
+    }
+}
+
+public class PauseArgs : EventArgs
+{
+    public bool UI;
+
+    public PauseArgs(bool a)
+    {
+        UI = a;
     }
 }

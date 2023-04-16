@@ -98,6 +98,7 @@ public class FpsController : MonoBehaviour
 
         PlayerInputActions.General.Interact.performed += Interact;
         PlayerInputActions.General.Interact.canceled += context => lockpick.StopPicking();
+        PlayerInputActions.General.Interact.canceled += context => lockpick.StopLocking();
         playerInputActions.General.Use.performed += UseItem;
         PlayerInputActions.General.Drop.performed += DropItem;
 
@@ -224,25 +225,35 @@ public class FpsController : MonoBehaviour
                 if (door == null || door.StageLocked)
                     return;
 
-                if (!door.Toggle())
+                if (door.locked || door.Open)
                 {
-                    for(int i = 0; i < inventory.Items.Length - 1; i++)
+                    if (!door.Toggle())
                     {
-                        if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
+                        for(int i = 0; i < inventory.Items.Length - 1; i++)
                         {
-                            inventory.UseItem(i);
-                            GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
-                            return;
+                            if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
+                            {
+                                inventory.UseItem(i);
+                                GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
+                                return;
+                            }
                         }
+                        LineManager.instance.SayLine("Door locked");
                     }
-                    LineManager.instance.SayLine("Door locked");
+                    else
+                    {
+                        GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
+                    }
+
+                    lockpick.PickLock(door, settings);
                 }
                 else
                 {
-                    GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
+                    if (!door.locked && !door.Open && inventory.Items[inventory.ActiveSlot] != null && door.TryLockItem(inventory.Items[inventory.ActiveSlot].itemObj))
+                    {
+                        lockpick.LockLock(door, settings, inventory, inventory.Items[inventory.ActiveSlot].itemObj);
+                    }
                 }
-
-                lockpick.PickLock(door, settings);
             }
             else if (hit.transform.CompareTag("ItemHole") && !GameManager.Instance.elevator.Broken)
             {
@@ -285,7 +296,24 @@ public class FpsController : MonoBehaviour
             }
             else if (hit.transform.CompareTag("Door"))
             {
-                bar.SetActionText("Open door (E)");
+                Door door = hit.transform.GetComponentInParent<Door>();
+                if (!door.Open && door.locked)
+                {
+                    bar.SetActionText("Pick lock (Hold E)");
+                }
+                else if (!door.Open && !door.locked && inventory.Items[inventory.ActiveSlot] != null 
+                    && door.TryLockItem(inventory.Items[inventory.ActiveSlot].itemObj))
+                {
+                    bar.SetActionText("Lock door (Hold E)");
+                }
+                else if (!door.Open && !door.locked)
+                {
+                    bar.SetActionText("Open door (E)");
+                }
+                else if (door.Open)
+                {
+                    bar.SetActionText("Close door (E)");
+                }
                 return;
             }
             else if (hit.transform.CompareTag("ItemHole") && !GameManager.Instance.elevator.Broken)

@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b43b62cf59b85654ca14fdc25e4c4275, type: 3}
-  m_Name: Test
+  m_Name: Intro
   m_EditorClassIdentifier: 
-  name: Test1
+  name: Intro
+  pageUIPrefab: {fileID: 2979150920196819607, guid: 3d060e6abdbe15f4d847752c08059359, type: 3}

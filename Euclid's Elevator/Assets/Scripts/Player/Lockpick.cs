@@ -6,75 +6,57 @@ public class Lockpick : MonoBehaviour
 {
     [SerializeField] ActionBar bar;
     [SerializeField] float pickDuration;
+    [SerializeField] float lockDuration;
+    [SerializeField] float doorLockHoldTime;
 
-    float pickTimeBoost;
-    float pickPercent;
-
-    float timeElapsed;
-    float time;
+    float boost;
     bool picking;
+    bool locking;
 
-    float dist;
-    LayerMask mask;
-    Camera cam;
-    Door door;
 
     private void Awake()
     {
-        pickTimeBoost = 1;
-    }
-
-    private void Update()
-    {
-        if (picking)
-        {
-            timeElapsed += Time.deltaTime * pickTimeBoost;
-            bar.SetSliderValue(pickPercent);
-            if (time < time - pickDuration + timeElapsed)
-            {
-                StopPicking();
-                door.ForceOpen();
-                pickPercent = 100;
-            }
-            else if (!Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, dist, mask) ||
-                     !hit.transform.CompareTag("Door"))
-            {
-                StopPicking();
-            }
-            else if (!door.locked)
-            {
-                StopPicking();
-            }
-            else
-            {
-                pickPercent = (timeElapsed) / (pickDuration) * 100;
-            }
-        }
-        else
-        {
-            timeElapsed = 0;
-            pickPercent = 0;
-        }
+        boost = 1;
     }
 
     public void PickLock(Door door, InteractionSettings settings)
     {
-        if (picking)
+        if (picking || !door.locked)
             return;
 
-        this.door = door;
-        if (!door.locked)
-            return;
+        StartCoroutine(PickLockC(door, settings));
+    }
 
+    IEnumerator PickLockC(Door door, InteractionSettings settings)
+    {
         bar.StartAction();
-        time = Time.time + pickDuration;
-
-        cam = settings.cam;
-        dist = settings.interactionDistance;
-        mask = settings.interactionMask;
-
-        SoundManager.Instance.PlaySound("LockPick", pickTimeBoost);
         picking = true;
+        SoundManager.Instance.PlaySound("LockPick", boost);
+        float timeElapsed = 0;
+
+        while (timeElapsed < pickDuration)
+        {
+            timeElapsed += Time.deltaTime * boost;
+
+            if (!Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask) ||
+                !hit.transform.CompareTag("Door"))
+            {
+                StopPicking();
+                yield break;
+            }
+            else if (!door.locked || !picking)
+            {
+                StopPicking();
+                yield break;
+            }
+            
+            bar.SetSliderValue((timeElapsed) / (pickDuration) * 100);
+
+            yield return null;
+        }
+
+        door.ForceOpen();
+        StopPicking();
     }
 
     public void StopPicking()
@@ -84,12 +66,68 @@ public class Lockpick : MonoBehaviour
         picking = false;
     }
     
+    public void LockLock(Door door, InteractionSettings settings, Inventory inventory, ItemObject itemObj)
+    {
+        if (door.locked || door.Open || locking)
+            return;
+
+        StartCoroutine(LockLockC(door, settings, inventory, itemObj));
+    }
+
+    IEnumerator LockLockC(Door door, InteractionSettings settings, Inventory inventory, ItemObject itemObj)
+    {
+        locking = true;
+        float timeElapsed = 0;
+
+        while (timeElapsed < lockDuration)
+        {
+            timeElapsed += Time.deltaTime * boost;
+
+            if (!Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask) ||
+                !hit.transform.CompareTag("Door"))
+            {
+                StopLocking();
+                yield break;
+            }
+            else if (door.locked || door.Open || inventory.Items[inventory.ActiveSlot] == null || inventory.Items[inventory.ActiveSlot].itemObj.name != itemObj.name)
+            {
+                StopLocking();
+                yield break;
+            }
+            else if (!locking)
+            {
+                if (timeElapsed < doorLockHoldTime)
+                {
+                    door.Toggle();
+                }
+                yield break;
+            }
+            if (timeElapsed >= doorLockHoldTime)
+            {
+                bar.StartAction();
+                bar.SetSliderValue((timeElapsed - doorLockHoldTime) / (lockDuration - doorLockHoldTime) * 100);
+            }
+
+            yield return null;
+        }
+
+        inventory.UseItem(inventory.ActiveSlot);
+        door.ForceLock();
+        StopLocking();
+    }
+
+    public void StopLocking()
+    {
+        bar.StopAction();
+        locking = false;
+    }
+
     public void BoostLockPick(float multiplier, float time)
     {
-        pickTimeBoost = multiplier;
+        boost = multiplier;
         StartCoroutine(WaitAndExec(time, () =>
         {
-            pickTimeBoost = 1;
+            boost = 1;
         }));
     }
 
