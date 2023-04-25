@@ -7,7 +7,8 @@ using System;
 
 public class Journal : MonoBehaviour
 {
-    [SerializeField] float openJournalUITime;
+    [SerializeField] AnimationClip openJournal;
+    [SerializeField] AnimationClip closeJournal;
     [SerializeField] float flipPageTime;
     [SerializeField] Animator journal;
     [SerializeField] UIManager UIManager;
@@ -47,22 +48,23 @@ public class Journal : MonoBehaviour
 
     void EnterJournalView()
     {
-        if (GameManager.Paused || inJournalView)
+        if (GameManager.Paused || inJournalView || GameManager.Instance.playerController.Dead)
             return;
 
         inJournalView = true;
 
+        journal.gameObject.SetActive(true);
         SoundManager.Instance.PlaySound("JournalOpen");
         journal.SetBool("Open", true);
         UIManager.EnterJournalView();
 
-        StartCoroutine(WaitAndExec(openJournalUITime, () =>
+        StartCoroutine(WaitAndExecRT(openJournal.length, () =>
         {
             UIManager.OpenJournalUI();
             RefreshView();
             journalUIOn = true;
-            GameManager.Instance.Pause();
         }));
+        GameManager.Instance.Pause();
     }
 
     public void ExitJournalView()
@@ -71,8 +73,12 @@ public class Journal : MonoBehaviour
             return;
 
         journalUIOn = false;
-        inJournalView = false;
 
+        StartCoroutine(WaitAndExecRT(closeJournal.length, () =>
+        {
+            journal.gameObject.SetActive(false);
+            inJournalView = false;
+        }));
         SoundManager.Instance.PlaySound("JournalClose");
         journal.SetBool("Open", false);
         UIManager.ExitJournalView();

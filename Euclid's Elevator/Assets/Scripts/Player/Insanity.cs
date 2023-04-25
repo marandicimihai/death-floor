@@ -48,7 +48,7 @@ public class Insanity : MonoBehaviour
 
             if (InsanityMeter >= maxInsanity)
             {
-                controller.Die();
+                controller.InsanityDie();
             }
 
             volume.weight = Mathf.Clamp01(t / timeForFullWeight);

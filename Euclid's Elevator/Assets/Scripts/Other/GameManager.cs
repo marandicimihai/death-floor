@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
 
     public event EventHandler<StageArgs> OnStageStart;
+    public event EventHandler OnElevatorDoorClosed;
     
     public EventHandler OnSpawn;
     public EventHandler<DeathArgs> OnDeath;
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
 
         OnSpawn?.Invoke(this, new EventArgs());
     }
+
     //respawns player and enemy
     public void PlayerDied()
     {
@@ -159,24 +161,17 @@ public class GameManager : MonoBehaviour
         return a;
     }
 
+    public void ElevatorDoorClosed()
+    {
+        OnElevatorDoorClosed?.Invoke(this, new EventArgs());
+    }
+
     [MenuItem("Developer/Next Stage")]
     public static void NextStageDev()
     {
         Instance.StartCoroutine(Instance.NextStage());
     }
     
-    [MenuItem("Developer/Pause")]
-    public static void PauseDev()
-    {
-        Instance.Pause();
-    }
-
-    [MenuItem("Developer/Unpause")]
-    public static void UnpauseDev()
-    {
-        Instance.Unpause();
-    }
-
     void SpawnPlayer()
     {
         player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
@@ -199,6 +194,20 @@ public class GameManager : MonoBehaviour
         {
             enemyController.Spawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
         }));
+    }
+
+    #region Pause
+
+    [MenuItem("Developer/Pause")]
+    public static void PauseDev()
+    {
+        Instance.Pause();
+    }
+
+    [MenuItem("Developer/Unpause")]
+    public static void UnpauseDev()
+    {
+        Instance.Unpause();
     }
 
     /// <summary>
@@ -263,6 +272,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+#endregion
+
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)
     {
         yield return new WaitForSeconds(time);
@@ -274,6 +285,8 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
+#region EventArgs
 
 public class DeathArgs : EventArgs
 {
@@ -304,3 +317,5 @@ public class PauseArgs : EventArgs
         UI = a;
     }
 }
+
+#endregion

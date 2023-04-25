@@ -190,7 +190,7 @@ public class Enemy : MonoBehaviour
 
         if (Vector3.Distance(destination, transform.position) < chaseRange)
         {
-            GameManager.Instance.playerController.Die(transform.position + (Vector3.up / 2));
+            GameManager.Instance.playerController.JumpscareDie(transform.position + (Vector3.up / 2));
         }
     }
 

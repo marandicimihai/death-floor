@@ -5,24 +5,26 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform Camera;
-    [SerializeField]FpsController controller;
+    [SerializeField] FpsController controller;
     [SerializeField] Vector2 sensitivities;
-    [SerializeField] float jumpscareTurnTime;
-
+    [SerializeField] float turnTime;
+    [SerializeField] float animationTime;
 
     Vector2 rotation;
 
-    Quaternion from;
-    Quaternion to;
+    Transform initialParent;
+    Transform target;
 
-    float t;
+    Vector3 initialLocalPosition;
+    Quaternion rotationOnEnter;
 
-    bool rotating;
     [System.NonSerialized] public bool canLook;
 
     private void Awake()
     {
         canLook = true;
+        initialParent = Camera.parent;
+        initialLocalPosition = Camera.localPosition;
     }
 
     private void Start()
@@ -32,25 +34,6 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (rotating)
-        {
-            t += 1 / jumpscareTurnTime * Time.deltaTime;
-
-            t = Mathf.Clamp01(t);
-
-            Vector3 step = Quaternion.Slerp(from, to, t).eulerAngles;
-
-            Camera.localEulerAngles = new Vector3(step.x, 0, 0);
-            transform.localEulerAngles = new Vector3(0, step.y, 0);
-
-            if (new Vector3(Camera.localEulerAngles.x, transform.localEulerAngles.y, 0) == Vector3.Scale(to.eulerAngles, new Vector3(1, 1, 0)))
-            {
-                rotation = new Vector2(Camera.localEulerAngles.x, transform.localEulerAngles.y);
-                rotating = false;
-            }
-            return;
-        }
-
         if (!canLook)
             return;
 
@@ -65,17 +48,121 @@ public class CameraController : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, rotation.y, 0);
     }
 
-    public void JumpscareTurn(Vector3 enemyPosition)
+    public void Turn(Vector3 pos)
     {
-        to = Quaternion.LookRotation((enemyPosition - Camera.position).normalized);
-        from = Quaternion.Euler(new Vector3(Camera.localEulerAngles.x, transform.localEulerAngles.y, 0));
-        rotating = true;
-        t = 0;
+        StartCoroutine(TurnC(pos));
+    }
+
+    IEnumerator TurnC(Vector3 pos)
+    {
+        float t = 0;
+
+        Quaternion to = Quaternion.LookRotation((pos - Camera.position).normalized);
+        Quaternion from = Quaternion.Euler(new Vector3(Camera.localEulerAngles.x, transform.localEulerAngles.y, 0));
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / turnTime;
+
+            t = Mathf.Clamp01(t);
+
+            Vector3 step = Quaternion.Slerp(from, to, t).eulerAngles;
+
+            Camera.localEulerAngles = new Vector3(step.x, 0, 0);
+            transform.localEulerAngles = new Vector3(0, step.y, 0);
+
+            if (new Vector3(Camera.localEulerAngles.x, transform.localEulerAngles.y, 0) == Vector3.Scale(to.eulerAngles, new Vector3(1, 1, 0)))
+            {
+                rotation = new Vector2(Camera.localEulerAngles.x, transform.localEulerAngles.y);
+            }
+            yield return null;
+        }
+    }
+
+    public void EnterAnimation(Transform followTarget)
+    {
+        canLook = false;
+
+        rotationOnEnter = Camera.rotation;
+        Camera.parent = followTarget;
+
+        StartCoroutine(EnterAnimationPosition());
+        StartCoroutine(EnterAnimationRotation());
+    }
+
+    IEnumerator EnterAnimationPosition()
+    {
+        Vector3 initial = Camera.localPosition;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / animationTime;
+
+            Camera.localPosition = Vector3.Slerp(initial, Vector3.zero, t);
+
+            yield return null;
+        }
+    }
+
+    IEnumerator EnterAnimationRotation()
+    {
+        Quaternion initial = Camera.localRotation;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / animationTime;
+
+            Camera.localRotation = Quaternion.Slerp(initial, Quaternion.identity, t);
+
+            yield return null;
+        }
+    }
+
+    public void ExitAnimation()
+    {
+        Camera.parent = initialParent;
+        StartCoroutine(ExitAnimationPosition());
+        StartCoroutine(ExitAnimationRotation());
+    }
+
+    IEnumerator ExitAnimationPosition()
+    {
+        Vector3 initial = Camera.localPosition;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / animationTime;
+
+            Camera.localPosition = Vector3.Slerp(initial, initialLocalPosition, t);
+
+            yield return null;
+        }
+
+        canLook = true;
+    }
+
+    IEnumerator ExitAnimationRotation()
+    {
+        Quaternion initial = Camera.localRotation;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / animationTime;
+
+            Camera.localRotation = Quaternion.Slerp(initial, rotationOnEnter, t);
+
+            yield return null;
+        }
+
+        canLook = true;
     }
 
     public void ResetAngle(float yrotation)
     {
-        rotating = false;
         rotation.x = 0;
         rotation.y = yrotation;
     }

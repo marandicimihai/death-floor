@@ -1,4 +1,5 @@
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using System.Collections;
 using UnityEngine;
 using System;
@@ -62,7 +63,6 @@ public class FpsController : MonoBehaviour
 
     public PlayerInputActions PlayerInputActions { get { return playerInputActions; } }
     public bool Dead { get; private set; }
-    public bool Freezed { get; private set; }
 
     PlayerInputActions playerInputActions;
 
@@ -119,7 +119,7 @@ public class FpsController : MonoBehaviour
     private void Update()
     {
         GetLooking();
-        if (Freezed)
+        if (Dead)
         {
             forces = Vector3.zero;
             return;
@@ -129,6 +129,8 @@ public class FpsController : MonoBehaviour
         controller.Move(moveDir * Time.deltaTime);
         forces = Vector3.zero;
     }
+
+    #region Movement
 
     private void ComputeVelocity()
     {
@@ -207,9 +209,13 @@ public class FpsController : MonoBehaviour
         return;
     }
 
+    #endregion
+
+    #region Interaction
+
     private void Interact(InputAction.CallbackContext context)
     {
-        if (Dead || Freezed)
+        if (Dead)
             return;
 
         if (Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask))
@@ -332,7 +338,7 @@ public class FpsController : MonoBehaviour
 
     private void DropItem(InputAction.CallbackContext context)
     {
-        if (Dead || Freezed)
+        if (Dead)
             return;
 
         inventory.DropItem(settings.cam.transform.position, settings.cam.transform.forward);
@@ -347,6 +353,10 @@ public class FpsController : MonoBehaviour
         inventory.UseItem(inventory.ActiveSlot);
     }
 
+    #endregion
+
+    #region Effects
+
     public void IncreaseSpeed(float multiplier, float time)
     {
         speedMultiplier = multiplier;
@@ -358,28 +368,57 @@ public class FpsController : MonoBehaviour
 
     public void AddForce(Vector3 direction, float forceStrength)
     {
-        forces += forceStrength * Vector3.Scale(direction, new Vector3(1, 0, 1)).normalized;
+        forces += Vector3.ProjectOnPlane(direction, Vector3.up).normalized * forceStrength;
     }
 
-    public void Die(Vector3? enemyPosition = null)
+    #endregion
+
+    public void EnterAnimation(Transform cameraParent)
+    {
+        PlayerInputActions.Disable();
+        cameraController.EnterAnimation(cameraParent);
+    }
+
+    public void ExitAnimation()
+    {
+        PlayerInputActions.Enable();
+        cameraController.ExitAnimation();
+    }
+
+    public void JumpscareDie(Vector3 enemyPosition)
     {
         if (Dead || invincible)
             return;
 
         Dead = true;
-        Freezed = true;
         cameraController.canLook = false;
 
-        velocity = Vector3.zero;
+        SoundManager.Instance.PlaySound("Jumpscare");
+        cameraController.Turn(enemyPosition);
 
-        if (enemyPosition != null)
-        {
-            SoundManager.Instance.PlaySound("Jumpscare");
-            cameraController.JumpscareTurn((Vector3)enemyPosition);
-        }
+        if (GameManager.Instance != null)
+            GameManager.Instance.PlayerDied();
+    }
 
-        insanity.Die();
-        inventory.Die();
+    public void InsanityDie()
+    {
+        if (Dead || invincible)
+            return;
+
+        Dead = true;
+        cameraController.canLook = false;
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.PlayerDied();
+    }
+
+    public void TrapDie()
+    {
+        if (Dead || invincible)
+            return;
+
+        Dead = true;
+        cameraController.canLook = false;
 
         if (GameManager.Instance != null)
             GameManager.Instance.PlayerDied();
@@ -389,8 +428,9 @@ public class FpsController : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, spawnYRot, transform.eulerAngles.z);
         Dead = false;
-        Freezed = true;
         cameraController.canLook = false;
+        insanity.Die();
+        inventory.Die();
     }
 
     public void SpawnUnlock()
@@ -399,7 +439,6 @@ public class FpsController : MonoBehaviour
         lastPosition = transform.position;
         walked = 0;
         steps = 0;
-        Freezed = false;
         cameraController.canLook = true;
     }
 

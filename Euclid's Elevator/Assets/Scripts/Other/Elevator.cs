@@ -1,9 +1,12 @@
+using System.Collections;
 using UnityEngine;
+using System;
 
 public class Elevator : MonoBehaviour
 {
     public bool Open { get; private set; }
     public bool Broken { get; private set; }
+    [SerializeField] AnimationClip close;
     [SerializeField] new Collider collider;
     [SerializeField] Animator elevator;
     [SerializeField] ItemObject keyCard;
@@ -29,6 +32,11 @@ public class Elevator : MonoBehaviour
         collider.enabled = true;
         elevator.SetBool("Open", false);
         Open = false;
+
+        StartCoroutine(WaitAndExec(close.length, () =>
+        {
+            GameManager.Instance.ElevatorDoorClosed();
+        }));
     }
 
     public bool InsertItem(ItemObject obj)
@@ -54,5 +62,16 @@ public class Elevator : MonoBehaviour
     public void BreakDown()
     {
         Broken = true;
+    }
+
+    IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)
+    {
+        yield return new WaitForSeconds(time);
+        exec?.Invoke();
+
+        if (repeat)
+        {
+            StartCoroutine(WaitAndExec(time, exec, repeat));
+        }
     }
 }
