@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 3271902419166874805}
   - component: {fileID: 194107855}
   - component: {fileID: 6931447489308384182}
+  - component: {fileID: 8059570348605574819}
   m_Layer: 11
   m_Name: TrapHand
   m_TagString: Untagged
@@ -216,6 +217,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8059570348605574819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748305483270886926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88002d93b87b9c44bfbf6b372c288eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraParent: {fileID: 700611161}
+  goBack: 0
+  callDeath: 1
 --- !u!1 &2763621869789968084
 GameObject:
   m_ObjectHideFlags: 0

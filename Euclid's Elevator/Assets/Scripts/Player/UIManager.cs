@@ -15,10 +15,10 @@ public class UIManager : MonoBehaviour
         {
             if (args.UI)
             {
-                SendMessage("TurnOffUI");
+                TurnOffUI();
             }
         };
-        GameManager.Instance.OnUnpause += (sender, args) => SendMessage("TurnOnUI");
+        GameManager.Instance.OnUnpause += (sender, args) => TurnOnUI();
     }
 
     public void EnterJournalView()

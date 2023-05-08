@@ -231,34 +231,32 @@ public class FpsController : MonoBehaviour
                 if (door == null || door.StageLocked)
                     return;
 
-                if (door.locked || door.Open)
+                if (!door.locked && !door.Open)
                 {
-                    if (!door.Toggle())
+                    if (inventory.Items[inventory.ActiveSlot] != null && door.TryLockItem(inventory.Items[inventory.ActiveSlot].itemObj))
                     {
-                        for(int i = 0; i < inventory.Items.Length - 1; i++)
-                        {
-                            if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
-                            {
-                                inventory.UseItem(i);
-                                GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
-                                return;
-                            }
-                        }
-                        LineManager.instance.SayLine("Door locked");
+                        lockpick.LockLock(door, settings, inventory, inventory.Items[inventory.ActiveSlot].itemObj);
+                        return;
                     }
-                    else
-                    {
-                        GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
-                    }
+                }
 
+                if (!door.Toggle())
+                {
+                    for(int i = 0; i < inventory.Items.Length - 1; i++)
+                    {
+                        if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
+                        {
+                            inventory.UseItem(i);
+                            GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
+                            return;
+                        }
+                    }
                     lockpick.PickLock(door, settings);
+                    LineManager.instance.SayLine("Door locked");
                 }
                 else
                 {
-                    if (!door.locked && !door.Open && inventory.Items[inventory.ActiveSlot] != null && door.TryLockItem(inventory.Items[inventory.ActiveSlot].itemObj))
-                    {
-                        lockpick.LockLock(door, settings, inventory, inventory.Items[inventory.ActiveSlot].itemObj);
-                    }
+                    GameManager.Instance.enemyController.NoiseHeardNav(door.middle.position);
                 }
             }
             else if (hit.transform.CompareTag("ItemHole") && !GameManager.Instance.elevator.Broken)
@@ -379,55 +377,57 @@ public class FpsController : MonoBehaviour
         cameraController.EnterAnimation(cameraParent);
     }
 
-    public void ExitAnimation()
+    public void ExitAnimation(bool callDeath)
     {
         PlayerInputActions.Enable();
         cameraController.ExitAnimation();
+        if (callDeath)
+        {
+            CallDeath();
+        }
     }
 
-    public void JumpscareDie(Vector3 enemyPosition)
+    void CallDeath()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.PlayerDied();
+    }
+
+    void Death()
     {
         if (Dead || invincible)
             return;
 
         Dead = true;
         cameraController.canLook = false;
+    }
+
+    public void JumpscareDie()
+    {
+        Death();
 
         SoundManager.Instance.PlaySound("Jumpscare");
-        cameraController.Turn(enemyPosition);
 
-        if (GameManager.Instance != null)
-            GameManager.Instance.PlayerDied();
+        //Death called from animation
     }
 
     public void InsanityDie()
     {
-        if (Dead || invincible)
-            return;
-
-        Dead = true;
-        cameraController.canLook = false;
-
-        if (GameManager.Instance != null)
-            GameManager.Instance.PlayerDied();
+        Death();
+        CallDeath();
     }
 
     public void TrapDie()
     {
-        if (Dead || invincible)
-            return;
-
-        Dead = true;
-        cameraController.canLook = false;
-
-        if (GameManager.Instance != null)
-            GameManager.Instance.PlayerDied();
+        Death();
+        //Death called from animation
     }
+
 
     public void SpawnFreeze()
     {
+        cameraController.ClearBlackScreen(0.1f);
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, spawnYRot, transform.eulerAngles.z);
-        Dead = false;
         cameraController.canLook = false;
         insanity.Die();
         inventory.Die();
@@ -435,6 +435,7 @@ public class FpsController : MonoBehaviour
 
     public void SpawnUnlock()
     {
+        Dead = false;
         cameraController.ResetAngle(spawnYRot);
         lastPosition = transform.position;
         walked = 0;

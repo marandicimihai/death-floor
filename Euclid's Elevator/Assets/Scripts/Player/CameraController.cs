@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(FpsController))]
 public class CameraController : MonoBehaviour
 {
+    public bool canLook;
     public Transform Camera;
     [SerializeField] FpsController controller;
+    [SerializeField] Volume blackScreenVolume;
     [SerializeField] Vector2 sensitivities;
     [SerializeField] float turnTime;
     [SerializeField] float animationTime;
@@ -13,12 +16,11 @@ public class CameraController : MonoBehaviour
     Vector2 rotation;
 
     Transform initialParent;
-    Transform target;
 
     Vector3 initialLocalPosition;
     Quaternion rotationOnEnter;
 
-    [System.NonSerialized] public bool canLook;
+    IEnumerator blackScreenCor;
 
     private void Awake()
     {
@@ -123,6 +125,7 @@ public class CameraController : MonoBehaviour
     public void ExitAnimation()
     {
         Camera.parent = initialParent;
+
         StartCoroutine(ExitAnimationPosition());
         StartCoroutine(ExitAnimationRotation());
     }
@@ -140,8 +143,6 @@ public class CameraController : MonoBehaviour
 
             yield return null;
         }
-
-        canLook = true;
     }
 
     IEnumerator ExitAnimationRotation()
@@ -157,8 +158,6 @@ public class CameraController : MonoBehaviour
 
             yield return null;
         }
-
-        canLook = true;
     }
 
     public void ResetAngle(float yrotation)
@@ -182,5 +181,40 @@ public class CameraController : MonoBehaviour
         }
 
         Camera.localPosition = initial;
+    }
+
+    public void BlackScreen(float time)
+    {
+        if (blackScreenCor != null)
+        {
+            StopCoroutine(blackScreenCor);
+        }
+        blackScreenCor = VolumeFade(blackScreenVolume, time, 1);
+        StartCoroutine(blackScreenCor);
+    }
+
+    public void ClearBlackScreen(float time)
+    {
+        if (blackScreenCor != null)
+        {
+            StopCoroutine(blackScreenCor);
+        }
+        blackScreenCor = VolumeFade(blackScreenVolume, time, 0);
+        StartCoroutine(blackScreenCor);
+    }
+
+    IEnumerator VolumeFade(Volume vol, float time, float finalValue)
+    {
+        float initial = vol.weight;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / time;
+
+            vol.weight = Mathf.Lerp(initial, finalValue, t);
+
+            yield return null;
+        }
     }
 }

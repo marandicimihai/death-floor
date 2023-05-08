@@ -1,21 +1,29 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using System;
 using TMPro;
+
+[Serializable]
+struct SliderStruct
+{
+    public string name;
+    public GameObject obj;
+    public Image fillImg;
+}
 
 public class ActionBar : MonoBehaviour
 {
     public bool hideInfo;
 
     [SerializeField] GameObject UI;
-    [SerializeField] GameObject sliderObject;
-    [SerializeField] Slider slider;
     [SerializeField] TMP_Text action;
+    [SerializeField] SliderStruct[] sliders;
 
     bool isActive;
 
     private void Awake()
     {
-        StopAction();
+        StopActions();
     }
 
     private void Start()
@@ -35,56 +43,62 @@ public class ActionBar : MonoBehaviour
         }
     }
 
-    public void StartAction()
+    public void StartAction(string name)
     {
         if (isActive)
             return;
 
-        if (hideInfo)
+        SliderStruct slider = Array.Find(sliders, (SliderStruct current) => current.name == name);
+
+        if (slider.name == string.Empty)
         {
-            UI.SetActive(false);
-            return;
+            Debug.Log($"Couldn't find slider with name {name}");
         }
 
-        slider.value = 0;
-        sliderObject.SetActive(true);
+        slider.fillImg.fillAmount = 0;
+        slider.obj.SetActive(true);
         isActive = true;
     }
 
-    public void SetSliderValue(float percentage)
+    public void SetSliderValue(string name, float amount)
     {
         if (!isActive)
             return;
 
-        if (hideInfo)
+        SliderStruct slider = Array.Find(sliders, (SliderStruct current) => current.name == name);
+
+        if (slider.name == string.Empty)
         {
-            UI.SetActive(false);
-            return;
+            Debug.Log($"Couldn't find slider with name {name}");
         }
 
-        slider.value = percentage;
+        slider.fillImg.fillAmount = amount;
     }
 
-    public void StopAction()
+    public void StopAction(string name)
     {
-        if (hideInfo)
+        SliderStruct slider = Array.Find(sliders, (SliderStruct current) => current.name == name);
+
+        if (slider.name == string.Empty)
         {
-            UI.SetActive(false);
-            return;
+            Debug.Log($"Couldn't find slider with name {name}");
         }
 
-        sliderObject.SetActive(false);
+        slider.obj.SetActive(false);
+        isActive = false;
+    }
+
+    public void StopActions()
+    {
+        foreach(SliderStruct slider in sliders)
+        {
+            slider.obj.SetActive(false);
+        }
         isActive = false;
     }
 
     public void SetActionText(string text)
     {
-        if (hideInfo)
-        {
-            UI.SetActive(false);
-            return;
-        }
-
         action.text = text;
     }
 }

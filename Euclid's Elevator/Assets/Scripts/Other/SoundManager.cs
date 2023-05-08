@@ -1,6 +1,7 @@
-using System;
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 [Serializable]
 struct Sound
@@ -13,6 +14,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
     [SerializeField] Sound[] sounds;
+    public List<AudioSource> realtime;
 
     private void Awake()
     {
@@ -24,7 +26,7 @@ public class SoundManager : MonoBehaviour
         GameManager.MakePausable(this);
     }
 
-    public void PlaySound(string name, float playbackSpeed = 1)
+    public void PlaySound(string name, float playbackSpeed = 1, bool realtime = false)
     {
         Sound sound = Array.Find(sounds, (Sound current) => current.name == name);
 
@@ -35,6 +37,42 @@ public class SoundManager : MonoBehaviour
         }
 
         sound.source.pitch = playbackSpeed;
+        if (realtime)
+        {
+            StartCoroutine(PlayRT(sound.source));
+            return;
+        }
+        sound.source.Play();
+    }
+    
+    public void PlaySound(string name, bool realtime = false)
+    {
+        Sound sound = Array.Find(sounds, (Sound current) => current.name == name);
+
+        if (sound.name == null)
+        {
+            Debug.Log("Couldn't find sound");
+            return;
+        }
+
+        if (realtime)
+        {
+            StartCoroutine(PlayRT(sound.source));
+            return;
+        }
+        sound.source.Play();
+    }
+    
+    public void PlaySound(string name)
+    {
+        Sound sound = Array.Find(sounds, (Sound current) => current.name == name);
+
+        if (sound.name == null)
+        {
+            Debug.Log("Couldn't find sound");
+            return;
+        }
+
         sound.source.Play();
     }
 
@@ -51,7 +89,7 @@ public class SoundManager : MonoBehaviour
         sound.source.Stop();
     }
 
-    public void PlaySound(string[] randomSounds)
+    public void PlaySound(string[] randomSounds, bool realtime = false)
     {
         int index = UnityEngine.Random.Range(0, randomSounds.Length);
 
@@ -65,17 +103,22 @@ public class SoundManager : MonoBehaviour
                 continue;
             }
 
+            if (realtime)
+            {
+                StartCoroutine(PlayRT(sound.source));
+                return;
+            }
             sound.source.Play();
             return;
         }
     }
 
-    public void PlaySounds(string[] soundsInOrder)
+    public void PlaySounds(string[] soundsInOrder, bool realtime = false)
     {
-        StartCoroutine(PlaySoundsInOrder(soundsInOrder));
+        StartCoroutine(PlaySoundsInOrder(soundsInOrder, realtime));
     }
 
-    IEnumerator PlaySoundsInOrder(string[] soundsInOrder)
+    IEnumerator PlaySoundsInOrder(string[] soundsInOrder, bool realtime = false)
     {
         for (int i = 0; i < soundsInOrder.Length; i++)
         {
@@ -86,8 +129,24 @@ public class SoundManager : MonoBehaviour
                 continue;
             }
 
-            sound.source.Play();
+            if (realtime)
+            {
+                StartCoroutine(PlayRT(sound.source));
+            }
+            else
+            {
+                sound.source.Play();
+            }
             yield return new WaitForSeconds(sound.source.clip.length);
         }
+    }
+
+    IEnumerator PlayRT(AudioSource s)
+    {
+        realtime.Add(s);
+        s.UnPause();
+        s.Play();
+        yield return new WaitForSeconds(s.clip.length);
+        realtime.Remove(s);
     }
 }

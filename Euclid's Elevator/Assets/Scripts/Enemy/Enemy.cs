@@ -41,7 +41,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] int lastPose;
     [SerializeField] float timeBetweenPoses;
 
-    [System.NonSerialized] public bool visibleToPlayer;
+    public bool Visible;
+    public bool CanKill;
 
     Transform player;
     CameraController camCon;
@@ -65,6 +66,28 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (CanKill && Vector3.Distance(player.position, transform.position) < chaseRange &&
+            !GameManager.Instance.playerController.Dead)
+        {
+            CanKill = false;
+            animator.SetInteger("State", -1);
+            if (Visible)
+            {
+                animator.SetTrigger("Execute2");
+            }
+            else
+            {
+                animator.SetTrigger("Execute1");
+            }
+            GameManager.Instance.playerController.JumpscareDie();
+        }
+        CheckVisible();
+        PathFindingLogic();
+        DoorCheck();
+    }
+
+    void CheckVisible()
+    {
         if ((!Physics.Raycast(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position,
             Vector3.Distance(GameManager.Instance.player.position, transform.position), GameManager.Instance.playerController.settings.visionMask) ||
             !Physics.Raycast(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position,
@@ -77,37 +100,37 @@ public class Enemy : MonoBehaviour
             GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds))
         {
             Stop();
-            visibleToPlayer = true;
+            Visible = true;
         }
         else
         {
             Continue();
-            visibleToPlayer = false;
+            Visible = false;
             Quaternion rotation = Quaternion.LookRotation((GameManager.Instance.player.position - transform.position).normalized, Vector3.up);
             rig.rotation = rotation * Quaternion.Euler(0, -90, 0);
         }
+    }
 
-        /*Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
-        Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f + Vector3.up * 0.49f, transform.position - camCon.Camera.position);
-        Debug.DrawRay(camCon.Camera.position + Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);
-        Debug.DrawRay(camCon.Camera.position - Vector3.Cross(Vector3.up, transform.position - camCon.Camera.position).normalized * 0.24f - Vector3.up * 0.49f, transform.position - camCon.Camera.position);*/
-
-        if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && hit.collider.CompareTag("Player") || visibleToPlayer)
+    void PathFindingLogic()
+    {
+        if ((Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && 
+            hit.collider.CompareTag("Player")) || Visible)
         {
             Chase();
         }
         else if (chasing)
         {
             chasing = false;
-            patrolStep = false;
-            state = EnemyState.Inspect;
             NoiseHeardNav(player.position);
         }
         else if (state != EnemyState.Inspect)
         {
             Patrol();
         }
+    }
 
+    void DoorCheck()
+    {
         if (state != EnemyState.Patrol && Physics.Raycast(transform.position, transform.forward, out RaycastHit doorHit, doorOpenDistance)
             && doorHit.transform.CompareTag("Door"))
         {
@@ -128,14 +151,6 @@ public class Enemy : MonoBehaviour
             {
                 door1.ForceOpen();
             }
-        }
-    }
-
-    private void OnValidate()
-    {
-        if (chaseRange < chaseStopDistance)
-        {
-            chaseRange = chaseStopDistance;
         }
     }
 
@@ -187,11 +202,6 @@ public class Enemy : MonoBehaviour
             StopCoroutine(inspectCoroutine);
 
         chasing = true;
-
-        if (Vector3.Distance(destination, transform.position) < chaseRange)
-        {
-            GameManager.Instance.playerController.JumpscareDie(transform.position + (Vector3.up / 2));
-        }
     }
 
     public void NoiseHeardNav(Vector3 noisePosition)
@@ -208,6 +218,7 @@ public class Enemy : MonoBehaviour
 
         state = EnemyState.Inspect;
         agent.speed = inspectSpeed;
+        patrolStep = false;
 
         destination = noisePosition;
         agent.SetDestination(destination);
@@ -231,9 +242,9 @@ public class Enemy : MonoBehaviour
     {
         agent.Warp(position);
         agent.ResetPath();
-        state = EnemyState.Patrol;
         patrolStep = false;
-        agent.velocity = Vector3.zero;
+        CanKill = true;
+        state = EnemyState.Patrol;
     }
 
     // The function, when called without specifying the time, will stop the agent, until it is let to continue;
@@ -243,8 +254,10 @@ public class Enemy : MonoBehaviour
         patrolStep = false;
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
+
         if (patrolCoroutine != null)
             StopCoroutine(patrolCoroutine);
+        
         if (time != 0)
         {
             fullyStopped = true;
@@ -258,7 +271,7 @@ public class Enemy : MonoBehaviour
 
     public void Continue()
     {
-        if (fullyStopped || !GameManager.Instance.ElevatorOpen)
+        if (fullyStopped)
             return;
 
         agent.isStopped = false;
@@ -268,15 +281,22 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitUntil(() => 
         {
-            return !visibleToPlayer;
+            return !Visible;
         });
+
+        if (GameManager.Instance.playerController.Dead)
+        {
+            StartCoroutine(ChangePose());
+            yield break;
+        }
+
         if (state == EnemyState.Chase || state == EnemyState.Inspect)
         {
             animator.SetInteger("State", UnityEngine.Random.Range(firstRun, lastRun + 1));
             yield return new WaitForSeconds(timeBetweenPoses);
             yield return new WaitUntil(() =>
             {
-                return visibleToPlayer || state == EnemyState.Patrol;
+                return Visible || state == EnemyState.Patrol;
             });
             StartCoroutine(ChangePose());
             yield break;
@@ -287,7 +307,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenPoses);
             yield return new WaitUntil(() =>
             {
-                return visibleToPlayer || state != EnemyState.Patrol;
+                return Visible || state != EnemyState.Patrol;
             });
             StartCoroutine(ChangePose());
             yield break;

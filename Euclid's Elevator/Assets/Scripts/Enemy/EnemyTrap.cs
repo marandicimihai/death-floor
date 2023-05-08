@@ -23,13 +23,16 @@ public class EnemyTrap : MonoBehaviour
     {
         initial = baseBone.rotation;
 
-        GameManager.Instance.OnElevatorDoorClosed += (object sender, EventArgs args) =>
+        GameManager.Instance.OnElevatorDoorClosed += OnClosed;
+    }
+
+    void OnClosed(object sender, EventArgs args)
+    {
+        if (used)
         {
-            if (used)
-            {
-                Destroy(this.gameObject);
-            }
-        };
+            Destroy(this.gameObject);
+            GameManager.Instance.OnElevatorDoorClosed -= OnClosed;
+        }
     }
 
     private void OnValidate()

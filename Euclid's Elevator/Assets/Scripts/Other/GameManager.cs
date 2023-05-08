@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
+    #region GameLoop
+
     //called once
     void StartGame()
     {
@@ -119,6 +121,7 @@ public class GameManager : MonoBehaviour
             }
         }));
     }
+
     //moves on to next stage
     IEnumerator NextStage()
     {
@@ -146,6 +149,9 @@ public class GameManager : MonoBehaviour
         waitingForPlayer = false;
     }
 
+    #endregion
+
+    #region Elevator
     //used to check if player has keycard to move on to next stage
     public bool InsertItem(ItemObject requirement)
     {
@@ -166,6 +172,9 @@ public class GameManager : MonoBehaviour
         OnElevatorDoorClosed?.Invoke(this, new EventArgs());
     }
 
+    #endregion
+
+    #region Other
     [MenuItem("Developer/Next Stage")]
     public static void NextStageDev()
     {
@@ -174,7 +183,7 @@ public class GameManager : MonoBehaviour
     
     void SpawnPlayer()
     {
-        player.SetPositionAndRotation(playerSpawn.position, Quaternion.identity);
+        player.position = playerSpawn.position;
 
         SoundManager.Instance.StopSound("Hum");
         SoundManager.Instance.PlaySound("ElevatorHum");
@@ -192,6 +201,7 @@ public class GameManager : MonoBehaviour
         enemyController.Stop(timeUntilOpenElevator);
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
+            enemyController.CanKill = true;
             enemyController.Spawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
         }));
     }
@@ -251,7 +261,14 @@ public class GameManager : MonoBehaviour
         }
         foreach(AudioSource s in FindObjectsOfType<AudioSource>())
         {
-            s.Pause();
+            if (!SoundManager.Instance.realtime.Contains(s))
+            {
+                s.Pause();
+            }
+        }
+        if (!playerController.journal.InJournalView)
+        {
+            playerController.journal.CancelExitCall();
         }
         Time.timeScale = 0;
     }
@@ -268,7 +285,7 @@ public class GameManager : MonoBehaviour
         {
             s.UnPause();
         }
-        playerController.journal.ExitJournalView();
+        StartCoroutine(playerController.journal.CallExitWhenAvailable());
         Time.timeScale = 1;
     }
 
@@ -284,6 +301,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(WaitAndExec(time, exec, repeat));
         }
     }
+    #endregion
 }
 
 #region EventArgs

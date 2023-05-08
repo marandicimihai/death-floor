@@ -7,27 +7,53 @@ using System;
 
 public class Journal : MonoBehaviour
 {
+    [Header("Journal")]
     [SerializeField] AnimationClip openJournal;
     [SerializeField] AnimationClip closeJournal;
     [SerializeField] float flipPageTime;
+    [SerializeField] float holdTime;
     [SerializeField] Animator journal;
     [SerializeField] UIManager UIManager;
+    [Header("Pages")]
     [SerializeField] Transform leftPage;
     [SerializeField] Transform rightPage;
     [SerializeField] Text leftPageNumber;
     [SerializeField] Text rightPageNumber;
+    [Header("Sliders")]
+    [SerializeField] GameObject sliderobjleft;
+    [SerializeField] GameObject sliderobjright;
+    [SerializeField] Image leftSlider;
+    [SerializeField] Image rightSlider;
+    [Header("Pages")]
     [SerializeField] List<JournalPage> pages;
 
     int currentPage;
-    bool inJournalView;
+    public bool InJournalView { get; private set; }
     bool journalUIOn;
     bool canFlip;
+    bool exitQueued;
+
+    string inputname;
+    float startTime;
+    bool holding;
 
     private void Start()
     {
         GameManager.Instance.playerController.PlayerInputActions.General.Journal.performed += ToggleJournal;
-        GameManager.Instance.playerController.PlayerInputActions.General.PageRight.performed += NextPage;
-        GameManager.Instance.playerController.PlayerInputActions.General.PageLeft.performed += PreviousPage;
+        GameManager.Instance.playerController.PlayerInputActions.General.PageRight.started += (InputAction.CallbackContext context) => 
+        {
+            inputname = context.action.name;
+            startTime = Time.unscaledTime;
+            StartCoroutine(HoldSlider(inputname));
+        };
+        GameManager.Instance.playerController.PlayerInputActions.General.PageLeft.started += (InputAction.CallbackContext context) =>
+        {
+            inputname = context.action.name;
+            startTime = Time.unscaledTime;
+            StartCoroutine(HoldSlider(inputname));
+        };
+        GameManager.Instance.playerController.PlayerInputActions.General.PageRight.canceled += NextPage;
+        GameManager.Instance.playerController.PlayerInputActions.General.PageLeft.canceled += PreviousPage;
         canFlip = true;
         currentPage = 1;
     }
@@ -36,7 +62,7 @@ public class Journal : MonoBehaviour
 
     void ToggleJournal(InputAction.CallbackContext context)
     {
-        if (inJournalView)
+        if (InJournalView)
         {
             ExitJournalView();
         }
@@ -48,28 +74,32 @@ public class Journal : MonoBehaviour
 
     void EnterJournalView()
     {
-        if (GameManager.Paused || inJournalView || GameManager.Instance.playerController.Dead)
+        if (GameManager.Paused || InJournalView || GameManager.Instance.playerController.Dead)
             return;
 
-        inJournalView = true;
+        GameManager.Instance.Pause();
+        InJournalView = true;
 
         journal.gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound("JournalOpen");
+        SoundManager.Instance.PlaySound("JournalOpen", true);
         journal.SetBool("Open", true);
         UIManager.EnterJournalView();
 
         StartCoroutine(WaitAndExecRT(openJournal.length, () =>
         {
+            journalUIOn = true;
+
+            if (exitQueued)
+                return;
+
             UIManager.OpenJournalUI();
             RefreshView();
-            journalUIOn = true;
         }));
-        GameManager.Instance.Pause();
     }
 
     public void ExitJournalView()
     {
-        if (!inJournalView || !journalUIOn)
+        if (!InJournalView || !journalUIOn)
             return;
 
         journalUIOn = false;
@@ -77,7 +107,7 @@ public class Journal : MonoBehaviour
         StartCoroutine(WaitAndExecRT(closeJournal.length, () =>
         {
             journal.gameObject.SetActive(false);
-            inJournalView = false;
+            InJournalView = false;
         }));
         SoundManager.Instance.PlaySound("JournalClose");
         journal.SetBool("Open", false);
@@ -105,6 +135,31 @@ public class Journal : MonoBehaviour
         rightPageNumber.text = (currentPage + 1).ToString();
     }
 
+    public IEnumerator CallExitWhenAvailable()
+    {
+        if (exitQueued)
+            yield break;
+
+        exitQueued = true;
+
+        yield return new WaitUntil(() =>
+        {
+            return !(!InJournalView || !journalUIOn);
+        });
+
+        if (!exitQueued)
+            yield break;
+
+        exitQueued = false;
+
+        ExitJournalView();
+    }
+
+    public void CancelExitCall()
+    {
+        exitQueued = false;
+    }
+
     #endregion
 
     public void AddPage(JournalPage page)
@@ -123,13 +178,30 @@ public class Journal : MonoBehaviour
 
     void NextPage(InputAction.CallbackContext context)
     {
-        if (!inJournalView || !canFlip)
+        holding = false;
+
+        if (!InJournalView || !canFlip)
             return;
 
-        if (currentPage + 2 <= pages.Count)
+        if (Time.unscaledTime - startTime > holdTime && inputname == context.action.name)
         {
-            currentPage += 2;
-            SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3"});
+            if (pages.Count % 2 == 0)
+            {
+                currentPage = pages.Count - 1;
+            }
+            else
+            {
+                currentPage = pages.Count;
+            }
+            SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3" });
+        }
+        else
+        {
+            if (currentPage + 2 <= pages.Count)
+            {
+                currentPage += 2;
+                SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3"});
+            }
         }
 
         canFlip = false;
@@ -143,13 +215,23 @@ public class Journal : MonoBehaviour
 
     void PreviousPage(InputAction.CallbackContext context)
     {
-        if (!inJournalView || !canFlip)
+        holding = false;
+
+        if (!InJournalView || !canFlip)
             return;
 
-        if (currentPage - 2 >= 1)
+        if (Time.unscaledTime - startTime > holdTime && inputname == context.action.name)
         {
-            currentPage -= 2;
+            currentPage = 1;
             SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3" });
+        }
+        else
+        {
+            if (currentPage - 2 >= 1)
+            {
+                currentPage -= 2;
+                SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3" });
+            }
         }
 
         canFlip = false;
@@ -159,6 +241,36 @@ public class Journal : MonoBehaviour
         }));
 
         RefreshView();
+    }
+
+    IEnumerator HoldSlider(string inputName)
+    {
+        if (inputName == "PageRight")
+        {
+            sliderobjright.SetActive(true);
+            sliderobjleft.SetActive(false);
+        }
+        else if (inputName == "PageLeft")
+        {
+            sliderobjright.SetActive(false);
+            sliderobjleft.SetActive(true);
+        }
+        holding = true;
+        yield return new WaitUntil(() =>
+        {
+            if (inputName == "PageRight")
+            {
+                rightSlider.fillAmount = (Time.unscaledTime - startTime) / holdTime;
+            }
+            else if (inputName == "PageLeft")
+            {
+                leftSlider.fillAmount = (Time.unscaledTime - startTime) / holdTime;
+            }
+            return !holding;
+        });
+
+        sliderobjright.SetActive(false);
+        sliderobjleft.SetActive(false);
     }
 
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)

@@ -39,7 +39,7 @@ public class Insanity : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.enemyController.visibleToPlayer)
+        if (GameManager.Instance.enemyController.Visible)
         {
             if (t < insanityTime)
                 t += Time.deltaTime;

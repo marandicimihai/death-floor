@@ -29,7 +29,7 @@ public class Lockpick : MonoBehaviour
 
     IEnumerator PickLockC(Door door, InteractionSettings settings)
     {
-        bar.StartAction();
+        bar.StartAction("PickLock");
         picking = true;
         SoundManager.Instance.PlaySound("LockPick", boost);
         float timeElapsed = 0;
@@ -50,7 +50,7 @@ public class Lockpick : MonoBehaviour
                 yield break;
             }
             
-            bar.SetSliderValue((timeElapsed) / (pickDuration) * 100);
+            bar.SetSliderValue("PickLock", (timeElapsed) / (pickDuration));
 
             yield return null;
         }
@@ -61,7 +61,7 @@ public class Lockpick : MonoBehaviour
 
     public void StopPicking()
     {
-        bar.StopAction();
+        bar.StopAction("PickLock");
         SoundManager.Instance.StopSound("LockPick");
         picking = false;
     }
@@ -104,8 +104,8 @@ public class Lockpick : MonoBehaviour
             }
             if (timeElapsed >= doorLockHoldTime)
             {
-                bar.StartAction();
-                bar.SetSliderValue((timeElapsed - doorLockHoldTime) / (lockDuration - doorLockHoldTime) * 100);
+                bar.StartAction("LockLock");
+                bar.SetSliderValue("LockLock", (timeElapsed - doorLockHoldTime) / (lockDuration - doorLockHoldTime));
             }
 
             yield return null;
@@ -118,7 +118,7 @@ public class Lockpick : MonoBehaviour
 
     public void StopLocking()
     {
-        bar.StopAction();
+        bar.StopAction("LockLock");
         locking = false;
     }
 
