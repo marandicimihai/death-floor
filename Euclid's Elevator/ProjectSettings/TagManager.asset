@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Door
   - ItemHole
+  - Elevator
   layers:
   - Default
   - TransparentFX

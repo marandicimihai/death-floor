@@ -79,12 +79,7 @@ public class GameManager : MonoBehaviour
     {
         SpawnPlayer();
         SpawnEnemy();
-        StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
-        {
-            SoundManager.Instance.PlaySound("ElevatorStop");
-            SoundManager.Instance.StopSound("ElevatorHum");
-            elevator.OpenElevator();
-        }));
+        InitElevator();
 
         stage = 1;
         OnStageStart?.Invoke(this, new StageArgs(stage));
@@ -97,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         elevator.CloseElevator();
         elevator.BreakDown();
-        enemyController.Stop();
+        enemyController.Stop(timeAfterDeath);
 
         StartCoroutine(WaitAndExec(timeAfterDeath, () =>
         {
@@ -112,12 +107,7 @@ public class GameManager : MonoBehaviour
                 OnDeath?.Invoke(this, new DeathArgs(deaths));
                 SpawnPlayer();
                 SpawnEnemy();
-                StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
-                {
-                    SoundManager.Instance.PlaySound("ElevatorStop");
-                    SoundManager.Instance.StopSound("ElevatorHum");
-                    elevator.OpenElevator();
-                }));
+                InitElevator();
             }
         }));
     }
@@ -140,12 +130,7 @@ public class GameManager : MonoBehaviour
         OnStageStart?.Invoke(this, new StageArgs(stage));
 
         SpawnEnemy();
-        StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
-        {
-            SoundManager.Instance.PlaySound("ElevatorStop");
-            SoundManager.Instance.StopSound("ElevatorHum");
-            elevator.OpenElevator();
-        }));
+        InitElevator();
         waitingForPlayer = false;
     }
 
@@ -198,11 +183,16 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        enemyController.Stop(timeUntilOpenElevator);
+        enemyController.Reset(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position, timeUntilOpenElevator - 0.5f);
+    }
+
+    void InitElevator()
+    {
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
-            enemyController.CanKill = true;
-            enemyController.Spawn(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position);
+            SoundManager.Instance.PlaySound("ElevatorStop");
+            SoundManager.Instance.StopSound("ElevatorHum");
+            elevator.OpenElevator();
         }));
     }
 

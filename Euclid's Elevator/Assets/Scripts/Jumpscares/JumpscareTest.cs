@@ -17,7 +17,7 @@ public class JumpscareTest : JumpscareBase
 
     protected override void OnJumpscareTriggered()
     {
-        GameManager.Instance.enemyController.Spawn(enemySpawn);
+        GameManager.Instance.enemyController.Reset(enemySpawn, 0);
         Debug.Log("Boo!");
     }
 }

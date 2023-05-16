@@ -26,6 +26,13 @@ public class SoundManager : MonoBehaviour
         GameManager.MakePausable(this);
     }
 
+    public AudioSource GetSound(string name)
+    {
+        Sound sound = Array.Find(sounds, (Sound current) => current.name == name);
+
+        return sound.source;
+    }
+
     public void PlaySound(string name, float playbackSpeed = 1, bool realtime = false)
     {
         Sound sound = Array.Find(sounds, (Sound current) => current.name == name);

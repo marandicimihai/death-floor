@@ -8,6 +8,7 @@ public class Lockpick : MonoBehaviour
     [SerializeField] float pickDuration;
     [SerializeField] float lockDuration;
     [SerializeField] float doorLockHoldTime;
+    [SerializeField] float alertEnemyTime;
 
     float boost;
     bool picking;
@@ -50,6 +51,11 @@ public class Lockpick : MonoBehaviour
                 yield break;
             }
             
+            if (timeElapsed >= alertEnemyTime)
+            {
+                GameManager.Instance.enemyController.NoiseHeardNav(door.transform.position);
+            }
+
             bar.SetSliderValue("PickLock", (timeElapsed) / (pickDuration));
 
             yield return null;

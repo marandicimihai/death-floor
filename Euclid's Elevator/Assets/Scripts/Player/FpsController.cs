@@ -158,7 +158,14 @@ public class FpsController : MonoBehaviour
         
         if (steps > prev && !sneaking && input != Vector2.zero && controller.velocity.magnitude >= 0.2f)
         {
-            SoundManager.Instance.PlaySound($"Footstep{(steps % 4) + 1}");;
+            if (Physics.Raycast(new Ray(transform.position + controller.center, Vector3.down), out RaycastHit floor, controller.height / 2 + slopeCheckExtension, whatIsGround) && floor.collider.CompareTag("Elevator"))
+            {
+                SoundManager.Instance.PlaySound($"ElevStep{(steps % 3) + 1}");
+            }
+            else
+            {
+                SoundManager.Instance.PlaySound($"Footstep{(steps % 4) + 1}");
+            }
             GameManager.Instance.enemyController.NoiseHeardNav(transform.position);
         }
 

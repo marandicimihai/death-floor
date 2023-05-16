@@ -41,6 +41,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] int lastPose;
     [SerializeField] float timeBetweenPoses;
 
+    [Header("Sound")]
+    [SerializeField] AudioSource drag;
+    [SerializeField] float dragFadeTime; 
+
     public bool Visible;
     public bool CanKill;
 
@@ -48,10 +52,13 @@ public class Enemy : MonoBehaviour
     CameraController camCon;
     EnemyState state;
 
-    IEnumerator patrolCoroutine, inspectCoroutine;
+    IEnumerator patrolCoroutine, inspectCoroutine, doorCoroutine;
 
     Vector3 destination;
 
+    float dragVol;
+
+    bool ambianceStarted;
     bool fullyStopped;
     bool patrolStep;
     bool chasing;
@@ -62,6 +69,7 @@ public class Enemy : MonoBehaviour
         camCon = player.GetComponent<CameraController>();
         GameManager.MakePausable(this);
         StartCoroutine(ChangePose());
+        drag.Play();
     }
 
     private void Update()
@@ -81,6 +89,19 @@ public class Enemy : MonoBehaviour
             }
             GameManager.Instance.playerController.JumpscareDie();
         }
+
+        if (agent.velocity.magnitude >= 0.1f)
+        {
+            dragVol += Time.deltaTime / dragFadeTime;
+        }
+        else
+        {
+            dragVol -= Time.deltaTime / dragFadeTime;
+        }
+
+        dragVol = Mathf.Clamp01(dragVol);
+        drag.volume = dragVol;
+
         CheckVisible();
         PathFindingLogic();
         DoorCheck();
@@ -125,6 +146,12 @@ public class Enemy : MonoBehaviour
         }
         else if (state != EnemyState.Inspect)
         {
+            if (ambianceStarted)
+            {
+                SoundManager.Instance.StopSound("MusicalMid");
+                SoundManager.Instance.PlaySound("MusicalEnd");
+                ambianceStarted = false;
+            }
             Patrol();
         }
     }
@@ -132,22 +159,29 @@ public class Enemy : MonoBehaviour
     void DoorCheck()
     {
         if (state != EnemyState.Patrol && Physics.Raycast(transform.position, transform.forward, out RaycastHit doorHit, doorOpenDistance)
-            && doorHit.transform.CompareTag("Door"))
+            && doorHit.transform.CompareTag("Door") && !agent.isStopped)
         {
             Door door1 = doorHit.transform.GetComponentInParent<Door>();
-            if (door1.locked)
+            if (door1.locked && doorCoroutine == null)
             {
-                StartCoroutine(WaitAndExec(openDoorTime, () =>
+                doorCoroutine = WaitAndExec(openDoorTime, () =>
                 {
                     if (state != EnemyState.Patrol && Physics.Raycast(transform.position, transform.forward, out RaycastHit rayHit, doorOpenDistance)
-                        && rayHit.transform.CompareTag("Door"))
+                        && rayHit.transform.CompareTag("Door") && !agent.isStopped)
                     {
                         Door door = rayHit.transform.GetComponentInParent<Door>();
+                        if (door != door1)
+                        {
+                            return;
+                        }
                         door.ForceOpen();
                     }
-                }));
+                    doorCoroutine = null;
+                });
+
+                StartCoroutine(doorCoroutine);
             }
-            else
+            else if (doorCoroutine == null)
             {
                 door1.ForceOpen();
             }
@@ -201,6 +235,17 @@ public class Enemy : MonoBehaviour
         if (!chasing && inspectCoroutine != null)
             StopCoroutine(inspectCoroutine);
 
+        if (!ambianceStarted)
+        {
+            SoundManager.Instance.PlaySound("MusicalStart");
+
+            StartCoroutine(WaitAndExec(SoundManager.Instance.GetSound("MusicalStart").clip.length, () =>
+            {
+                SoundManager.Instance.PlaySound("MusicalMid");
+            }));
+            ambianceStarted = true;
+        }
+
         chasing = true;
     }
 
@@ -220,7 +265,7 @@ public class Enemy : MonoBehaviour
         agent.speed = inspectSpeed;
         patrolStep = false;
 
-        destination = noisePosition;
+        destination = noisePosition + (noisePosition + transform.position).normalized * 2;
         agent.SetDestination(destination);
 
         inspectCoroutine = NoiseHeard(destination, inspectThreshold);
@@ -238,13 +283,19 @@ public class Enemy : MonoBehaviour
         state = EnemyState.Patrol;
     }
 
-    public void Spawn(Vector3 position)
+    public void Reset(Vector3 position, float time)
     {
         agent.Warp(position);
         agent.ResetPath();
-        patrolStep = false;
-        CanKill = true;
-        state = EnemyState.Patrol;
+        Stop(time);
+        StartCoroutine(WaitAndExec(time, ()=>
+        {
+            agent.Warp(position);
+            agent.ResetPath();
+            state = EnemyState.Patrol;
+            patrolStep = false;
+            CanKill = true;
+        }));
     }
 
     // The function, when called without specifying the time, will stop the agent, until it is let to continue;

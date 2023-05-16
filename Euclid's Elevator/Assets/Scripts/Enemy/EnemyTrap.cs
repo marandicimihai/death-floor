@@ -13,6 +13,12 @@ public class EnemyTrap : MonoBehaviour
     [SerializeField] float lookAroundTimeInterval;
     [SerializeField] float turnTime;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource ambiance;
+    [SerializeField] AudioSource hit;
+    [SerializeField] AudioSource screech;
+    [SerializeField] AudioSource exit;
+
     Quaternion initial;
 
     float time;
@@ -56,15 +62,13 @@ public class EnemyTrap : MonoBehaviour
 
             if (Vector3.Distance(GameManager.Instance.player.position, transform.position) < deathRadius)
             {
+                hit.Play();
+                screech.Play();
+
                 anim.SetTrigger("Kill");
                 GameManager.Instance.playerController.TrapDie();
                 used = true;
             }
-        }
-
-        if (!pull && used)
-        {
-            anim.SetTrigger("Burrow");
         }
 
         if (!pull && !used)
@@ -114,6 +118,9 @@ public class EnemyTrap : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            anim.SetTrigger("Burrow");
+            ambiance.Stop();
+            exit.Play();
             pull = false;
             used = true;
         }
