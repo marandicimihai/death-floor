@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
 
     float dragVol;
 
-    bool ambianceStarted;
+    bool ambianceStarted, ambianceMid;
     bool fullyStopped;
     bool patrolStep;
     bool chasing;
@@ -146,11 +146,14 @@ public class Enemy : MonoBehaviour
         }
         else if (state != EnemyState.Inspect)
         {
-            if (ambianceStarted)
+            if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && ambianceStarted)
             {
-                SoundManager.Instance.StopSound("MusicalMid");
-                SoundManager.Instance.PlaySound("MusicalEnd");
+                SoundManager.Instance.StopSoundLoop("MusicalMid", () =>
+                {
+                    SoundManager.Instance.PlaySound("MusicalEnd");
+                });
                 ambianceStarted = false;
+                ambianceMid = false;
             }
             Patrol();
         }
@@ -235,17 +238,21 @@ public class Enemy : MonoBehaviour
         if (!chasing && inspectCoroutine != null)
             StopCoroutine(inspectCoroutine);
 
+        SoundManager.Instance.StopSound("MusicalEnd");
         if (!ambianceStarted)
         {
             SoundManager.Instance.PlaySound("MusicalStart");
-
-            StartCoroutine(WaitAndExec(SoundManager.Instance.GetSound("MusicalStart").clip.length, () =>
-            {
-                SoundManager.Instance.PlaySound("MusicalMid");
-            }));
             ambianceStarted = true;
         }
-
+        else
+        {
+            if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && !ambianceMid)
+            {
+                SoundManager.Instance.PlaySound("MusicalMid");
+                ambianceMid = true;
+            }
+        }
+        
         chasing = true;
     }
 

@@ -96,6 +96,19 @@ public class SoundManager : MonoBehaviour
         sound.source.Stop();
     }
 
+    public void StopSoundLoop(string name, Action onStopLoop = null)
+    {
+        Sound sound = Array.Find(sounds, (Sound current) => current.name == name);
+
+        if (sound.name == null)
+        {
+            Debug.Log("Couldn't find sound");
+            return;
+        }
+
+        StartCoroutine(StopLoop(sound, onStopLoop));
+    }
+
     public void PlaySound(string[] randomSounds, bool realtime = false)
     {
         int index = UnityEngine.Random.Range(0, randomSounds.Length);
@@ -155,5 +168,20 @@ public class SoundManager : MonoBehaviour
         s.Play();
         yield return new WaitForSeconds(s.clip.length);
         realtime.Remove(s);
+    }
+
+    IEnumerator StopLoop(Sound sound, Action onStopLoop)
+    {
+        float t = sound.source.time;
+        if (t > 0)
+        {
+            while (t < sound.source.clip.length)
+            {
+                t += Time.deltaTime * sound.source.pitch;
+                yield return null;
+            }
+        }
+        sound.source.Stop();
+        onStopLoop?.Invoke();
     }
 }

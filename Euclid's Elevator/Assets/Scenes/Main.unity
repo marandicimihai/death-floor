@@ -20866,7 +20866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1620492d54b8bb047b46808596d17948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invincible: 0
+  invincible: 1
   insanity: {fileID: 1288032392}
   cameraController: {fileID: 1288032385}
   lockpick: {fileID: 1288032393}

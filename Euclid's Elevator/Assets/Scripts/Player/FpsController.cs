@@ -396,7 +396,7 @@ public class FpsController : MonoBehaviour
 
     void CallDeath()
     {
-        if (GameManager.Instance != null)
+        if (GameManager.Instance != null && !invincible)
             GameManager.Instance.PlayerDied();
     }
 

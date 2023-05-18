@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         stage++;
         OnStageStart?.Invoke(this, new StageArgs(stage));
 
-        SpawnEnemy();
+        StartCoroutine(WaitAndExec(1.5f, () => SpawnEnemy()));
         InitElevator();
         waitingForPlayer = false;
     }
@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        enemyController.Reset(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position, timeUntilOpenElevator - 0.5f);
+        enemyController.Reset(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position, 1);
     }
 
     void InitElevator()
