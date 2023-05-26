@@ -5,6 +5,13 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 
+[Serializable]
+struct EnemySpawn
+{
+    public Transform spawn;
+    public int stage;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -37,7 +44,7 @@ public class GameManager : MonoBehaviour
     [Header("Spawn Settings")]
     [SerializeField] int maxDeaths;
     [SerializeField] Transform playerSpawn;
-    [SerializeField] Transform[] oogaManSpawns;
+    [SerializeField] EnemySpawn[] oogaManSpawns;
     [SerializeField] float shakeTime;
     [SerializeField] float shakeMag;
 
@@ -57,11 +64,12 @@ public class GameManager : MonoBehaviour
 
     bool waitingForPlayer;
 
-    int stage;
+    public int stage;
     int deaths;
 
     private void Awake()
     {
+        stage = 1;
         Instance = this;
         pausable = new List<MonoBehaviour>();
     }
@@ -77,14 +85,14 @@ public class GameManager : MonoBehaviour
     //called once
     void StartGame()
     {
-        SpawnPlayer();
-        SpawnEnemy();
-        InitElevator();
-
         stage = 1;
         OnStageStart?.Invoke(this, new StageArgs(stage));
 
         OnSpawn?.Invoke(this, new EventArgs());
+
+        SpawnPlayer();
+        SpawnEnemy();
+        InitElevator();
     }
 
     //respawns player and enemy
@@ -100,7 +108,7 @@ public class GameManager : MonoBehaviour
             if (deaths >= maxDeaths)
             {
                 OnEnd?.Invoke(this, new EventArgs());
-                //END MENU
+                Debug.Log("Game Over! U ded!");
             }
             else
             {
@@ -126,8 +134,15 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.StopSound("Hum");
         StartCoroutine(playerController.cameraController.Shake(shakeTime, shakeMag));
 
-        stage++;
-        OnStageStart?.Invoke(this, new StageArgs(stage));
+        if (stage >= stages )
+        {
+            Debug.Log("You won!");
+        }
+        else
+        {
+            stage++;
+            OnStageStart?.Invoke(this, new StageArgs(stage));
+        }
 
         StartCoroutine(WaitAndExec(1.5f, () => SpawnEnemy()));
         InitElevator();
@@ -183,7 +198,16 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        enemyController.Reset(oogaManSpawns[UnityEngine.Random.Range(0, oogaManSpawns.Length)].position, 1);
+        List<EnemySpawn> spawns = new List<EnemySpawn>();
+        foreach (EnemySpawn spawn in oogaManSpawns)
+        {
+            if (spawn.stage <= stage)
+            {
+                spawns.Add(spawn);
+            }
+        }
+
+        enemyController.Reset(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position, 1);
     }
 
     void InitElevator()
@@ -195,6 +219,8 @@ public class GameManager : MonoBehaviour
             elevator.OpenElevator();
         }));
     }
+
+    #endregion
 
     #region Pause
 
@@ -279,7 +305,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-#endregion
+    #endregion
 
     IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)
     {
@@ -291,7 +317,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(WaitAndExec(time, exec, repeat));
         }
     }
-    #endregion
 }
 
 #region EventArgs

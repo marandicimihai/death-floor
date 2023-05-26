@@ -99,6 +99,11 @@ public class Enemy : MonoBehaviour
             dragVol -= Time.deltaTime / dragFadeTime;
         }
 
+        if (state == EnemyState.Patrol)
+        {
+            dragVol = 0;
+        }
+
         dragVol = Mathf.Clamp01(dragVol);
         drag.volume = dragVol;
 

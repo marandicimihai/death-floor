@@ -249,7 +249,7 @@ public class FpsController : MonoBehaviour
 
                 if (!door.Toggle())
                 {
-                    for(int i = 0; i < inventory.Items.Length - 1; i++)
+                    for(int i = 0; i < inventory.Items.Length; i++)
                     {
                         if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && door.Toggle(inventory.Items[i].itemObj))
                         {
@@ -268,7 +268,7 @@ public class FpsController : MonoBehaviour
             }
             else if (hit.transform.CompareTag("ItemHole") && !GameManager.Instance.elevator.Broken)
             {
-                for (int i = 0; i < inventory.Items.Length - 1; i++)
+                for (int i = 0; i < inventory.Items.Length; i++)
                 {
                     if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && GameManager.Instance.InsertItem(inventory.Items[i].itemObj))
                     {
@@ -283,7 +283,7 @@ public class FpsController : MonoBehaviour
             }
             else if (hit.transform.CompareTag("ItemHole") && GameManager.Instance.elevator.Broken)
             {
-                for (int i = 0; i < inventory.Items.Length - 1; i++)
+                for (int i = 0; i < inventory.Items.Length; i++)
                 {
                     if (inventory.Items[i] != null && inventory.Items[i].itemObj != null && GameManager.Instance.elevator.Repair(inventory.Items[i].itemObj))
                     {

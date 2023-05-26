@@ -17,7 +17,7 @@ TagManager:
   - Items
   - Enemy
   - PostProcessing
-  - Not in Reflection
+  - DoorFrame
   - Walls
   - Trap
   - Outlined Obj

@@ -999,7 +999,7 @@ GameObject:
   - component: {fileID: 5047833103351873854}
   - component: {fileID: 7468405049454952417}
   - component: {fileID: 3174685667772055347}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DoorFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1098,7 +1098,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7036435676490716213}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

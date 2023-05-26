@@ -2,153 +2,88 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [System.Serializable]
+struct SpawnerGroup
+{
+    public ItemSpawner[] spawners;
+    public int activeStage;
+}
+[System.Serializable]
 struct ItemSpawn
 {
     public ItemObject item;
-    public int priority;
-    [Range(0, 100)]
-    public float probability;
+    public int probability;
 }
 
 public class ItemManager : MonoBehaviour
 {
-    [SerializeField] ItemSpawner[] spawners;
+    [SerializeField] SpawnerGroup[] spawnerGroups;
     [SerializeField] ItemSpawn[] spawns;
+    [SerializeField] ItemObject spawnOnDeath;
+    [SerializeField] ItemObject spawnOnStage;
 
     private void Awake()
     {
-        SpawnItems();
-    }
 
-    private void OnValidate()
-    {
-        if (spawns.Length <= 1)
-            return;
-
-        SortPriority();
-        int i = spawns[0].priority, from = 0, index = 0;
-        foreach(ItemSpawn s in spawns)
+        GameManager.Instance.OnDeath += (object caller, DeathArgs args) =>
         {
-            if (i != s.priority)
+            SpawnItem(spawnOnDeath);
+        };
+
+        GameManager.Instance.OnStageStart += (object caller, StageArgs args) =>
+        {
+            if (args.stage != 4)
             {
-                Clamp(from, index);
-                from = index;
-                i = s.priority;
+                SpawnItems();
             }
-            index++;
-        }
-        Clamp(from, index);
+            SpawnItem(spawnOnStage);
+        };
     }
 
     public void SpawnItems()
     {
-        if (spawns.Length <= 1)
-            return;
+        List<ItemSpawner> spawners = new();
 
-        SortPriority();
-        int i = spawns[0].priority, from = 0, index = 0;
-        foreach (ItemSpawn s in spawns)
+        foreach(SpawnerGroup gr in spawnerGroups)
         {
-            if (i != s.priority)
+            if (gr.activeStage == GameManager.Instance.stage)
             {
-                SpawnItemsOfPriority(from, index);
-                from = index;
-                i = s.priority;
+                spawners.AddRange(gr.spawners);
             }
-            index++;
         }
-        SpawnItemsOfPriority(from, index);
-    }
 
-    void SpawnItemsOfPriority(int from, int to)
-    {
-        if (from == to)
-            return;
-
-        //try to spawn every item at most
-        for (int i = from; i < to; i++)
+        foreach (ItemSpawner spawner in spawners)
         {
-            int itemIndex = -1;
+            float probability = Random.Range(0, 100f);
+            float current = -1;
 
-            //calculate item index by probability
-            float prob = Random.Range(1f, 100);
-            float sum = 0;
-            for (int j = from; j < to; j++)
+            for(int i = 0; i < spawns.Length; i++)
             {
-                sum += spawns[j].probability;
-                if (sum >= prob)
+                current += spawns[i].probability;
+                if (current >= probability)
                 {
-                    itemIndex = j;
-                    break;
+                    if (spawner.Spawn(spawns[i].item))
+                    {
+                        break;
+                    }
                 }
-            }
-
-            if (itemIndex == -1)
-                continue;
-
-            //choose spawner
-            int spawnerIndex = Random.Range(0, spawners.Length);
-
-            bool gate = false;
-            for (int j = 0; j < spawners.Length; j++)
-            {
-                if (!spawners[spawnerIndex].hasItem && spawners[spawnerIndex].Spawn(spawns[itemIndex].item))
-                {
-                    gate = true;
-                    break;
-                }
-
-                spawnerIndex = (spawnerIndex + 1) % (spawners.Length);
-            }
-
-            if (!gate)
-            {
-                Debug.Log($"Couldn't find spawner for {spawns[itemIndex].item.name}");
             }
         }
     }
 
-    void SortPriority()
+    public void SpawnItem(ItemObject item)
     {
-        if (spawns.Length <= 1)
-            return;
+        List<ItemSpawner> spawners = new();
 
-        for (int i = 0; i < spawns.Length - 1; i++)
+        foreach (SpawnerGroup gr in spawnerGroups)
         {
-            bool a = true;
-            for (int j = 1; j < spawns.Length; j++)
+            if (gr.activeStage == GameManager.Instance.stage)
             {
-                if (spawns[j - 1].priority > spawns[j].priority)
-                {
-                    ItemSpawn temp = spawns[j];
-                    spawns[j] = spawns[j - 1];
-                    spawns[j - 1] = temp;
-                    a = false;
-                }
+                spawners.AddRange(gr.spawners);
             }
-            if (a)
-                return;
-        }
-    }
-
-    void Clamp(int from, int to)
-    {
-        float sum = 0;
-
-        for (int i = from; i < to; i++)
-        {
-            sum += spawns[i].probability;
         }
 
-        if (sum <= 100)
-            return;
+        int spawnerIndex = Random.Range(0, spawners.Count);
 
-        float surplus = sum - 100;
-
-        for (int i = from; i < to; i++)
-        {
-            spawns[i].probability = spawns[i].probability - surplus * (spawns[i].probability / 100);
-            spawns[i].probability = Mathf.Clamp(spawns[i].probability, 0, 100);
-        }
+        spawners[spawnerIndex].ForceSpawn(item);
     }
 }

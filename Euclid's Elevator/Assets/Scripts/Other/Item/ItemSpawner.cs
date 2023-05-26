@@ -18,4 +18,13 @@ public class ItemSpawner : MonoBehaviour
         }
         return false;
     }
+
+    public void ForceSpawn(ItemObject item)
+    {
+        if (Instantiate(item.prefab, transform.position, Quaternion.identity).TryGetComponent<Item>(out Item itemc))
+        {
+            itemc.uses = itemc.itemObj.uses;
+        }
+        hasItem = true;
+    }
 }
