@@ -14,16 +14,23 @@ struct ItemSpawn
     public int probability;
 }
 
+[System.Serializable]
+struct KeycardSpawn
+{
+    public Transform[] points;
+    public int stage;
+}
+
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] SpawnerGroup[] spawnerGroups;
     [SerializeField] ItemSpawn[] spawns;
+    [SerializeField] KeycardSpawn[] keySpawns;
     [SerializeField] ItemObject spawnOnDeath;
-    [SerializeField] ItemObject spawnOnStage;
+    [SerializeField] ItemObject keycard;
 
     private void Awake()
     {
-
         GameManager.Instance.OnDeath += (object caller, DeathArgs args) =>
         {
             SpawnItem(spawnOnDeath);
@@ -35,11 +42,11 @@ public class ItemManager : MonoBehaviour
             {
                 SpawnItems();
             }
-            SpawnItem(spawnOnStage);
+            SpawnKeycard(args.stage);
         };
     }
 
-    public void SpawnItems()
+    void SpawnItems()
     {
         List<ItemSpawner> spawners = new();
 
@@ -70,7 +77,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void SpawnItem(ItemObject item)
+    void SpawnItem(ItemObject item)
     {
         List<ItemSpawner> spawners = new();
 
@@ -85,5 +92,18 @@ public class ItemManager : MonoBehaviour
         int spawnerIndex = Random.Range(0, spawners.Count);
 
         spawners[spawnerIndex].ForceSpawn(item);
+    }
+
+    void SpawnKeycard(int stage)
+    {
+        foreach (KeycardSpawn spawn in keySpawns)
+        {
+            if (spawn.stage == stage)
+            {
+                int i = Random.Range(0, spawn.points.Length);
+                Instantiate(keycard.prefab, spawn.points[i].position, Quaternion.identity);
+                break;
+            }
+        }
     }
 }
