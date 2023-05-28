@@ -230,6 +230,7 @@ public class FpsController : MonoBehaviour
             if (hit.transform.TryGetComponent(out Item item))
             {
                 inventory.PickUpItem(item);
+                journal.AddPage(item.itemObj.pickUpPage);
             }
             else if (hit.transform.CompareTag("Door"))
             {

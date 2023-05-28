@@ -164,6 +164,8 @@ public class Journal : MonoBehaviour
 
     public void AddPage(JournalPage page)
     {
+        if (page == null)
+            return;
         foreach (JournalPage p in pages)
         {
             if (p.name == page.name)
@@ -185,6 +187,7 @@ public class Journal : MonoBehaviour
 
         if (Time.unscaledTime - startTime > holdTime && inputname == context.action.name)
         {
+            int old = currentPage;
             if (pages.Count % 2 == 0)
             {
                 currentPage = pages.Count - 1;
@@ -193,7 +196,10 @@ public class Journal : MonoBehaviour
             {
                 currentPage = pages.Count;
             }
-            SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3" });
+            if (currentPage != old)
+            {
+                SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3" });
+            }
         }
         else
         {
@@ -220,7 +226,7 @@ public class Journal : MonoBehaviour
         if (!InJournalView || !canFlip)
             return;
 
-        if (Time.unscaledTime - startTime > holdTime && inputname == context.action.name)
+        if (Time.unscaledTime - startTime > holdTime && inputname == context.action.name && currentPage != 1)
         {
             currentPage = 1;
             SoundManager.Instance.PlaySound(new string[3] { "JournalFlip1", "JournalFlip2", "JournalFlip3" });

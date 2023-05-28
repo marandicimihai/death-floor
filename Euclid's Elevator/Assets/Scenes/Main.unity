@@ -7491,12 +7491,7 @@ MonoBehaviour:
   rightSlider: {fileID: 1949589649}
   pages:
   - {fileID: 11400000, guid: 15df6a0344c64984ca9ce4e6cd43ba28, type: 2}
-  - {fileID: 11400000, guid: 15df6a0344c64984ca9ce4e6cd43ba28, type: 2}
-  - {fileID: 11400000, guid: 15df6a0344c64984ca9ce4e6cd43ba28, type: 2}
-  - {fileID: 11400000, guid: 15df6a0344c64984ca9ce4e6cd43ba28, type: 2}
-  - {fileID: 11400000, guid: 15df6a0344c64984ca9ce4e6cd43ba28, type: 2}
-  - {fileID: 11400000, guid: 15df6a0344c64984ca9ce4e6cd43ba28, type: 2}
-  - {fileID: 11400000, guid: 15df6a0344c64984ca9ce4e6cd43ba28, type: 2}
+  - {fileID: 11400000, guid: a3916f1faec3af1458a2df706da855d1, type: 2}
 --- !u!114 &1288032395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12441,7 +12436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1984876290
 Transform:
   m_ObjectHideFlags: 0

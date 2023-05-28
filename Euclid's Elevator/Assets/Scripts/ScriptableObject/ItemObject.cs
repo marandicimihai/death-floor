@@ -11,4 +11,5 @@ public class ItemObject : ScriptableObject
     public string[] drawSounds;
     public string[] useSounds;
     public bool useSoundsInOrder;
+    public JournalPage pickUpPage;
 }

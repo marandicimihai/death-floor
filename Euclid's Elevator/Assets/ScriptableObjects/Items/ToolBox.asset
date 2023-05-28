@@ -22,3 +22,4 @@ MonoBehaviour:
   - ToolBoxDraw
   useSounds: []
   useSoundsInOrder: 0
+  pickUpPage: {fileID: 11400000, guid: 31b7a7dc1155d2a478754178512e8847, type: 2}

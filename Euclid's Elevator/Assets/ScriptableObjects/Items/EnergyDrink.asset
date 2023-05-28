@@ -25,3 +25,4 @@ MonoBehaviour:
   - SodaOpen
   - Swallow
   useSoundsInOrder: 1
+  pickUpPage: {fileID: 11400000, guid: 558980eb0a338a84ba15073b8f1ea8de, type: 2}

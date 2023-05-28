@@ -22,3 +22,5 @@ MonoBehaviour:
   - ItemDraw1
   - ItemDraw2
   useSounds: []
+  useSoundsInOrder: 0
+  pickUpPage: {fileID: 11400000, guid: ad8f490d71d212a47857ff1cfafbb70c, type: 2}
