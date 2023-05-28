@@ -34,7 +34,6 @@ public class Lockpick : MonoBehaviour
         picking = true;
         SoundManager.Instance.PlaySound("LockPick", boost);
         float timeElapsed = 0;
-
         while (timeElapsed < pickDuration)
         {
             timeElapsed += Time.deltaTime * boost;

@@ -175,11 +175,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Other
-    [MenuItem("Developer/Next Stage")]
+    /*[MenuItem("Developer/Next Stage")]
     public static void NextStageDev()
     {
         Instance.StartCoroutine(Instance.NextStage());
-    }
+    }*/
     
     void SpawnPlayer()
     {
@@ -199,11 +199,21 @@ public class GameManager : MonoBehaviour
     void SpawnEnemy()
     {
         List<EnemySpawn> spawns = new List<EnemySpawn>();
-        foreach (EnemySpawn spawn in oogaManSpawns)
+        if (stage == 4)
         {
-            if (spawn.stage <= stage)
+            foreach (EnemySpawn spawn in oogaManSpawns)
             {
                 spawns.Add(spawn);
+            }
+        }
+        else
+        {
+            foreach (EnemySpawn spawn in oogaManSpawns)
+            {
+                if (spawn.stage == stage)
+                {
+                    spawns.Add(spawn);
+                }
             }
         }
 
@@ -224,7 +234,7 @@ public class GameManager : MonoBehaviour
 
     #region Pause
 
-    [MenuItem("Developer/Pause")]
+    /*[MenuItem("Developer/Pause")]
     public static void PauseDev()
     {
         Instance.Pause();
@@ -234,7 +244,7 @@ public class GameManager : MonoBehaviour
     public static void UnpauseDev()
     {
         Instance.Unpause();
-    }
+    }*/
 
     /// <summary>
     /// Use method in OnEnable() or later

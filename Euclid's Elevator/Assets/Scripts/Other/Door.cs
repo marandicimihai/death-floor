@@ -33,8 +33,12 @@ public class Door : MonoBehaviour
 
     private void Awake()
     {
-        StageLocked = true;
+        if (stageUnlock > 1)
+        {
+            StageLocked = true;
+        }
     }
+
     private void Start()
     {
         GameManager.MakePausable(this);

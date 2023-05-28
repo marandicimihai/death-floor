@@ -299,7 +299,8 @@ public class FpsController : MonoBehaviour
 
     private void GetLooking()
     {
-        if (Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask))
+        if (Physics.Raycast(settings.cam.transform.position, settings.cam.transform.forward, out RaycastHit hit, settings.interactionDistance, settings.interactionMask)
+            && !bar.IsActive)
         {
             if (hit.transform.TryGetComponent(out Item item))
             {

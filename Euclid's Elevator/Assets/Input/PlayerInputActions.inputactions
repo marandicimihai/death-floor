@@ -6,15 +6,6 @@
             "id": "073f81ce-2d6d-4d5e-a9bf-da88c85ac1cd",
             "actions": [
                 {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "099ef1b1-470a-4f52-acd6-a086b14b952f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Movement",
                     "type": "Value",
                     "id": "544f4115-38b1-4186-8c7d-188738e1acf6",
@@ -130,20 +121,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "dea35954-aa1e-429f-8ea5-f80f9106510c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "3d470c99-5cb3-4976-93f3-d16db5c796b0",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "a2505d6e-71aa-4e42-908b-773e99dfae90",
@@ -328,6 +317,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "PageLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4a848ce2-a347-4df8-b770-7b510dd3b4ee",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

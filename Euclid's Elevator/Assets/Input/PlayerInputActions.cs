@@ -28,15 +28,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
             ""id"": ""073f81ce-2d6d-4d5e-a9bf-da88c85ac1cd"",
             ""actions"": [
                 {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""099ef1b1-470a-4f52-acd6-a086b14b952f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""544f4115-38b1-4186-8c7d-188738e1acf6"",
@@ -152,20 +143,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""dea35954-aa1e-429f-8ea5-f80f9106510c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""3d470c99-5cb3-4976-93f3-d16db5c796b0"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""a2505d6e-71aa-4e42-908b-773e99dfae90"",
@@ -352,6 +341,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""PageLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a848ce2-a347-4df8-b770-7b510dd3b4ee"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -360,7 +360,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
 }");
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
-        m_General_Interact = m_General.FindAction("Interact", throwIfNotFound: true);
         m_General_Movement = m_General.FindAction("Movement", throwIfNotFound: true);
         m_General_Look = m_General.FindAction("Look", throwIfNotFound: true);
         m_General_Inventory1 = m_General.FindAction("Inventory 1", throwIfNotFound: true);
@@ -374,6 +373,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_General_Journal = m_General.FindAction("Journal", throwIfNotFound: true);
         m_General_PageRight = m_General.FindAction("PageRight", throwIfNotFound: true);
         m_General_PageLeft = m_General.FindAction("PageLeft", throwIfNotFound: true);
+        m_General_Interact = m_General.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -433,7 +433,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     // General
     private readonly InputActionMap m_General;
     private IGeneralActions m_GeneralActionsCallbackInterface;
-    private readonly InputAction m_General_Interact;
     private readonly InputAction m_General_Movement;
     private readonly InputAction m_General_Look;
     private readonly InputAction m_General_Inventory1;
@@ -447,11 +446,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Journal;
     private readonly InputAction m_General_PageRight;
     private readonly InputAction m_General_PageLeft;
+    private readonly InputAction m_General_Interact;
     public struct GeneralActions
     {
         private @PlayerInputActions m_Wrapper;
         public GeneralActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Interact => m_Wrapper.m_General_Interact;
         public InputAction @Movement => m_Wrapper.m_General_Movement;
         public InputAction @Look => m_Wrapper.m_General_Look;
         public InputAction @Inventory1 => m_Wrapper.m_General_Inventory1;
@@ -465,6 +464,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Journal => m_Wrapper.m_General_Journal;
         public InputAction @PageRight => m_Wrapper.m_General_PageRight;
         public InputAction @PageLeft => m_Wrapper.m_General_PageLeft;
+        public InputAction @Interact => m_Wrapper.m_General_Interact;
         public InputActionMap Get() { return m_Wrapper.m_General; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -474,9 +474,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_GeneralActionsCallbackInterface != null)
             {
-                @Interact.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
                 @Movement.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnMovement;
@@ -516,13 +513,13 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PageLeft.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
                 @PageLeft.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
                 @PageLeft.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
+                @Interact.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_GeneralActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
@@ -562,13 +559,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PageLeft.started += instance.OnPageLeft;
                 @PageLeft.performed += instance.OnPageLeft;
                 @PageLeft.canceled += instance.OnPageLeft;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
     public GeneralActions @General => new GeneralActions(this);
     public interface IGeneralActions
     {
-        void OnInteract(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInventory1(InputAction.CallbackContext context);
@@ -582,5 +581,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnJournal(InputAction.CallbackContext context);
         void OnPageRight(InputAction.CallbackContext context);
         void OnPageLeft(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

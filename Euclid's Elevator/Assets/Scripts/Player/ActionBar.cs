@@ -19,7 +19,7 @@ public class ActionBar : MonoBehaviour
     [SerializeField] TMP_Text action;
     [SerializeField] SliderStruct[] sliders;
 
-    bool isActive;
+    public bool IsActive { get; private set; }
 
     private void Awake()
     {
@@ -45,7 +45,7 @@ public class ActionBar : MonoBehaviour
 
     public void StartAction(string name)
     {
-        if (isActive)
+        if (IsActive)
             return;
 
         SliderStruct slider = Array.Find(sliders, (SliderStruct current) => current.name == name);
@@ -57,12 +57,12 @@ public class ActionBar : MonoBehaviour
 
         slider.fillImg.fillAmount = 0;
         slider.obj.SetActive(true);
-        isActive = true;
+        IsActive = true;
     }
 
     public void SetSliderValue(string name, float amount)
     {
-        if (!isActive)
+        if (!IsActive)
             return;
 
         SliderStruct slider = Array.Find(sliders, (SliderStruct current) => current.name == name);
@@ -85,7 +85,7 @@ public class ActionBar : MonoBehaviour
         }
 
         slider.obj.SetActive(false);
-        isActive = false;
+        IsActive = false;
     }
 
     public void StopActions()
@@ -94,7 +94,7 @@ public class ActionBar : MonoBehaviour
         {
             slider.obj.SetActive(false);
         }
-        isActive = false;
+        IsActive = false;
     }
 
     public void SetActionText(string text)

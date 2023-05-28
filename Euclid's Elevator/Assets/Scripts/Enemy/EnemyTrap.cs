@@ -118,9 +118,12 @@ public class EnemyTrap : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            anim.SetTrigger("Burrow");
-            ambiance.Stop();
-            exit.Play();
+            if (!used)
+            {
+                anim.SetTrigger("Burrow");
+                ambiance.Stop();
+                exit.Play();
+            }
             pull = false;
             used = true;
         }
