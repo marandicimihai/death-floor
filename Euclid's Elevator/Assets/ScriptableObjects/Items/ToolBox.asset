@@ -16,6 +16,7 @@ MonoBehaviour:
   uses: 1
   inventoryIcon: {fileID: 21300000, guid: dfd5b65472f3c1349836351a12bfa9a9, type: 3}
   prefab: {fileID: 5082355359761784416, guid: f5d2bdb09384f874cb11e6467224679e, type: 3}
+  holdPrefab: {fileID: 965289570507358224, guid: 033aa2e0495d5714d9dc02e6c7da55f9, type: 3}
   pickUpSounds:
   - ToolBoxPickUp
   drawSounds:
@@ -23,3 +24,5 @@ MonoBehaviour:
   useSounds: []
   useSoundsInOrder: 0
   pickUpPage: {fileID: 11400000, guid: 31b7a7dc1155d2a478754178512e8847, type: 2}
+  holdOffset: {x: 0.26, y: -0.19, z: 0.47}
+  holdAngles: {x: 0, y: -270, z: 0}

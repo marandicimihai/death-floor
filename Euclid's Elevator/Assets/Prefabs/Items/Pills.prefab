@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8316810766581796558}
   - component: {fileID: -3368814156052420098}
   m_Layer: 6
-  m_Name: Pills 1
+  m_Name: Pills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5096525209911580625}
   m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: 2.5150943, y: 0.7823981, z: -5.663766}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

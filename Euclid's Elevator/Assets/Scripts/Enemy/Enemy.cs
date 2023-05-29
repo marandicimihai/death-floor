@@ -92,6 +92,7 @@ public class Enemy : MonoBehaviour
             SoundManager.Instance.StopSound("MusicalEnd");
             ambianceStarted = false;
             ambianceMid = false;
+            drag.volume = 0;
             GameManager.Instance.playerController.JumpscareDie();
         }
 
@@ -161,6 +162,7 @@ public class Enemy : MonoBehaviour
         }
         else if (state != EnemyState.Inspect)
         {
+            //stop the ambiance
             if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && ambianceStarted)
             {
                 SoundManager.Instance.StopSoundLoop("MusicalMid", () =>
@@ -285,6 +287,16 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitUntil(() =>
         {
+            //stop the ambiance
+            if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && ambianceStarted)
+            {
+                SoundManager.Instance.StopSoundLoop("MusicalMid", () =>
+                {
+                    SoundManager.Instance.PlaySound("MusicalEnd");
+                });
+                ambianceStarted = false;
+                ambianceMid = false;
+            }
             return Vector3.Distance(position, transform.position) < threshold;
         });
 
