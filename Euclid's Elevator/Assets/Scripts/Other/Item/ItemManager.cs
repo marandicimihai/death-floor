@@ -26,14 +26,21 @@ public class ItemManager : MonoBehaviour
     [SerializeField] SpawnerGroup[] spawnerGroups;
     [SerializeField] ItemSpawn[] spawns;
     [SerializeField] KeycardSpawn[] keySpawns;
-    [SerializeField] ItemObject spawnOnDeath;
+    [SerializeField] ItemObject toolbox;
     [SerializeField] ItemObject keycard;
 
     private void Awake()
     {
         GameManager.Instance.OnDeath += (object caller, DeathArgs args) =>
         {
-            SpawnItem(spawnOnDeath);
+            if (!GameObject.FindGameObjectWithTag("Toolbox"))
+            {
+                SpawnItem(toolbox);
+            }
+            if (!GameObject.FindGameObjectWithTag("KeyCard"))
+            {
+                SpawnKeycard(GameManager.Instance.stage);
+            }
         };
 
         GameManager.Instance.OnStageStart += (object caller, StageArgs args) =>

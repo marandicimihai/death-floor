@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4abf9c4572e19b4b9af37cfb9e939cb, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  name: 5
-  text: 5
+  name: 4
+  text: wtf
   timeLastingAfterTyping: 4
   oneTime: 1

@@ -98,6 +98,7 @@ public class Enemy : MonoBehaviour
 
         if (!CanKill)
         {
+            Visible = false;
             return;
         }
 
@@ -264,6 +265,11 @@ public class Enemy : MonoBehaviour
     {
         if (Vector3.Distance(noisePosition, transform.position) > inspectDistance)
         {
+            if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && !ambianceMid && ambianceStarted)
+            {
+                SoundManager.Instance.PlaySound("MusicalMid");
+                ambianceMid = true;
+            }
             return;
         }
 
@@ -287,16 +293,6 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitUntil(() =>
         {
-            //stop the ambiance
-            if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && ambianceStarted)
-            {
-                SoundManager.Instance.StopSoundLoop("MusicalMid", () =>
-                {
-                    SoundManager.Instance.PlaySound("MusicalEnd");
-                });
-                ambianceStarted = false;
-                ambianceMid = false;
-            }
             return Vector3.Distance(position, transform.position) < threshold;
         });
 

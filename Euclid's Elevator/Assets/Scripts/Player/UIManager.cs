@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject dialogueUI;
     [SerializeField] GameObject inventoryUI;
     [SerializeField] GameObject journalUI;
+    [SerializeField] GameObject insanityBar;
     [SerializeField] ActionBar bar;
 
     private void Start()
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour
         crosshairUI.SetActive(false);
         inventoryUI.SetActive(false);
         dialogueUI.SetActive(false);
+        insanityBar.SetActive(false);
         bar.hideInfo = true;
     }   
     
@@ -39,6 +41,7 @@ public class UIManager : MonoBehaviour
         crosshairUI.SetActive(true);
         inventoryUI.SetActive(true);
         dialogueUI.SetActive(true);
+        insanityBar.SetActive(true);
         journalUI.SetActive(false);
         bar.hideInfo = false;
     }

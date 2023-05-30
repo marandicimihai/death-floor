@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(FpsController))]
@@ -29,6 +30,8 @@ public class Insanity : MonoBehaviour
     [SerializeField] float timeForFullWeight;
     [SerializeField] float timeForNoWeight;
 
+    [SerializeField] Image slider;
+
     float insanity;
     float t;
 
@@ -39,14 +42,15 @@ public class Insanity : MonoBehaviour
 
     private void Update()
     {
+        slider.fillAmount = insanity / 100f;
         if (GameManager.Instance.enemyController.Visible)
         {
             if (t < insanityTime)
                 t += Time.deltaTime;
 
-            InsanityMeter = GetInsanity(t);
+            InsanityMeter += GetInsanity(t) * Time.deltaTime;
 
-            if (InsanityMeter >= maxInsanity)
+            if (InsanityMeter >= maxInsanity && !controller.Dead)
             {
                 controller.InsanityDie();
             }

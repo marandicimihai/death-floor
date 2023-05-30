@@ -131,6 +131,10 @@ public class Inventory : MonoBehaviour
 
     public void Die()
     {
+        for (int i = 0; i < holdPosition.childCount; i++)
+        {
+            Destroy(holdPosition.GetChild(i).gameObject);
+        }
         foreach (Item item in items)
         {
             if (item != null)
@@ -160,6 +164,7 @@ public class Inventory : MonoBehaviour
         if (items[i].uses <= 0)
         {
             Destroy(items[i]);
+            items[i] = null;
         }
         RefreshInventoryScreen();
     }

@@ -7,6 +7,8 @@ TagManager:
   - Door
   - ItemHole
   - Elevator
+  - Toolbox
+  - KeyCard
   layers:
   - Default
   - TransparentFX

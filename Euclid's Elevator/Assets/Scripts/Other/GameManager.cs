@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
         if (stage >= stages )
         {
             Debug.Log("You won!");
+            Application.Quit();
         }
         else
         {
@@ -227,7 +228,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        enemyController.Reset(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position, 1);
+        enemyController.Reset(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position, timeUntilOpenElevator);
     }
 
     void InitElevator()

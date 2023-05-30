@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: 
   name: 3
-  text: 3
+  text: ':skull:'
   timeLastingAfterTyping: 4
   oneTime: 1
