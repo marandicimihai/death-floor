@@ -30,14 +30,11 @@ public class MenuSettings : MonoBehaviour
     [SerializeField] Res[] resType;
     [SerializeField] int resIndex;
     [SerializeField] bool isfullscreen = true;
-    [SerializeField] string[] aliasNames;
-    [SerializeField] int aliasIndex; //0 is false (AKA none)
     [SerializeField] bool vSync;
     [SerializeField] bool bloom; 
     [SerializeField] bool blur; //i bet a lot of people will turn this one off
     [SerializeField] Text textQuality;
     [SerializeField] Text textRes;
-    [SerializeField] Text textAlias;
     //reference here "ticked boxes" imagies;
     [SerializeField] Image ImageBoxVsync;
     [SerializeField] Image ImageBoxFullscreen;
@@ -214,7 +211,6 @@ public class MenuSettings : MonoBehaviour
         string width = resType[resIndex].width.ToString();
         string height = resType[resIndex].height.ToString();
         textRes.text = width + "x" + height;
-        textAlias.text = aliasNames[aliasIndex];
         ImageBoxVsync.enabled = vSync;
         ImageBoxFullscreen.enabled = isfullscreen;
         ImageBoxBloom.enabled = bloom;
@@ -263,21 +259,6 @@ public class MenuSettings : MonoBehaviour
         string height = resType[resIndex].height.ToString();
         textRes.text = width + "x" + height;
         Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
-        DoThatThing();
-    }
-    public void SetAliasIndex(int index)
-    {
-        aliasIndex = index;
-        textAlias.text = aliasNames[aliasIndex];
-    }
-    public void NextAliasIndex()
-    {
-        aliasIndex++;
-        if (aliasIndex >= aliasNames.Length)
-        {
-            aliasIndex = 0;
-        }
-        textAlias.text = aliasNames[aliasIndex];
         DoThatThing();
     }
     public void SetVsync(bool newVsync)
@@ -345,10 +326,6 @@ public class MenuSettings : MonoBehaviour
     public int GetResIndex()
     {
         return resIndex;
-    }
-    public int GetAliasIndex()
-    {
-        return aliasIndex;
     }
     public bool GetVsync()
     {

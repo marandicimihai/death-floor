@@ -221,7 +221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &32422538
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2692,7 +2692,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 530, y: -180}
+  m_AnchoredPosition: {x: -610, y: -100}
   m_SizeDelta: {x: 555.253, y: 66.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &431538339
@@ -3985,18 +3985,11 @@ MonoBehaviour:
     height: 864
   resIndex: 2
   isfullscreen: 1
-  aliasNames:
-  - Disabled
-  - kiss
-  - men
-  - lol
-  aliasIndex: 1
   vSync: 1
   bloom: 1
   blur: 1
   textQuality: {fileID: 342673540}
   textRes: {fileID: 457357225}
-  textAlias: {fileID: 199963755}
   ImageBoxVsync: {fileID: 1225430105}
   ImageBoxFullscreen: {fileID: 339838326}
   ImageBoxBloom: {fileID: 892426724}
@@ -8049,7 +8042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1172148574
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13330,7 +13323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2117954793
 RectTransform:
   m_ObjectHideFlags: 0
