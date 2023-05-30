@@ -223,17 +223,6 @@
                 },
                 {
                     "name": "",
-                    "id": "80b9e5e9-d483-42b1-8d6a-222f2ae04ad1",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Sneak",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e36b041f-a7e4-480e-8f27-125f162e4d3a",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -322,12 +311,21 @@
                 },
                 {
                     "name": "",
+<<<<<<< Updated upstream
                     "id": "4a848ce2-a347-4df8-b770-7b510dd3b4ee",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+=======
+                    "id": "80b9e5e9-d483-42b1-8d6a-222f2ae04ad1",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sneak",
+>>>>>>> Stashed changes
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
