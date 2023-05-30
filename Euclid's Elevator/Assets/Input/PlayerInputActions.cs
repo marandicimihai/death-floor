@@ -25,75 +25,21 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""General"",
-            ""id"": ""073f81ce-2d6d-4d5e-a9bf-da88c85ac1cd"",
+            ""id"": ""5ddf8197-b2ad-466f-9441-aaaa5a47d935"",
             ""actions"": [
                 {
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
-                    ""id"": ""544f4115-38b1-4186-8c7d-188738e1acf6"",
+                    ""id"": ""c1a51c9c-2c20-4472-a329-d8c6685c0382"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""4cff3172-7694-412b-8db1-6b9a651d51d2"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Inventory 1"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
-                    ""id"": ""3090a30a-6d4d-4514-be15-1bf11ae32c2f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Inventory 2"",
-                    ""type"": ""Button"",
-                    ""id"": ""8189ab00-7b29-45c4-a3f8-fb725a3cdcaa"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Inventory 3"",
-                    ""type"": ""Button"",
-                    ""id"": ""4ea143ad-4b4b-41ba-b7e4-f6d58d74c955"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Inventory 4"",
-                    ""type"": ""Button"",
-                    ""id"": ""66aad85e-f851-4d54-aa69-e3ccc9579236"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Drop"",
-                    ""type"": ""Button"",
-                    ""id"": ""4ae1ed73-7f5a-497b-9811-534d4ba8d874"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Sneak"",
-                    ""type"": ""Button"",
-                    ""id"": ""dc63cb1b-4504-4e48-8902-13b4e0b95a9e"",
+                    ""id"": ""3449320a-19a7-4f46-bfa6-790d238bc143"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -102,7 +48,70 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Use"",
                     ""type"": ""Button"",
-                    ""id"": ""ba012080-127b-4f9c-88a1-ff241005771b"",
+                    ""id"": ""e7bf78a3-187a-4bbe-80f0-bb3a2d5fc84f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""70555ad0-0ba6-4ca3-a70d-e3beab93ac61"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sneak"",
+                    ""type"": ""Button"",
+                    ""id"": ""ded79894-4e2b-4729-a862-55a6eb3e4e2b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""562a4ef1-0e50-4e09-bac4-b816702d8db9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Inventory1"",
+                    ""type"": ""Button"",
+                    ""id"": ""f052d98e-de12-4921-91d4-86894516f957"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1da5fccd-55b0-4087-9298-2d1815970daa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory3"",
+                    ""type"": ""Button"",
+                    ""id"": ""59190e49-be0b-4e4e-8a99-f0cda50388b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory4"",
+                    ""type"": ""Button"",
+                    ""id"": ""2419a776-0363-4671-af28-5ee97ec12b6a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -111,25 +120,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""03423efb-c307-44f0-917c-45df0853937b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Journal"",
-                    ""type"": ""Button"",
-                    ""id"": ""bf0fca54-e872-4898-b949-751d9b543e42"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PageRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""60fe3d19-47c8-4711-9cff-846d32ab7a7e"",
+                    ""id"": ""dc1acc43-8ea6-4b26-83f1-57073e75d139"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -138,16 +129,25 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""PageLeft"",
                     ""type"": ""Button"",
-                    ""id"": ""b994b851-fb87-4312-a41d-aa2ed29b7eae"",
+                    ""id"": ""1d4aa3ae-3baf-4e93-b8a6-5da14af7c0de"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""PageRight"",
                     ""type"": ""Button"",
-                    ""id"": ""dea35954-aa1e-429f-8ea5-f80f9106510c"",
+                    ""id"": ""df60a350-1d80-4a12-b48a-96600b97ae92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Journal"",
+                    ""type"": ""Button"",
+                    ""id"": ""e78134b4-7f45-4d0a-9b49-46694d34ed4c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -157,7 +157,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": ""2D Vector"",
-                    ""id"": ""a2505d6e-71aa-4e42-908b-773e99dfae90"",
+                    ""id"": ""d66e419d-13f7-47be-bdc9-9a49958ca4be"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -168,7 +168,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""cdfcca92-c462-49e3-98f5-d050a99d1ceb"",
+                    ""id"": ""9efbdea8-4cc7-418c-8ee4-aa31b6f8d3e6"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -179,7 +179,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""64e366fe-29b2-4afb-ac15-8eb3e8ccc22f"",
+                    ""id"": ""c2d095f6-ae96-4274-ab0e-a4ee884cdc37"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -190,7 +190,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""d9224f64-754a-4c5e-890f-9736246c0f07"",
+                    ""id"": ""f79bc49d-c97f-4cb6-9034-c75e694c39af"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -201,7 +201,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""bef69ebc-db2d-4203-8d81-427721a3d87f"",
+                    ""id"": ""1a8bf0b2-1652-44cf-aa24-2bf782cc2453"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -212,40 +212,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1a893567-86c9-4ea0-ac58-12c656f4db1f"",
-                    ""path"": ""<Pointer>/delta"",
+                    ""id"": ""c7763cbb-0b49-424b-b29c-ca256a879715"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Look"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""04d3fc32-d211-4587-b8ee-8546fc27a83e"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory 1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""56a97daa-3cb7-4218-9ece-8473ab619c5f"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Drop"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e36b041f-a7e4-480e-8f27-125f162e4d3a"",
+                    ""id"": ""13afe4d1-1c56-41ce-b279-9a55fa26184a"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -256,40 +234,84 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""60f7a42c-1570-4b12-bee7-59d07ccca7ef"",
+                    ""id"": ""149d1b2b-f1f5-4805-842c-a21648da594b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0faafe10-5a63-4307-a5db-bb8958fd025f"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sneak"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71d4a184-7150-436f-8566-f024214de885"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dab4ff8d-25ba-4540-80e3-39a33ec5ae5d"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5de50814-b83f-4fdf-b1d1-0d1f664448c8"",
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Inventory 2"",
+                    ""action"": ""Inventory2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b6ae5ee8-3c42-47c9-beb0-eac759f6e971"",
+                    ""id"": ""18cd74d5-1781-452f-b406-9f36563c50b7"",
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Inventory 3"",
+                    ""action"": ""Inventory3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fc8f0396-8e69-4ef8-9b48-0b8dd1578c75"",
+                    ""id"": ""4d408516-482d-4c53-b3fd-5e1bc1f955b7"",
                     ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Inventory 4"",
+                    ""action"": ""Inventory4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0bea0231-23ad-4fa0-9536-c30866d702f3"",
+                    ""id"": ""b0e72d97-6a05-44b8-9011-515caac45352"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -300,29 +322,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""14d84b70-10c7-4c23-b051-55dcc6fc1f65"",
-                    ""path"": ""<Keyboard>/j"",
+                    ""id"": ""59ec9127-c4ba-4046-82aa-69d7256c2de0"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Journal"",
+                    ""action"": ""PageLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d6d8da10-e1db-441c-b904-dc1a33a30708"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PageRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5a56583d-a07f-4633-9bbd-da680493bd05"",
+                    ""id"": ""d275eea7-9eee-4eef-9f5e-fd312a9b0b98"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -333,21 +344,34 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-<<<<<<< Updated upstream
-                    ""id"": ""4a848ce2-a347-4df8-b770-7b510dd3b4ee"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""id"": ""729608c7-228c-477d-8158-555db09ccb01"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact"",
-=======
-                    ""id"": ""80b9e5e9-d483-42b1-8d6a-222f2ae04ad1"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""action"": ""PageRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85d9cc3f-06ef-4964-a53b-b11798049e69"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Sneak"",
->>>>>>> Stashed changes
+                    ""action"": ""PageRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e0a3028-eba2-43c2-8ce2-4587f56bd4aa"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Journal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -359,19 +383,19 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
         m_General_Movement = m_General.FindAction("Movement", throwIfNotFound: true);
-        m_General_Look = m_General.FindAction("Look", throwIfNotFound: true);
-        m_General_Inventory1 = m_General.FindAction("Inventory 1", throwIfNotFound: true);
-        m_General_Inventory2 = m_General.FindAction("Inventory 2", throwIfNotFound: true);
-        m_General_Inventory3 = m_General.FindAction("Inventory 3", throwIfNotFound: true);
-        m_General_Inventory4 = m_General.FindAction("Inventory 4", throwIfNotFound: true);
+        m_General_Interact = m_General.FindAction("Interact", throwIfNotFound: true);
+        m_General_Use = m_General.FindAction("Use", throwIfNotFound: true);
         m_General_Drop = m_General.FindAction("Drop", throwIfNotFound: true);
         m_General_Sneak = m_General.FindAction("Sneak", throwIfNotFound: true);
-        m_General_Use = m_General.FindAction("Use", throwIfNotFound: true);
+        m_General_Look = m_General.FindAction("Look", throwIfNotFound: true);
+        m_General_Inventory1 = m_General.FindAction("Inventory1", throwIfNotFound: true);
+        m_General_Inventory2 = m_General.FindAction("Inventory2", throwIfNotFound: true);
+        m_General_Inventory3 = m_General.FindAction("Inventory3", throwIfNotFound: true);
+        m_General_Inventory4 = m_General.FindAction("Inventory4", throwIfNotFound: true);
         m_General_Pause = m_General.FindAction("Pause", throwIfNotFound: true);
-        m_General_Journal = m_General.FindAction("Journal", throwIfNotFound: true);
-        m_General_PageRight = m_General.FindAction("PageRight", throwIfNotFound: true);
         m_General_PageLeft = m_General.FindAction("PageLeft", throwIfNotFound: true);
-        m_General_Interact = m_General.FindAction("Interact", throwIfNotFound: true);
+        m_General_PageRight = m_General.FindAction("PageRight", throwIfNotFound: true);
+        m_General_Journal = m_General.FindAction("Journal", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -432,37 +456,37 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_General;
     private IGeneralActions m_GeneralActionsCallbackInterface;
     private readonly InputAction m_General_Movement;
+    private readonly InputAction m_General_Interact;
+    private readonly InputAction m_General_Use;
+    private readonly InputAction m_General_Drop;
+    private readonly InputAction m_General_Sneak;
     private readonly InputAction m_General_Look;
     private readonly InputAction m_General_Inventory1;
     private readonly InputAction m_General_Inventory2;
     private readonly InputAction m_General_Inventory3;
     private readonly InputAction m_General_Inventory4;
-    private readonly InputAction m_General_Drop;
-    private readonly InputAction m_General_Sneak;
-    private readonly InputAction m_General_Use;
     private readonly InputAction m_General_Pause;
-    private readonly InputAction m_General_Journal;
-    private readonly InputAction m_General_PageRight;
     private readonly InputAction m_General_PageLeft;
-    private readonly InputAction m_General_Interact;
+    private readonly InputAction m_General_PageRight;
+    private readonly InputAction m_General_Journal;
     public struct GeneralActions
     {
         private @PlayerInputActions m_Wrapper;
         public GeneralActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_General_Movement;
+        public InputAction @Interact => m_Wrapper.m_General_Interact;
+        public InputAction @Use => m_Wrapper.m_General_Use;
+        public InputAction @Drop => m_Wrapper.m_General_Drop;
+        public InputAction @Sneak => m_Wrapper.m_General_Sneak;
         public InputAction @Look => m_Wrapper.m_General_Look;
         public InputAction @Inventory1 => m_Wrapper.m_General_Inventory1;
         public InputAction @Inventory2 => m_Wrapper.m_General_Inventory2;
         public InputAction @Inventory3 => m_Wrapper.m_General_Inventory3;
         public InputAction @Inventory4 => m_Wrapper.m_General_Inventory4;
-        public InputAction @Drop => m_Wrapper.m_General_Drop;
-        public InputAction @Sneak => m_Wrapper.m_General_Sneak;
-        public InputAction @Use => m_Wrapper.m_General_Use;
         public InputAction @Pause => m_Wrapper.m_General_Pause;
-        public InputAction @Journal => m_Wrapper.m_General_Journal;
-        public InputAction @PageRight => m_Wrapper.m_General_PageRight;
         public InputAction @PageLeft => m_Wrapper.m_General_PageLeft;
-        public InputAction @Interact => m_Wrapper.m_General_Interact;
+        public InputAction @PageRight => m_Wrapper.m_General_PageRight;
+        public InputAction @Journal => m_Wrapper.m_General_Journal;
         public InputActionMap Get() { return m_Wrapper.m_General; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -475,6 +499,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnMovement;
+                @Interact.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
+                @Use.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
+                @Use.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
+                @Use.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
+                @Drop.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
+                @Drop.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
+                @Drop.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
+                @Sneak.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
+                @Sneak.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
+                @Sneak.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
                 @Look.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnLook;
@@ -490,30 +526,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Inventory4.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
                 @Inventory4.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
                 @Inventory4.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
-                @Drop.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
-                @Drop.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
-                @Drop.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnDrop;
-                @Sneak.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
-                @Sneak.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
-                @Sneak.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnSneak;
-                @Use.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
-                @Use.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
-                @Use.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnUse;
                 @Pause.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPause;
-                @Journal.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
-                @Journal.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
-                @Journal.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
-                @PageRight.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
-                @PageRight.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
-                @PageRight.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
                 @PageLeft.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
                 @PageLeft.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
                 @PageLeft.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageLeft;
-                @Interact.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInteract;
+                @PageRight.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
+                @PageRight.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
+                @PageRight.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnPageRight;
+                @Journal.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
+                @Journal.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
+                @Journal.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnJournal;
             }
             m_Wrapper.m_GeneralActionsCallbackInterface = instance;
             if (instance != null)
@@ -521,6 +545,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
+                @Use.started += instance.OnUse;
+                @Use.performed += instance.OnUse;
+                @Use.canceled += instance.OnUse;
+                @Drop.started += instance.OnDrop;
+                @Drop.performed += instance.OnDrop;
+                @Drop.canceled += instance.OnDrop;
+                @Sneak.started += instance.OnSneak;
+                @Sneak.performed += instance.OnSneak;
+                @Sneak.canceled += instance.OnSneak;
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
@@ -536,30 +572,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Inventory4.started += instance.OnInventory4;
                 @Inventory4.performed += instance.OnInventory4;
                 @Inventory4.canceled += instance.OnInventory4;
-                @Drop.started += instance.OnDrop;
-                @Drop.performed += instance.OnDrop;
-                @Drop.canceled += instance.OnDrop;
-                @Sneak.started += instance.OnSneak;
-                @Sneak.performed += instance.OnSneak;
-                @Sneak.canceled += instance.OnSneak;
-                @Use.started += instance.OnUse;
-                @Use.performed += instance.OnUse;
-                @Use.canceled += instance.OnUse;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @Journal.started += instance.OnJournal;
-                @Journal.performed += instance.OnJournal;
-                @Journal.canceled += instance.OnJournal;
-                @PageRight.started += instance.OnPageRight;
-                @PageRight.performed += instance.OnPageRight;
-                @PageRight.canceled += instance.OnPageRight;
                 @PageLeft.started += instance.OnPageLeft;
                 @PageLeft.performed += instance.OnPageLeft;
                 @PageLeft.canceled += instance.OnPageLeft;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
+                @PageRight.started += instance.OnPageRight;
+                @PageRight.performed += instance.OnPageRight;
+                @PageRight.canceled += instance.OnPageRight;
+                @Journal.started += instance.OnJournal;
+                @Journal.performed += instance.OnJournal;
+                @Journal.canceled += instance.OnJournal;
             }
         }
     }
@@ -567,18 +591,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IGeneralActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnUse(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
+        void OnSneak(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInventory1(InputAction.CallbackContext context);
         void OnInventory2(InputAction.CallbackContext context);
         void OnInventory3(InputAction.CallbackContext context);
         void OnInventory4(InputAction.CallbackContext context);
-        void OnDrop(InputAction.CallbackContext context);
-        void OnSneak(InputAction.CallbackContext context);
-        void OnUse(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnJournal(InputAction.CallbackContext context);
-        void OnPageRight(InputAction.CallbackContext context);
         void OnPageLeft(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
+        void OnPageRight(InputAction.CallbackContext context);
+        void OnJournal(InputAction.CallbackContext context);
     }
 }

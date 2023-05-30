@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
     public bool canLook;
     public Transform Camera;
     [SerializeField] FpsController controller;
+    [SerializeField] Volume bloomVolume;
+    [SerializeField] Volume blurVolume;
     [SerializeField] Volume blackScreenVolume;
     [SerializeField] Vector2 sensitivities;
     [SerializeField] float turnTime;
@@ -216,5 +218,34 @@ public class CameraController : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void SetBloom(bool bloom)
+    {
+        if (bloom)
+        {
+            bloomVolume.weight = 1;
+        }
+        else
+        {
+            bloomVolume.weight = 0;
+        }
+    }
+
+    public void SetBlur(bool blur)
+    {
+        if (blur)
+        {
+            blurVolume.weight = 1;
+        }
+        else
+        {
+            blurVolume.weight = 0;
+        }
+    }
+
+    public void SetSens(float sens)
+    {
+        sensitivities *= sens;
     }
 }

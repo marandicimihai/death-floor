@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Spawn
   m_EditorClassIdentifier: 
   name: Spawn
-  text: Where am I?
+  text: I should open my journal (J)
   timeLastingAfterTyping: 6
   oneTime: 1

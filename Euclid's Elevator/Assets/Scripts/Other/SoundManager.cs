@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
     [SerializeField] Sound[] sounds;
+    [SerializeField] AudioSource[] ambiance;
     public List<AudioSource> realtime;
 
     private void Awake()
@@ -136,6 +137,25 @@ public class SoundManager : MonoBehaviour
     public void PlaySounds(string[] soundsInOrder, bool realtime = false)
     {
         StartCoroutine(PlaySoundsInOrder(soundsInOrder, realtime));
+    }
+
+    public void SetAmbianceVolume(float volume)
+    {
+        foreach (AudioSource s in ambiance)
+        {
+            s.volume = volume;
+        }
+    }
+
+    public void SetEffectsVolume(float volume)
+    {
+        foreach (Sound s in sounds)
+        {
+            if (Array.Find(ambiance, (AudioSource source) => source == s.source) == null)
+            {
+                s.source.volume = volume;
+            }
+        }
     }
 
     IEnumerator PlaySoundsInOrder(string[] soundsInOrder, bool realtime = false)

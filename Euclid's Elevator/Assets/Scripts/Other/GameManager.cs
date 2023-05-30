@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] int stages;
 
-
     public event EventHandler<StageArgs> OnStageStart;
     public event EventHandler OnElevatorDoorClosed;
     
@@ -77,6 +76,17 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         playerController.PlayerInputActions.General.Pause.performed += TogglePause;
+        Settings set = SaveSystem.LoadSettings();
+
+        if (set != null)
+        {
+            SoundManager.Instance.SetAmbianceVolume(set.ambianceVolume);
+            SoundManager.Instance.SetEffectsVolume(set.effectsVolume);
+            playerController.cameraController.SetBloom(set.bloom);
+            playerController.cameraController.SetBlur(set.blur);
+            playerController.cameraController.SetSens(set.sensitivity);
+        }
+
         StartGame();
     }
 
@@ -296,6 +306,8 @@ public class GameManager : MonoBehaviour
         {
             playerController.journal.CancelExitCall();
         }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0;
     }
 
@@ -312,6 +324,8 @@ public class GameManager : MonoBehaviour
             s.UnPause();
         }
         StartCoroutine(playerController.journal.CallExitWhenAvailable());
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Time.timeScale = 1;
     }
 
