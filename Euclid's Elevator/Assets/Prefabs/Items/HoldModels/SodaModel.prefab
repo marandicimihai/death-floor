@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5238025476138839109}
   - component: {fileID: 2517957314698244857}
   - component: {fileID: 6139646708752005870}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: SodaThingy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7963e368f8c95ad4a8e9020d54cf3e6a, type: 2}
+  - {fileID: 2100000, guid: 5bb36bb2eebe9ed498ff23077e066f85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7805952380120323285}
   - component: {fileID: 8449769159010621498}
   - component: {fileID: 5221869620655050620}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: SodaModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7963e368f8c95ad4a8e9020d54cf3e6a, type: 2}
+  - {fileID: 2100000, guid: 5bb36bb2eebe9ed498ff23077e066f85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

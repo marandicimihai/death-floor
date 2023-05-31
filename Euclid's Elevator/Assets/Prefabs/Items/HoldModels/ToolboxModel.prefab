@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8453399565587371035}
   - component: {fileID: 3069123396111582543}
   - component: {fileID: 3090704381882436040}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: ToolboxModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7963e368f8c95ad4a8e9020d54cf3e6a, type: 2}
+  - {fileID: 2100000, guid: 5bb36bb2eebe9ed498ff23077e066f85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6621977675098216231}
   - component: {fileID: 7644277168915810010}
   - component: {fileID: 4922270745410249490}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: ToolboxHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7963e368f8c95ad4a8e9020d54cf3e6a, type: 2}
+  - {fileID: 2100000, guid: 5bb36bb2eebe9ed498ff23077e066f85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
