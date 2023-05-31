@@ -102,7 +102,7 @@ MonoBehaviour:
   itemObj: {fileID: 11400000, guid: 07a40d532db5b1145b58bc2340e3ebe1, type: 2}
   dropSources:
   - {fileID: -3368814156052420098}
-  insanityDecrease: 30
+  insanityDecrease: 50
 --- !u!65 &4740793623351212108
 BoxCollider:
   m_ObjectHideFlags: 0

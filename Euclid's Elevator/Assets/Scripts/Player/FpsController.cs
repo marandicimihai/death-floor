@@ -310,7 +310,11 @@ public class FpsController : MonoBehaviour
             else if (hit.transform.CompareTag("Door"))
             {
                 Door door = hit.transform.GetComponentInParent<Door>();
-                if (!door.Open && door.locked)
+                if (!door.Open && door.StageLocked)
+                {
+                    bar.SetActionText("Locked");
+                }
+                else if (!door.Open && door.locked)
                 {
                     bar.SetActionText("Pick lock (Hold E)");
                 }

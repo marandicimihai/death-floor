@@ -186,11 +186,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Other
-    /*[MenuItem("Developer/Next Stage")]
-    public static void NextStageDev()
-    {
-        Instance.StartCoroutine(Instance.NextStage());
-    }*/
     
     void SpawnPlayer()
     {
@@ -244,18 +239,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Pause
-
-    /*[MenuItem("Developer/Pause")]
-    public static void PauseDev()
-    {
-        Instance.Pause();
-    }
-
-    [MenuItem("Developer/Unpause")]
-    public static void UnpauseDev()
-    {
-        Instance.Unpause();
-    }*/
 
     /// <summary>
     /// Use method in OnEnable() or later

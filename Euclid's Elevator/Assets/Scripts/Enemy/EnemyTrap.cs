@@ -6,6 +6,7 @@ public class EnemyTrap : MonoBehaviour
 {
     [SerializeField] Animator anim;
     [SerializeField] Transform baseBone;
+    [SerializeField] LayerMask playerMask;
     [SerializeField] float triggerRadius;
     [SerializeField] float deathRadius;
     [SerializeField] float forceStrength;
@@ -51,7 +52,8 @@ public class EnemyTrap : MonoBehaviour
 
     private void Update()
     {
-        if (pull && Vector3.ProjectOnPlane(transform.position - GameManager.Instance.player.position, Vector3.up).magnitude >= minRadius && !used)
+        if (pull && Vector3.ProjectOnPlane(transform.position - GameManager.Instance.player.position, Vector3.up).magnitude >= minRadius && !used
+            && Physics.Raycast(transform.position, GameManager.Instance.player.position - transform.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
         {
             anim.SetTrigger("Spot");
 
@@ -67,6 +69,7 @@ public class EnemyTrap : MonoBehaviour
 
                 anim.SetTrigger("Kill");
                 GameManager.Instance.playerController.TrapDie();
+                ambiance.Stop();
                 used = true;
             }
         }

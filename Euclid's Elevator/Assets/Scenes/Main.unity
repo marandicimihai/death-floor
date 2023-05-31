@@ -151,7 +151,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 46313607}
   - {fileID: 864649539}
   - {fileID: 496169798}
   - {fileID: 802647685}
@@ -531,37 +530,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5647875614815510884, guid: bd4065106a8283e4baedbf6d04f27ec0, type: 3}
   m_PrefabInstance: {fileID: 44842844}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &46313606
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 46313607}
-  m_Layer: 0
-  m_Name: OogaSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &46313607
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46313606}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.75, y: 1, z: -4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6476136}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &50201369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1282,7 +1250,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &177648810
 GameObject:
@@ -1553,7 +1521,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &254880167
 GameObject:
@@ -2549,7 +2517,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &491615135
 GameObject:
@@ -2616,7 +2584,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &508163135
 PrefabInstance:
@@ -3615,12 +3583,10 @@ MonoBehaviour:
   timeUntilOpenElevator: 3
   unlockPlayerTime: 0.5
   elevatorPoint: {x: -0.25, y: 0.75, z: 2}
-  elevatorRadius: 0.5
+  elevatorRadius: 1
   maxDeaths: 4
   playerSpawn: {fileID: 1719553233}
   oogaManSpawns:
-  - spawn: {fileID: 46313607}
-    stage: 1
   - spawn: {fileID: 864649539}
     stage: 1
   - spawn: {fileID: 496169798}
@@ -3824,13 +3790,13 @@ MonoBehaviour:
     activeStage: 4
   spawns:
   - item: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-    probability: 5
+    probability: 15
   - item: {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
-    probability: 5
+    probability: 10
   - item: {fileID: 11400000, guid: 07a40d532db5b1145b58bc2340e3ebe1, type: 2}
-    probability: 10
+    probability: 20
   - item: {fileID: 11400000, guid: 3d7146097d411ba4faea96b9609b64f2, type: 2}
-    probability: 10
+    probability: 20
   keySpawns:
   - points:
     - {fileID: 2016018472}
@@ -4242,7 +4208,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &802647684
 GameObject:
@@ -4273,7 +4239,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &811475836
 GameObject:
@@ -5859,7 +5825,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &884350534 stripped
 Transform:
@@ -7681,30 +7647,6 @@ MonoBehaviour:
   controller: {fileID: 1288032386}
   camCon: {fileID: 1288032385}
   insanityTime: 14
-  insanityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   minInsanity: 0
   maxInsanity: 100
   volume: {fileID: 576751799}
@@ -7725,7 +7667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 632143729}
   pickDuration: 6
-  lockDuration: 2
+  lockDuration: 0.75
   doorLockHoldTime: 0.4
   alertEnemyTime: 3
 --- !u!114 &1288032394
@@ -9891,7 +9833,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1510692467
 GameObject:
@@ -10851,7 +10793,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1564863483
 GameObject:
@@ -10882,7 +10824,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1583081997 stripped
 Transform:
@@ -11368,7 +11310,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1634737865
 PrefabInstance:
@@ -12860,7 +12802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1984876290
 Transform:
   m_ObjectHideFlags: 0
@@ -12939,7 +12881,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2016018471
 GameObject:
@@ -13703,7 +13645,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6476136}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2110844839
 GameObject:

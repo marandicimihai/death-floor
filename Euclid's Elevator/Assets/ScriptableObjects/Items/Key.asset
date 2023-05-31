@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Key
   m_EditorClassIdentifier: 
   itemName: Key
-  uses: 4
+  uses: 2
   inventoryIcon: {fileID: 21300000, guid: 2200dcd6377c0cd468b11881202ca654, type: 3}
   prefab: {fileID: 7178980861119937168, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
   holdPrefab: {fileID: 1668860761680531593, guid: 2c51d40c79ccff04196bc0d14c16f7a1, type: 3}

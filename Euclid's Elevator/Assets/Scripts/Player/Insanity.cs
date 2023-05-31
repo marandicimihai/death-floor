@@ -14,6 +14,7 @@ public class Insanity : MonoBehaviour
         set
         {
             insanity = Mathf.Clamp(value, minInsanity, maxInsanity);
+            t = insanity / maxInsanity * insanityTime;
         }
     }
 
@@ -21,7 +22,6 @@ public class Insanity : MonoBehaviour
     [SerializeField] CameraController camCon;
 
     [SerializeField] float insanityTime;
-    [SerializeField] AnimationCurve insanityCurve;
     
     [SerializeField] float minInsanity;
     [SerializeField] float maxInsanity;
@@ -38,6 +38,8 @@ public class Insanity : MonoBehaviour
     private void Start()
     {
         GameManager.MakePausable(this);
+
+        GameManager.Instance.OnStageStart += (object caller, StageArgs args) => Die();
     }
 
     private void Update()
@@ -48,7 +50,7 @@ public class Insanity : MonoBehaviour
             if (t < insanityTime)
                 t += Time.deltaTime;
 
-            InsanityMeter += GetInsanity(t) * Time.deltaTime;
+            InsanityMeter = t / insanityTime * maxInsanity;
 
             if (InsanityMeter >= maxInsanity && !controller.Dead)
             {
@@ -59,7 +61,6 @@ public class Insanity : MonoBehaviour
         }
         else
         {
-            t = 0;
             volume.weight = Mathf.Clamp01(volume.weight - timeForNoWeight * Time.deltaTime);
         }
     }
@@ -67,11 +68,5 @@ public class Insanity : MonoBehaviour
     public void Die()
     {
         InsanityMeter = minInsanity;
-    }
-
-    public float GetInsanity(float n)
-    {
-        n /= insanityTime;
-        return insanityCurve.Evaluate(n) * maxInsanity;
     }
 }

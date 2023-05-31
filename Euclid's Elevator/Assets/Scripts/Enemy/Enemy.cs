@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine;
+using UnityEditor;
 using System;
 
 enum EnemyState
@@ -98,6 +99,7 @@ public class Enemy : MonoBehaviour
 
         if (!CanKill)
         {
+            agent.isStopped = true;
             Visible = false;
             return;
         }
@@ -109,11 +111,6 @@ public class Enemy : MonoBehaviour
         else
         {
             dragVol -= Time.deltaTime / dragFadeTime;
-        }
-
-        if (state == EnemyState.Patrol)
-        {
-            dragVol = 0;
         }
 
         dragVol = Mathf.Clamp01(dragVol);
@@ -154,6 +151,20 @@ public class Enemy : MonoBehaviour
         if ((Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, 100, rayMask) && 
             hit.collider.CompareTag("Player")) || Visible)
         {
+            SoundManager.Instance.StopSound("MusicalEnd");
+            if (!ambianceStarted)
+            {
+                SoundManager.Instance.PlaySound("MusicalStart");
+                ambianceStarted = true;
+            }
+            else
+            {
+                if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && !ambianceMid)
+                {
+                    SoundManager.Instance.PlaySound("MusicalMid");
+                    ambianceMid = true;
+                }
+            }
             Chase();
         }
         else if (chasing)
@@ -166,6 +177,7 @@ public class Enemy : MonoBehaviour
             //stop the ambiance
             if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && ambianceStarted)
             {
+                SoundManager.Instance.PlaySound("MusicalMid");
                 SoundManager.Instance.StopSoundLoop("MusicalMid", () =>
                 {
                     SoundManager.Instance.PlaySound("MusicalEnd");
@@ -243,21 +255,6 @@ public class Enemy : MonoBehaviour
         if (!chasing && inspectCoroutine != null)
             StopCoroutine(inspectCoroutine);
 
-        SoundManager.Instance.StopSound("MusicalEnd");
-        if (!ambianceStarted)
-        {
-            SoundManager.Instance.PlaySound("MusicalStart");
-            ambianceStarted = true;
-        }
-        else
-        {
-            if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && !ambianceMid)
-            {
-                SoundManager.Instance.PlaySound("MusicalMid");
-                ambianceMid = true;
-            }
-        }
-        
         chasing = true;
     }
 
@@ -293,6 +290,16 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitUntil(() =>
         {
+            if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && ambianceStarted)
+            {
+                SoundManager.Instance.PlaySound("MusicalMid");
+                SoundManager.Instance.StopSoundLoop("MusicalMid", () =>
+                {
+                    SoundManager.Instance.PlaySound("MusicalEnd");
+                });
+                ambianceStarted = false;
+                ambianceMid = false;
+            }
             return Vector3.Distance(position, transform.position) < threshold;
         });
 
@@ -351,6 +358,7 @@ public class Enemy : MonoBehaviour
         while (t < openDoorTime)
         {
             t += Time.deltaTime;
+            agent.velocity = Vector3.zero;
 
             if (state == EnemyState.Patrol || !Physics.Raycast(transform.position, transform.forward, out RaycastHit rayHit, doorOpenDistance)
                         || !rayHit.transform.CompareTag("Door") || rayHit.transform.GetComponentInParent<Door>() != door || agent.isStopped)

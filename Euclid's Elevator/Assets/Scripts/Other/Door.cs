@@ -44,9 +44,20 @@ public class Door : MonoBehaviour
         GameManager.MakePausable(this);
         GameManager.Instance.OnStageStart += (object sender, StageArgs args) =>
         {
+            if (Open)
+            {
+                Toggle();
+            }
             if (args.stage >= stageUnlock && StageLocked)
             {
                 StageLocked = false;
+            }
+        };
+        GameManager.Instance.OnDeath += (object sender, DeathArgs args) =>
+        {
+            if (Open)
+            {
+                Toggle();
             }
         };
     }

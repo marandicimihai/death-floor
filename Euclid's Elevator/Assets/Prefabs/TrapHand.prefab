@@ -202,6 +202,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 3271902419166874805}
   baseBone: {fileID: 127501177840733144}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 17929
   triggerRadius: 5
   deathRadius: 1
   forceStrength: 4
