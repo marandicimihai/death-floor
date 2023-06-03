@@ -51,6 +51,7 @@ public class Door : MonoBehaviour
             if (args.stage >= stageUnlock && StageLocked)
             {
                 StageLocked = false;
+                ForceOpen();
             }
         };
         GameManager.Instance.OnDeath += (object sender, DeathArgs args) =>

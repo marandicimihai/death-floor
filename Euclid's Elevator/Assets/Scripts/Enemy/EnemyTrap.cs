@@ -24,6 +24,7 @@ public class EnemyTrap : MonoBehaviour
 
     float time;
     bool pull;
+    bool hasPulled;
     bool used;
 
     private void Start()
@@ -60,7 +61,7 @@ public class EnemyTrap : MonoBehaviour
             baseBone.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(GameManager.Instance.player.position - baseBone.position, Vector3.up).normalized, Vector3.up) * initial;
 
             GameManager.Instance.playerController.AddForce(transform.position - GameManager.Instance.player.position, forceStrength);
-            GameManager.Instance.enemyController.NoiseHeardNav(transform.position);
+            GameManager.Instance.enemyController.NoiseHeardNav(transform.position, true);
 
             if (Vector3.Distance(GameManager.Instance.player.position, transform.position) < deathRadius)
             {
@@ -72,6 +73,8 @@ public class EnemyTrap : MonoBehaviour
                 ambiance.Stop();
                 used = true;
             }
+
+            hasPulled = true;
         }
 
         if (!pull && !used)
@@ -121,7 +124,7 @@ public class EnemyTrap : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!used)
+            if (!used && hasPulled)
             {
                 anim.SetTrigger("Burrow");
                 ambiance.Stop();

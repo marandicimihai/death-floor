@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine;
-using UnityEditor;
 using System;
 
 enum EnemyState
@@ -31,7 +30,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] float chaseSpeed;
     [SerializeField] float chaseStopDistance;
     [SerializeField] float chaseRange;
+
+    [Header("Door")]
     [SerializeField] float openDoorTime;
+    [SerializeField] float closeDoorTime;
     [SerializeField] float doorOpenDistance;
 
     [Header("Animation Properties")]
@@ -195,15 +197,41 @@ public class Enemy : MonoBehaviour
             && doorHit.transform.CompareTag("Door") && !agent.isStopped)
         {
             Door door = doorHit.transform.GetComponentInParent<Door>();
-            if (door.locked && doorCoroutine == null)
+            if (door.locked && doorCoroutine == null && !door.StageLocked)
             {
                 doorCoroutine = OpenDoor(door);
 
                 StartCoroutine(doorCoroutine);
             }
-            else if (doorCoroutine == null)
+            else if (doorCoroutine == null && !door.StageLocked)
             {
                 door.ForceOpen();
+            }
+        }
+        else if (state == EnemyState.Patrol && Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, doorOpenDistance)
+            && hitInfo.transform.CompareTag("Door") && !agent.isStopped)
+        {
+            Door door = hitInfo.transform.GetComponentInParent<Door>();
+            if (door.locked && doorCoroutine == null && !door.StageLocked)
+            {
+                doorCoroutine = OpenDoor(door);
+
+                StartCoroutine(doorCoroutine);
+                StartCoroutine(WaitAndExec(openDoorTime + closeDoorTime, () =>
+                {
+                    door.ForceLock();
+                }));
+            }
+            else if (doorCoroutine == null && !door.StageLocked)
+            {
+                door.ForceOpen();
+                StartCoroutine(WaitAndExec(openDoorTime + closeDoorTime, () =>
+                {
+                    if (door.Open)
+                    {
+                        door.Toggle();
+                    }
+                }));
             }
         }
     }
@@ -258,9 +286,9 @@ public class Enemy : MonoBehaviour
         chasing = true;
     }
 
-    public void NoiseHeardNav(Vector3 noisePosition)
+    public void NoiseHeardNav(Vector3 noisePosition, bool ignoreDistance = false)
     {
-        if (Vector3.Distance(noisePosition, transform.position) > inspectDistance)
+        if (Vector3.Distance(noisePosition, transform.position) > inspectDistance && !ignoreDistance)
         {
             if (!SoundManager.Instance.GetSound("MusicalStart").isPlaying && !ambianceMid && ambianceStarted)
             {
@@ -305,6 +333,14 @@ public class Enemy : MonoBehaviour
 
         patrolStep = false;
         state = EnemyState.Patrol;
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        agent.Warp(position);
+        agent.ResetPath();
+        state = EnemyState.Patrol;
+        patrolStep = false;
     }
 
     public void Reset(Vector3 position, float time)
@@ -358,10 +394,10 @@ public class Enemy : MonoBehaviour
         while (t < openDoorTime)
         {
             t += Time.deltaTime;
-            agent.velocity = Vector3.zero;
+            agent.isStopped = true;
 
-            if (state == EnemyState.Patrol || !Physics.Raycast(transform.position, transform.forward, out RaycastHit rayHit, doorOpenDistance)
-                        || !rayHit.transform.CompareTag("Door") || rayHit.transform.GetComponentInParent<Door>() != door || agent.isStopped)
+            if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit rayHit, doorOpenDistance)
+                        || !rayHit.transform.CompareTag("Door") || rayHit.transform.GetComponentInParent<Door>() != door || !CanKill)
             {
                 doorCoroutine = null;
                 yield break;

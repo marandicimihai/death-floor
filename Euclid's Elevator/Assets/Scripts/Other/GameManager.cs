@@ -222,16 +222,31 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
-        enemyController.Reset(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position, timeUntilOpenElevator);
+        if (stage == 1)
+        {
+            enemyController.CanKill = false;
+            enemyController.Teleport(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position);
+        }
+        else
+        {
+            enemyController.Reset(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position, timeUntilOpenElevator);
+        }
     }
 
     void InitElevator()
     {
+        for (int i = 1; i <= deaths; i++)
+        {
+            SoundManager.Instance.PlaySound($"ElevatorState00{i}");
+        }
         StartCoroutine(WaitAndExec(timeUntilOpenElevator, () =>
         {
             SoundManager.Instance.PlaySound("ElevatorStop");
             SoundManager.Instance.StopSound("ElevatorHum");
+            for (int i = 1; i <= 3; i++)
+            {
+                SoundManager.Instance.StopSound($"ElevatorState00{i}");
+            }
             elevator.OpenElevator();
         }));
     }

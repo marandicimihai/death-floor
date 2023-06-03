@@ -105,8 +105,6 @@ public class MenuSettings : MonoBehaviour
     //OTHER
     public void OpenFatherMenu()
     {
-        set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
-        SaveSystem.SaveSettings(set);
         if (FindObjectOfType<MainMenu>())
         {
             MainMenu mm = FindObjectOfType<MainMenu>();
@@ -185,6 +183,9 @@ public class MenuSettings : MonoBehaviour
     {
         effectsVolume = effectsSlider.value;
         ambianceVolume = ambianceSlider.value;
+        Settings old = SaveSystem.LoadSettings();
+        set = new Settings(effectsVolume, ambianceVolume, old.bloom, old.blur, old.sensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
+        SaveSystem.SaveSettings(set);
     }
     public void SetEffectsVolume(float vol)
     {
@@ -230,7 +231,6 @@ public class MenuSettings : MonoBehaviour
             qualityIndex = 0;
         }
         textQuality.text = qualityNames[qualityIndex];
-        QualitySettings.SetQualityLevel(qualityIndex);
         DoThatThing();
     }
     public void SetResArray(Res[] newResArray) //idk if u need this...
@@ -258,7 +258,6 @@ public class MenuSettings : MonoBehaviour
         string width = resType[resIndex].width.ToString();
         string height = resType[resIndex].height.ToString();
         textRes.text = width + "x" + height;
-        Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
         DoThatThing();
     }
     public void SetVsync(bool newVsync)
@@ -278,14 +277,6 @@ public class MenuSettings : MonoBehaviour
     {
         vSync = !vSync;
         ImageBoxVsync.enabled = vSync;
-        if (vSync)
-        {
-            QualitySettings.vSyncCount = 1;
-        }
-        else
-        {
-            QualitySettings.vSyncCount = 0;
-        }
     }
     public void SetFullscreen(bool newFullscreen)
     {
@@ -297,7 +288,6 @@ public class MenuSettings : MonoBehaviour
     {
         isfullscreen = !isfullscreen;
         ImageBoxFullscreen.enabled = isfullscreen;
-        Screen.fullScreen = isfullscreen;
     }
     public void SetBloom(bool newBloom)
     {
@@ -308,6 +298,9 @@ public class MenuSettings : MonoBehaviour
     {
         bloom = !bloom;
         ImageBoxBloom.enabled = bloom;
+        Settings old = SaveSystem.LoadSettings();
+        set = new Settings(old.effectsVolume, old.ambianceVolume, bloom, old.blur, old.sensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
+        SaveSystem.SaveSettings(set);
     }
     public void SetBlur(bool newBlur)
     {
@@ -318,6 +311,9 @@ public class MenuSettings : MonoBehaviour
     {
         blur = !blur;
         ImageBoxBlur.enabled = blur;
+        Settings old = SaveSystem.LoadSettings();
+        set = new Settings(old.effectsVolume, old.ambianceVolume, old.bloom, blur, old.sensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
+        SaveSystem.SaveSettings(set);
     }
     public int GetQualityIndex()
     {
@@ -366,6 +362,26 @@ public class MenuSettings : MonoBehaviour
     public void SyncSens() //whenever the slider gets input;
     {
         mouseSensitivity = mouseSensSlider.value;
+        Settings old = SaveSystem.LoadSettings();
+        set = new Settings(old.effectsVolume, old.ambianceVolume, old.bloom, old.blur, mouseSensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
+        SaveSystem.SaveSettings(set);
     }
     //idk what to do here with Input so yeah, you do you;
+
+    public void Apply()
+    {
+        Screen.fullScreen = isfullscreen;
+        if (vSync)
+        {
+            QualitySettings.vSyncCount = 1;
+        }
+        else
+        {
+            QualitySettings.vSyncCount = 0;
+        }
+        QualitySettings.SetQualityLevel(qualityIndex);
+        Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
+        set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
+        SaveSystem.SaveSettings(set);
+    }
 }

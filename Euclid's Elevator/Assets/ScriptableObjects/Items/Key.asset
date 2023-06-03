@@ -23,8 +23,8 @@ MonoBehaviour:
   drawSounds:
   - KeyDraw
   useSounds:
-  - KeyPickUp1
-  - KeyPickUp2
+  - Lock1
+  - Lock2
   useSoundsInOrder: 0
   pickUpPage: {fileID: 11400000, guid: c75522d7ec7ae1f4a8880b86b89997c3, type: 2}
   holdOffset: {x: 0, y: 0, z: 0}
