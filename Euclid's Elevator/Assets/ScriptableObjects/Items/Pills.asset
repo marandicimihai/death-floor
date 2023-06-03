@@ -9,21 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f33514e90af670d429e181fa136feadb, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b91554212fd5944ab01703053b81b3c, type: 3}
   m_Name: Pills
   m_EditorClassIdentifier: 
-  itemName: Pills
+  name: Pills
+  physicalObject: {fileID: 5096525209911580625, guid: 4140e56d4c069cd419fcea6d4c0fe8f0, type: 3}
   uses: 1
-  inventoryIcon: {fileID: 21300000, guid: 20927fd9e7122d24cb8efaf6fbc30dc2, type: 3}
-  prefab: {fileID: 5096525209911580625, guid: 4140e56d4c069cd419fcea6d4c0fe8f0, type: 3}
-  holdPrefab: {fileID: 3877704203069068449, guid: f775e253da020e548b5e01a3d2621b44, type: 3}
-  pickUpSounds:
-  - PillJarPickUp
-  drawSounds:
-  - PillJarDraw
-  useSounds:
-  - Swallow
-  useSoundsInOrder: 0
-  pickUpPage: {fileID: 11400000, guid: 5dabbc95c56e9824c8e8fe2b43f92810, type: 2}
-  holdOffset: {x: 0, y: 0, z: 0}
+  icon: {fileID: 21300000, guid: 20927fd9e7122d24cb8efaf6fbc30dc2, type: 3}
+  inHandObject: {fileID: 3877704203069068449, guid: f775e253da020e548b5e01a3d2621b44, type: 3}
+  offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: 0, y: 0, z: 0}

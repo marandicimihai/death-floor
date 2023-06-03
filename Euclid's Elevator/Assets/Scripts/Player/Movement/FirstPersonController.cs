@@ -50,11 +50,14 @@ public class FirstPersonController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
-        Input.InputActions.General.Sneak.started += (InputAction.CallbackContext context) => sneaking = true;
-        Input.InputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => sneaking = false;
-
         speedMultiplier = 1;
         canMove = true;
+    }
+
+    private void Start()
+    {
+        Input.InputActions.General.Sneak.started += (InputAction.CallbackContext context) => sneaking = true;
+        Input.InputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => sneaking = false;
     }
 
     private void Update()
