@@ -8,6 +8,8 @@ public class MenuSettings : MonoBehaviour
     //"It's been a worthwile since i last scripted for a unity project" - Dev #2
     public bool refreshTest = false; //use this "trigger" to update the settings UI;
     Animator thisAnim;
+    [SerializeField] AudioClip clickingSound;
+    AudioSource thisSource;
     [Header("Page Paramaters")]
     Canvas thisCanvas;
     [SerializeField] bool displayPages;
@@ -15,9 +17,11 @@ public class MenuSettings : MonoBehaviour
     [SerializeField] [Range(0, 2)] int pageIndex;
     [SerializeField] string[] pagesNames;
     [SerializeField] Sprite[] pageIcons;
+    [SerializeField] Sprite[] pageIconsHL;
     [SerializeField] GameObject[] pages;
     [SerializeField] Text pageDisplayText;
     [SerializeField] Image pageDisplayIcon;
+    [SerializeField] Button pageDisplayButton;
     [Header("Audio")]
     [SerializeField] [Range(0f, 1.0f)] float effectsVolume = 1;
     [SerializeField] [Range(0f, 1.0f)] float ambianceVolume = 1;
@@ -57,6 +61,7 @@ public class MenuSettings : MonoBehaviour
 
     void Start()
     {
+        thisSource = GetComponent<AudioSource>();
         thisAnim = gameObject.GetComponent<Animator>();
         SetPagesOff();
         UpdateAudio();
@@ -84,6 +89,11 @@ public class MenuSettings : MonoBehaviour
     {
         testRefresh();
     }
+    public void DoClick()
+    {
+        thisSource.clip = clickingSound;
+        thisSource.Play();
+    }
     void DoThatThing() //it's kinda annoying how the fucking buttons are just staying selected, what's this dumm ass feature
     {
         GameObject myEventSystem = GameObject.Find("EventSystem");
@@ -105,10 +115,21 @@ public class MenuSettings : MonoBehaviour
     //OTHER
     public void OpenFatherMenu()
     {
+<<<<<<< Updated upstream
+=======
+        //The main menu and side menu shouldn't be in the same scene
+        set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
+        SaveSystem.SaveSettings(set);
+>>>>>>> Stashed changes
         if (FindObjectOfType<MainMenu>())
         {
             MainMenu mm = FindObjectOfType<MainMenu>();
             mm.OpenMainTab(true);
+            mm.OpenSettings(false);
+        }
+        else if(FindObjectOfType<SideMenu>())
+        {
+            SideMenu mm = FindObjectOfType<SideMenu>();
             mm.OpenSettings(false);
         }
         else
@@ -131,6 +152,9 @@ public class MenuSettings : MonoBehaviour
         }
         pageDisplayText.text = pagesNames[pageIndex];
         pageDisplayIcon.sprite = pageIcons[pageIndex];
+        SpriteState ss = new SpriteState();
+        ss.highlightedSprite = pageIconsHL[pageIndex];
+        pageDisplayButton.spriteState = ss;
     }
     public void ChangePageNext()
     {
@@ -143,6 +167,9 @@ public class MenuSettings : MonoBehaviour
         pages[pageIndex].SetActive(true);
         pageDisplayText.text = pagesNames[pageIndex];
         pageDisplayIcon.sprite = pageIcons[pageIndex];
+        SpriteState ss = new SpriteState();
+        ss.highlightedSprite = pageIconsHL[pageIndex];
+        pageDisplayButton.spriteState = ss;
         DoThatThing();
     }
     public void SetPagesOff()
@@ -368,6 +395,7 @@ public class MenuSettings : MonoBehaviour
     }
     //idk what to do here with Input so yeah, you do you;
 
+<<<<<<< Updated upstream
     public void Apply()
     {
         Screen.fullScreen = isfullscreen;
@@ -384,4 +412,6 @@ public class MenuSettings : MonoBehaviour
         set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
         SaveSystem.SaveSettings(set);
     }
+=======
+>>>>>>> Stashed changes
 }

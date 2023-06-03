@@ -8,10 +8,13 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Canvas mainTab;
     [SerializeField] Canvas creditsTab;
     [SerializeField] Animator menuCameraAnim;
+    [SerializeField] AudioClip clickingSound;
+    AudioSource thisSource;
     MenuSettings settingsTab;
     // Start is called before the first frame update
     void Start()
     {
+        thisSource = GetComponent<AudioSource>();
         settingsTab = FindObjectOfType<MenuSettings>();
         mainTab.enabled = true;
         creditsTab.enabled = false;
@@ -57,5 +60,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Main");
     }
-
+    public void DoClick()
+    {
+        thisSource.clip = clickingSound;
+        thisSource.Play();
+    }
 }
