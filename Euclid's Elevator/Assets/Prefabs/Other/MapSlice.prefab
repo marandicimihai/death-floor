@@ -30575,7 +30575,6 @@ GameObject:
   - component: {fileID: 4640504156834730134}
   - component: {fileID: 8127574096257594130}
   - component: {fileID: 5122830593409934952}
-  - component: {fileID: 1792508362673512288}
   m_Layer: 0
   m_Name: A_LeasureRoomCeil
   m_TagString: Untagged
@@ -30662,18 +30661,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1792508362673512288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060101335169059579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1266229574291991279
 GameObject:
   m_ObjectHideFlags: 0
@@ -30685,7 +30672,6 @@ GameObject:
   - component: {fileID: 2139589737499009379}
   - component: {fileID: 6606783246908419187}
   - component: {fileID: 3323133843774766041}
-  - component: {fileID: 158564079}
   m_Layer: 0
   m_Name: TinyTunnelCeil
   m_TagString: Untagged
@@ -30762,18 +30748,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &158564079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266229574291991279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1311406463583236639
 GameObject:
   m_ObjectHideFlags: 0
@@ -31022,7 +30996,6 @@ GameObject:
   - component: {fileID: 2089385776150809596}
   - component: {fileID: 229392155743845125}
   - component: {fileID: 7903083351005486464}
-  - component: {fileID: 1717231141}
   m_Layer: 0
   m_Name: SouthWestOfficeCeil
   m_TagString: Untagged
@@ -31128,18 +31101,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1717231141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057973266591628563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2353200703772587377
 GameObject:
   m_ObjectHideFlags: 0
@@ -31483,7 +31444,6 @@ GameObject:
   - component: {fileID: 2396894338325134873}
   - component: {fileID: 5901732170968862948}
   - component: {fileID: 8082309604910412625}
-  - component: {fileID: 68597915}
   m_Layer: 0
   m_Name: MonkeyBusinessCeil
   m_TagString: Untagged
@@ -31576,18 +31536,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &68597915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3342248796379417826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3874153082413999838
 GameObject:
   m_ObjectHideFlags: 0
@@ -31818,7 +31766,6 @@ GameObject:
   - component: {fileID: 4742149932106042837}
   - component: {fileID: 5990333164273483234}
   - component: {fileID: 8680881039950926161}
-  - component: {fileID: 1826605135}
   m_Layer: 0
   m_Name: NorthOfficeCeil
   m_TagString: Untagged
@@ -31921,18 +31868,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1826605135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4314990679249657222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4828253082603398973
 GameObject:
   m_ObjectHideFlags: 0
@@ -31944,7 +31879,6 @@ GameObject:
   - component: {fileID: 6951870571676344976}
   - component: {fileID: 2636487518610075901}
   - component: {fileID: 3289051788789587170}
-  - component: {fileID: 1792508362673512286}
   m_Layer: 0
   m_Name: A_WorkOfficeCeil
   m_TagString: Untagged
@@ -32038,18 +31972,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1792508362673512286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4828253082603398973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5062358252753423508
 GameObject:
   m_ObjectHideFlags: 0
@@ -32061,7 +31983,6 @@ GameObject:
   - component: {fileID: 2784985802305254050}
   - component: {fileID: 6367035971210944442}
   - component: {fileID: 378136031176470213}
-  - component: {fileID: 1116030099}
   m_Layer: 0
   m_Name: RelaxoRoomCeil
   m_TagString: Untagged
@@ -32145,18 +32066,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1116030099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5062358252753423508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5168497856286971314
 GameObject:
   m_ObjectHideFlags: 0
@@ -32385,7 +32294,6 @@ GameObject:
   - component: {fileID: 8038741432302571162}
   - component: {fileID: 4646090895929229896}
   - component: {fileID: 2924637639433452215}
-  - component: {fileID: 1548000788}
   m_Layer: 0
   m_Name: QuadCeil
   m_TagString: Untagged
@@ -32464,18 +32372,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1548000788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5396834883942265034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5842832778355960490
 GameObject:
   m_ObjectHideFlags: 0
@@ -32487,7 +32383,6 @@ GameObject:
   - component: {fileID: 1058829802115303237}
   - component: {fileID: 8869611740104570586}
   - component: {fileID: 1991479029395030707}
-  - component: {fileID: 578781039}
   m_Layer: 0
   m_Name: LongBigCorridorCeil
   m_TagString: Untagged
@@ -32572,18 +32467,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &578781039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5842832778355960490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5992543128825524180
 GameObject:
   m_ObjectHideFlags: 0
@@ -32595,7 +32478,6 @@ GameObject:
   - component: {fileID: 3592396764540433063}
   - component: {fileID: 1593017523975475680}
   - component: {fileID: 6699024080269155649}
-  - component: {fileID: 1842098918}
   m_Layer: 0
   m_Name: CursedCornerCeil
   m_TagString: Untagged
@@ -32678,18 +32560,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1842098918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5992543128825524180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6291079018096618933
 GameObject:
   m_ObjectHideFlags: 0
@@ -32827,7 +32697,6 @@ GameObject:
   - component: {fileID: 5613559967394925605}
   - component: {fileID: 6275958659340262354}
   - component: {fileID: 1946797399632941255}
-  - component: {fileID: 1521741331}
   m_Layer: 0
   m_Name: MeetingsRoomCeil
   m_TagString: Untagged
@@ -32913,18 +32782,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1521741331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6995544181417197735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7431567732359940989
 GameObject:
   m_ObjectHideFlags: 0
@@ -32936,7 +32793,6 @@ GameObject:
   - component: {fileID: 4053200405439856143}
   - component: {fileID: 3097593550032484843}
   - component: {fileID: 3365370074897754267}
-  - component: {fileID: 1792508362673512287}
   m_Layer: 0
   m_Name: A_LongOfficeCeil
   m_TagString: Untagged
@@ -33030,18 +32886,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1792508362673512287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7431567732359940989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7834960353267632620
 GameObject:
   m_ObjectHideFlags: 0
@@ -33053,7 +32897,6 @@ GameObject:
   - component: {fileID: 3994682032135359845}
   - component: {fileID: 3571823775023690066}
   - component: {fileID: 5281883203281172878}
-  - component: {fileID: 1792508362673512285}
   m_Layer: 0
   m_Name: A_CorridorCeil
   m_TagString: Untagged
@@ -33136,18 +32979,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1792508362673512285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7834960353267632620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7857060001630044191
 GameObject:
   m_ObjectHideFlags: 0
@@ -33392,7 +33223,6 @@ GameObject:
   - component: {fileID: 7739033807875821002}
   - component: {fileID: 510505588569098642}
   - component: {fileID: 5789265750709835072}
-  - component: {fileID: 1322390823}
   m_Layer: 0
   m_Name: NorthWestOfficeCeil
   m_TagString: Untagged
@@ -33493,18 +33323,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1322390823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8395864838873153665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8437317072344427962
 GameObject:
   m_ObjectHideFlags: 0
@@ -33640,7 +33458,6 @@ GameObject:
   - component: {fileID: 8765522738159535091}
   - component: {fileID: 4501658856957688013}
   - component: {fileID: 6921869608957086203}
-  - component: {fileID: 1792508362673512289}
   m_Layer: 0
   m_Name: A_EntranceCeil
   m_TagString: Untagged
@@ -33719,18 +33536,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1792508362673512289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8481774311829171449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784270142c7a913418c7cedebbb81cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8687110953608617307
 GameObject:
   m_ObjectHideFlags: 0
