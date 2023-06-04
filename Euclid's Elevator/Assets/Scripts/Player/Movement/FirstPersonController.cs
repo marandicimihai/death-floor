@@ -51,7 +51,7 @@ public class FirstPersonController : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         speedMultiplier = 1;
-        canMove = true;
+        Enable();
     }
 
     private void Start()
@@ -68,6 +68,11 @@ public class FirstPersonController : MonoBehaviour
             moveDirection = forces + velocity;
             controller.Move(moveDirection * Time.deltaTime);
         }
+        else
+        {
+            velocity = Vector3.zero;
+        }
+
         ComputeGravity();
         controller.Move(gravity * Time.deltaTime);
         forces = Vector3.zero;
@@ -184,5 +189,23 @@ public class FirstPersonController : MonoBehaviour
     public void AddForce(Vector3 direction, float forceStrength)
     {
         forces += Vector3.ProjectOnPlane(direction, Vector3.up).normalized * forceStrength;
+    }
+
+    public void Spawn(Vector3 spawnPoint, float freezeTime)
+    {
+        transform.position = spawnPoint;
+        canMove = false;
+
+        Invoke(nameof(Enable), freezeTime);
+    }
+
+    public void Disable()
+    {
+        canMove = false;
+    }
+
+    public void Enable()
+    {
+        canMove = true;
     }
 }

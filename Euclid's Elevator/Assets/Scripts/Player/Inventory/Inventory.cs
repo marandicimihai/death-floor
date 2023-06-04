@@ -36,6 +36,28 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         Input.InputActions.General.Drop.performed += (InputAction.CallbackContext context) => DropItem();
+        Input.InputActions.General.Inventory1.performed += InventoryPerformed;
+        Input.InputActions.General.Inventory2.performed += InventoryPerformed;
+        Input.InputActions.General.Inventory3.performed += InventoryPerformed;
+        Input.InputActions.General.Inventory4.performed += InventoryPerformed;
+    }
+
+    void InventoryPerformed(InputAction.CallbackContext context)
+    {
+        int input;
+
+        try
+        {
+            input = int.Parse(context.control.name) - 1;
+        }
+        catch
+        {
+            Debug.Log("Parse no work :c.");
+            return;
+        }
+
+        Index = input;
+        OnItemsChanged?.Invoke(this, new EventArgs());
     }
 
     public void PickUpItem(Item itemComponent)
@@ -78,7 +100,7 @@ public class Inventory : MonoBehaviour
         OnItemsChanged?.Invoke(this, new EventArgs());
     }
 
-    void UseItem()
+    public void UseItem()
     {
         if (Items[Index] != null && Items[Index].OnUse())
         {
@@ -88,6 +110,35 @@ public class Inventory : MonoBehaviour
             {
                 Destroy(Items[Index]);
                 Items[Index] = null;
+                OnItemsChanged?.Invoke(this, new EventArgs());
+            }
+        }
+    }
+
+    public void UseItem(int id)
+    {
+        if (Items[id] != null && Items[id].OnUse())
+        {
+            Items[id].uses -= 1;
+
+            if (Items[id].uses <= 0)
+            {
+                Destroy(Items[id]);
+                Items[id] = null;
+                OnItemsChanged?.Invoke(this, new EventArgs());
+            }
+        }
+    }
+
+    public void ClearInventory()
+    {
+        for (int i = 0; i < slots; i++)
+        {
+            if (Items[i] != null)
+            {
+                Destroy(Items[i]);
+                Items[i] = null;
+
                 OnItemsChanged?.Invoke(this, new EventArgs());
             }
         }

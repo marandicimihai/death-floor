@@ -24,7 +24,8 @@ public class InteractionManager : MonoBehaviour
         Interactions inter = GetComponent<Interactions>();
         interactions = new interaction[]
         {
-            inter.PickUp
+            inter.PickUp,
+            inter.ToggleDoor
         };
     }
 

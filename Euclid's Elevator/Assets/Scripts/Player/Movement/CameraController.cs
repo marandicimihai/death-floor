@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] new Transform camera;
+    public new Transform camera;
     [SerializeField] float sensitivity;
 
     Vector2 rotation;
@@ -10,9 +10,8 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        ResetAngle(90);
-
-        canLook = true;
+        ResetAngle();
+        Enable();
     }
 
     private void Update()
@@ -31,9 +30,27 @@ public class CameraController : MonoBehaviour
         }    
     }
     
-    public void ResetAngle(float yrotation)
+    public void ResetAngle()
     {
         rotation.x = 0;
-        rotation.y = yrotation;
+        rotation.y = 90;
+    }
+
+    public void Spawn(float freezeTime)
+    {
+        canLook = false;
+        ResetAngle();
+
+        Invoke(nameof(Enable), freezeTime);
+    }
+
+    public void Disable()
+    {
+        canLook = false;
+    }
+
+    public void Enable()
+    {
+        canLook = true;
     }
 }

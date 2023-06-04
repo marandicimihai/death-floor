@@ -8,6 +8,7 @@ public class InventoryHUD : MonoBehaviour
     [SerializeField] Transform holdPos;
 
     Inventory inventory;
+    bool hideHUD;
 
     private void Awake()
     {
@@ -16,14 +17,28 @@ public class InventoryHUD : MonoBehaviour
         inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshVisualModels();
     }
 
+    private void Update()
+    {
+        if (hideHUD)
+        {
+            if (holdPos.childCount > 0)
+            {
+                DestroyChildren(holdPos);
+            }
+        }
+    }
+
     void RefreshVisualModels()
     {
+        if (hideHUD)
+            return;
+
         if (holdPos.childCount > 0)
         {
             if (inventory.Items[inventory.Index] != null && holdPos.GetComponentInChildren<Item>() &&
                 holdPos.GetComponentInChildren<Item>().properties.name != inventory.Items[inventory.Index].properties.name)
             {
-                Destroy(holdPos.GetChild(0).gameObject);
+                DestroyChildren(holdPos);
                 Item item = inventory.Items[inventory.Index];
                 GameObject model = Instantiate(item.properties.inHandObject, holdPos);
                 model.transform.localPosition = item.properties.offset;
@@ -31,7 +46,7 @@ public class InventoryHUD : MonoBehaviour
             }
             else if (inventory.Items[inventory.Index] == null)
             {
-                Destroy(holdPos.GetChild(0).gameObject);
+                DestroyChildren(holdPos);
             }
         }
         else
@@ -43,6 +58,14 @@ public class InventoryHUD : MonoBehaviour
                 model.transform.localPosition = item.properties.offset;
                 model.transform.localEulerAngles = item.properties.holdAngles;
             }
+        }
+    }
+
+    void DestroyChildren(Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Destroy(parent.GetChild(i).gameObject);
         }
     }
 }

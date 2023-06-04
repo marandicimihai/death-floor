@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5835537716381155603}
   - component: {fileID: 8265414771627984392}
   - component: {fileID: 4728151281112965355}
+  - component: {fileID: 4824101471960859685}
   m_Layer: 0
   m_Name: KeyCardModel
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4824101471960859685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6420132037335156090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88db75730e05c6458fc1ad1178db923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 11400000, guid: 577ccc289259c4c459026e8f185a64ff, type: 2}
