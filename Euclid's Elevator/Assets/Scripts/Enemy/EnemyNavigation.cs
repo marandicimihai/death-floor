@@ -12,7 +12,7 @@ enum State
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyNavigation : MonoBehaviour
 {
-    bool Visible
+    public bool Visible
     {
         get
         {
@@ -31,6 +31,7 @@ public class EnemyNavigation : MonoBehaviour
         }
     }
     [SerializeField] Player player;
+    [SerializeField] EnemyRigAnim rigAnim;
     [SerializeField] LayerMask solid;
 
     [Header("Patrol")]
@@ -85,6 +86,7 @@ public class EnemyNavigation : MonoBehaviour
     {
         if (canKill && Vector3.Distance(transform.position, player.transform.position) <= killDistance)
         {
+            rigAnim.KillAnimation();
             player.Die(killTime);
             canKill = false;
             canMove = false;

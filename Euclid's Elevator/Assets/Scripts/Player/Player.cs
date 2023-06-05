@@ -4,7 +4,9 @@ public class Player : MonoBehaviour
 {
     public FirstPersonController controller;
     public CameraController cameraController;
+    public CameraAnimation cameraAnimation;
     public Inventory inventory;
+    public InventoryHUD inventoryHUD;
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
     

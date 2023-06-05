@@ -303,6 +303,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2440113499704506165}
   - component: {fileID: 3068876454251326860}
+  - component: {fileID: 8103411295878314293}
+  - component: {fileID: 1899635610}
   m_Layer: 0
   m_Name: EnemyRig
   m_TagString: Untagged
@@ -348,6 +350,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &8103411295878314293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068876454251326863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29bb2f193d6b8f343b1bf16d093a6adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  animator: {fileID: 3068876454251326860}
+--- !u!114 &1899635610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068876454251326863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc7ef5f652a56d45a03e1ba2a6d1b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  cameraReference: {fileID: 1212580369}
+  hideHUD: 1
 --- !u!1 &3339834823448691250
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,15 @@ public class Elevator : MonoBehaviour
         Invoke(nameof(OpenElevator), elevatorRideTime);
     }
 
+    private void Start()
+    {
+        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
+        {
+            CloseElevator(true);
+            Invoke(nameof(OpenElevator), elevatorRideTime);
+        };
+    }
+
     private void Update()
     {
         if (waiting && Vector3.Distance(transform.position, player.transform.position) <= waitForPlayerRadius)
@@ -53,10 +62,14 @@ public class Elevator : MonoBehaviour
         animator.SetBool("Open", true);
         doorCollider.enabled = false;
     }
-    
-    void CloseElevator()
+
+    void CloseElevator(bool instant = false)
     {
         animator.SetBool("Open", false);
+        if (instant)
+        {
+            animator.SetTrigger("InstaClose");
+        }
         doorCollider.enabled = true;
     }
 }

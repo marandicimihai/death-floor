@@ -33,7 +33,10 @@ public class Door : MonoBehaviour
         {
             stageLocked = true;
         }
+    }
 
+    private void Start()
+    {
         GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
         {
             if (GameManager.Instance.Stage == unlockStage)

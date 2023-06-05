@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] EnemySpawn[] enemySpawns;
 
     public EventHandler OnStageStart;
+    public EventHandler OnDeath;
 
     GameStage stage;
 
@@ -92,6 +93,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            OnDeath?.Invoke(this, new EventArgs());
             SpawnPlayer();
             SpawnEnemy();
         }

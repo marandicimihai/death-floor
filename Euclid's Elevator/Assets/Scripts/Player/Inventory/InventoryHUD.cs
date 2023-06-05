@@ -14,7 +14,7 @@ public class InventoryHUD : MonoBehaviour
     [SerializeField] float swaySmoothRot;
 
     Inventory inventory;
-    bool hideHUD;
+    public bool hideHUD;
 
     private void Awake()
     {

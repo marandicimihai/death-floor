@@ -28,7 +28,7 @@ public class Interactions : MonoBehaviour
                 int i = 0;
                 foreach (Item item in player.inventory.Items)
                 {
-                    if (door.CheckItem(item.properties))
+                    if (item != null && door.CheckItem(item.properties))
                     {
                         player.inventory.DecreaseDurability(i);
                         door.Toggle();

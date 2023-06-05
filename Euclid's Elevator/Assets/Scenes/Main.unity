@@ -1522,7 +1522,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 56008
+    m_Bits: 121480
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -5084,6 +5084,7 @@ GameObject:
   - component: {fileID: 1288032394}
   - component: {fileID: 1288032395}
   - component: {fileID: 1288032396}
+  - component: {fileID: 1288032397}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -5186,7 +5187,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1288032388}
   cameraController: {fileID: 1288032389}
+  cameraAnimation: {fileID: 1288032397}
   inventory: {fileID: 1288032394}
+  inventoryHUD: {fileID: 1288032395}
   spawnFreezeTime: 0.5
   maxDeaths: 4
 --- !u!114 &1288032391
@@ -5271,6 +5274,7 @@ MonoBehaviour:
   swayMaxRotStep: 5
   swaySmooth: 10
   swaySmoothRot: 12
+  hideHUD: 0
 --- !u!114 &1288032396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5284,6 +5288,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 20
+--- !u!114 &1288032397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288032383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67afc3874dcb0c440a6b0c853a3b5d3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1288032390}
+  camera: {fileID: 575464969}
+  defaultCameraParent: {fileID: 1288032384}
+  animationTransitionTime: 0.5
 --- !u!1 &1292862747
 GameObject:
   m_ObjectHideFlags: 0
@@ -7492,6 +7512,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2086231056}
     m_Modifications:
+    - target: {fileID: 1899635610, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1288032390}
     - target: {fileID: 2440113499704506165, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -7540,15 +7564,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyRig
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 280655828376131967, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
-    - {fileID: 1899635610, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+    - target: {fileID: 8103411295878314293, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 2086231058}
+    - target: {fileID: 8103411295878314293, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1288032390}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
 --- !u!4 &1899635607 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2440113499704506165, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
   m_PrefabInstance: {fileID: 1899635606}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1899635608 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8103411295878314293, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+  m_PrefabInstance: {fileID: 1899635606}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29bb2f193d6b8f343b1bf16d093a6adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1918024773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8313114065036069703, guid: 940d5d83f332f7540849c1a7426eac4b, type: 3}
@@ -8184,6 +8225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1288032390}
+  rigAnim: {fileID: 1899635608}
   solid:
     serializedVersion: 2
     m_Bits: 17921
