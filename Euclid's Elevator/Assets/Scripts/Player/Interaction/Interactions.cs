@@ -30,7 +30,7 @@ public class Interactions : MonoBehaviour
                 {
                     if (door.CheckItem(item.properties))
                     {
-                        player.inventory.UseItem(i);
+                        player.inventory.DecreaseDurability(i);
                         door.Toggle();
                         break;
                     }
@@ -42,6 +42,24 @@ public class Interactions : MonoBehaviour
                 door.Toggle();
             }
             return true;
+        }
+        return false;
+    }
+
+    public bool InsertKeycard(Player player, RaycastHit hit)
+    {
+        if (hit.collider.CompareTag("ItemHole") && hit.collider.GetComponentInParent<Elevator>() != null)
+        {
+            Elevator elev = hit.collider.GetComponentInParent<Elevator>();
+
+            for (int i = 0; i < player.inventory.Items.Length; i++)
+            {
+                if (player.inventory.Items[i] != null && elev.CheckItem(player.inventory.Items[i].properties))
+                {
+                    player.inventory.DecreaseDurability(i);
+                    return true;
+                }
+            }
         }
         return false;
     }

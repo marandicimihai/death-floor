@@ -6,6 +6,12 @@ public class InventoryHUD : MonoBehaviour
 {
     [Header("ItemModels")]
     [SerializeField] Transform holdPos;
+    [SerializeField] float swayStep;
+    [SerializeField] float swayMaxStep;
+    [SerializeField] float swayRotStep;
+    [SerializeField] float swayMaxRotStep;
+    [SerializeField] float swaySmooth;
+    [SerializeField] float swaySmoothRot;
 
     Inventory inventory;
     bool hideHUD;
@@ -25,6 +31,10 @@ public class InventoryHUD : MonoBehaviour
             {
                 DestroyChildren(holdPos);
             }
+        }
+        else
+        {
+            Sway();
         }
     }
 
@@ -58,6 +68,27 @@ public class InventoryHUD : MonoBehaviour
                 model.transform.localPosition = item.properties.offset;
                 model.transform.localEulerAngles = item.properties.holdAngles;
             }
+        }
+    }
+
+    void Sway()
+    {
+        if (inventory.Items[inventory.Index] != null && holdPos.childCount > 0)
+        {
+            Vector2 invertLook = Input.InputActions.General.Look.ReadValue<Vector2>() * -swayStep;
+            invertLook.x = Mathf.Clamp(invertLook.x, -swayMaxStep, swayMaxStep);
+            invertLook.y = Mathf.Clamp(invertLook.y, -swayMaxStep, swayMaxStep);
+
+            Vector3 swayPos = invertLook;
+
+            Vector3 swayRotLook = Input.InputActions.General.Look.ReadValue<Vector2>() * -swayRotStep;
+            swayRotLook.x = Mathf.Clamp(swayRotLook.x, -swayMaxRotStep, swayMaxRotStep);
+            swayRotLook.y = Mathf.Clamp(swayRotLook.y, -swayMaxRotStep, swayMaxRotStep);
+
+            Vector3 swayRot = new Vector3(swayRotLook.y, swayRotLook.x, swayRotLook.x);
+
+            holdPos.GetChild(0).localPosition = Vector3.Lerp(holdPos.GetChild(0).localPosition, swayPos + inventory.Items[inventory.Index].properties.offset, Time.deltaTime * swaySmooth);
+            holdPos.GetChild(0).localRotation = Quaternion.Slerp(holdPos.GetChild(0).localRotation, Quaternion.Euler(swayRot + inventory.Items[inventory.Index].properties.holdAngles), Time.deltaTime * swaySmoothRot);
         }
     }
 

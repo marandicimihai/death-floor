@@ -36,6 +36,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         Input.InputActions.General.Drop.performed += (InputAction.CallbackContext context) => DropItem();
+        Input.InputActions.General.Use.performed += (InputAction.CallbackContext context) => UseItem();
         Input.InputActions.General.Inventory1.performed += InventoryPerformed;
         Input.InputActions.General.Inventory2.performed += InventoryPerformed;
         Input.InputActions.General.Inventory3.performed += InventoryPerformed;
@@ -100,24 +101,22 @@ public class Inventory : MonoBehaviour
         OnItemsChanged?.Invoke(this, new EventArgs());
     }
 
-    public void UseItem()
+    void UseItem()
     {
-        if (Items[Index] != null && Items[Index].OnUse())
+        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse())
         {
-            Items[Index].uses -= 1;
-
-            if (Items[Index].uses <= 0)
-            {
-                Destroy(Items[Index]);
-                Items[Index] = null;
-                OnItemsChanged?.Invoke(this, new EventArgs());
-            }
+            DecreaseDurability();
         }
     }
 
-    public void UseItem(int id)
+    public void DecreaseDurability(int id = -1)
     {
-        if (Items[id] != null && Items[id].OnUse())
+        if (id == -1)
+        {
+            id = Index;
+        }
+
+        if (Items[id] != null)
         {
             Items[id].uses -= 1;
 

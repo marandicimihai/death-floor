@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3069123396111582543}
   - component: {fileID: 3090704381882436040}
   - component: {fileID: 7364445948733918279}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ToolboxModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 6621977675098216231}
   - component: {fileID: 7644277168915810010}
   - component: {fileID: 4922270745410249490}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ToolboxHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -25,7 +25,8 @@ public class InteractionManager : MonoBehaviour
         interactions = new interaction[]
         {
             inter.PickUp,
-            inter.ToggleDoor
+            inter.ToggleDoor,
+            inter.InsertKeycard
         };
     }
 

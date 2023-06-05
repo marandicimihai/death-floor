@@ -63,13 +63,15 @@ public class GameManager : MonoBehaviour
         }
         else if (stage == GameStage.WaitForPlayer)
         {
-
+            
         }
         else if (stage == GameStage.End)
         {
 
         }
     }
+
+    #region GameLevel
 
     void StartGame()
     {
@@ -82,19 +84,6 @@ public class GameManager : MonoBehaviour
         SpawnEnemy();
     }
 
-    void NextStage()
-    {
-        Stage++;
-        if (Stage > stageCount)
-        {
-            stage = GameStage.End;
-        }
-        else
-        {
-            OnStageStart?.Invoke(this, new EventArgs());
-        }
-    }
-
     public void PlayerDeath(int deaths, int maxDeaths)
     {
         if (deaths == maxDeaths)
@@ -105,6 +94,35 @@ public class GameManager : MonoBehaviour
         {
             SpawnPlayer();
             SpawnEnemy();
+        }
+    }
+
+    public void PlayerEnteredElevator()
+    {
+        if (stage == GameStage.WaitForPlayer)
+        {
+            NextStage();
+        }
+    }
+
+    public void KeycardInserted()
+    {
+        if (stage == GameStage.GameLevel)
+        {
+            stage = GameStage.WaitForPlayer;
+        }
+    }
+
+    void NextStage()
+    {
+        Stage++;
+        if (Stage > stageCount)
+        {
+            stage = GameStage.End;
+        }
+        else
+        {
+            OnStageStart?.Invoke(this, new EventArgs());
         }
     }
 
@@ -134,4 +152,6 @@ public class GameManager : MonoBehaviour
 
         enemy.Spawn(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position);
     }
+
+    #endregion
 }

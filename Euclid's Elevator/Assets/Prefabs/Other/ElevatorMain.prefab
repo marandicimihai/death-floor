@@ -51,13 +51,13 @@ Light:
   m_InnerSpotAngle: 84.43399
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -82,7 +82,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1025
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -90,7 +90,7 @@ Light:
   m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: 0.000000112732835}
+  m_BoundingSphereOverride: {x: 1.6494401e+28, y: 3991.2502, z: 0, w: 8.5e-44}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -447,6 +447,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f74eff7f03f05c4cb124856c5b336fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  keycard: {fileID: 11400000, guid: 577ccc289259c4c459026e8f185a64ff, type: 2}
+  doorCollider: {fileID: 3921013585228813346}
+  waitForPlayerRadius: 0.9
+  elevatorRideTime: 5
 --- !u!1 &7952024010619760010
 GameObject:
   m_ObjectHideFlags: 0
