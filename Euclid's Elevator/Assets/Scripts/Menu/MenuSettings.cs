@@ -115,12 +115,12 @@ public class MenuSettings : MonoBehaviour
     //OTHER
     public void OpenFatherMenu()
     {
-<<<<<<< Updated upstream
-=======
+        //----
         //The main menu and side menu shouldn't be in the same scene
         set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
         SaveSystem.SaveSettings(set);
->>>>>>> Stashed changes
+        //problemo?
+
         if (FindObjectOfType<MainMenu>())
         {
             MainMenu mm = FindObjectOfType<MainMenu>();
@@ -395,7 +395,7 @@ public class MenuSettings : MonoBehaviour
     }
     //idk what to do here with Input so yeah, you do you;
 
-<<<<<<< Updated upstream
+//problemo
     public void Apply()
     {
         Screen.fullScreen = isfullscreen;
@@ -412,6 +412,5 @@ public class MenuSettings : MonoBehaviour
         set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
         SaveSystem.SaveSettings(set);
     }
-=======
->>>>>>> Stashed changes
+//problemo?
 }
