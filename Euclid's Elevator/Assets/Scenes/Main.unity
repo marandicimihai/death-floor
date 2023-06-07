@@ -2239,7 +2239,7 @@ Transform:
   - {fileID: 1416401309}
   - {fileID: 577653519}
   m_Father: {fileID: 575464966}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &496169797
 GameObject:
@@ -2417,14 +2417,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575464965}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1.0000002}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1441404229}
   - {fileID: 1781553531}
   - {fileID: 491615136}
-  - {fileID: 1441404229}
   m_Father: {fileID: 1288032384}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2588,7 +2588,7 @@ GameObject:
   - component: {fileID: 577653519}
   - component: {fileID: 577653520}
   m_Layer: 0
-  m_Name: Volume (2)
+  m_Name: MotionBlur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5085,6 +5085,8 @@ GameObject:
   - component: {fileID: 1288032395}
   - component: {fileID: 1288032396}
   - component: {fileID: 1288032397}
+  - component: {fileID: 1288032398}
+  - component: {fileID: 1288032399}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -5188,6 +5190,7 @@ MonoBehaviour:
   controller: {fileID: 1288032388}
   cameraController: {fileID: 1288032389}
   cameraAnimation: {fileID: 1288032397}
+  vfxmanager: {fileID: 1288032398}
   inventory: {fileID: 1288032394}
   inventoryHUD: {fileID: 1288032395}
   spawnFreezeTime: 0.5
@@ -5304,6 +5307,37 @@ MonoBehaviour:
   camera: {fileID: 575464969}
   defaultCameraParent: {fileID: 1288032384}
   animationTransitionTime: 0.5
+--- !u!114 &1288032398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288032383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5bed3a85c910b041862cfb14562d700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackScreen: {fileID: 1214926707}
+  insanity: {fileID: 576751799}
+  camera: {fileID: 575464969}
+  shakeMagnitude: 0.005
+--- !u!114 &1288032399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288032383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddade0b73f85ee47bf0124290d44f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1288032390}
+  enemy: {fileID: 2086231058}
+  insanityTime: 30
 --- !u!1 &1292862747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5891,7 +5925,7 @@ GameObject:
   - component: {fileID: 1416401309}
   - component: {fileID: 1416401310}
   m_Layer: 0
-  m_Name: Volume (1)
+  m_Name: Bloom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6009,7 +6043,7 @@ Transform:
   m_Children:
   - {fileID: 1202080400}
   m_Father: {fileID: 575464966}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1441404230
 MonoBehaviour:
@@ -7170,7 +7204,7 @@ Transform:
   m_Children:
   - {fileID: 424325021}
   m_Father: {fileID: 575464966}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1781553532
 MonoBehaviour:
@@ -7513,6 +7547,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 2086231056}
     m_Modifications:
     - target: {fileID: 1899635610, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1288032390}
+    - target: {fileID: 1899635611, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1288032390}
+    - target: {fileID: 1899635612, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1288032390}
@@ -8242,7 +8284,6 @@ MonoBehaviour:
   killDistance: 1.5
   chaseSpeed: 9
   chaseStopDistance: 1.4
-  killTime: 2.5
   spawnFreezeTime: 2
   openDoorDistance: 2
   openUnlockedDoorTime: 0.5

@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool Dead { get; private set; }
     public FirstPersonController controller;
     public CameraController cameraController;
     public CameraAnimation cameraAnimation;
+    public VFXManager vfxmanager;
     public Inventory inventory;
     public InventoryHUD inventoryHUD;
     [SerializeField] float spawnFreezeTime;
@@ -12,23 +14,31 @@ public class Player : MonoBehaviour
     
     int deaths;
 
-    public void Die(float respawnTime)
+    public void Die(bool callDeath)
     {
-        deaths++;
+        if (!Dead)
+        {
+            Dead = true;
+            deaths++;
 
-        controller.Disable();
-        cameraController.Disable();
-        inventory.ClearInventory();
-        Invoke(nameof(CallDeath), respawnTime);
+            controller.Disable();
+            cameraController.Disable();
+            inventory.ClearInventory();
+            if (callDeath)
+            {
+                CallDeath();
+            }
+        }
     }
 
-    void CallDeath()
+    public void CallDeath()
     {
         GameManager.Instance.PlayerDeath(deaths, maxDeaths);
     }
 
     public void Spawn(Vector3 position)
     {
+        Dead = false;
         controller.Spawn(position, spawnFreezeTime);
         cameraController.Spawn(spawnFreezeTime);
     }

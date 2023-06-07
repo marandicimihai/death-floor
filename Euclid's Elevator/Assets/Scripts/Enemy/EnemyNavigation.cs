@@ -54,7 +54,6 @@ public class EnemyNavigation : MonoBehaviour
     [SerializeField] float chaseStopDistance;
 
     [Header("Other")]
-    [SerializeField] float killTime;
     [SerializeField] float spawnFreezeTime;
     [SerializeField] float openDoorDistance;
     [SerializeField] float openUnlockedDoorTime;
@@ -84,42 +83,51 @@ public class EnemyNavigation : MonoBehaviour
 
     private void Update()
     {
-        if (canKill && Vector3.Distance(transform.position, player.transform.position) <= killDistance)
+        if (!player.Dead)
         {
-            rigAnim.KillAnimation();
-            player.Die(killTime);
-            canKill = false;
-            canMove = false;
-        }
-        if (canMove && !Visible)
-        {
-            if (!Physics.Raycast(transform.position, player.transform.position - transform.position, 
-                Vector3.Distance(player.transform.position, transform.position), solid) || Visible)
+            if (canKill && Vector3.Distance(transform.position, player.transform.position) <= killDistance)
             {
-                Chase();
+                rigAnim.KillAnimation();
+                player.Die(false);
+                canKill = false;
+                canMove = false;
             }
-            else if (state == State.Chase)
+            if (canMove)
             {
-                InspectNoise(player.transform.position);
-            }
-            else if (state == State.Inspect)
-            {
-                inspectTimeElapsed += Time.deltaTime;
-                if (Vector3.Distance(agent.destination, transform.position) <= inspectThreshold || inspectTimeElapsed > maxInspectTime)
+                if (Visible)
                 {
-                    state = State.Patrol;
+                    agent.velocity = Vector3.zero;
+                    agent.isStopped = true;
                 }
-            }
+                if (!Physics.Raycast(transform.position, player.transform.position - transform.position, 
+                    Vector3.Distance(player.transform.position, transform.position), solid) || Visible)
+                {
+                    FaceTarget();
+                    Chase();
+                }
+                else if (state == State.Chase)
+                {
+                    InspectNoise(player.transform.position);
+                }
+                else if (state == State.Inspect)
+                {
+                    inspectTimeElapsed += Time.deltaTime;
+                    if (Vector3.Distance(agent.destination, transform.position) <= inspectThreshold || inspectTimeElapsed > maxInspectTime)
+                    {
+                        state = State.Patrol;
+                    }
+                }
+                else
+                {
+                    Patrol();
+                }
+                DoorOpen();
+            }   
             else
             {
-                Patrol();
+                agent.velocity = Vector3.zero;
+                agent.isStopped = true;
             }
-            DoorOpen();
-        }   
-        else
-        {
-            agent.velocity = Vector3.zero;
-            agent.isStopped = true;
         }
     }
 
@@ -169,6 +177,7 @@ public class EnemyNavigation : MonoBehaviour
         //checks for a door, if the door is open, if the player is patrolling and the cooldown is gone or if the player is not patrolling
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, openDoorDistance, door) && 
             hit.collider.GetComponentInParent<Door>() != null && !hit.collider.GetComponentInParent<Door>().Open &&
+            !hit.collider.GetComponentInParent<Door>().StageLocked && 
             ((state == State.Patrol && timeSinceOpenDoor >= doorOpenCooldownTime) || state != State.Patrol))
         {
             Door door = hit.collider.GetComponentInParent<Door>();
@@ -208,6 +217,15 @@ public class EnemyNavigation : MonoBehaviour
             openDoorTimeElapsed = 0;
             timeSinceOpenDoor += Time.deltaTime;
         }
+    }
+
+    void FaceTarget()
+    {
+        Vector3 target = agent.steeringTarget;
+
+        Vector3 direction = (target - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = lookRotation;
     }
 
     IEnumerator CloseDoor(Door door, bool locked, float time)

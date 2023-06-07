@@ -7,6 +7,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] Collider doorCollider;
     [SerializeField] float waitForPlayerRadius;
     [SerializeField] float elevatorRideTime;
+    [SerializeField] float elevatorAccelTime;
 
     Animator animator;
 
@@ -16,7 +17,7 @@ public class Elevator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        Invoke(nameof(OpenElevator), elevatorRideTime);
+        InitiateElevatorRide();
     }
 
     private void Start()
@@ -24,7 +25,7 @@ public class Elevator : MonoBehaviour
         GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
         {
             CloseElevator(true);
-            Invoke(nameof(OpenElevator), elevatorRideTime);
+            InitiateElevatorRide();
         };
     }
 
@@ -35,7 +36,7 @@ public class Elevator : MonoBehaviour
             GameManager.Instance.PlayerEnteredElevator();
 
             CloseElevator();
-            Invoke(nameof(OpenElevator), elevatorRideTime);
+            InitiateElevatorRide();
 
             waiting = false;
         }
@@ -55,6 +56,18 @@ public class Elevator : MonoBehaviour
     {
         GameManager.Instance.KeycardInserted();
         waiting = true;
+    }
+
+    void InitiateElevatorRide()
+    {
+        Invoke(nameof(OpenElevator), elevatorRideTime);
+        player.vfxmanager.CameraShake(AnimationAction.FadeAppear, elevatorAccelTime);
+        Invoke(nameof(DeaccelerateElevator), elevatorRideTime - elevatorAccelTime);
+    }
+
+    void DeaccelerateElevator()
+    {
+        player.vfxmanager.CameraShake(AnimationAction.FadeDisappear, elevatorAccelTime);
     }
 
     void OpenElevator()

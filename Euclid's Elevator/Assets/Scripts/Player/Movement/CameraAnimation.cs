@@ -35,7 +35,7 @@ public class CameraAnimation : MonoBehaviour
             camera.transform.localPosition = Vector3.Lerp(positionOnEnter, Vector3.zero, interpolation);
             camera.transform.localRotation = Quaternion.Lerp(rotationOnEnter, Quaternion.identity, interpolation);
         }
-        else
+        else if (!inAnimation && interpolation != 0)
         {
             interpolation -= Time.deltaTime / animationTransitionTime;
             camera.transform.localPosition = Vector3.Lerp(defaultPosition, positionOnEnter, interpolation);
@@ -64,7 +64,7 @@ public class CameraAnimation : MonoBehaviour
         inAnimation = true;
     }
 
-    public void ExitAnimation()
+    public void ExitAnimation(bool instant = false)
     {
         if (!inAnimation)
             return;
@@ -75,6 +75,13 @@ public class CameraAnimation : MonoBehaviour
         player.cameraController.Enable();
 
         camera.transform.parent = defaultCameraParent;
+
+        if (instant)
+        {
+            interpolation = 0;
+            camera.transform.localPosition = defaultPosition;
+            camera.transform.localRotation = defaultRotation;
+        }
 
         positionOnEnter = camera.transform.localPosition;
         rotationOnEnter = camera.transform.localRotation;

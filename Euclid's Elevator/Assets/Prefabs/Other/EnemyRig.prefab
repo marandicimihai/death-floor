@@ -305,6 +305,8 @@ GameObject:
   - component: {fileID: 3068876454251326860}
   - component: {fileID: 8103411295878314293}
   - component: {fileID: 1899635610}
+  - component: {fileID: 1899635611}
+  - component: {fileID: 1899635612}
   m_Layer: 0
   m_Name: EnemyRig
   m_TagString: Untagged
@@ -362,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29bb2f193d6b8f343b1bf16d093a6adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   enemy: {fileID: 0}
   animator: {fileID: 3068876454251326860}
 --- !u!114 &1899635610
@@ -379,6 +382,34 @@ MonoBehaviour:
   player: {fileID: 0}
   cameraReference: {fileID: 1212580369}
   hideHUD: 1
+  instantExit: 1
+--- !u!114 &1899635611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068876454251326863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66cea5cf4a009742bc72c6a6c485423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  blackScreenFadeTime: 0.5
+--- !u!114 &1899635612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068876454251326863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6238bf3395442444f8aad0bc013cf44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &3339834823448691250
 GameObject:
   m_ObjectHideFlags: 0

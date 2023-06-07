@@ -4,15 +4,14 @@ public class Door : MonoBehaviour
 {
     public bool Locked { get; private set; }
     public bool Open { get; private set; }
-    
+    public bool StageLocked { get; private set; }
+
     [SerializeField] ItemProperties key;
     [SerializeField] Transform panel;
     [SerializeField] Vector3 closedAngles;
     [SerializeField] Vector3 openAngles;
     [SerializeField] float openTime;
     [SerializeField] int unlockStage;
-
-    bool stageLocked;
 
     float interpolation;
 
@@ -31,7 +30,7 @@ public class Door : MonoBehaviour
 
         if (unlockStage > 1)
         {
-            stageLocked = true;
+            StageLocked = true;
         }
     }
 
@@ -41,7 +40,7 @@ public class Door : MonoBehaviour
         {
             if (GameManager.Instance.Stage == unlockStage)
             {
-                stageLocked = false;
+                StageLocked = false;
                 OpenDoor(true);
             }
         };
@@ -49,12 +48,12 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        if (stageLocked)
+        if (StageLocked)
         {
             Locked = true;
         }
 
-        if (Open && !Locked && !stageLocked)
+        if (Open && !Locked && !StageLocked)
         {
             interpolation += Time.deltaTime / openTime;
         }
@@ -68,7 +67,7 @@ public class Door : MonoBehaviour
 
     public bool CheckItem(ItemProperties req)
     {
-        if (req.name == key.name && !stageLocked)
+        if (req.name == key.name && !StageLocked)
         {
             Locked = false;
             return true;

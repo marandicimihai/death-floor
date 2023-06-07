@@ -452,6 +452,7 @@ MonoBehaviour:
   doorCollider: {fileID: 3921013585228813346}
   waitForPlayerRadius: 0.9
   elevatorRideTime: 5
+  elevatorAccelTime: 1
 --- !u!1 &7952024010619760010
 GameObject:
   m_ObjectHideFlags: 0

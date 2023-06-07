@@ -5,6 +5,7 @@ public class PlayerCameraAnimation : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Transform cameraReference;
     [SerializeField] bool hideHUD;
+    [SerializeField] bool instantExit;
 
     public void EnterAnimation()
     {
@@ -13,6 +14,6 @@ public class PlayerCameraAnimation : MonoBehaviour
 
     public void ExitAnimation()
     {
-        player.cameraAnimation.ExitAnimation();
+        player.cameraAnimation.ExitAnimation(instantExit);
     }
 }

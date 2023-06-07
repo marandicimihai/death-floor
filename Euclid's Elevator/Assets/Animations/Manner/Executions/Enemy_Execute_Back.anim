@@ -67592,8 +67592,22 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.875
+  - time: 0.5833333
+    functionName: BlackScreenAppear
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8333333
     functionName: ExitAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.875
+    functionName: CallDeath
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

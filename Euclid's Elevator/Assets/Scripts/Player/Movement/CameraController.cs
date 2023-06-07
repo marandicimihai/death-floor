@@ -32,6 +32,8 @@ public class CameraController : MonoBehaviour
     
     public void ResetAngle()
     {
+        camera.localEulerAngles = new Vector3(rotation.x, 0, 0);
+        transform.localEulerAngles = new Vector3(0, rotation.y, 0);
         rotation.x = 0;
         rotation.y = 90;
     }
