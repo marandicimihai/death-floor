@@ -7,10 +7,11 @@ public class Interactions : MonoBehaviour
 
     [Header("Toggle Door")]
     [SerializeField] LayerMask door;
+    [SerializeField] ItemProperties key;
     
-    public bool PickUp(Player player, RaycastHit hit)
+    public bool PickUp(CallType type, Player player, RaycastHit hit)
     {
-        if (((1 << hit.transform.gameObject.layer) & items.value) > 0 && hit.transform.TryGetComponent(out Item item))
+        if (type == CallType.Started && ((1 << hit.transform.gameObject.layer) & items.value) > 0 && hit.transform.TryGetComponent(out Item item))
         {
             player.inventory.PickUpItem(item);
             return true;
@@ -18,37 +19,58 @@ public class Interactions : MonoBehaviour
         return false;
     }
 
-    public bool ToggleDoor(Player player, RaycastHit hit)
+    public bool ToggleDoor(CallType type, Player player, RaycastHit hit)
     {
-        if (((1 << hit.transform.gameObject.layer) & door.value) > 0 && hit.collider.GetComponentInParent<Door>() != null)
+        if (type == CallType.Started)
         {
-            Door door = hit.collider.GetComponentInParent<Door>();
-            if (door.Locked)
+            if (((1 << hit.transform.gameObject.layer) & door.value) > 0 && hit.collider.GetComponentInParent<Door>() != null)
             {
-                int i = 0;
-                foreach (Item item in player.inventory.Items)
+                Door door = hit.collider.GetComponentInParent<Door>();
+                if (door.Locked)
                 {
-                    if (item != null && door.CheckItem(item.properties))
+                    int i = 0;
+                    foreach (Item item in player.inventory.Items)
                     {
-                        player.inventory.DecreaseDurability(i);
-                        door.Toggle();
-                        break;
+                        if (item != null && door.CheckItem(item.properties))
+                        {
+                            player.inventory.DecreaseDurability(i);
+                            door.Toggle();
+                            return true;
+                        }
+                        i++;
                     }
-                    i++;
+                    player.lockpick.PickLock(door);
                 }
+                else
+                {
+                    if (!door.Open)
+                    {
+                        int i = 0;
+                        foreach (Item item in player.inventory.Items)
+                        {
+                            if (item != null && item.properties.name == key.name)
+                            {
+                                player.lockpick.Lock(door, i);
+                                return true;
+                            }
+                            i++;
+                        }
+                    }
+                    door.Toggle();
+                }
+                return true;
             }
-            else
-            {
-                door.Toggle();
-            }
-            return true;
+        }
+        else if (type == CallType.Canceled)
+        {
+            player.lockpick.Stop();
         }
         return false;
     }
 
-    public bool InsertKeycard(Player player, RaycastHit hit)
+    public bool InsertKeycard(CallType type, Player player, RaycastHit hit)
     {
-        if (hit.collider.CompareTag("ItemHole") && hit.collider.GetComponentInParent<Elevator>() != null)
+        if (type == CallType.Started && hit.collider.CompareTag("ItemHole") && hit.collider.GetComponentInParent<Elevator>() != null)
         {
             Elevator elev = hit.collider.GetComponentInParent<Elevator>();
 

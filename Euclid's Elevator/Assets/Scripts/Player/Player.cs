@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public VFXManager vfxmanager;
     public Inventory inventory;
     public InventoryHUD inventoryHUD;
+    public Lockpick lockpick;
+    public InteractionManager interactionManager;
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
     

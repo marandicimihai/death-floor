@@ -5087,6 +5087,7 @@ GameObject:
   - component: {fileID: 1288032397}
   - component: {fileID: 1288032398}
   - component: {fileID: 1288032399}
+  - component: {fileID: 1288032400}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -5193,6 +5194,8 @@ MonoBehaviour:
   vfxmanager: {fileID: 1288032398}
   inventory: {fileID: 1288032394}
   inventoryHUD: {fileID: 1288032395}
+  lockpick: {fileID: 1288032400}
+  interactionManager: {fileID: 1288032392}
   spawnFreezeTime: 0.5
   maxDeaths: 4
 --- !u!114 &1288032391
@@ -5242,6 +5245,7 @@ MonoBehaviour:
   door:
     serializedVersion: 2
     m_Bits: 16896
+  key: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
 --- !u!114 &1288032394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5338,6 +5342,23 @@ MonoBehaviour:
   player: {fileID: 1288032390}
   enemy: {fileID: 2086231058}
   insanityTime: 30
+  insanityEffectFadeTime: 3
+--- !u!114 &1288032400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288032383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac256e7317dbeaf42a270a8ea81f3807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1288032390}
+  lockPickTime: 4
+  lockHoldTime: 0.5
+  lockTime: 0.75
 --- !u!1 &1292862747
 GameObject:
   m_ObjectHideFlags: 0

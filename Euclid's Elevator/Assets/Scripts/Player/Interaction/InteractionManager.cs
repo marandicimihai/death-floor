@@ -1,6 +1,12 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 
+public enum CallType
+{
+    Started,
+    Canceled
+}
+
 [RequireComponent(typeof(Interactions))]
 public class InteractionManager : MonoBehaviour
 {
@@ -9,7 +15,7 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] float interactionDistance;
 
     Player player;
-    delegate bool interaction(Player player, RaycastHit hit);
+    delegate bool interaction(CallType type, Player player, RaycastHit hit);
     interaction[] interactions;
 
     private void Awake()
@@ -33,6 +39,7 @@ public class InteractionManager : MonoBehaviour
     private void Start()
     {
         Input.InputActions.General.Interact.performed += Interact;
+        Input.InputActions.General.Interact.canceled += InteractionCanceled;
     }
 
     void Interact(InputAction.CallbackContext context)
@@ -41,11 +48,30 @@ public class InteractionManager : MonoBehaviour
         {
             foreach (interaction t in interactions)
             {
-                if (t.Invoke(player, hit))
+                if (t.Invoke(CallType.Started, player, hit))
                 {
                     break;
                 }
             }
         }
+    }
+
+    void InteractionCanceled(InputAction.CallbackContext context)
+    {
+        Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactionDistance, interactionLayerMask);
+        
+        foreach (interaction t in interactions)
+        {
+            if (t.Invoke(CallType.Canceled, player, hit))
+            {
+                break;
+            }
+        }
+    }
+
+    public RaycastHit GetInteractionRaycast()
+    {
+        Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactionDistance, interactionLayerMask);
+        return hit;
     }
 }
