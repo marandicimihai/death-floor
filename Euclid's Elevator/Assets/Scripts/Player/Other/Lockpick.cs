@@ -8,7 +8,6 @@ public class Lockpick : MonoBehaviour
     [SerializeField] float lockTime;
 
     Door target;
-    int keyIndex;
 
     float timeElapsed;
 
@@ -17,33 +16,42 @@ public class Lockpick : MonoBehaviour
 
     private void Update()
     {
-        if (player.interactionManager.GetInteractionRaycast().transform == null ||
-            player.interactionManager.GetInteractionRaycast().transform.GetComponentInParent<Door>() == null ||
-            player.interactionManager.GetInteractionRaycast().transform.GetComponentInParent<Door>() != target)
+        if (!player.interactionManager.GetInteractionRaycast(out RaycastHit hit) ||
+            hit.transform.GetComponentInParent<Door>() == null ||
+            hit.transform.GetComponentInParent<Door>() != target)
         {
+            StopSlider();
             picking = false;
             locking = false;
         }
-        if (player.inventory.Items[keyIndex] == null)
+        if (locking && !target.MatchesRequirement(player))
         {
+            StopSlider();
             locking = false;
         }
         if (picking)
         {
+            player.HUDManager.actionInfo.SetSliderValue(timeElapsed / lockPickTime, this);
             timeElapsed += Time.deltaTime;
             if (timeElapsed >= lockPickTime)
             {
+                StopSlider();
                 target.OpenDoor(true);
                 picking = false;
             }
         }
         if (locking)
         {
+            if (timeElapsed >= lockHoldTime)
+            {
+                player.HUDManager.actionInfo.SetSliderValue((timeElapsed - lockHoldTime) / (lockTime - lockHoldTime), this);
+            }
+
             timeElapsed += Time.deltaTime;
             if (timeElapsed >= lockTime)
             {
-                player.inventory.DecreaseDurability(keyIndex);
-                target.LockDoor();
+                StopSlider();
+                target.LockDoor(player);
                 locking = false;
             }
         }
@@ -53,17 +61,18 @@ public class Lockpick : MonoBehaviour
     {
         if (!picking && !locking && !door.StageLocked)
         {
+            player.HUDManager.actionInfo.StartAction(SliderType.Unlock, this);
             timeElapsed = 0;
             target = door;
             picking = true;
         }
     }
 
-    public void Lock(Door door, int keyIndex)
+    public void Lock(Door door)
     {
         if (!picking && !locking && !door.Open)
         {
-            this.keyIndex = keyIndex;
+            player.HUDManager.actionInfo.StartAction(SliderType.Lock, this);
             timeElapsed = 0;
             target = door;
             locking = true;
@@ -77,7 +86,17 @@ public class Lockpick : MonoBehaviour
             target.Toggle();
         }
 
+        StopSlider();
+
         picking = false;
         locking = false;
+    }
+
+    void StopSlider()
+    {
+        if (picking || locking)
+        {
+            player.HUDManager.actionInfo.StopAction(this);
+        }
     }
 }

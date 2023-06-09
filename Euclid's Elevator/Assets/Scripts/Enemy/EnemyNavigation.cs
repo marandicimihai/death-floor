@@ -43,6 +43,7 @@ public class EnemyNavigation : MonoBehaviour
     [SerializeField] float patrolStopDistance;
 
     [Header("Inspect")]
+    [SerializeField] float inspectDistance;
     [SerializeField] float inspectThreshold;
     [SerializeField] float maxInspectTime;
     [SerializeField] float inspectSpeed;
@@ -141,11 +142,14 @@ public class EnemyNavigation : MonoBehaviour
 
     void InspectNoise(Vector3 noisePos)
     {
-        state = State.Inspect;
-        agent.destination = noisePos + (noisePos - transform.position).normalized * inspectThreshold;
-        inspectTimeElapsed = 0;
-        agent.speed = inspectSpeed;
-        agent.stoppingDistance = inspectStopDistance;
+        if (Vector3.Distance(transform.position, player.transform.position) <= inspectDistance)
+        {
+            state = State.Inspect;
+            agent.destination = noisePos + (noisePos - transform.position).normalized * inspectThreshold;
+            inspectTimeElapsed = 0;
+            agent.speed = inspectSpeed;
+            agent.stoppingDistance = inspectStopDistance;
+        }
     }
     
     void Patrol()

@@ -42,14 +42,20 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    public bool CheckItem(ItemProperties req)
+    public bool TryInsert(Player player)
     {
-        if (req.name == keycard.name)
+        bool a = player.inventory.Contains(keycard);
+        if (a)
         {
             InsertKeycard();
-            return true;
+            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(keycard));
         }
-        return false;
+        return a;
+    }
+
+    public bool MatchesRequirement(Player player)
+    {
+        return player.inventory.Contains(keycard);
     }
 
     void InsertKeycard()

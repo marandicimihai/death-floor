@@ -65,14 +65,20 @@ public class Door : MonoBehaviour
         panel.localEulerAngles = Vector3.Lerp(closedAngles, openAngles, interpolation);
     }
 
-    public bool CheckItem(ItemProperties req)
+    public bool TryUnlock(Player player)
     {
-        if (req.name == key.name && !StageLocked)
+        bool a = player.inventory.Contains(key);
+        if (a && !StageLocked)
         {
             Locked = false;
-            return true;
+            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(key));
         }
-        return false;
+        return a;
+    }
+
+    public bool MatchesRequirement(Player player)
+    {
+        return player.inventory.Contains(key);
     }
 
     public void Toggle()
@@ -104,12 +110,20 @@ public class Door : MonoBehaviour
         }
     }
 
-    public void LockDoor()
+    /// <summary>
+    /// Pass in player variable to decrease durability of key
+    /// </summary>
+    /// <param name="player"></param>
+    public void LockDoor(Player player = null)
     {
         Locked = true;
         if (Open)
         {
             Open = false;
+        }
+        if (player != null)
+        {
+            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(key));
         }
     }
 }

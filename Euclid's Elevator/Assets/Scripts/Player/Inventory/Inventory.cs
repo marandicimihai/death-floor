@@ -142,4 +142,28 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public bool Contains(ItemProperties prop)
+    {
+        for (int i = 0; i < slots; i++)
+        {
+            if (Items[i] != null && Items[i].properties.name == prop.name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetItemIndex(ItemProperties prop)
+    {
+        for (int i = 0; i < slots; i++)
+        {
+            if (Items[i] != null && Items[i].properties.name == prop.name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

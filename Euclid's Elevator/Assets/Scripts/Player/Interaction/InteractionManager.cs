@@ -8,6 +8,7 @@ public enum CallType
 }
 
 [RequireComponent(typeof(Interactions))]
+[RequireComponent(typeof(ActionText))]
 public class InteractionManager : MonoBehaviour
 {
     [SerializeField] new Camera camera;
@@ -18,6 +19,9 @@ public class InteractionManager : MonoBehaviour
     delegate bool interaction(CallType type, Player player, RaycastHit hit);
     interaction[] interactions;
 
+    delegate bool action(Player player, RaycastHit hit);
+    action[] actions;
+
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -26,6 +30,19 @@ public class InteractionManager : MonoBehaviour
         {
             Debug.LogError("Interactions cannot be executed without the presence of the player script!");
         }
+
+        //sorted by priority
+        ActionText acte = GetComponent<ActionText>();
+        actions = new action[]
+        {
+            acte.LockDoor,
+            acte.OpenDoor,
+            acte.CloseDoor,
+            acte.UnlockDoor,
+            acte.PickLock,
+            acte.InsertKeycard,
+            acte.PickUpItem
+        };
 
         Interactions inter = GetComponent<Interactions>();
         interactions = new interaction[]
@@ -42,9 +59,33 @@ public class InteractionManager : MonoBehaviour
         Input.InputActions.General.Interact.canceled += InteractionCanceled;
     }
 
+    private void Update()
+    {
+        if (GetInteractionRaycast(out RaycastHit hit))
+        {
+            bool gate = false;
+            foreach (action ac in actions)
+            {
+                if (ac.Invoke(player, hit))
+                {
+                    gate = true;
+                    break;
+                }
+            }
+            if (!gate)
+            {
+                player.HUDManager.actionInfo.SetActionText(string.Empty);
+            }
+        }
+        else
+        {
+            player.HUDManager.actionInfo.SetActionText(string.Empty);
+        }
+    }
+
     void Interact(InputAction.CallbackContext context)
     {
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactionDistance, interactionLayerMask))
+        if (GetInteractionRaycast(out RaycastHit hit))
         {
             foreach (interaction t in interactions)
             {
@@ -58,7 +99,7 @@ public class InteractionManager : MonoBehaviour
 
     void InteractionCanceled(InputAction.CallbackContext context)
     {
-        Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactionDistance, interactionLayerMask);
+        GetInteractionRaycast(out RaycastHit hit);
         
         foreach (interaction t in interactions)
         {
@@ -69,9 +110,10 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    public RaycastHit GetInteractionRaycast()
+    public bool GetInteractionRaycast(out RaycastHit hit)
     {
-        Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, interactionDistance, interactionLayerMask);
-        return hit;
+        bool a = Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hitRay, interactionDistance, interactionLayerMask);
+        hit = hitRay;
+        return a;
     }
 }

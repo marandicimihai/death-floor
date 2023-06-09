@@ -48,7 +48,7 @@ public class CameraAnimation : MonoBehaviour
         if (inAnimation)
             return;
 
-        player.inventoryHUD.hideHUD = hideHUD;
+        player.HUDManager.hideHUD = hideHUD;
 
         player.controller.Disable();
         player.cameraController.Disable();
@@ -69,7 +69,7 @@ public class CameraAnimation : MonoBehaviour
         if (!inAnimation)
             return;
 
-        player.inventoryHUD.hideHUD = false;
+        player.HUDManager.hideHUD = false;
 
         player.controller.Enable();
         player.cameraController.Enable();
