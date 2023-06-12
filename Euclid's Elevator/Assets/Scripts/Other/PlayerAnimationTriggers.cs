@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class PlayerAnimationTriggers : MonoBehaviour
 {
-    [SerializeField] Player player;
-
     public void CallDeath()
     {
-        player.CallDeath();
+        GameManager.Instance.player.CallDeath();
     }
 }

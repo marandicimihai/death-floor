@@ -26,6 +26,7 @@ public class Interactions : MonoBehaviour
                 {
                     if (door.TryUnlock(player))
                     {
+                        GameManager.Instance.enemy.InspectNoise(transform.position);
                         door.Toggle();
                         return true;
                     }
@@ -38,6 +39,7 @@ public class Interactions : MonoBehaviour
                         player.lockpick.Lock(door);
                         return true;
                     }
+                    GameManager.Instance.enemy.InspectNoise(transform.position);
                     door.Toggle();
                 }
                 return true;

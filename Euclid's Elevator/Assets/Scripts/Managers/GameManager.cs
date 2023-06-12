@@ -24,8 +24,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public int Stage { get; private set; }
 
-    [SerializeField] Player player;
-    [SerializeField] EnemyNavigation enemy;
+    public Transform playerTransform;
+    public Player player;
+    public EnemyNavigation enemy;
     [SerializeField] int stageCount;
     [SerializeField] Transform playerSpawn;
     [SerializeField] EnemySpawn[] enemySpawns;

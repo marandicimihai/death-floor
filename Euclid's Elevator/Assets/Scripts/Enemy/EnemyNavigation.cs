@@ -140,9 +140,9 @@ public class EnemyNavigation : MonoBehaviour
         agent.stoppingDistance = chaseStopDistance;
     }
 
-    void InspectNoise(Vector3 noisePos)
+    public void InspectNoise(Vector3 noisePos, bool ignoreDistance = false)
     {
-        if (Vector3.Distance(transform.position, player.transform.position) <= inspectDistance)
+        if (Vector3.Distance(transform.position, player.transform.position) <= inspectDistance || ignoreDistance)
         {
             state = State.Inspect;
             agent.destination = noisePos + (noisePos - transform.position).normalized * inspectThreshold;

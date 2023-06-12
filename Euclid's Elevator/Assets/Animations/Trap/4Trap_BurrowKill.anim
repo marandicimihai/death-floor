@@ -10754,7 +10754,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.9166666
+    m_StopTime: 2.1666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -44401,14 +44401,28 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.625
-    functionName: BlackScreen
+    functionName: BlackScreenAppear
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0.2
     intParameter: 0
     messageOptions: 0
-  - time: 1.9166666
+  - time: 1.9583334
     functionName: ExitAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.0833333
+    functionName: CallDeath
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.1666667
+    functionName: BlackScreenDisappear
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

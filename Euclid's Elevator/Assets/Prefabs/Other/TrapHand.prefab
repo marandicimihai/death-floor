@@ -138,6 +138,9 @@ GameObject:
   - component: {fileID: 3271902419166874804}
   - component: {fileID: 3271902419166874805}
   - component: {fileID: 6931447489308384182}
+  - component: {fileID: 1582335106244730058}
+  - component: {fileID: 5578335087515242201}
+  - component: {fileID: 924477168}
   m_Layer: 11
   m_Name: TrapHand
   m_TagString: Untagged
@@ -195,6 +198,57 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1582335106244730058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748305483270886926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b435741bfad813448beb53975ecdfc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 3271902419166874805}
+  baseBone: {fileID: 127501177840733144}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 17928
+  triggerRadius: 5
+  deathRadius: 1
+  forceStrength: 3
+  minRadius: 0.3
+  lookAroundTimeInterval: 4
+  turnTime: 2
+--- !u!114 &5578335087515242201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748305483270886926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc7ef5f652a56d45a03e1ba2a6d1b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraReference: {fileID: 700611161}
+  hideHUD: 1
+  instantExit: 1
+--- !u!114 &924477168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748305483270886926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66cea5cf4a009742bc72c6a6c485423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackScreenFadeTime: 0.5
 --- !u!1 &2763621869789968084
 GameObject:
   m_ObjectHideFlags: 0
