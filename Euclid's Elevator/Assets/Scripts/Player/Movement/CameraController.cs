@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     {
         if (canLook)
         {
-            Vector2 inputVec = Input.InputActions.General.Look.ReadValue<Vector2>();
+            Vector2 inputVec = Input.InputActions.General.Look.ReadValue<Vector2>() * Time.timeScale;
 
             rotation.x -= inputVec.y * sensitivity;
             rotation.y += inputVec.x * sensitivity;

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43b62cf59b85654ca14fdc25e4c4275, type: 3}
+  m_Script: {fileID: 11500000, guid: 01e76b097f02deb4c9d2a1800a0909ed, type: 3}
   m_Name: SodaPage
   m_EditorClassIdentifier: 
   name: SodaPage
-  pageUIPrefab: {fileID: 5874634821492649001, guid: 49c8d3e6e8ad895429729e98da62b4ad, type: 3}
+  pageHUDPrefab: {fileID: 5874634821492649001, guid: 49c8d3e6e8ad895429729e98da62b4ad, type: 3}

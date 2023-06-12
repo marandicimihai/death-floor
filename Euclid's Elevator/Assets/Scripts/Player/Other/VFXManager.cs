@@ -29,6 +29,9 @@ public class VFXManager : MonoBehaviour
 
     private void Start()
     {
+        blackScreenTime = 0.001f;
+        insanityTime = 0.001f;
+        shakeTime = 0.001f;
         GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => ResetEffects();
         GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => ResetEffects();
         initialPosition = camera.transform.localPosition;

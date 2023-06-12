@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43b62cf59b85654ca14fdc25e4c4275, type: 3}
+  m_Script: {fileID: 11500000, guid: 01e76b097f02deb4c9d2a1800a0909ed, type: 3}
   m_Name: KeycardPage
   m_EditorClassIdentifier: 
   name: KeycardPage
-  pageUIPrefab: {fileID: 4778382202171452038, guid: 31ffe3129ea86a04bb2bafbe2cb1af72, type: 3}
+  pageHUDPrefab: {fileID: 4778382202171452038, guid: 31ffe3129ea86a04bb2bafbe2cb1af72, type: 3}
