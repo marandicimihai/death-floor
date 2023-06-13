@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public PlayerHUDManager HUDManager;
     public Lockpick lockpick;
     public InteractionManager interactionManager;
+    public Insanity insanity;
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
     

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1032110137409783639}
   - component: {fileID: 7761240665989502499}
   - component: {fileID: 9143954926673339151}
+  - component: {fileID: -8978975329980099482}
   m_Layer: 16
   m_Name: CoffeeCupModel
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-8978975329980099482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393049514269490038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0d9a052d24ff841baa027762f9ffc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
+  uses: 0

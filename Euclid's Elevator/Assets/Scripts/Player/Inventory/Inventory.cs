@@ -21,7 +21,8 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] int slots;
     [SerializeField] Transform inventory;
-    
+    [SerializeField] Player player;
+
     [Header("Drop Properties")]
     [SerializeField] Transform dropPoint;
     [SerializeField] float dropForce;
@@ -67,7 +68,7 @@ public class Inventory : MonoBehaviour
         {
             if (Items[i] == null)
             {
-                Item newItem = inventory.gameObject.AddComponent<Item>();
+                Item newItem = inventory.gameObject.AddComponent(itemComponent.GetType()) as Item;
                 newItem.SetValues(itemComponent);
 
                 Destroy(itemComponent.gameObject);
@@ -103,7 +104,7 @@ public class Inventory : MonoBehaviour
 
     void UseItem()
     {
-        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse())
+        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(player))
         {
             DecreaseDurability();
         }

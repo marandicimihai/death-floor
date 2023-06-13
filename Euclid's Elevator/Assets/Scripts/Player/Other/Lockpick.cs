@@ -9,10 +9,16 @@ public class Lockpick : MonoBehaviour
 
     Door target;
 
+    float lockpickMultiplier;
     float timeElapsed;
 
     bool picking;
     bool locking;
+
+    private void Awake()
+    {
+        lockpickMultiplier = 1;
+    }
 
     private void Update()
     {
@@ -32,7 +38,7 @@ public class Lockpick : MonoBehaviour
         if (picking)
         {
             player.HUDManager.actionInfo.SetSliderValue(timeElapsed / lockPickTime, this);
-            timeElapsed += Time.deltaTime;
+            timeElapsed += Time.deltaTime * lockpickMultiplier;
             if (timeElapsed >= lockPickTime)
             {
                 StopSlider();
@@ -47,7 +53,7 @@ public class Lockpick : MonoBehaviour
                 player.HUDManager.actionInfo.SetSliderValue((timeElapsed - lockHoldTime) / (lockTime - lockHoldTime), this);
             }
 
-            timeElapsed += Time.deltaTime;
+            timeElapsed += Time.deltaTime * lockpickMultiplier;
             if (timeElapsed >= lockTime)
             {
                 StopSlider();
@@ -98,5 +104,20 @@ public class Lockpick : MonoBehaviour
         {
             player.HUDManager.actionInfo.StopAction(this);
         }
+    }
+
+    public void BoostForTime(float multiplier, float time)
+    {
+        if (lockpickMultiplier != 1)
+        {
+            CancelInvoke(nameof(WearOffBoost));
+        }
+        lockpickMultiplier = multiplier;
+        Invoke(nameof(WearOffBoost), time);
+    }
+
+    void WearOffBoost()
+    {
+        lockpickMultiplier = 1;
     }
 }

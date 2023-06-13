@@ -199,6 +199,21 @@ public class FirstPersonController : MonoBehaviour
         Invoke(nameof(Enable), freezeTime);
     }
 
+    public void BoostForTime(float multiplier, float time)
+    {
+        if (speedMultiplier != 1)
+        {
+            CancelInvoke(nameof(WearOffBoost));
+        }
+        speedMultiplier = multiplier;
+        Invoke(nameof(WearOffBoost), time);
+    }
+
+    void WearOffBoost()
+    {
+        speedMultiplier = 1;
+    }
+
     public void Disable()
     {
         canMove = false;

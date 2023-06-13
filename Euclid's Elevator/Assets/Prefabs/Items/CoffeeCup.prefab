@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 281770805537845023}
   - component: {fileID: 2119656069336916511}
   - component: {fileID: -9026693747359094591}
+  - component: {fileID: 1838876990961155924}
   m_Layer: 6
   m_Name: CoffeeCup
   m_TagString: Untagged
@@ -114,3 +115,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &1838876990961155924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4024848576558708582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0d9a052d24ff841baa027762f9ffc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
+  uses: 0
+  throwDistance: 3
+  stunTime: 8

@@ -8,8 +8,11 @@ public class EnemyRigAnim : MonoBehaviour
 
     private void Update()
     {
-        Quaternion rotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized, Vector3.up);
-        transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
+        if (!enemy.Visible)
+        {
+            Quaternion rotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized, Vector3.up);
+            transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
+        }
     }
 
     public void KillAnimation()

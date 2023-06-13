@@ -31,4 +31,10 @@ public class Insanity : MonoBehaviour
             player.Die(true);
         }
     }
+
+    public void ReduceSanity(float delta)
+    {
+        insanity -= delta;
+        insanity = Mathf.Clamp01(insanity);
+    }
 }

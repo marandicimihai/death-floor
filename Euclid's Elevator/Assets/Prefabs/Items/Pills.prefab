@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2285349495466648869}
   - component: {fileID: 4740793623351212108}
   - component: {fileID: 8316810766581796558}
+  - component: {fileID: -4902575318409983860}
   m_Layer: 6
   m_Name: Pills
   m_TagString: Untagged
@@ -114,3 +115,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &-4902575318409983860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5096525209911580625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2631b6129a3c0744583512c74be7aa84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 11400000, guid: 07a40d532db5b1145b58bc2340e3ebe1, type: 2}
+  uses: 0
+  sanityDecreasePercentage: 0.25

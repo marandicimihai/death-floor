@@ -2,13 +2,10 @@ using UnityEngine;
 
 public class Interactions : MonoBehaviour
 {
-    [SerializeField] Line line;
-
     public bool PickUp(CallType type, Player player, RaycastHit hit)
     {
         if (type == CallType.Started && hit.transform.TryGetComponent(out Item item))
         {
-            DialogueManager.Instance.SayLine(line);
             player.inventory.PickUpItem(item);
             return true;
         }

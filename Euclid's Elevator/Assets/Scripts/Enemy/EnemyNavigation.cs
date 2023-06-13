@@ -103,7 +103,10 @@ public class EnemyNavigation : MonoBehaviour
                 if (!Physics.Raycast(transform.position, player.transform.position - transform.position, 
                     Vector3.Distance(player.transform.position, transform.position), solid) || Visible)
                 {
-                    FaceTarget();
+                    if (!Visible)
+                    {
+                        FaceTarget();
+                    }
                     Chase();
                 }
                 else if (state == State.Chase)
@@ -256,5 +259,12 @@ public class EnemyNavigation : MonoBehaviour
     {
         canMove = true;
         canKill = true;
+    }
+
+    public void StopForTime(float time)
+    {
+        canMove = false;
+
+        Invoke(nameof(Enable), time);
     }
 }
