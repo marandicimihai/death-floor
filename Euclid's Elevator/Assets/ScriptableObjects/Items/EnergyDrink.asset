@@ -19,3 +19,14 @@ MonoBehaviour:
   inHandObject: {fileID: 4330410899288475457, guid: 243cb77ed2aa7984b90847337cc84a01, type: 3}
   offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: 0, y: 0, z: 0}
+  pickup:
+  - sodapickup
+  holster:
+  - itemdraw1
+  - itemdraw2
+  use:
+  - sodaopen
+  - swallow
+  drop:
+  - sodadrop
+  useUseSoundsInOrder: 1

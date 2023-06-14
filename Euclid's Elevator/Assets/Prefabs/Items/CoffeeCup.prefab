@@ -128,6 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
-  uses: 0
+  spilldrink: spilldrink
   throwDistance: 3
   stunTime: 8

@@ -39,9 +39,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-    private void Start()
-    {
         StartGame();
     }
 
@@ -126,6 +123,7 @@ public class GameManager : MonoBehaviour
         else
         {
             OnStageStart?.Invoke(this, new EventArgs());
+            SpawnEnemy();
         }
     }
 

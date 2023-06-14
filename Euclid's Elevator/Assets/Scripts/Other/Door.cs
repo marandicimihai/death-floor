@@ -8,11 +8,23 @@ public class Door : MonoBehaviour
 
     [SerializeField] ItemProperties key;
     [SerializeField] Transform panel;
+    [SerializeField] Animator animator;
     [SerializeField] Vector3 closedAngles;
     [SerializeField] Vector3 openAngles;
     [SerializeField] float openTime;
     [SerializeField] int unlockStage;
 
+    [Header("Sounds")]
+    [SerializeField] GameObject handle;
+    [SerializeField] GameObject panelObj;
+    [SerializeField] string openDoorName;
+    [SerializeField] string closeDoorName;
+    [SerializeField] string skrtDoorName;
+    [SerializeField] float doorCloseInterpolation;
+
+    AudioJob skrtjob;
+
+    bool playedCloseSound;
     float interpolation;
 
     private void Awake()
@@ -32,6 +44,8 @@ public class Door : MonoBehaviour
         {
             StageLocked = true;
         }
+
+        playedCloseSound = true;
     }
 
     private void Start()
@@ -56,9 +70,20 @@ public class Door : MonoBehaviour
         if (Open && !Locked && !StageLocked)
         {
             interpolation += Time.deltaTime / openTime;
+            if (skrtjob != null)
+            {
+                skrtjob.source.volume = 1 - interpolation;
+            }
+            playedCloseSound = false;
         }
         else
         {
+            if (interpolation <= doorCloseInterpolation && !playedCloseSound)
+            {
+                animator.SetTrigger("PullHandle");
+                AudioManager.Instance.PlayClip(handle, closeDoorName);
+                playedCloseSound = true;
+            }
             interpolation -= Time.deltaTime / openTime;
         }
         interpolation = Mathf.Clamp01(interpolation);
@@ -83,6 +108,7 @@ public class Door : MonoBehaviour
 
     public void Toggle()
     {
+        AudioManager.Instance.StopClip(skrtjob);
         if (Open)
         {
             CloseDoor();
@@ -97,6 +123,9 @@ public class Door : MonoBehaviour
     {
         if ((!Open && !Locked) || forced)
         {
+            animator.SetTrigger("PullHandle");
+            skrtjob = AudioManager.Instance.PlayClip(panelObj, skrtDoorName);
+            AudioManager.Instance.PlayClip(handle, openDoorName);
             Locked = false;
             Open = true;
         }

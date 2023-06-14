@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Coffee : Item, IUsable
 {
+    [SerializeField] [SyncValue] string spilldrink;
     [SerializeField] [SyncValue] float throwDistance;
     [SerializeField] [SyncValue] float stunTime;
 
@@ -11,6 +12,7 @@ public class Coffee : Item, IUsable
             GameManager.Instance.enemy.Visible)
         {
             GameManager.Instance.enemy.StopForTime(stunTime);
+            AudioManager.Instance.PlayClip(GameManager.Instance.enemy.gameObject, spilldrink);
         }
         return true;
     }

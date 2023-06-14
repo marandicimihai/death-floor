@@ -40,6 +40,7 @@ public class InteractionManager : MonoBehaviour
             acte.CloseDoor,
             acte.UnlockDoor,
             acte.PickLock,
+            acte.Repair,
             acte.InsertKeycard,
             acte.PickUpItem
         };
@@ -49,7 +50,7 @@ public class InteractionManager : MonoBehaviour
         {
             inter.PickUp,
             inter.ToggleDoor,
-            inter.InsertKeycard
+            inter.InsertInElevator
         };
     }
 

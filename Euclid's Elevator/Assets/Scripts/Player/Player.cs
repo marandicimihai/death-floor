@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public Insanity insanity;
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
-    
+
     int deaths;
 
     public void Die(bool callDeath)

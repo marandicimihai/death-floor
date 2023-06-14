@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine.AI;
 using UnityEngine;
 
-enum State
+public enum State
 {
     Patrol,
     Inspect,
@@ -33,6 +33,7 @@ public class EnemyNavigation : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] EnemyRigAnim rigAnim;
     [SerializeField] LayerMask solid;
+    [SerializeField] NavMeshAgent agent;
 
     [Header("Patrol")]
     [SerializeField] float doorOpenCooldownTime;
@@ -62,11 +63,22 @@ public class EnemyNavigation : MonoBehaviour
     [SerializeField] float closeDoorTime;
     [SerializeField] LayerMask door;
 
-    NavMeshAgent agent;
-    State state;
+    [Header("Audio")]
+    [SerializeField] string ambstart;
+    [SerializeField] string ambmid;
+    [SerializeField] string ambend;
+    [SerializeField] string drag;
 
-    bool canMove;
-    bool canKill;
+    AudioJob dragloop;
+    AudioJob midamb;
+    Quaternion stopRot;
+
+    public State State { get; private set; }
+
+    bool ambiencestarted;
+    bool ambiencemid;
+    bool canMove = true;
+    bool canKill = true;
 
     float stepTimeElapsed;
     float inspectTimeElapsed;
@@ -76,18 +88,17 @@ public class EnemyNavigation : MonoBehaviour
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        state = State.Patrol;
-        canMove = true;
-        canKill = true;
+        State = State.Patrol;
     }
 
     private void Update()
     {
+        rigAnim.RigUpdate();
         if (!player.Dead)
         {
             if (canKill && Vector3.Distance(transform.position, player.transform.position) <= killDistance)
             {
+                dragloop.StopPlaying();
                 rigAnim.KillAnimation();
                 player.Die(false);
                 canKill = false;
@@ -99,26 +110,31 @@ public class EnemyNavigation : MonoBehaviour
                 {
                     agent.velocity = Vector3.zero;
                     agent.isStopped = true;
+                    transform.rotation = stopRot;
+                }
+                if (agent.velocity.magnitude >= 0.1f && !Visible)
+                {
+                    dragloop.source.volume += Time.deltaTime;
+                }
+                else
+                {
+                    dragloop.source.volume -= Time.deltaTime;
                 }
                 if (!Physics.Raycast(transform.position, player.transform.position - transform.position, 
                     Vector3.Distance(player.transform.position, transform.position), solid) || Visible)
                 {
-                    if (!Visible)
-                    {
-                        FaceTarget();
-                    }
                     Chase();
                 }
-                else if (state == State.Chase)
+                else if (State == State.Chase)
                 {
                     InspectNoise(player.transform.position);
                 }
-                else if (state == State.Inspect)
+                else if (State == State.Inspect)
                 {
                     inspectTimeElapsed += Time.deltaTime;
                     if (Vector3.Distance(agent.destination, transform.position) <= inspectThreshold || inspectTimeElapsed > maxInspectTime)
                     {
-                        state = State.Patrol;
+                        State = State.Patrol;
                     }
                 }
                 else
@@ -131,13 +147,68 @@ public class EnemyNavigation : MonoBehaviour
             {
                 agent.velocity = Vector3.zero;
                 agent.isStopped = true;
+                transform.rotation = stopRot;
             }
+            stopRot = transform.rotation;
+
+            #region Sound
+
+            if (!Physics.Raycast(transform.position, player.transform.position - transform.position,
+                    Vector3.Distance(player.transform.position, transform.position), solid) || Visible)
+            {
+                if (!ambiencestarted)
+                {
+                    AudioManager.Instance.PlayClip(ambstart).StopOnClipEnd(() =>
+                    {
+                        midamb = AudioManager.Instance.PlayClip(ambmid);
+                        ambiencemid = true;
+                    });
+                    ambiencestarted = true;
+                }
+            }
+            else if (State == State.Inspect)
+            {
+                if (ambiencestarted && ambiencemid)
+                {
+                    midamb.StopOnClipEnd(() =>
+                    {
+                        AudioManager.Instance.PlayClip(ambend).StopOnClipEnd(() =>
+                        {
+                            ambiencestarted = false;
+                        });
+                    });
+                    ambiencemid = false;
+                }
+            }
+            else
+            {
+                if (ambiencestarted && ambiencemid)
+                {
+                    midamb.StopOnClipEnd(() =>
+                    {
+                        AudioManager.Instance.PlayClip(ambend).StopOnClipEnd(() =>
+                        {
+                            ambiencestarted = false;
+                        });
+                    });
+                    ambiencemid = false;
+                }
+            }
+
+            #endregion
+        }
+        else
+        {
+            AudioManager.Instance.StopClipsWithName(ambstart);
+            AudioManager.Instance.StopClipsWithName(ambmid);
+            AudioManager.Instance.StopClipsWithName(ambend);
+            AudioManager.Instance.StopClip(dragloop);
         }
     }
 
     void Chase()
     {
-        state = State.Chase;
+        State = State.Chase;
         agent.destination = player.transform.position;
         agent.speed = chaseSpeed;
         agent.stoppingDistance = chaseStopDistance;
@@ -147,7 +218,7 @@ public class EnemyNavigation : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.transform.position) <= inspectDistance || ignoreDistance)
         {
-            state = State.Inspect;
+            State = State.Inspect;
             agent.destination = noisePos + (noisePos - transform.position).normalized * inspectThreshold;
             inspectTimeElapsed = 0;
             agent.speed = inspectSpeed;
@@ -157,14 +228,14 @@ public class EnemyNavigation : MonoBehaviour
     
     void Patrol()
     {
-        if (!patrolling || state != State.Patrol)
+        if (!patrolling || State != State.Patrol)
         {
             do
             {
                 agent.destination = transform.position + (Vector3.ProjectOnPlane(Random.insideUnitSphere, Vector3.up).normalized) * patrolStep;
             } while (agent.pathStatus == NavMeshPathStatus.PathInvalid);
 
-            state = State.Patrol;
+            State = State.Patrol;
             patrolling = true;
             stepTimeElapsed = 0;
         }
@@ -185,7 +256,7 @@ public class EnemyNavigation : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, openDoorDistance, door) && 
             hit.collider.GetComponentInParent<Door>() != null && !hit.collider.GetComponentInParent<Door>().Open &&
             !hit.collider.GetComponentInParent<Door>().StageLocked && 
-            ((state == State.Patrol && timeSinceOpenDoor >= doorOpenCooldownTime) || state != State.Patrol))
+            ((State == State.Patrol && timeSinceOpenDoor >= doorOpenCooldownTime) || State != State.Patrol))
         {
             Door door = hit.collider.GetComponentInParent<Door>();
             openDoorTimeElapsed += Time.deltaTime;
@@ -196,7 +267,7 @@ public class EnemyNavigation : MonoBehaviour
                     openDoorTimeElapsed = 0;
                     timeSinceOpenDoor = 0;
                     door.OpenDoor(true);
-                    if (state == State.Patrol)
+                    if (State == State.Patrol)
                     {
                         StartCoroutine(CloseDoor(door, true, closeDoorTime));
                     }
@@ -209,7 +280,7 @@ public class EnemyNavigation : MonoBehaviour
                     openDoorTimeElapsed = 0;
                     timeSinceOpenDoor = 0;
                     door.OpenDoor(true);
-                    if (state == State.Patrol)
+                    if (State == State.Patrol)
                     {
                         StartCoroutine(CloseDoor(door, false, closeDoorTime));
                     }
@@ -224,15 +295,6 @@ public class EnemyNavigation : MonoBehaviour
             openDoorTimeElapsed = 0;
             timeSinceOpenDoor += Time.deltaTime;
         }
-    }
-
-    void FaceTarget()
-    {
-        Vector3 target = agent.steeringTarget;
-
-        Vector3 direction = (target - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = lookRotation;
     }
 
     IEnumerator CloseDoor(Door door, bool locked, float time)
@@ -250,7 +312,9 @@ public class EnemyNavigation : MonoBehaviour
         canMove = false;
         agent.Warp(position);
         agent.ResetPath();
-        state = State.Patrol;
+        State = State.Patrol;
+
+        dragloop = AudioManager.Instance.PlayClip(gameObject, drag);
 
         Invoke(nameof(Enable), spawnFreezeTime);
     }

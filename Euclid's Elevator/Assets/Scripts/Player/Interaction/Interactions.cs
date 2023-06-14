@@ -49,7 +49,7 @@ public class Interactions : MonoBehaviour
         return false;
     }
 
-    public bool InsertKeycard(CallType type, Player player, RaycastHit hit)
+    public bool InsertInElevator(CallType type, Player player, RaycastHit hit)
     {
         if (type == CallType.Started && hit.collider.CompareTag("ItemHole") && hit.collider.GetComponentInParent<Elevator>() != null)
         {

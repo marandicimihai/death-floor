@@ -222,6 +222,10 @@ MonoBehaviour:
   minRadius: 0.3
   lookAroundTimeInterval: 4
   turnTime: 2
+  groundhit: groundhit
+  screech: screech
+  ambience: trapambience
+  whoosh: woosh
 --- !u!114 &5578335087515242201
 MonoBehaviour:
   m_ObjectHideFlags: 0

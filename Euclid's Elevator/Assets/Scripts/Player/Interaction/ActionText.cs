@@ -11,6 +11,7 @@ public class ActionText : MonoBehaviour
 
     [Header("Elevator")]
     [SerializeField] string insertKeycard;
+    [SerializeField] string repairElevator;
 
     [Header("Items")]
     [SerializeField] string pickUpItem;
@@ -81,6 +82,20 @@ public class ActionText : MonoBehaviour
             if (hit.collider.GetComponentInParent<Elevator>().MatchesRequirement(player))
             {
                 player.HUDManager.actionInfo.SetActionText(insertKeycard);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool Repair(Player player, RaycastHit hit)
+    {
+        if (hit.collider.CompareTag("ItemHole") && hit.collider.GetComponentInParent<Elevator>() != null)
+        {
+            if (hit.collider.GetComponentInParent<Elevator>().Broken &&
+                hit.collider.GetComponentInParent<Elevator>().MatchesRequirement(player))
+            {
+                player.HUDManager.actionInfo.SetActionText(repairElevator);
                 return true;
             }
         }

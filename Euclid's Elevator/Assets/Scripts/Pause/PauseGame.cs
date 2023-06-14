@@ -12,11 +12,13 @@ public class PauseGame : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
+        AudioManager.Instance.Pause();
     }
 
 
     public void Unpause()
     {
         Time.timeScale = 1;
+        AudioManager.Instance.Unpause();
     }
 }

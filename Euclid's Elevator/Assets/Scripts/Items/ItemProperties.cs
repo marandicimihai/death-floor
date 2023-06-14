@@ -12,4 +12,11 @@ public class ItemProperties : ScriptableObject
     public GameObject inHandObject;
     public Vector3 offset;
     public Vector3 holdAngles;
+
+    [Header("Sounds")]
+    public string[] pickup;
+    public string[] holster;
+    public string[] use;
+    public string[] drop;
+    public bool useUseSoundsInOrder;
 }

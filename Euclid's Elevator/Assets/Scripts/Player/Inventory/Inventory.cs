@@ -58,6 +58,10 @@ public class Inventory : MonoBehaviour
             return;
         }
 
+        if (input != Index && Items[Index] != null)
+        {
+            AudioManager.Instance.PlayRandomClip(Items[Index].properties.holster);
+        }
         Index = input;
         OnItemsChanged?.Invoke(this, new EventArgs());
     }
@@ -72,6 +76,8 @@ public class Inventory : MonoBehaviour
                 newItem.SetValues(itemComponent);
 
                 Destroy(itemComponent.gameObject);
+
+                AudioManager.Instance.PlayRandomClip(newItem.properties.pickup);
 
                 Items[i] = newItem;
                 OnItemsChanged?.Invoke(this, new EventArgs());
@@ -94,6 +100,7 @@ public class Inventory : MonoBehaviour
         if (dropped.TryGetComponent(out Item item))
         {
             item.SetValues(Items[Index]);
+            AudioManager.Instance.PlayRandomClip(dropped, item.properties.drop);
         }
 
         Destroy(Items[Index]);
@@ -106,6 +113,15 @@ public class Inventory : MonoBehaviour
     {
         if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(player))
         {
+            if (Items[Index].properties.useUseSoundsInOrder)
+            {
+                AudioManager.Instance.PlayClips(Items[Index].properties.use);
+            }    
+            else
+            {
+                AudioManager.Instance.PlayRandomClip(Items[Index].properties.use);
+            }
+
             DecreaseDurability();
         }
     }

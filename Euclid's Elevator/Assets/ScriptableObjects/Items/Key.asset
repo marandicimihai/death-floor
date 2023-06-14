@@ -19,3 +19,14 @@ MonoBehaviour:
   inHandObject: {fileID: 1668860761680531593, guid: 2c51d40c79ccff04196bc0d14c16f7a1, type: 3}
   offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: -90, y: 0, z: -105}
+  pickup:
+  - keypickup
+  - keypickup2
+  holster:
+  - keydraw
+  use:
+  - lock1
+  - lock2
+  drop:
+  - keydrop
+  useUseSoundsInOrder: 0

@@ -20,10 +20,15 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] LayerMask ground;
     [SerializeField] float checkRadius;
     [SerializeField] float checkExtension;
-
+        
     [Header("Gravity")]
     [SerializeField] float gravityForce;
 
+    [Header("Steps")]
+    [SerializeField] float stepLength;
+    [SerializeField] string[] carpetStepNames;
+    [SerializeField] string[] concreteStepNames;
+    
     #endregion
 
     #region Private
@@ -34,6 +39,7 @@ public class FirstPersonController : MonoBehaviour
 
     float speed, speedMultiplier;
     float accel;
+    float stepElapsed;
 
     bool canMove, sneaking;
     bool Grounded
@@ -73,6 +79,7 @@ public class FirstPersonController : MonoBehaviour
             velocity = Vector3.zero;
         }
 
+        CalculateSteps(velocity);
         ComputeGravity();
         controller.Move(gravity * Time.deltaTime);
         forces = Vector3.zero;
@@ -212,6 +219,29 @@ public class FirstPersonController : MonoBehaviour
     void WearOffBoost()
     {
         speedMultiplier = 1;
+    }
+
+    void CalculateSteps(Vector3 velocity)
+    {
+        if (!sneaking)
+        {
+            stepElapsed += velocity.magnitude * Time.deltaTime;
+            if (stepElapsed >= stepLength)
+            {
+                stepElapsed = 0;
+                if (Physics.Raycast(new Ray(transform.position + controller.center, Vector3.down), out RaycastHit slopeHit, controller.height / 2 + checkExtension, ground))
+                {
+                    if (slopeHit.collider.CompareTag("Elevator"))
+                    {
+                        AudioManager.Instance.PlayRandomClip(concreteStepNames);
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlayRandomClip(carpetStepNames);
+                    }
+                }
+            }
+        }
     }
 
     public void Disable()

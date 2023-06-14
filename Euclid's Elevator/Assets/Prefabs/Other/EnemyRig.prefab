@@ -367,6 +367,11 @@ MonoBehaviour:
   player: {fileID: 0}
   enemy: {fileID: 0}
   animator: {fileID: 3068876454251326860}
+  firstRun: 4
+  lastRun: 9
+  firstPose: 0
+  lastPose: 3
+  timeBetweenPoses: 5
 --- !u!114 &1899635610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,7 +384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc7ef5f652a56d45a03e1ba2a6d1b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   cameraReference: {fileID: 1212580369}
   hideHUD: 1
   instantExit: 1
@@ -395,7 +399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66cea5cf4a009742bc72c6a6c485423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   blackScreenFadeTime: 0.5
 --- !u!114 &1899635612
 MonoBehaviour:
@@ -409,7 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238bf3395442444f8aad0bc013cf44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!1 &3339834823448691250
 GameObject:
   m_ObjectHideFlags: 0

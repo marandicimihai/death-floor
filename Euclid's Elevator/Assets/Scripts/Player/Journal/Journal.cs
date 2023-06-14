@@ -13,6 +13,12 @@ public class Journal : MonoBehaviour
     [SerializeField] Animator journalAnimator;
     [SerializeField] float HUDDelay;
 
+    [Header("Sounds")]
+    [SerializeField] string openJournal;
+    [SerializeField] string closeJournal;
+    [SerializeField] string scribble;
+    [SerializeField] string[] pageFlip;
+
     bool open;
 
     private void Awake()
@@ -43,10 +49,12 @@ public class Journal : MonoBehaviour
         if (open)
         {
             PauseGame.Instance.Pause();
+            AudioManager.Instance.PlayClip(openJournal);
         }
         else
         {
             PauseGame.Instance.Unpause();
+            AudioManager.Instance.PlayClip(closeJournal);
         }
     }
 
@@ -57,6 +65,7 @@ public class Journal : MonoBehaviour
             if (pages.Count >= page + 2)
             {
                 page += 2;
+                AudioManager.Instance.PlayRandomClip(pageFlip);
                 OnPagesChanged?.Invoke(this, new EventArgs());
             }
         }
@@ -69,6 +78,7 @@ public class Journal : MonoBehaviour
             if (page >= 3)
             {
                 page -= 2;
+                AudioManager.Instance.PlayRandomClip(pageFlip);
                 OnPagesChanged?.Invoke(this, new EventArgs());
             }
         }
@@ -79,6 +89,7 @@ public class Journal : MonoBehaviour
         if (!pages.Contains(newPage))
         {
             pages.Add(newPage);
+            AudioManager.Instance.PlayClip(scribble);
         }
     }
 }

@@ -19,3 +19,12 @@ MonoBehaviour:
   inHandObject: {fileID: 3877704203069068449, guid: f775e253da020e548b5e01a3d2621b44, type: 3}
   offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: 0, y: 0, z: 0}
+  pickup:
+  - pillpickup
+  holster:
+  - pilldraw
+  use:
+  - swallow
+  drop:
+  - pilldrop
+  useUseSoundsInOrder: 0

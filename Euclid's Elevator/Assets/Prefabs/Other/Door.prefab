@@ -420,9 +420,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
   panel: {fileID: 3616655169289104357}
+  animator: {fileID: 699835758}
   closedAngles: {x: 0, y: -180, z: 0}
   openAngles: {x: 0, y: 0, z: 0}
   openTime: 0.5
+  unlockStage: 0
+  handle: {fileID: 3559620624970810012}
+  panelObj: {fileID: 1515353366028158034}
+  openDoorName: opendoor
+  closeDoorName: closedoor
+  skrtDoorName: skrtdoor
+  doorCloseInterpolation: 0.2
 --- !u!1 &3438150209931975202
 GameObject:
   m_ObjectHideFlags: 0

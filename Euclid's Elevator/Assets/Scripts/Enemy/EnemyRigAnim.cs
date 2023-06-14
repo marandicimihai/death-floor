@@ -6,12 +6,39 @@ public class EnemyRigAnim : MonoBehaviour
     [SerializeField] EnemyNavigation enemy;
     [SerializeField] Animator animator;
 
-    private void Update()
+    [Header("Animation Properties")]
+    [SerializeField] int firstRun;
+    [SerializeField] int lastRun;
+    [SerializeField] int firstPose;
+    [SerializeField] int lastPose;
+    [SerializeField] float timeBetweenPoses;
+
+    float cooldown;
+
+    public void RigUpdate()
     {
         if (!enemy.Visible)
         {
             Quaternion rotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized, Vector3.up);
             transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
+
+            cooldown += Time.deltaTime;
+            if (cooldown >= timeBetweenPoses)
+            {
+                if (enemy.State == State.Chase || enemy.State == State.Inspect)
+                {
+                    animator.SetInteger("State", UnityEngine.Random.Range(firstRun, lastRun + 1));
+                }
+                else
+                {
+                    animator.SetInteger("State", UnityEngine.Random.Range(firstPose, lastPose + 1));
+                }
+                cooldown = 0;
+            }
+        }
+        else
+        {
+            cooldown = 0;
         }
     }
 
