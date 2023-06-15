@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4abf9c4572e19b4b9af37cfb9e939cb, type: 3}
+  m_Script: {fileID: 11500000, guid: c92ccff1a28d86c4c991fd0f3c91f45e, type: 3}
   m_Name: Elevator Broken
   m_EditorClassIdentifier: 
-  name: Elevator Broken
-  text: It's broken, I must repair it.
-  timeLastingAfterTyping: 3
+  name: 
+  text: 
+  timeLastingAfterTyping: 0
+  oneTime: 0

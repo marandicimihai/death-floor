@@ -9,23 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f33514e90af670d429e181fa136feadb, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b91554212fd5944ab01703053b81b3c, type: 3}
   m_Name: Key
   m_EditorClassIdentifier: 
-  itemName: Key
+  name: Key
+  physicalObject: {fileID: 7178980861119937168, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
   uses: 2
-  inventoryIcon: {fileID: 21300000, guid: 2200dcd6377c0cd468b11881202ca654, type: 3}
-  prefab: {fileID: 7178980861119937168, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
-  holdPrefab: {fileID: 1668860761680531593, guid: 2c51d40c79ccff04196bc0d14c16f7a1, type: 3}
-  pickUpSounds:
-  - KeyPickUp1
-  - KeyPickUp2
-  drawSounds:
-  - KeyDraw
-  useSounds:
-  - Lock1
-  - Lock2
-  useSoundsInOrder: 0
-  pickUpPage: {fileID: 11400000, guid: c75522d7ec7ae1f4a8880b86b89997c3, type: 2}
-  holdOffset: {x: 0, y: 0, z: 0}
+  icon: {fileID: 21300000, guid: 2200dcd6377c0cd468b11881202ca654, type: 3}
+  inHandObject: {fileID: 1668860761680531593, guid: 2c51d40c79ccff04196bc0d14c16f7a1, type: 3}
+  offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: -90, y: 0, z: -105}
+  pickup:
+  - keypickup
+  - keypickup2
+  holster:
+  - keydraw
+  use:
+  - lock1
+  - lock2
+  drop:
+  - keydrop
+  useUseSoundsInOrder: 0

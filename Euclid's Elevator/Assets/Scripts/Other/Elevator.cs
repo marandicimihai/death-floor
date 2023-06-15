@@ -1,77 +1,145 @@
-using System.Collections;
 using UnityEngine;
-using System;
 
 public class Elevator : MonoBehaviour
 {
-    public bool Open { get; private set; }
     public bool Broken { get; private set; }
-    [SerializeField] AnimationClip close;
-    [SerializeField] new Collider collider;
-    [SerializeField] Animator elevator;
-    [SerializeField] ItemObject keyCard;
-    [SerializeField] ItemObject toolbox;
+    [SerializeField] Player player;
+    [SerializeField] ItemProperties keycard;
+    [SerializeField] ItemProperties toolbox;
+    [SerializeField] Collider doorCollider;
+    [SerializeField] float waitForPlayerRadius;
+    [SerializeField] float elevatorRideTime;
+    [SerializeField] float elevatorAccelTime;
+
+    [Header("Sounds")]
+    [SerializeField] string close;
+    [SerializeField] string open;
+    [SerializeField] string move1;
+    [SerializeField] string move2;
+    [SerializeField] string move3;
+    [SerializeField] string move4;
+    [SerializeField] string stop;
+
+    AudioJob movejob;
+    Animator animator;
+
+    bool waiting;
 
     private void Awake()
     {
-        collider.enabled = false;
+        animator = GetComponent<Animator>();
     }
 
-    public void OpenElevator()
+    private void Start()
     {
-        SoundManager.Instance.PlaySound("Hum");
-        SoundManager.Instance.PlaySound("ElevatorOpen");
-        collider.enabled = false;
-        elevator.SetBool("Open", true);
-        Open = true;
-    }
-
-    public void CloseElevator()
-    {
-        SoundManager.Instance.PlaySound("ElevatorClose");
-        collider.enabled = true;
-        elevator.SetBool("Open", false);
-        Open = false;
-
-        StartCoroutine(WaitAndExec(close.length, () =>
+        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
         {
-            GameManager.Instance.ElevatorDoorClosed();
-        }));
+            Broken = true;
+            CloseElevator(true);
+            InitiateElevatorRide();
+        };
+
+        InitiateElevatorRide();
     }
 
-    public bool InsertItem(ItemObject obj)
+    private void Update()
     {
-        if (!Broken && obj.name == keyCard.name)
+        if (!Broken && waiting && Vector3.Distance(transform.position, player.transform.position) <= waitForPlayerRadius)
         {
-            return true;
+            GameManager.Instance.PlayerEnteredElevator();
+
+            CloseElevator();
+            InitiateElevatorRide();
+
+            waiting = false;
         }
-        return false;
     }
 
-    public bool Repair(ItemObject obj)
+    public bool TryInsert(Player player)
     {
-        if (Broken && obj.name == toolbox.name)
+        if (Broken)
         {
-            Broken = false;
-            return true;
+            bool b = player.inventory.Contains(toolbox);
+            if (b)
+            {
+                Broken = false;
+                player.inventory.DecreaseDurability(player.inventory.GetItemIndex(toolbox));
+            }
+            return b;
         }
 
-        return false;
-    }
-
-    public void BreakDown()
-    {
-        Broken = true;
-    }
-
-    IEnumerator WaitAndExec(float time, Action exec, bool repeat = false)
-    {
-        yield return new WaitForSeconds(time);
-        exec?.Invoke();
-
-        if (repeat)
+        bool a = player.inventory.Contains(keycard);
+        if (a)
         {
-            StartCoroutine(WaitAndExec(time, exec, repeat));
+            InsertKeycard();
+            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(keycard));
         }
+        return a;
+    }
+
+    public bool MatchesRequirement(Player player)
+    {
+        if (Broken)
+        {
+            return player.inventory.Contains(toolbox);
+        }
+        return player.inventory.Contains(keycard);
+    }
+
+    void InsertKeycard()
+    {
+        GameManager.Instance.KeycardInserted();
+        waiting = true;
+    }
+
+    void InitiateElevatorRide()
+    {
+        if (GameManager.Instance.Stage == 1)
+        {
+            movejob = AudioManager.Instance.PlayClip(move1);
+        }
+        else if (GameManager.Instance.Stage == 2)
+        {
+            movejob = AudioManager.Instance.PlayClip(move2);
+        }
+        else if (GameManager.Instance.Stage == 3)
+        {
+            movejob = AudioManager.Instance.PlayClip(move3);
+        }
+        else if (GameManager.Instance.Stage == 4)
+        {
+            movejob = AudioManager.Instance.PlayClip(move4);
+        }
+        Invoke(nameof(OpenElevator), elevatorRideTime);
+        player.vfxmanager.CameraShake(AnimationAction.FadeAppear, elevatorAccelTime);
+        Invoke(nameof(DeaccelerateElevator), elevatorRideTime - elevatorAccelTime);
+    }
+
+    void DeaccelerateElevator()
+    {
+        player.vfxmanager.CameraShake(AnimationAction.FadeDisappear, elevatorAccelTime);
+        movejob.StopPlaying();
+        AudioManager.Instance.PlayClip(stop);
+    }
+
+    void OpenElevator()
+    {
+        AudioManager.Instance.PlayClip(open);
+        animator.SetBool("Open", true);
+        doorCollider.enabled = false;
+    }
+
+    void CloseElevator(bool instant = false)
+    {
+        animator.SetBool("Open", false);
+        if (instant)
+        {
+            animator.SetTrigger("InstaClose");
+        }
+        else
+        {
+            AudioManager.Instance.PlayClip(close);
+        }
+        doorCollider.enabled = true;
     }
 }

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43b62cf59b85654ca14fdc25e4c4275, type: 3}
+  m_Script: {fileID: 11500000, guid: 01e76b097f02deb4c9d2a1800a0909ed, type: 3}
   m_Name: PillPage
   m_EditorClassIdentifier: 
   name: PillPage
-  pageUIPrefab: {fileID: 8379150218925274441, guid: c2a0ef24a2f832c48a6d19f6dfb7d772, type: 3}
+  pageHUDPrefab: {fileID: 8379150218925274441, guid: c2a0ef24a2f832c48a6d19f6dfb7d772, type: 3}

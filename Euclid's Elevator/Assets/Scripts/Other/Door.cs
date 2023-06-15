@@ -1,156 +1,158 @@
 using UnityEngine;
-using System.Collections;
 
 public class Door : MonoBehaviour
 {
-    public bool locked;
-    public Transform middle;
-
+    public bool Locked { get; private set; }
     public bool Open { get; private set; }
-    [SerializeField] float closedYRot;
-    [SerializeField] float openedYRot;
-    [SerializeField] float openTime;
-    [SerializeField] float closedSoundThreshold;
-    [SerializeField] Transform panel;
-    [SerializeField] Animator doorHandle;
-
-    [SerializeField] ItemObject requiredItem;
-    [SerializeField] ItemObject lockItem;
-
-    [SerializeField] AudioSource doorOpen;
-    [SerializeField] AudioSource doorClose;
-    [SerializeField] AudioSource doorHandleS;
-    [SerializeField] AudioSource unlock;
-
-    [Header("Stage settings")]
-
-    [SerializeField] int stageUnlock;
-
     public bool StageLocked { get; private set; }
-    float t;
 
-    IEnumerator doorCloseC;
+    [SerializeField] ItemProperties key;
+    [SerializeField] Transform panel;
+    [SerializeField] Animator animator;
+    [SerializeField] Vector3 closedAngles;
+    [SerializeField] Vector3 openAngles;
+    [SerializeField] float openTime;
+    [SerializeField] int unlockStage;
+
+    [Header("Sounds")]
+    [SerializeField] GameObject handle;
+    [SerializeField] GameObject panelObj;
+    [SerializeField] string openDoorName;
+    [SerializeField] string closeDoorName;
+    [SerializeField] string skrtDoorName;
+    [SerializeField] float doorCloseInterpolation;
+
+    AudioJob skrtjob;
+
+    bool playedCloseSound;
+    float interpolation;
 
     private void Awake()
     {
-        if (stageUnlock > 1)
+        Locked = true;
+
+        if (Open)
+        {
+            interpolation = 1;
+        }
+        else
+        {
+            interpolation = 0;
+        }
+
+        if (unlockStage > 1)
         {
             StageLocked = true;
         }
+
+        playedCloseSound = true;
     }
 
     private void Start()
     {
-        GameManager.MakePausable(this);
-        GameManager.Instance.OnStageStart += (object sender, StageArgs args) =>
+        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
         {
-            if (Open)
-            {
-                Toggle();
-            }
-            if (args.stage >= stageUnlock && StageLocked)
+            if (GameManager.Instance.Stage == unlockStage)
             {
                 StageLocked = false;
-                ForceOpen();
-            }
-        };
-        GameManager.Instance.OnDeath += (object sender, DeathArgs args) =>
-        {
-            if (Open)
-            {
-                Toggle();
+                OpenDoor(true);
             }
         };
     }
+
     private void Update()
     {
-        if (Open)
+        if (StageLocked)
         {
-            t += 1 / openTime * Time.deltaTime;
-            doorOpen.volume = (panel.localEulerAngles.y - openedYRot) / (closedYRot - openedYRot);
+            Locked = true;
         }
-        else
-        {
-            t -= 1 / openTime * Time.deltaTime;
-        }
-        t = Mathf.Clamp01(t);
-        panel.localRotation = Quaternion.Slerp(Quaternion.Euler(0, closedYRot, 0), Quaternion.Euler(0, openedYRot, 0), t);
-    }
 
-    private void OnValidate()
-    {
-        if (Open)
+        if (Open && !Locked && !StageLocked)
         {
-            panel.localRotation = Quaternion.Euler(0, openedYRot, 0);
-        }
-        else
-        {
-            panel.localRotation = Quaternion.Euler(0, closedYRot, 0);
-        }
-    }
-
-    public bool Toggle(ItemObject requirement = null)
-    {
-        doorHandle.SetTrigger("PullHandle");
-        if (requiredItem != null && requirement != null && requirement.itemName == requiredItem.itemName)
-            locked = false;
-
-        if (locked || StageLocked)
-            return false;
-
-        Open = !Open;
-        if (Open)
-        {
-            doorOpen.Play();
-            doorHandleS.Play();
-        }
-        else
-        {
-            if (doorCloseC == null)
+            interpolation += Time.deltaTime / openTime;
+            if (skrtjob != null)
             {
-                doorCloseC = DoorCloseSound();
-                StartCoroutine(doorCloseC);
+                skrtjob.source.volume = 1 - interpolation;
             }
+            playedCloseSound = false;
         }
-
-        return true;
-    }
-
-    IEnumerator DoorCloseSound()
-    {
-        yield return new WaitUntil(() => 
+        else
         {
-            return Mathf.Abs(panel.localEulerAngles.y - closedYRot) < closedSoundThreshold;
-        });
-        doorClose.Play();
-        doorCloseC = null;
-    }
-
-    public bool TryLockItem(ItemObject item)
-    {
-        if (lockItem != null && item != null && lockItem.name == item.name)
-        {
-            return true;
+            if (interpolation <= doorCloseInterpolation && !playedCloseSound)
+            {
+                animator.SetTrigger("PullHandle");
+                AudioManager.Instance.PlayClip(handle, closeDoorName);
+                playedCloseSound = true;
+            }
+            interpolation -= Time.deltaTime / openTime;
         }
-        return false;
+        interpolation = Mathf.Clamp01(interpolation);
+        panel.localEulerAngles = Vector3.Lerp(closedAngles, openAngles, interpolation);
     }
 
-    public void ForceOpen()
+    public bool TryUnlock(Player player)
     {
-        locked = false;
-        if (!Open)
+        bool a = player.inventory.Contains(key);
+        if (a && !StageLocked)
         {
-            Toggle();
-            unlock.Play();
+            Locked = false;
+            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(key));
+        }
+        return a;
+    }
+
+    public bool MatchesRequirement(Player player)
+    {
+        return player.inventory.Contains(key);
+    }
+
+    public void Toggle()
+    {
+        AudioManager.Instance.StopClip(skrtjob);
+        if (Open)
+        {
+            CloseDoor();
+        }
+        else
+        {
+            OpenDoor();
         }
     }
 
-    public void ForceLock()
+    public void OpenDoor(bool forced = false)
+    {
+        if ((!Open && !Locked) || forced)
+        {
+            animator.SetTrigger("PullHandle");
+            skrtjob = AudioManager.Instance.PlayClip(panelObj, skrtDoorName);
+            AudioManager.Instance.PlayClip(handle, openDoorName);
+            Locked = false;
+            Open = true;
+        }
+    }
+
+    public void CloseDoor()
     {
         if (Open)
         {
-            Toggle();
+            Open = false;
         }
-        locked = true;
+    }
+
+    /// <summary>
+    /// Pass in player variable to decrease durability of key
+    /// </summary>
+    /// <param name="player"></param>
+    public void LockDoor(Player player = null)
+    {
+        Locked = true;
+        if (Open)
+        {
+            Open = false;
+        }
+        if (player != null)
+        {
+            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(key));
+        }
     }
 }
