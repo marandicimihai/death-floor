@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Euclid's Elevator/Assets/Scripts/Pause.meta
 guid: 8ec4a181463923949b2b5ede364f9466
+========
+guid: ff82baccba08d7c4a8366598c21dd1bf
+>>>>>>>> Stashed changes:Euclid's Elevator/Assets/Scripts/Items/ItemScripts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
