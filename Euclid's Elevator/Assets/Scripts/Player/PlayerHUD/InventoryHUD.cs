@@ -7,7 +7,7 @@ public class InventoryHUD : MonoBehaviour
 {
     [System.NonSerialized] public bool hideHUD;
     [Header("ItemModels")]
-    [SerializeField] Transform holdPos;
+    public Transform holdPos;
     [SerializeField] float swayStep;
     [SerializeField] float swayMaxStep;
     [SerializeField] float swayRotStep;

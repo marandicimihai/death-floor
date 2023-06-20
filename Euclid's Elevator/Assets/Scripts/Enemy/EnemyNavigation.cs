@@ -170,28 +170,34 @@ public class EnemyNavigation : MonoBehaviour
             {
                 if (ambiencestarted && ambiencemid)
                 {
-                    midamb.StopOnClipEnd(() =>
+                    if (midamb != null)
                     {
-                        AudioManager.Instance.PlayClip(ambend).StopOnClipEnd(() =>
+                        midamb.StopOnClipEnd(() =>
                         {
-                            ambiencestarted = false;
+                            AudioManager.Instance.PlayClip(ambend).StopOnClipEnd(() =>
+                            {
+                                ambiencestarted = false;
+                            });
                         });
-                    });
-                    ambiencemid = false;
+                        ambiencemid = false;
+                    }
                 }
             }
             else
             {
                 if (ambiencestarted && ambiencemid)
                 {
-                    midamb.StopOnClipEnd(() =>
+                    if (midamb != null)
                     {
-                        AudioManager.Instance.PlayClip(ambend).StopOnClipEnd(() =>
+                        midamb.StopOnClipEnd(() =>
                         {
-                            ambiencestarted = false;
+                            AudioManager.Instance.PlayClip(ambend).StopOnClipEnd(() =>
+                            {
+                                ambiencestarted = false;
+                            });
                         });
-                    });
-                    ambiencemid = false;
+                        ambiencemid = false;
+                    }
                 }
             }
 

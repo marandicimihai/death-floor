@@ -372,6 +372,8 @@ MonoBehaviour:
   firstPose: 0
   lastPose: 3
   timeBetweenPoses: 5
+  deathback: enemyexecback
+  deathfront: enemyexecfront
 --- !u!114 &1899635610
 MonoBehaviour:
   m_ObjectHideFlags: 0

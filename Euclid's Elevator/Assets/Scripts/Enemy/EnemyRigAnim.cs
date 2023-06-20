@@ -13,6 +13,9 @@ public class EnemyRigAnim : MonoBehaviour
     [SerializeField] int lastPose;
     [SerializeField] float timeBetweenPoses;
 
+    [SerializeField] string deathback;
+    [SerializeField] string deathfront;
+
     float cooldown;
 
     public void RigUpdate()
@@ -47,10 +50,12 @@ public class EnemyRigAnim : MonoBehaviour
         animator.SetInteger("State", -1);
         if (enemy.Visible)
         {
+            AudioManager.Instance.PlayClip(deathfront);
             animator.SetTrigger("Execute2");
         }
         else
         {
+            AudioManager.Instance.PlayClip(deathback);
             animator.SetTrigger("Execute1");
         }
     }

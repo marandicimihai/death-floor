@@ -57,33 +57,41 @@ public class Elevator : MonoBehaviour
 
     public bool TryInsert(Player player)
     {
-        if (Broken)
+        if (player.inventory.Items[player.inventory.Index] != null)
         {
-            bool b = player.inventory.Contains(toolbox);
-            if (b)
+            if (Broken)
             {
-                Broken = false;
-                player.inventory.DecreaseDurability(player.inventory.GetItemIndex(toolbox));
+                bool b = player.inventory.Items[player.inventory.Index].properties.name == toolbox.name;
+                if (b)
+                {
+                    Broken = false;
+                    player.inventory.DecreaseDurability(player.inventory.Index);
+                }
+                return b;
             }
-            return b;
-        }
 
-        bool a = player.inventory.Contains(keycard);
-        if (a)
-        {
-            InsertKeycard();
-            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(keycard));
+            bool a = player.inventory.Items[player.inventory.Index].properties.name == keycard.name;
+            if (a)
+            {
+                InsertKeycard();
+                player.inventory.DecreaseDurability(player.inventory.Index);
+            }
+            return a;
         }
-        return a;
+        return false;
     }
 
     public bool MatchesRequirement(Player player)
     {
-        if (Broken)
+        if (player.inventory.Items[player.inventory.Index] != null)
         {
-            return player.inventory.Contains(toolbox);
+            if (Broken)
+            {
+                return player.inventory.Items[player.inventory.Index].properties.name == toolbox.name;
+            }
+            return player.inventory.Items[player.inventory.Index].properties.name == keycard.name;
         }
-        return player.inventory.Contains(keycard);
+        return false;
     }
 
     void InsertKeycard()

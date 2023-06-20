@@ -135,7 +135,7 @@ public class Inventory : MonoBehaviour
 
         if (Items[id] != null)
         {
-            Items[id].uses -= 1;
+            Items[id].DecreaseDurability();
 
             if (Items[id].uses <= 0)
             {

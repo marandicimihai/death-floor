@@ -1595,6 +1595,26 @@ MonoBehaviour:
     spatialBlend: 1
     maxDistance: 10
     playPaused: 1
+  - name: enemyexecback
+    clip: {fileID: 8300000, guid: 368cbf37d31fedf40925370e48908ae2, type: 3}
+    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    maxDistance: 10
+    playPaused: 0
+  - name: enemyexecfront
+    clip: {fileID: 8300000, guid: 1a4d8e8ee27f5af478c0a273cd30b36a, type: 3}
+    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    maxDistance: 10
+    playPaused: 0
   empty: {fileID: 5535761128504817408, guid: 72b12f349ed2e1843b015cac4fce795f, type: 3}
 --- !u!114 &147068389 stripped
 MonoBehaviour:

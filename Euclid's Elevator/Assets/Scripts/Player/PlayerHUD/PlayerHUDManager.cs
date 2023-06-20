@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerHUDManager : MonoBehaviour
 {
     public ActionInfoHUD actionInfo;
-    [SerializeField] InventoryHUD inventoryHUD;
+    public InventoryHUD inventoryHUD;
     [SerializeField] GameObject crosshair;
     [SerializeField] JournalHUD journalHUD;
     [SerializeField] DialogueHUD dialogueHUD;

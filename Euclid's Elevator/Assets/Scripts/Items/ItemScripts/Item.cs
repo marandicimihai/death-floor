@@ -12,4 +12,20 @@ public class Item : SyncValues
             itemInit = true;
         }
     }
+
+    public void DecreaseDurability()
+    {
+        uses -= 1;
+        if (uses <= 0)
+        {
+            OnBreak();
+        }
+        //Destruction is handled in Inventory.cs
+        //Component is destroyed next frame
+    }
+
+    protected virtual void OnBreak()
+    {
+
+    }
 }

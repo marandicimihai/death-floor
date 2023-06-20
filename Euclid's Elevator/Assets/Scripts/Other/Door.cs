@@ -92,18 +92,27 @@ public class Door : MonoBehaviour
 
     public bool TryUnlock(Player player)
     {
-        bool a = player.inventory.Contains(key);
-        if (a && !StageLocked)
+        bool a;
+        if (player.inventory.Items[player.inventory.Index] != null)
         {
-            Locked = false;
-            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(key));
+            a = player.inventory.Items[player.inventory.Index].properties.name == key.name;
+            if (a && !StageLocked)
+            {
+                Locked = false;
+                player.inventory.DecreaseDurability(player.inventory.Index);
+            }
+            return a;
         }
-        return a;
+        return false;
     }
 
     public bool MatchesRequirement(Player player)
     {
-        return player.inventory.Contains(key);
+        if (player.inventory.Items[player.inventory.Index] != null)
+        {
+            return player.inventory.Items[player.inventory.Index].properties.name == key.name;
+        }
+        return false;
     }
 
     public void Toggle()
