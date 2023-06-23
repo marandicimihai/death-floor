@@ -289,7 +289,19 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 531221989}
         m_TargetAssemblyTypeName: MenuSettings, Assembly-CSharp
-        m_MethodName: Apply
+        m_MethodName: ApplyAndSaveGraphics
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 531221989}
+        m_TargetAssemblyTypeName: MenuSettings, Assembly-CSharp
+        m_MethodName: DoClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3984,40 +3996,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed97ede013a9e142a4596f934678ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refreshTest: 0
-  clickingSound: {fileID: 0}
   displayPages: 0
-  canvasOn: 0
   pageIndex: 0
-  pagesNames: []
-  pageIcons: []
-  pageIconsHL: []
-  pages: []
-  pageDisplayText: {fileID: 0}
-  pageDisplayIcon: {fileID: 0}
-  pageDisplayButton: {fileID: 0}
+  pagesNames:
+  - Audio
+  - Graphics
+  - Input
+  pageIcons:
+  - {fileID: 21300000, guid: c1e274975d986764292c8ab5d7e0bf54, type: 3}
+  - {fileID: 21300000, guid: ab8eb1c4d8a75af4fb1227e5d181b1c6, type: 3}
+  - {fileID: 21300000, guid: 7f7d8cc18b773c944b2f0777abf7c765, type: 3}
+  pageIconsHL:
+  - {fileID: 21300000, guid: 42cf3320fae6f94458a1115e2fc5d531, type: 3}
+  - {fileID: 21300000, guid: 3f4d94931e514be41bcc955373bf91d4, type: 3}
+  - {fileID: 21300000, guid: 90e79671d92984e46906185df7e2f10b, type: 3}
+  pages:
+  - {fileID: 346809101}
+  - {fileID: 1172148573}
+  - {fileID: 2102098480}
+  pageDisplayText: {fileID: 1060327844}
+  pageDisplayButton: {fileID: 330847569}
   effectsVolume: 1
   ambianceVolume: 1
-  effectsSlider: {fileID: 0}
-  ambianceSlider: {fileID: 0}
-  qualityNames: []
+  effectsSlider: {fileID: 1207489198}
+  ambianceSlider: {fileID: 490134190}
+  qualityNames:
+  - Extravagant
+  - Decent
+  - Potato
   qualityIndex: 0
-  resType: []
+  resType:
+  - width: 1920
+    height: 1080
+  - width: 1440
+    height: 1080
+  - width: 1280
+    height: 720
+  - width: 1920
+    height: 1200
+  - width: 1280
+    height: 800
+  - width: 1920
+    height: 1440
+  - width: 1280
+    height: 960
+  - width: 800
+    height: 600
+  - width: 3840
+    height: 1600
+  - width: 3440
+    height: 1440
+  - width: 2560
+    height: 1080
   resIndex: 0
   isfullscreen: 1
-  vSync: 0
-  bloom: 0
-  blur: 0
-  textQuality: {fileID: 0}
-  textRes: {fileID: 0}
-  ImageBoxVsync: {fileID: 0}
-  ImageBoxFullscreen: {fileID: 0}
-  ImageBoxBloom: {fileID: 0}
-  ImageBoxBlur: {fileID: 0}
-  textDisplay: []
-  inputText: []
+  vSync: 1
+  bloom: 1
+  blur: 1
+  textQuality: {fileID: 342673540}
+  textRes: {fileID: 457357225}
+  imageBoxVsync: {fileID: 1225430105}
+  imageBoxFullscreen: {fileID: 339838326}
+  imageBoxBloom: {fileID: 892426724}
+  imageBoxBlur: {fileID: 969829078}
+  textDisplay:
+  - Never
+  - Gonna
+  - Give
+  - U
+  - Up
+  - Never2
+  - Gonna2
+  - Let
+  - Yu
+  - Down
+  inputText:
+  - {fileID: 730706289}
+  - {fileID: 1622171585}
+  - {fileID: 904465289}
+  - {fileID: 1442937620}
+  - {fileID: 1766592201}
+  - {fileID: 420089860}
+  - {fileID: 191315445}
+  - {fileID: 702069212}
+  - {fileID: 133763122}
+  - {fileID: 1089370416}
   mouseSensitivity: 1
-  mouseSensSlider: {fileID: 0}
+  mouseSensSlider: {fileID: 2141966335}
+  clickingSound: {fileID: 8300000, guid: bb4a110183e855c479d8b6b529f690f8, type: 3}
+  canvasOn: 0
+  refreshTest: 0
 --- !u!95 &531221990
 Animator:
   serializedVersion: 5
@@ -8174,7 +8242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1172148574
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13395,7 +13463,7 @@ MonoBehaviour:
   mainTab: {fileID: 1396347725}
   creditsTab: {fileID: 473975593}
   menuCameraAnim: {fileID: 1254322030}
-  clickingSound: {fileID: 8300000, guid: 6e0e12e67aac19147ab4410bcd3cacd1, type: 3}
+  clickingSound: {fileID: 8300000, guid: bb4a110183e855c479d8b6b529f690f8, type: 3}
 --- !u!82 &2021414348
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16629,18 +16697,6 @@ Transform:
   m_Father: {fileID: 3382050438929782568}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!114 &4631356386473324594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9004775579141858362}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e91d3cc491a2f147a25fbc5c9a8141f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4816010903749566063
 Transform:
   m_ObjectHideFlags: 0
@@ -17058,30 +17114,6 @@ Transform:
   m_Father: {fileID: 4860145061533312633}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6287092822534046576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7778486398925576056}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e91d3cc491a2f147a25fbc5c9a8141f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6287092823987316254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7778486397489230358}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e91d3cc491a2f147a25fbc5c9a8141f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6287981321689815725
 GameObject:
   m_ObjectHideFlags: 0
@@ -17812,7 +17844,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3382050438929782568}
   - component: {fileID: 5505587380969633722}
-  - component: {fileID: 6287092823987316254}
   - component: {fileID: 4169810849960760027}
   - component: {fileID: 8742155899295927769}
   m_Layer: 0
@@ -17832,7 +17863,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3382050440500359750}
   - component: {fileID: 5505587382205174484}
-  - component: {fileID: 6287092822534046576}
   - component: {fileID: 4169810851141531573}
   - component: {fileID: 8742155897510930615}
   m_Layer: 0
@@ -18462,7 +18492,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4173336502380282116}
   - component: {fileID: 6584853131660632470}
-  - component: {fileID: 4631356386473324594}
   - component: {fileID: 3376568754776982775}
   - component: {fileID: 7951034758024125429}
   m_Layer: 0

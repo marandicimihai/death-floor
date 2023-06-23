@@ -6,26 +6,20 @@ using System;
 public class MenuSettings : MonoBehaviour
 {
     //"It's been a worthwile since i last scripted for a unity project" - Dev #2
-    public bool refreshTest = false; //use this "trigger" to update the settings UI;
-    Animator thisAnim;
-    [SerializeField] AudioClip clickingSound;
-    AudioSource thisSource;
+
     [Header("Page Paramaters")]
-    Canvas thisCanvas;
     [SerializeField] bool displayPages;
-    [SerializeField] bool canvasOn;
     [SerializeField] [Range(0, 2)] int pageIndex;
-    [SerializeField] string[] pagesNames;
-    [SerializeField] Sprite[] pageIcons;
-    [SerializeField] Sprite[] pageIconsHL;
-    [SerializeField] GameObject[] pages;
+    [SerializeField] string[] pagesNames = new string[3];
+    [SerializeField] Sprite[] pageIcons = new Sprite[3];
+    [SerializeField] Sprite[] pageIconsHL = new Sprite[3]; //HL stands for highlighted
+    [SerializeField] GameObject[] pages = new GameObject[3];
     [SerializeField] Text pageDisplayText;
-    [SerializeField] Image pageDisplayIcon;
+    //[SerializeField] Image pageDisplayIcon;
     [SerializeField] Button pageDisplayButton;
     [Header("Audio")]
     [SerializeField] [Range(0f, 1.0f)] float effectsVolume = 1;
     [SerializeField] [Range(0f, 1.0f)] float ambianceVolume = 1;
-    //these are referenced incase we want to change the sliders without the user;
     [SerializeField] Slider effectsSlider;
     [SerializeField] Slider ambianceSlider;
     [Header("Graphics")]
@@ -39,18 +33,23 @@ public class MenuSettings : MonoBehaviour
     [SerializeField] bool blur; //i bet a lot of people will turn this one off
     [SerializeField] Text textQuality;
     [SerializeField] Text textRes;
-    //reference here "ticked boxes" imagies;
-    [SerializeField] Image ImageBoxVsync;
-    [SerializeField] Image ImageBoxFullscreen;
-    [SerializeField] Image ImageBoxBloom;
-    [SerializeField] Image ImageBoxBlur;
+    [SerializeField] Image imageBoxVsync;
+    [SerializeField] Image imageBoxFullscreen;
+    [SerializeField] Image imageBoxBloom;
+    [SerializeField] Image imageBoxBlur;
     [Header("Input")]
     [SerializeField] string[] textDisplay; //how should the text be displayed for the input buttons
-    [SerializeField] Text[] inputText; //the length of textDisplay must match the length of inputText
+    [SerializeField] Text[] inputText; //inputText's length shall be the same as textDisplay's length
     [SerializeField] [Range(0.1f, 2.0f)] float mouseSensitivity = 1;
     [SerializeField] Slider mouseSensSlider;
-
-    Settings set;
+    [Header("Other")]
+    [SerializeField] AudioClip clickingSound;
+    [SerializeField] bool canvasOn;
+    public bool refreshTest = false; //use this "trigger" to update the settings UI;
+    Animator thisAnim;
+    AudioSource thisSource;
+    Canvas thisCanvas;
+    //Settings set; 
 
     [Serializable] 
     public class Res
@@ -58,69 +57,31 @@ public class MenuSettings : MonoBehaviour
         public int width = 1600;
         public int height = 900;
     }
-
+    private void OnValidate()
+    {
+        if(inputText.Length != textDisplay.Length)
+        {
+            Debug.LogError("inputText is not matching the length of textDisplay!!!");
+        }
+    }
     void Start()
     {
         thisSource = GetComponent<AudioSource>();
         thisAnim = gameObject.GetComponent<Animator>();
-        SetPagesOff();
-        UpdateAudio();
-        UpdateGraphics();
-        UpdateInput();
-        ChangePageTo(pageIndex);
         thisCanvas = gameObject.GetComponent<Canvas>();
-        thisCanvas.enabled = canvasOn;
+        Refresh();
     }
-
-    public void ApplySettings(Settings set)
-    {
-        SetEffectsVolume(set.effectsVolume);
-        SetAmbianceVolume(set.ambianceVolume);
-        SetSens(set.sensitivity);
-        SetBloom(set.bloom);
-        SetBlur(set.blur);
-        SetResIndex(set.resIndex);
-        SetQualityIndex(set.qualityIndex);
-        SetVsync(set.vSync);
-        SetFullscreen(set.fullScreen);
-    }
-
     void Update()
-    {
-        testRefresh();
-    }
-    public void DoClick()
-    {
-        thisSource.clip = clickingSound;
-        thisSource.Play();
-    }
-    void DoThatThing() //it's kinda annoying how the fucking buttons are just staying selected, what's this dumm ass feature
-    {
-        GameObject myEventSystem = GameObject.Find("EventSystem");
-        myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
-    }
-    void testRefresh()
     {
         if (refreshTest)
         {
-            SetPagesOff();
             refreshTest = false;
-            UpdateAudio();
-            UpdateGraphics();
-            UpdateInput();
-            ChangePageTo(pageIndex);
-            thisCanvas.enabled = canvasOn;
+            Refresh();
         }
     }
-    //OTHER
+    //UI MANAGMENT
     public void OpenFatherMenu()
     {
-        //----
-        //The main menu and side menu shouldn't be in the same scene
-        set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
-        SaveSystem.SaveSettings(set);
-        //problemo?
-
         if (FindObjectOfType<MainMenu>())
         {
             MainMenu mm = FindObjectOfType<MainMenu>();
@@ -129,17 +90,21 @@ public class MenuSettings : MonoBehaviour
         }
         else if(FindObjectOfType<SideMenu>())
         {
-            SideMenu mm = FindObjectOfType<SideMenu>();
-            mm.OpenSettings(false);
+            SideMenu sm = FindObjectOfType<SideMenu>();
+            sm.OpenSettings(false);
         }
         else
         {
             Debug.LogError("Hey dumb ass, you forgot to add the main menu");
         }
     }
-    public void ChangePageTo(int index)
+    void ChangePageTo(int index)
     {
-
+        if(index >= pages.Length || index < 0)
+        {
+            index = 0;
+            Debug.LogWarning("page index was set beyond the available size!");
+        }
         if (displayPages)
         {
             pages[pageIndex].SetActive(false);
@@ -151,7 +116,8 @@ public class MenuSettings : MonoBehaviour
             SetPagesOff(); //just to make sure
         }
         pageDisplayText.text = pagesNames[pageIndex];
-        pageDisplayIcon.sprite = pageIcons[pageIndex];
+        //pageDisplayIcon.sprite = pageIcons[pageIndex];
+        pageDisplayButton.GetComponent<Image>().sprite = pageIcons[pageIndex];
         SpriteState ss = new SpriteState();
         ss.highlightedSprite = pageIconsHL[pageIndex];
         pageDisplayButton.spriteState = ss;
@@ -166,11 +132,12 @@ public class MenuSettings : MonoBehaviour
         }
         pages[pageIndex].SetActive(true);
         pageDisplayText.text = pagesNames[pageIndex];
-        pageDisplayIcon.sprite = pageIcons[pageIndex];
+        //pageDisplayIcon.sprite = pageIcons[pageIndex];
+        pageDisplayButton.GetComponent<Image>().sprite = pageIcons[pageIndex];
         SpriteState ss = new SpriteState();
         ss.highlightedSprite = pageIconsHL[pageIndex];
         pageDisplayButton.spriteState = ss;
-        DoThatThing();
+        UnselectButton();
     }
     public void SetPagesOff()
     {
@@ -179,18 +146,14 @@ public class MenuSettings : MonoBehaviour
             pages[i].SetActive(false);
         }
     }
-    public void SetDisplayPages(bool value)
-    {
-        displayPages = true;
-        ChangePageTo(pageIndex);
-    }
     public void OpenSettings(bool value)
     {
         thisAnim.SetBool("isOpen", value);
         displayPages = value;
         thisAnim.SetTrigger("fuckThis");
+        Refresh();
     }
-    public void SetCanvasOn() //the fucking animator gotta act special and not accept boolians, kids these days!
+    public void SetCanvasOn() //the fucking animator gotta act special and not accept boolians, kids these days! 
     {
         canvasOn = true;
         thisCanvas.enabled = canvasOn;
@@ -203,52 +166,55 @@ public class MenuSettings : MonoBehaviour
     //AUDIO
     void UpdateAudio()
     {
+        /* !!!
+        if([saved settings != null]){
+            effectsVolume = [settings effects volume]; 
+            ambianceVolume = [settings ambiance volume]; 
+        }
+        */
         effectsSlider.value = effectsVolume;
         ambianceSlider.value = ambianceVolume;
+        SaveAudio();
     }
-    public void SyncVolume()
+    public void SyncVolume() //Syncs the stored values of the sound volume with the slider values
     {
         effectsVolume = effectsSlider.value;
         ambianceVolume = ambianceSlider.value;
-        Settings old = SaveSystem.LoadSettings();
-        set = new Settings(effectsVolume, ambianceVolume, old.bloom, old.blur, old.sensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
-        SaveSystem.SaveSettings(set);
+        SaveAudio();
     }
-    public void SetEffectsVolume(float vol)
+    public void SaveAudio()
     {
-        effectsVolume = vol;
-        effectsSlider.value = effectsVolume;
-    }
-    public void SetAmbianceVolume(float vol)
-    {
-        ambianceVolume = vol;
-        ambianceSlider.value = ambianceVolume;
-    }
-    public float GetEffectsVolume()
-    {
-        return effectsVolume;
-    }
-    public float GetAmbianceVolume()
-    {
-        return ambianceVolume;
+        Debug.Log("Audio saved");
+        //SAVE AUDIO!!!
     }
     //GRAPHICS
     void UpdateGraphics()
     {
+        /* !!!
+        if([saved settings != null]){
+          qualityIndex = [SETTINGS QUALITY]; 
+          resIndex = [SETTINGS RES]; 
+          vSync = [SETTINGS VSYBC];
+          isfullscreen = [SETTINGS FULLSCREEN];
+          bloom = [SETTINGS BLOOM];
+          blur = [SETTINGS BLUR];
+        }
+        */
         textQuality.text = qualityNames[qualityIndex];
+        QualitySettings.SetQualityLevel(qualityIndex);
         string width = resType[resIndex].width.ToString();
         string height = resType[resIndex].height.ToString();
         textRes.text = width + "x" + height;
-        ImageBoxVsync.enabled = vSync;
-        ImageBoxFullscreen.enabled = isfullscreen;
-        ImageBoxBloom.enabled = bloom;
-        ImageBoxBlur.enabled = blur;
-    }
-    public void SetQualityIndex(int index)
-    {
-        qualityIndex = index;
-        textQuality.text = qualityNames[qualityIndex];
-        QualitySettings.SetQualityLevel(qualityIndex);
+        Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
+        QualitySettings.vSyncCount = vSync.GetHashCode();
+        Screen.fullScreen = isfullscreen;
+        //SO um? there is no actual parameter for bloom when updating settings??? !!!
+        //so does the blur !!!
+        imageBoxVsync.enabled = vSync;
+        imageBoxFullscreen.enabled = isfullscreen;
+        imageBoxBloom.enabled = bloom;
+        imageBoxBlur.enabled = blur;
+        ApplyAndSaveGraphics();
     }
     public void NextQualityIndex()
     {
@@ -258,22 +224,7 @@ public class MenuSettings : MonoBehaviour
             qualityIndex = 0;
         }
         textQuality.text = qualityNames[qualityIndex];
-        DoThatThing();
-    }
-    public void SetResArray(Res[] newResArray) //idk if u need this...
-    {
-        resType = newResArray;
-        string width = resType[resIndex].width.ToString();
-        string height = resType[resIndex].height.ToString();
-        textRes.text = width + "x" + height;
-    }
-    public void SetResIndex(int index)
-    {
-        resIndex = index;
-        string width = resType[resIndex].width.ToString();
-        string height = resType[resIndex].height.ToString();
-        textRes.text = width + "x" + height;
-        Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
+        UnselectButton();
     }
     public void NextResIndex()
     {
@@ -285,132 +236,87 @@ public class MenuSettings : MonoBehaviour
         string width = resType[resIndex].width.ToString();
         string height = resType[resIndex].height.ToString();
         textRes.text = width + "x" + height;
-        DoThatThing();
-    }
-    public void SetVsync(bool newVsync)
-    {
-        vSync = newVsync;
-        ImageBoxVsync.enabled = vSync;
-        if (vSync)
-        {
-            QualitySettings.vSyncCount = 1;
-        }
-        else
-        {
-            QualitySettings.vSyncCount = 0;
-        }
+        UnselectButton();
     }
     public void SwitchVsync()
     {
         vSync = !vSync;
-        ImageBoxVsync.enabled = vSync;
-    }
-    public void SetFullscreen(bool newFullscreen)
-    {
-        isfullscreen = newFullscreen;
-        ImageBoxFullscreen.enabled = isfullscreen;
-        Screen.fullScreen = isfullscreen;
+        imageBoxVsync.enabled = vSync;
     }
     public void SwitchFullscreen()
     {
         isfullscreen = !isfullscreen;
-        ImageBoxFullscreen.enabled = isfullscreen;
-    }
-    public void SetBloom(bool newBloom)
-    {
-        bloom = newBloom;
-        ImageBoxBloom.enabled = bloom;
+        imageBoxFullscreen.enabled = isfullscreen;
     }
     public void SwitchBloom()
     {
         bloom = !bloom;
-        ImageBoxBloom.enabled = bloom;
-        Settings old = SaveSystem.LoadSettings();
-        set = new Settings(old.effectsVolume, old.ambianceVolume, bloom, old.blur, old.sensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
-        SaveSystem.SaveSettings(set);
-    }
-    public void SetBlur(bool newBlur)
-    {
-        blur = newBlur;
-        ImageBoxBlur.enabled = blur;
+        imageBoxBloom.enabled = bloom;
     }
     public void SwitchBlur()
     {
         blur = !blur;
-        ImageBoxBlur.enabled = blur;
-        Settings old = SaveSystem.LoadSettings();
-        set = new Settings(old.effectsVolume, old.ambianceVolume, old.bloom, blur, old.sensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
-        SaveSystem.SaveSettings(set);
+        imageBoxBlur.enabled = blur;
     }
-    public int GetQualityIndex()
+    public void ApplyAndSaveGraphics()
     {
-        return qualityIndex;
+        Debug.Log("Graphics saved");
+        Screen.fullScreen = isfullscreen;
+        QualitySettings.vSyncCount = vSync.GetHashCode();
+        QualitySettings.SetQualityLevel(qualityIndex);
+        Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
+        //SAVE GRAPHICS!!!
     }
-    public int GetResIndex()
-    {
-        return resIndex;
-    }
-    public bool GetVsync()
-    {
-        return vSync;
-    }
-    public bool GetFullscreen()
-    {
-        return isfullscreen;
-    }
-    public bool GetBloom()
-    {
-        return bloom;
-    }
-    public bool GetBlur()
-    {
-        return blur;
-    }
-
-    //Input
+    //INPUT
     void UpdateInput()
     {
+        /* !!!
+        if([saved settings != null]){
+            mouseSensitivity = [SETTINGS SENS]; !!!
+            also the same for other INPUTS (that currently can not be changed >:\ )!
+        }
+        */
         for(int i = 0; i < inputText.Length; i++)
         {
             inputText[i].text = textDisplay[i];
         }
         mouseSensSlider.value = mouseSensitivity;
+        SaveInput();
     }
-    public void SetDisplayKey(int index, string newDisplayText)
-    {
-        textDisplay[index] = newDisplayText;
-        inputText[index].text = textDisplay[index];
-    }
-    public void SetSens(float newSens) //0.1 to 2
-    {
-        mouseSensitivity = newSens;
-        mouseSensSlider.value = mouseSensitivity;
-    }
-    public void SyncSens() //whenever the slider gets input;
+    public void SyncSens() //whenever the slider gets input; 
     {
         mouseSensitivity = mouseSensSlider.value;
-        Settings old = SaveSystem.LoadSettings();
-        set = new Settings(old.effectsVolume, old.ambianceVolume, old.bloom, old.blur, mouseSensitivity, old.resIndex, old.qualityIndex, old.vSync, old.fullScreen);
-        SaveSystem.SaveSettings(set);
+        SaveInput();
     }
-    //idk what to do here with Input so yeah, you do you;
-
-//problemo
-    public void Apply()
+    //BRO DO THE INPUT BROOOOOOO!!!! pls!
+    public void SaveInput()
     {
-        Screen.fullScreen = isfullscreen;
-        if (vSync)
-        {
-            QualitySettings.vSyncCount = 1;
-        }
-        else
-        {
-            QualitySettings.vSyncCount = 0;
-        }
-        QualitySettings.SetQualityLevel(qualityIndex);
-        Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
-        set = new Settings(effectsVolume, ambianceVolume, bloom, blur, mouseSensitivity, resIndex, qualityIndex, vSync, isfullscreen);
-        SaveSystem.SaveSettings(set);
+        Debug.Log("Input saved");
+        //SAVE INPUT!!!
     }
-//problemo?
+
+    //OTHER
+    public void DoClick() //make a clicking sound
+    {
+        thisSource.clip = clickingSound;
+        thisSource.Play();
+    }
+    void UnselectButton() //the buttons stay selected after being clicked thus the highlights no longer work, so yeah unselecting is the only way
+    {
+        GameObject myEventSystem = GameObject.Find("EventSystem");
+        myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
+    }
+
+    //Will recheck everything and apply changes (such as should the menu be open or what text should the UI display)
+    //it also sets the values of every parameter to the saved ones
+    //but if the saved settings are NULL, no where to be found, gone... it will save at the end thus creating new saved settings
+    void Refresh() 
+    {
+        SetPagesOff();
+        UpdateAudio();
+        UpdateGraphics();
+        UpdateInput();
+        ChangePageTo(pageIndex);
+        thisCanvas.enabled = canvasOn;
+    }
 }

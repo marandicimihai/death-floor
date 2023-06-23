@@ -9,28 +9,16 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Canvas creditsTab;
     [SerializeField] Animator menuCameraAnim;
     [SerializeField] AudioClip clickingSound;
-    AudioSource thisSource;
-    MenuSettings settingsTab;
-    // Start is called before the first frame update
+    AudioSource thisAudioSource; //thisAudioSource is a perfectly normal name, stfu
+    MenuSettings settingsMenu;
     void Start()
     {
-        thisSource = GetComponent<AudioSource>();
-        settingsTab = FindObjectOfType<MenuSettings>();
+        thisAudioSource = GetComponent<AudioSource>();
+        settingsMenu = FindObjectOfType<MenuSettings>();
         mainTab.enabled = true;
         creditsTab.enabled = false;
-        settingsTab.SetPagesOff();
-        settingsTab.SetCanvasOff();
-        Settings set = SaveSystem.LoadSettings();
-        if (set != null)
-        {
-            settingsTab.ApplySettings(set);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        settingsMenu.SetPagesOff();
+        settingsMenu.SetCanvasOff();
     }
     public void OpenMainTab(bool open)
     {
@@ -43,12 +31,14 @@ public class MainMenu : MonoBehaviour
     }
     public void OpenSettings(bool open)
     {
+        /*
         Settings set = SaveSystem.LoadSettings();
         if (set != null)
         {
-            settingsTab.ApplySettings(set);
+            settingsMenu.ApplySettings(set);
         }
-        settingsTab.OpenSettings(open);
+        */
+        settingsMenu.OpenSettings(open);
         menuCameraAnim.SetBool("Settings", open);
     }
     public void QuitGame()
@@ -62,7 +52,7 @@ public class MainMenu : MonoBehaviour
     }
     public void DoClick()
     {
-        thisSource.clip = clickingSound;
-        thisSource.Play();
+        thisAudioSource.clip = clickingSound;
+        thisAudioSource.Play();
     }
 }

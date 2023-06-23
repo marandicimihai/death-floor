@@ -31,16 +31,16 @@ public class SideMenu : MonoBehaviour
         }
 
     }
-    void TEST()
+    void TEST() //to test the sidemenu
     {
         OpenMenu(open);
     }
     public void SetMenuType(bool type) //0 - pause menu// 1 - death menu;
     {
         isDeathMenu = type;
-        RefreshVisuals();
+        Refresh();
     }
-    void RefreshVisuals()
+    void Refresh()
     {
         restartBut.SetActive(isDeathMenu);
         resumeBut.SetActive(!isDeathMenu);
@@ -49,7 +49,7 @@ public class SideMenu : MonoBehaviour
     }
     public void OpenMenu(bool value)
     {
-        RefreshVisuals();
+        Refresh();
         if (value)
         {
             thisAnim.SetTrigger("SlideIn");
