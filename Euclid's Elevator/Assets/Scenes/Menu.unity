@@ -1288,14 +1288,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 187514165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2dd5174c58e76a4fa5a7d4b217b5d90, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e2d3954dfe3ba94c95ad3f50d74b21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isDeathMenu: 0
   resumeBut: {fileID: 603316737}
   restartBut: {fileID: 1681812707}
-  pauseSprite: {fileID: 959263766}
-  gameoverSprite: {fileID: 2065865766}
+  pauseSprite: {fileID: 0}
+  gameoverSprite: {fileID: 0}
   open: 0
   test: 0
 --- !u!1 &191315443
@@ -3126,6 +3126,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 443303897}
   m_CullTransparentMesh: 1
+--- !u!1001 &451774243
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908777, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908779, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: settings.Array.data[56].maxDistance
+      value: 500
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
 --- !u!1 &457357223
 GameObject:
   m_ObjectHideFlags: 0
@@ -4124,98 +4185,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 531221984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa41738365b16343840d5b7673ea643, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ed97ede013a9e142a4596f934678ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refreshTest: 0
-  clickingSound: {fileID: 8300000, guid: bb4a110183e855c479d8b6b529f690f8, type: 3}
   displayPages: 0
-  canvasOn: 0
   pageIndex: 0
   pagesNames:
-  - Audio
-  - Graphics
-  - Input
+  - 
+  - 
+  - 
   pageIcons:
-  - {fileID: 21300000, guid: c1e274975d986764292c8ab5d7e0bf54, type: 3}
-  - {fileID: 21300000, guid: ab8eb1c4d8a75af4fb1227e5d181b1c6, type: 3}
-  - {fileID: 21300000, guid: 7f7d8cc18b773c944b2f0777abf7c765, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   pageIconsHL:
-  - {fileID: 21300000, guid: 42cf3320fae6f94458a1115e2fc5d531, type: 3}
-  - {fileID: 21300000, guid: 3f4d94931e514be41bcc955373bf91d4, type: 3}
-  - {fileID: 21300000, guid: 90e79671d92984e46906185df7e2f10b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   pages:
-  - {fileID: 346809101}
-  - {fileID: 1172148573}
-  - {fileID: 2102098480}
-  pageDisplayText: {fileID: 1060327844}
-  pageDisplayIcon: {fileID: 330847567}
-  pageDisplayButton: {fileID: 330847569}
-  effectsVolume: 0.85
-  ambianceVolume: 0.85
-  effectsSlider: {fileID: 1207489198}
-  ambianceSlider: {fileID: 490134190}
-  qualityNames:
-  - Thermal bomb
-  - Medium
-  - VHS (Low)
-  qualityIndex: 2
-  resType:
-  - width: 1280
-    height: 720
-  - width: 1600
-    height: 900
-  - width: 1920
-    height: 1080
-  - width: 1280
-    height: 800
-  - width: 1440
-    height: 900
-  - width: 1920
-    height: 1200
-  - width: 1366
-    height: 768
-  - width: 1280
-    height: 960
-  - width: 2560
-    height: 1080
-  - width: 1536
-    height: 864
-  resIndex: 2
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  pageDisplayText: {fileID: 0}
+  pageDisplayButton: {fileID: 0}
+  effectsVolume: 1
+  ambianceVolume: 1
+  effectsSlider: {fileID: 0}
+  ambianceSlider: {fileID: 0}
+  qualityNames: []
+  qualityIndex: 0
+  resType: []
+  resIndex: 0
   isfullscreen: 1
-  vSync: 1
-  bloom: 1
-  blur: 1
-  textQuality: {fileID: 342673540}
-  textRes: {fileID: 457357225}
-  ImageBoxVsync: {fileID: 1225430105}
-  ImageBoxFullscreen: {fileID: 339838326}
-  ImageBoxBloom: {fileID: 892426724}
-  ImageBoxBlur: {fileID: 969829078}
-  textDisplay:
-  - W
-  - S
-  - A
-  - D
-  - Shift
-  - Esc
-  - E
-  - F
-  - Q
-  - J
-  inputText:
-  - {fileID: 730706289}
-  - {fileID: 1622171585}
-  - {fileID: 904465289}
-  - {fileID: 1442937620}
-  - {fileID: 1766592201}
-  - {fileID: 420089860}
-  - {fileID: 191315445}
-  - {fileID: 702069212}
-  - {fileID: 133763122}
-  - {fileID: 1089370416}
+  vSync: 0
+  bloom: 0
+  blur: 0
+  textQuality: {fileID: 0}
+  textRes: {fileID: 0}
+  imageBoxVsync: {fileID: 0}
+  imageBoxFullscreen: {fileID: 0}
+  imageBoxBloom: {fileID: 0}
+  imageBoxBlur: {fileID: 0}
+  textDisplay: []
+  inputText: []
   mouseSensitivity: 1
-  mouseSensSlider: {fileID: 2141966335}
+  mouseSensSlider: {fileID: 0}
+  click: click
+  canvasOn: 0
+  refreshTest: 0
 --- !u!95 &531221990
 Animator:
   serializedVersion: 5
@@ -14353,13 +14370,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2021414345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d9e4fa283208f479d7ab8021255386, type: 3}
+  m_Script: {fileID: 11500000, guid: cba095d59f0161e4abdc028cbdbf2d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainTab: {fileID: 1396347725}
   creditsTab: {fileID: 473975593}
   menuCameraAnim: {fileID: 1254322030}
-  clickingSound: {fileID: 8300000, guid: bb4a110183e855c479d8b6b529f690f8, type: 3}
+  click: click
 --- !u!82 &2021414348
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17681,21 +17698,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e91d3cc491a2f147a25fbc5c9a8141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locked: 1
-  middle: {fileID: 1375894401220815817}
-  closedYRot: 180
-  openedYRot: 50
-  openTime: 0.5
-  closedSoundThreshold: 40
-  panel: {fileID: 7589385332311207709}
-  doorHandle: {fileID: 6584853131660632470}
-  requiredItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  lockItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  doorOpen: {fileID: 3376568754776982775}
-  doorClose: {fileID: 7951034758024125429}
-  doorHandleS: {fileID: 8221514956164698872}
-  unlock: {fileID: 2405631264489644205}
-  stageUnlock: 0
 --- !u!4 &4816010903749566063
 Transform:
   m_ObjectHideFlags: 0
@@ -18125,21 +18127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e91d3cc491a2f147a25fbc5c9a8141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locked: 1
-  middle: {fileID: 296664935734270091}
-  closedYRot: 180
-  openedYRot: 20
-  openTime: 0.5
-  closedSoundThreshold: 40
-  panel: {fileID: 9103804799808068703}
-  doorHandle: {fileID: 5505587382205174484}
-  requiredItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  lockItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  doorOpen: {fileID: 4169810851141531573}
-  doorClose: {fileID: 8742155897510930615}
-  doorHandleS: {fileID: 7286102710950322618}
-  unlock: {fileID: 3920202499974026223}
-  stageUnlock: 3
 --- !u!114 &6287092823987316254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18152,21 +18139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e91d3cc491a2f147a25fbc5c9a8141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locked: 1
-  middle: {fileID: 296664934151257573}
-  closedYRot: 180
-  openedYRot: 65
-  openTime: 0.5
-  closedSoundThreshold: 40
-  panel: {fileID: 9103804799918897457}
-  doorHandle: {fileID: 5505587380969633722}
-  requiredItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  lockItem: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  doorOpen: {fileID: 4169810849960760027}
-  doorClose: {fileID: 8742155899295927769}
-  doorHandleS: {fileID: 7286102709513700564}
-  unlock: {fileID: 3920202499330143873}
-  stageUnlock: 0
 --- !u!1 &6287981321689815725
 GameObject:
   m_ObjectHideFlags: 0

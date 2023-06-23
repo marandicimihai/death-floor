@@ -1017,605 +1017,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
---- !u!1 &129587960
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 129587961}
-  - component: {fileID: 129587962}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &129587961
+--- !u!4 &129587961 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+  m_PrefabInstance: {fileID: 3795079936316584785}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129587960}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 43122405}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &129587962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129587960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97dc0aff0852c7249a1d8f799a0d9d2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jobs: []
-  paused: {fileID: 2587515176096854133, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-  unpaused: {fileID: 24500006, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-  settings:
-  - name: carpetstep1
-    clip: {fileID: 8300000, guid: fa3992d7e4fe62d4d9eedb8c08715301, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 500
-    playPaused: 0
-  - name: carpetstep2
-    clip: {fileID: 8300000, guid: 1cb303739aee1774f9c73a8c0267235a, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 500
-    playPaused: 0
-  - name: carpetstep3
-    clip: {fileID: 8300000, guid: f42d0a7f239d74f498607bca46d6a4f6, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 500
-    playPaused: 0
-  - name: carpetstep4
-    clip: {fileID: 8300000, guid: df58e4ecaf861d842bb547823c12e81b, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 500
-    playPaused: 0
-  - name: concretestep1
-    clip: {fileID: 8300000, guid: b429b2c0aa0e2c2449479156bab34757, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 500
-    playPaused: 0
-  - name: concretestep2
-    clip: {fileID: 8300000, guid: 5698068743826e74b8f44c3ba9061ee2, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 500
-    playPaused: 0
-  - name: concretestep3
-    clip: {fileID: 8300000, guid: a558a2f429678e446ab17adc80d73a4e, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 500
-    playPaused: 0
-  - name: opendoor
-    clip: {fileID: 8300000, guid: 2c9800ece1560664582d6cca0dbf31e2, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.81
-    maxDistance: 10
-    playPaused: 0
-  - name: closedoor
-    clip: {fileID: 8300000, guid: 5a400f27a4f85744a99fd0ba98356b21, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: skrtdoor
-    clip: {fileID: 8300000, guid: 6a310dca0f359234f99aeceb68d33ade, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: elevatorclose
-    clip: {fileID: 8300000, guid: 18851def0cd53574ca4db4cb29f9b342, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: elevatoropen
-    clip: {fileID: 8300000, guid: 9abd7fba55acc5247a0fc0b09aa30c2a, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: elevator1
-    clip: {fileID: 8300000, guid: 50eafabdfb1621b4b878beb7b2c10eab, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 1
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: elevator2
-    clip: {fileID: 8300000, guid: 997a10d65c7262e47a45ecc6004ddf9c, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 1
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: elevator3
-    clip: {fileID: 8300000, guid: 28b42c144b6830345848302b41074faf, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 1
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: elevator4
-    clip: {fileID: 8300000, guid: 00cf737f2a8b1b4419f4d68db6d0b337, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 1
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: elevatorstop
-    clip: {fileID: 8300000, guid: 676814b145dcd694d8680c4fb321c5dc, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: itemdraw1
-    clip: {fileID: 8300000, guid: 3ac96cf89c65202469118ed02810c346, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: itemdraw2
-    clip: {fileID: 8300000, guid: 7164c21dfb8784f41afeadb27fcb9149, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: itemdrop
-    clip: {fileID: 8300000, guid: aff8f824a9eed414ca208c2db265ed48, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: itempickup
-    clip: {fileID: 8300000, guid: 18a8c55573371ca46ac8c618fede2b93, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: pilldraw
-    clip: {fileID: 8300000, guid: 856dafc3e7a414548beee94365e8a42d, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: pilldrop
-    clip: {fileID: 8300000, guid: 0b77da34065d8bc40bb83b3df7e8897c, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: pillpickup
-    clip: {fileID: 8300000, guid: 9cca9a0da49feaf4a854945a596b3aa0, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: keydraw
-    clip: {fileID: 8300000, guid: 19e69dac65197fc42a714dd31993431a, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: keydrop
-    clip: {fileID: 8300000, guid: 1b45a4403e49ef047a6e88600509a3c0, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: keypickup
-    clip: {fileID: 8300000, guid: 79eb593db09718a439821886bb54771d, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: keypickup2
-    clip: {fileID: 8300000, guid: a9c6513ca5109054fa4d821dccb3cc56, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: sodadrop
-    clip: {fileID: 8300000, guid: dd3c5e56c14d571488536d21132eb2f5, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: sodaopen
-    clip: {fileID: 8300000, guid: 81e949a23c000e948a43baf39c999670, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: sodapickup
-    clip: {fileID: 8300000, guid: 5dd9cb72ca86ffb40ac07dad67b86d83, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: toolboxdraw
-    clip: {fileID: 8300000, guid: ab37e787c013ebe4fabd9e9a885a947e, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: toolboxdrop
-    clip: {fileID: 8300000, guid: 13062dca98d51634f9c4c227050900e1, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: toolboxdrop2
-    clip: {fileID: 8300000, guid: fd9d86155425515458be0a444e50188c, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: toolboxpickup
-    clip: {fileID: 8300000, guid: 0ec006a96bc622e428daa7aa4567802f, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: swallow
-    clip: {fileID: 8300000, guid: d05249aba92ea1340a2fa70f8336ab09, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: spilldrink
-    clip: {fileID: 8300000, guid: c46993bb73c48c54fa0370fc73b3657e, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: lock1
-    clip: {fileID: 8300000, guid: 0925c410f1aad0847a57aa8c37ac15f1, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: lock2
-    clip: {fileID: 8300000, guid: 06d4891b0df38f24f9bc425df0457e7d, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: closejournal
-    clip: {fileID: 8300000, guid: 553c2aeab9c9e444184d2f2bdcde8c05, type: 3}
-    group: {fileID: -1791524047358816221, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: openjournal
-    clip: {fileID: 8300000, guid: b52f13e470f504b4b9af89096c3bf954, type: 3}
-    group: {fileID: -1791524047358816221, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: scribble
-    clip: {fileID: 8300000, guid: 31f0a4d75a585fa48b967206af530f48, type: 3}
-    group: {fileID: -1791524047358816221, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: pageflip1
-    clip: {fileID: 8300000, guid: 5017483e7dbd2484db78940d5774cdff, type: 3}
-    group: {fileID: -1791524047358816221, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: pageflip2
-    clip: {fileID: 8300000, guid: 9af4c9c3fe31df2409c47708222e6a2a, type: 3}
-    group: {fileID: -1791524047358816221, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: pageflip3
-    clip: {fileID: 8300000, guid: cad420f57cfc98e468fc34a7b6a5aabe, type: 3}
-    group: {fileID: -1791524047358816221, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: trapambience
-    clip: {fileID: 8300000, guid: 14eb2e3a1ecc2f2409cbf7f3b99d30f9, type: 3}
-    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 1
-    volume: 1
-    pitch: 1
-    spatialBlend: 1
-    maxDistance: 7
-    playPaused: 1
-  - name: groundhit
-    clip: {fileID: 8300000, guid: 2d2c59ab9f92a0741b9380f57342e5e4, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: screech
-    clip: {fileID: 8300000, guid: 630c8a3efa3b85e4f81a2bd432ed5ed8, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: woosh
-    clip: {fileID: 8300000, guid: a15888e705a48d74c9c8761a2eec1ae7, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.8
-    maxDistance: 10
-    playPaused: 0
-  - name: enemyambiencestart
-    clip: {fileID: 8300000, guid: a4494fc2dc8385841ae14fec59b772cd, type: 3}
-    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: enemyambiencemid
-    clip: {fileID: 8300000, guid: 46fc017937545824a98438fb5e5471f8, type: 3}
-    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 1
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 1
-  - name: enemyambienceend
-    clip: {fileID: 8300000, guid: ab638f7430fa4a54aa125b66192b818b, type: 3}
-    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: enemydragloop
-    clip: {fileID: 8300000, guid: 99a965708bcda4c4cb112ef92663b627, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 1
-    volume: 1
-    pitch: 1
-    spatialBlend: 1
-    maxDistance: 10
-    playPaused: 1
-  - name: enemyexecback
-    clip: {fileID: 8300000, guid: 368cbf37d31fedf40925370e48908ae2, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  - name: enemyexecfront
-    clip: {fileID: 8300000, guid: 1a4d8e8ee27f5af478c0a273cd30b36a, type: 3}
-    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
-    playOnAwake: 0
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0
-    maxDistance: 10
-    playPaused: 0
-  empty: {fileID: 5535761128504817408, guid: 72b12f349ed2e1843b015cac4fce795f, type: 3}
 --- !u!114 &147068389 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6695781387082226419, guid: bd4065106a8283e4baedbf6d04f27ec0, type: 3}
@@ -17665,14 +17071,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1288032390}
-    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: elevatorRideTime
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: elevatorAccelTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4860145061060307195, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -17728,6 +17126,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4860145061060307195, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
   m_PrefabInstance: {fileID: 2497906011412337138}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3795079936316584785
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 43122405}
+    m_Modifications:
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908776, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795079936375908777, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 87c7148a8ef64cf4e878517d72e68702, type: 3}
 --- !u!1001 &9151026745901264395
 PrefabInstance:
   m_ObjectHideFlags: 0

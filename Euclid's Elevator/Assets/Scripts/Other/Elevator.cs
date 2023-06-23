@@ -19,6 +19,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] string move3;
     [SerializeField] string move4;
     [SerializeField] string stop;
+    [SerializeField] string repair;
 
     AudioJob movejob;
     Animator animator;
@@ -65,6 +66,7 @@ public class Elevator : MonoBehaviour
                 if (b)
                 {
                     Broken = false;
+                    AudioManager.Instance.PlayClip(repair);
                     player.inventory.DecreaseDurability(player.inventory.Index);
                 }
                 return b;

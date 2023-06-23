@@ -61,7 +61,7 @@ public class SideMenu : MonoBehaviour
             open = false;
         }
     }
-    public void SetCanvas(int mode) //unity has a garbaj animator that doesn't accept boolians
+    public void SetCanvas(int mode)
     { //0 - false/1 - true
         if(mode > 0)
         {

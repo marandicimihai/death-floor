@@ -31,6 +31,11 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
         jobs = new();
         Instance = this;
     }

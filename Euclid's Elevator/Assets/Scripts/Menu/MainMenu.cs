@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,12 +6,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Canvas mainTab;
     [SerializeField] Canvas creditsTab;
     [SerializeField] Animator menuCameraAnim;
-    [SerializeField] AudioClip clickingSound;
-    AudioSource thisAudioSource; //thisAudioSource is a perfectly normal name, stfu
+    [SerializeField] string click;
     MenuSettings settingsMenu;
     void Start()
     {
-        thisAudioSource = GetComponent<AudioSource>();
         settingsMenu = FindObjectOfType<MenuSettings>();
         mainTab.enabled = true;
         creditsTab.enabled = false;
@@ -52,7 +48,6 @@ public class MainMenu : MonoBehaviour
     }
     public void DoClick()
     {
-        thisAudioSource.clip = clickingSound;
-        thisAudioSource.Play();
+        AudioManager.Instance.PlayClip(click);
     }
 }

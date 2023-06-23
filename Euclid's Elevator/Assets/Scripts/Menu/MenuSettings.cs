@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using System;
 public class MenuSettings : MonoBehaviour
 {
-    //"It's been a worthwile since i last scripted for a unity project" - Dev #2
-
     [Header("Page Paramaters")]
     [SerializeField] bool displayPages;
     [SerializeField] [Range(0, 2)] int pageIndex;
@@ -43,11 +41,10 @@ public class MenuSettings : MonoBehaviour
     [SerializeField] [Range(0.1f, 2.0f)] float mouseSensitivity = 1;
     [SerializeField] Slider mouseSensSlider;
     [Header("Other")]
-    [SerializeField] AudioClip clickingSound;
+    [SerializeField] string click;
     [SerializeField] bool canvasOn;
     public bool refreshTest = false; //use this "trigger" to update the settings UI;
     Animator thisAnim;
-    AudioSource thisSource;
     Canvas thisCanvas;
     //Settings set; 
 
@@ -66,7 +63,6 @@ public class MenuSettings : MonoBehaviour
     }
     void Start()
     {
-        thisSource = GetComponent<AudioSource>();
         thisAnim = gameObject.GetComponent<Animator>();
         thisCanvas = gameObject.GetComponent<Canvas>();
         Refresh();
@@ -298,8 +294,7 @@ public class MenuSettings : MonoBehaviour
     //OTHER
     public void DoClick() //make a clicking sound
     {
-        thisSource.clip = clickingSound;
-        thisSource.Play();
+        AudioManager.Instance.PlayClip(click);
     }
     void UnselectButton() //the buttons stay selected after being clicked thus the highlights no longer work, so yeah unselecting is the only way
     {
