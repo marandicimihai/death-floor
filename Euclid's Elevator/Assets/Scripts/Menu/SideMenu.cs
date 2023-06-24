@@ -80,14 +80,14 @@ public class SideMenu : MonoBehaviour
     public void Resume()
     {
         OpenMenu(false);
-        //do the resume
+        //do the resume !
     }
     public void Restart()
     {
-        //do restart
+        //do restart !
     }
     public void LoadMainMenu()
     {
-        //do that
+        //do that !
     }
 }

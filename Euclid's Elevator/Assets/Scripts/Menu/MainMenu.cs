@@ -27,13 +27,6 @@ public class MainMenu : MonoBehaviour
     }
     public void OpenSettings(bool open)
     {
-        /*
-        Settings set = SaveSystem.LoadSettings();
-        if (set != null)
-        {
-            settingsMenu.ApplySettings(set);
-        }
-        */
         settingsMenu.OpenSettings(open);
         menuCameraAnim.SetBool("Settings", open);
     }
