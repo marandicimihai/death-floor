@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
     public List<AudioJob> jobs;
 
-    [SerializeField] AudioMixerSnapshot paused;
+    [SerializeField] AudioMixerSnapshot paused;//muffles the sound
     [SerializeField] AudioMixerSnapshot unpaused;
     [SerializeField] SourceSettings[] settings;
     [SerializeField] GameObject empty;
@@ -40,7 +40,19 @@ public class AudioManager : MonoBehaviour
         Instance = this;
     }
 
-    public void Pause()
+    private void Start()
+    {
+        PauseGame.Instance.OnPause += (object caller, EventArgs args) =>
+        {
+            Pause();
+        };
+        PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+        {
+            Unpause();
+        };
+    }
+
+    void Pause()
     {
         paused.TransitionTo(0);
         foreach (AudioJob job in jobs)
@@ -52,7 +64,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Unpause()
+    void Unpause()
     {
         unpaused.TransitionTo(0);
         foreach (AudioJob job in jobs)

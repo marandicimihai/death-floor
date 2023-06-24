@@ -29,6 +29,20 @@ public class PlayerHUDManager : MonoBehaviour
         DefaultHUD();
     }
 
+    private void Start()
+    {
+        PauseGame.Instance.OnPause += (object caller, System.EventArgs args) =>
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        };
+        PauseGame.Instance.OnUnPause += (object caller, System.EventArgs args) =>
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        };
+    }
+
     public void ToggleJournalView(bool value, float delay)
     {
         journalTimeElapsed = 0;

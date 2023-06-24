@@ -104,19 +104,19 @@ public class Elevator : MonoBehaviour
 
     void InitiateElevatorRide()
     {
-        if (GameManager.Instance.Stage == 1)
+        if (player.Deaths == 0)
         {
             movejob = AudioManager.Instance.PlayClip(move1);
         }
-        else if (GameManager.Instance.Stage == 2)
+        else if (player.Deaths == 1)
         {
             movejob = AudioManager.Instance.PlayClip(move2);
         }
-        else if (GameManager.Instance.Stage == 3)
+        else if (player.Deaths == 2)
         {
             movejob = AudioManager.Instance.PlayClip(move3);
         }
-        else if (GameManager.Instance.Stage == 4)
+        else if (player.Deaths == 3)
         {
             movejob = AudioManager.Instance.PlayClip(move4);
         }

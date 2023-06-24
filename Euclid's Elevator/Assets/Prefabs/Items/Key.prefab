@@ -132,3 +132,4 @@ MonoBehaviour:
   key2: {fileID: 5334123188023769081, guid: 702828c57fd614248a723903c9432c6e, type: 3}
   timeLasting: 5
   force: 4
+  keybreak: keybreak

@@ -6,6 +6,7 @@ public class Key : Item
     [SyncValue] [SerializeField] GameObject key2;
     [SyncValue] [SerializeField] float timeLasting;
     [SyncValue] [SerializeField] float force;
+    [SyncValue] [SerializeField] string keybreak;
 
     protected override void OnBreak()
     {
@@ -15,5 +16,7 @@ public class Key : Item
         GameObject secondkey = Instantiate(key2, GameManager.Instance.player.HUDManager.inventoryHUD.holdPos.position, Quaternion.identity);
         secondkey.AddComponent<Lifetime>().Initiate(timeLasting);
         secondkey.GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * force, ForceMode.Impulse);
+
+        AudioManager.Instance.PlayClip(keybreak);
     }
 }

@@ -7,6 +7,9 @@ public class Lockpick : MonoBehaviour
     [SerializeField] float lockHoldTime;
     [SerializeField] float lockTime;
 
+    [Header("Sounds")]
+    [SerializeField] string picklock;
+
     Door target;
 
     float lockpickMultiplier;
@@ -67,6 +70,7 @@ public class Lockpick : MonoBehaviour
     {
         if (!picking && !locking && !door.StageLocked)
         {
+            AudioManager.Instance.PlayClip(door.gameObject, picklock);
             player.HUDManager.actionInfo.StartAction(SliderType.Unlock, this);
             timeElapsed = 0;
             target = door;
@@ -104,6 +108,7 @@ public class Lockpick : MonoBehaviour
         {
             player.HUDManager.actionInfo.StopAction(this);
         }
+        AudioManager.Instance.StopClipsWithName(picklock);
     }
 
     public void BoostForTime(float multiplier, float time)

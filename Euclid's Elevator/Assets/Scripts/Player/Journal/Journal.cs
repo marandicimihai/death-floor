@@ -29,14 +29,21 @@ public class Journal : MonoBehaviour
 
     private void Start()
     {
-        Input.InputActions.General.Journal.performed += ToggleJournal;
-        Input.InputActions.General.PageLeft.performed += PageLeft;
-        Input.InputActions.General.PageRight.performed += PageRight;
+        Input.InputActions.Realtime.Journal.performed += ToggleJournal;
+        Input.InputActions.Realtime.PageLeft.performed += PageLeft;
+        Input.InputActions.Realtime.PageRight.performed += PageRight;
+        PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+        {
+            if (open)
+            {
+                ToggleJournal(new InputAction.CallbackContext());
+            }
+        };
     }
 
     void ToggleJournal(InputAction.CallbackContext context)
     {
-        if (player.Dead)
+        if (player.Dead || (PauseGame.Instance.Paused && !open))
         {
             return;
         }

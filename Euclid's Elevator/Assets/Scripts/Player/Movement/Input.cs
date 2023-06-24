@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class Input : MonoBehaviour
 {
@@ -9,5 +10,17 @@ public class Input : MonoBehaviour
         InputActions = new PlayerInputActions();
 
         InputActions.Enable();
+    }
+
+    private void Start()
+    {
+        PauseGame.Instance.OnPause += (object caller, EventArgs args) =>
+        {
+            InputActions.General.Disable();
+        };
+        PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+        {
+            InputActions.General.Enable();
+        };
     }
 }

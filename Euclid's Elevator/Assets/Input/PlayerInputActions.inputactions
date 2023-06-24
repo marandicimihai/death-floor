@@ -94,42 +94,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "dc1acc43-8ea6-4b26-83f1-57073e75d139",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PageLeft",
-                    "type": "Button",
-                    "id": "1d4aa3ae-3baf-4e93-b8a6-5da14af7c0de",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PageRight",
-                    "type": "Button",
-                    "id": "df60a350-1d80-4a12-b48a-96600b97ae92",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Journal",
-                    "type": "Button",
-                    "id": "e78134b4-7f45-4d0a-9b49-46694d34ed4c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -286,10 +250,54 @@
                     "action": "Inventory4",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Realtime",
+            "id": "9533c225-3f1f-4acf-a887-4b07cff54d2d",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "7d8712cf-8981-4bd6-8c83-84cb6de08553",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
+                    "name": "PageLeft",
+                    "type": "Button",
+                    "id": "3d267a5a-cc1a-45a0-878d-cae4ba22208a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PageRight",
+                    "type": "Button",
+                    "id": "d27b5a9f-7ea1-4116-9bc4-c69b97c06471",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Journal",
+                    "type": "Button",
+                    "id": "952f6354-4333-470f-9d9b-f464b6e939ab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "b0e72d97-6a05-44b8-9011-515caac45352",
+                    "id": "5e8c3bd4-9f31-4ecd-984c-b56a32782798",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
@@ -300,29 +308,18 @@
                 },
                 {
                     "name": "",
-                    "id": "59ec9127-c4ba-4046-82aa-69d7256c2de0",
-                    "path": "<Keyboard>/a",
+                    "id": "40ce3872-8614-4b37-ad08-4517526b22c5",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PageLeft",
+                    "action": "Journal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "d275eea7-9eee-4eef-9f5e-fd312a9b0b98",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PageLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "729608c7-228c-477d-8158-555db09ccb01",
+                    "id": "e1ed52d8-4156-49e6-868c-0494ab0b6dc8",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -333,7 +330,7 @@
                 },
                 {
                     "name": "",
-                    "id": "85d9cc3f-06ef-4964-a53b-b11798049e69",
+                    "id": "592ae1ad-a033-44d0-b0ac-669027172ace",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -344,12 +341,23 @@
                 },
                 {
                     "name": "",
-                    "id": "2e0a3028-eba2-43c2-8ce2-4587f56bd4aa",
-                    "path": "<Keyboard>/j",
+                    "id": "f4a7c3cf-a70b-4610-86ff-b0b9896b66df",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Journal",
+                    "action": "PageLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8c166e8-53df-46b6-8871-011d1ef91c6c",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PageLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

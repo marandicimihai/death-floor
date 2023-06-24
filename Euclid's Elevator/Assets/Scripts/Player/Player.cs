@@ -3,6 +3,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public bool Dead { get; private set; }
+    public int Deaths { get; private set; }
+
     public FirstPersonController controller;
     public CameraController cameraController;
     public CameraAnimation cameraAnimation;
@@ -15,14 +17,12 @@ public class Player : MonoBehaviour
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
 
-    int deaths;
-
     public void Die(bool callDeath)
     {
         if (!Dead)
         {
             Dead = true;
-            deaths++;
+            Deaths++;
 
             controller.Disable();
             cameraController.Disable();
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 
     public void CallDeath()
     {
-        GameManager.Instance.PlayerDeath(deaths, maxDeaths);
+        GameManager.Instance.PlayerDeath(Deaths, maxDeaths);
     }
 
     public void Spawn(Vector3 position)

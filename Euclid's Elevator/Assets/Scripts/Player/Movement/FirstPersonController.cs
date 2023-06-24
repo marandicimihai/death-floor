@@ -240,6 +240,7 @@ public class FirstPersonController : MonoBehaviour
                         AudioManager.Instance.PlayRandomClip(carpetStepNames);
                     }
                 }
+                GameManager.Instance.enemy.InspectNoise(transform.position);
             }
         }
     }

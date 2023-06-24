@@ -618,4 +618,24 @@ MonoBehaviour:
     spatialBlend: 0
     maxDistance: 10
     playPaused: 0
+  - name: keybreak
+    clip: {fileID: 8300000, guid: c329ec91d80b00d44864917ebdb48539, type: 3}
+    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    maxDistance: 10
+    playPaused: 0
+  - name: picklock
+    clip: {fileID: 8300000, guid: c69f745b94a58bb40971a0eb07182e18, type: 3}
+    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.8
+    maxDistance: 10
+    playPaused: 0
   empty: {fileID: 5535761128504817408, guid: 72b12f349ed2e1843b015cac4fce795f, type: 3}

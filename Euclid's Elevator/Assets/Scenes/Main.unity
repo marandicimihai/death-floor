@@ -6041,6 +6041,7 @@ MonoBehaviour:
   lockPickTime: 4
   lockHoldTime: 0.5
   lockTime: 0.75
+  picklock: picklock
 --- !u!114 &1288032401
 MonoBehaviour:
   m_ObjectHideFlags: 0
