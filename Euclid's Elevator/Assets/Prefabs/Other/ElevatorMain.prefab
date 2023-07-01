@@ -536,7 +536,7 @@ MonoBehaviour:
   toolbox: {fileID: 11400000, guid: dda90fce8e9402540bc0b5d0bff786f7, type: 2}
   doorCollider: {fileID: 3921013585228813346}
   waitForPlayerRadius: 0.9
-  elevatorRideTime: 15
+  elevatorRideTime: 5
   elevatorAccelTime: 5
   close: elevatorclose
   open: elevatoropen
@@ -546,6 +546,7 @@ MonoBehaviour:
   move4: elevator4
   stop: elevatorstop
   repair: repairelevator
+  insert: keycardinsert
 --- !u!1 &7952024010619760010
 GameObject:
   m_ObjectHideFlags: 0

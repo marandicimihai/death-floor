@@ -7,6 +7,9 @@ public class Insanity : MonoBehaviour
     [SerializeField] float insanityTime;
     [SerializeField] float insanityEffectFadeTime;
 
+    [Header("Animation")]
+    [SerializeField] Animator sanityDeath;
+
     float insanity;
 
     private void Start()
@@ -28,7 +31,9 @@ public class Insanity : MonoBehaviour
         }
         if (insanity >= 1)
         {
-            player.Die(true);
+            player.Die(false);
+            sanityDeath.SetBool("Dead", true);
+            Invoke(nameof(ResetAnimation), 1);
         }
     }
 
@@ -36,5 +41,10 @@ public class Insanity : MonoBehaviour
     {
         insanity -= delta;
         insanity = Mathf.Clamp01(insanity);
+    }
+
+    void ResetAnimation()
+    {
+        sanityDeath.SetBool("Dead", false);
     }
 }

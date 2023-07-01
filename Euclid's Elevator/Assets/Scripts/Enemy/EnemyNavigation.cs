@@ -112,14 +112,7 @@ public class EnemyNavigation : MonoBehaviour
                     agent.isStopped = true;
                     transform.rotation = stopRot;
                 }
-                if (agent.velocity.magnitude >= 0.1f && !Visible)
-                {
-                    dragloop.source.volume += Time.deltaTime;
-                }
-                else
-                {
-                    dragloop.source.volume -= Time.deltaTime;
-                }
+
                 if (!Physics.Raycast(transform.position, player.transform.position - transform.position, 
                     Vector3.Distance(player.transform.position, transform.position), solid) || Visible)
                 {
@@ -149,7 +142,6 @@ public class EnemyNavigation : MonoBehaviour
                 agent.isStopped = true;
                 transform.rotation = stopRot;
             }
-            stopRot = transform.rotation;
 
             #region Sound
 
@@ -201,15 +193,32 @@ public class EnemyNavigation : MonoBehaviour
                 }
             }
 
+            if (dragloop != null)
+            {
+                if (agent.velocity.magnitude >= 0.1f)
+                {
+                    dragloop.source.volume += Time.deltaTime;
+                }
+                else
+                {
+                    dragloop.source.volume -= Time.deltaTime;
+                }
+                dragloop.source.volume = Mathf.Clamp01(dragloop.source.volume);
+            }
+
             #endregion
         }
         else
         {
+            agent.velocity = Vector3.zero;
+            agent.isStopped = true;
+            transform.rotation = stopRot;
             AudioManager.Instance.StopClipsWithName(ambstart);
             AudioManager.Instance.StopClipsWithName(ambmid);
             AudioManager.Instance.StopClipsWithName(ambend);
             AudioManager.Instance.StopClip(dragloop);
         }
+        stopRot = transform.rotation;
     }
 
     void Chase()

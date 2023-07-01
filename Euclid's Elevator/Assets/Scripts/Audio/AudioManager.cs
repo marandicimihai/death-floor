@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
         paused.TransitionTo(0);
         foreach (AudioJob job in jobs)
         {
-            if (!job.playPaused)
+            if (!job.playPaused && job.source != null)
             {
                 job.source.Pause();
             }
@@ -69,7 +69,10 @@ public class AudioManager : MonoBehaviour
         unpaused.TransitionTo(0);
         foreach (AudioJob job in jobs)
         {
-            job.source.UnPause();
+            if (job.source != null)
+            {
+                job.source.UnPause();
+            }
         }
     }
 

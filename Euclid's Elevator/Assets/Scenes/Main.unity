@@ -2257,6 +2257,9 @@ GameObject:
   m_Component:
   - component: {fileID: 461027507}
   - component: {fileID: 461027508}
+  - component: {fileID: 461027511}
+  - component: {fileID: 461027510}
+  - component: {fileID: 461027509}
   m_Layer: 3
   m_Name: CameraRefRoot
   m_TagString: Untagged
@@ -2300,6 +2303,46 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &461027509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461027506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66cea5cf4a009742bc72c6a6c485423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackScreenFadeTime: 0.3
+--- !u!114 &461027510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461027506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc7ef5f652a56d45a03e1ba2a6d1b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraReference: {fileID: 116717557}
+  hideHUD: 1
+  instantExit: 1
+--- !u!114 &461027511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461027506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6238bf3395442444f8aad0bc013cf44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &463270348
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,7 +2754,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575464965}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6111,8 +6154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1288032390}
   enemy: {fileID: 2086231058}
-  insanityTime: 30
+  insanityTime: 20
   insanityEffectFadeTime: 3
+  sanityDeath: {fileID: 461027508}
 --- !u!114 &1288032400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17164,10 +17208,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1288032390}
-    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: elevatorRideTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4860145061060307195, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
       propertyPath: m_RootOrder
       value: 1

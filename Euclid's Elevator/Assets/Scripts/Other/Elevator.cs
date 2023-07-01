@@ -20,6 +20,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] string move4;
     [SerializeField] string stop;
     [SerializeField] string repair;
+    [SerializeField] string insert;
 
     AudioJob movejob;
     Animator animator;
@@ -75,6 +76,8 @@ public class Elevator : MonoBehaviour
             bool a = player.inventory.Items[player.inventory.Index].properties.name == keycard.name;
             if (a)
             {
+                animator.SetTrigger("Keycard");
+                AudioManager.Instance.PlayClip(insert);
                 InsertKeycard();
                 player.inventory.DecreaseDurability(player.inventory.Index);
             }
