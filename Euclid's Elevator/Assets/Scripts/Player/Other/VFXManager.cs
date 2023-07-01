@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine.Rendering;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public enum AnimationAction
 
 public class VFXManager : MonoBehaviour
 {
+    [SerializeField] Player player;
     [SerializeField] Volume blackScreen;
     [SerializeField] Volume insanity;
     [SerializeField] new Camera camera;
@@ -32,8 +34,7 @@ public class VFXManager : MonoBehaviour
         blackScreenTime = 0.001f;
         insanityTime = 0.001f;
         shakeTime = 0.001f;
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => ResetEffects();
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => ResetEffects();
+        player.OnSpawn += (SpawnArgs args) => ResetEffects(); // delayed
         initialPosition = camera.transform.localPosition;
     }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public new Transform camera;
+    [SerializeField] Player player;
     [SerializeField] float sensitivity;
 
     Vector2 rotation;
@@ -12,6 +13,10 @@ public class CameraController : MonoBehaviour
     {
         ResetAngle();
         Enable();
+        player.OnSpawn += (SpawnArgs args) =>
+        {
+            Spawn(args.freezeTime);
+        };
     }
 
     private void Update()
@@ -32,10 +37,10 @@ public class CameraController : MonoBehaviour
     
     public void ResetAngle()
     {
-        camera.localEulerAngles = new Vector3(rotation.x, 0, 0);
-        transform.localEulerAngles = new Vector3(0, rotation.y, 0);
         rotation.x = 0;
         rotation.y = 90;
+        camera.localEulerAngles = new Vector3(rotation.x, 0, 0);
+        transform.localEulerAngles = new Vector3(0, rotation.y, 0);
     }
 
     public void Spawn(float freezeTime)

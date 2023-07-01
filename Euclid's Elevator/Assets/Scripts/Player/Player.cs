@@ -1,7 +1,10 @@
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour
 {
+    public delegate void OnSpawnDel(SpawnArgs args);
+    public OnSpawnDel OnSpawn;
     public bool Dead { get; private set; }
     public int Deaths { get; private set; }
 
@@ -41,8 +44,19 @@ public class Player : MonoBehaviour
 
     public void Spawn(Vector3 position)
     {
+        OnSpawn?.Invoke(new SpawnArgs(position, spawnFreezeTime));
         Dead = false;
-        controller.Spawn(position, spawnFreezeTime);
-        cameraController.Spawn(spawnFreezeTime);
+    }
+}
+
+public class SpawnArgs : EventArgs
+{
+    public Vector3 position;
+    public float freezeTime;
+
+    public SpawnArgs(Vector3 position, float freezeTime)
+    {
+        this.position = position;
+        this.freezeTime = freezeTime;
     }
 }

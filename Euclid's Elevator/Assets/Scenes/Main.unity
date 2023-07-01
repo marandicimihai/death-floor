@@ -5810,6 +5810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c948195e2d0054184781dd7a4cdef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1288032390}
   forwardScale: 1
   strafeScale: 0.8
   maxSlopeAngle: 60
@@ -5850,6 +5851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 575464966}
+  player: {fileID: 1288032390}
   sensitivity: 0.1
 --- !u!114 &1288032390
 MonoBehaviour:
@@ -6005,6 +6007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bed3a85c910b041862cfb14562d700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1288032390}
   blackScreen: {fileID: 1214926707}
   insanity: {fileID: 576751799}
   camera: {fileID: 575464969}
@@ -8658,6 +8661,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2086231056}
     m_Modifications:
+    - target: {fileID: 1899635611, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
+      propertyPath: blackScreenFadeTime
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2440113499704506165, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -17072,6 +17079,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1288032390}
+    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
+      propertyPath: elevatorRideTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4860145061060307195, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
       propertyPath: m_RootOrder
       value: 1

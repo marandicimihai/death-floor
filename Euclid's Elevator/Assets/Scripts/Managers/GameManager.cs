@@ -36,9 +36,13 @@ public class GameManager : MonoBehaviour
 
     GameStage stage;
 
-    private void Awake()
+    void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
         StartGame();
     }
 

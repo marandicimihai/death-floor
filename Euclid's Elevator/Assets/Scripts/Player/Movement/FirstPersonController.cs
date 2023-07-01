@@ -5,6 +5,8 @@ public class FirstPersonController : MonoBehaviour
 {
     #region Private Serialized
 
+    [SerializeField] Player player;
+
     [Header("Input Movement Speed")]
     [SerializeField] float forwardScale;
     [SerializeField] float strafeScale;
@@ -54,6 +56,11 @@ public class FirstPersonController : MonoBehaviour
 
     private void Awake()
     {
+        player.OnSpawn += (SpawnArgs args) =>
+        {
+            Spawn(args.position, args.freezeTime);
+        };
+
         controller = GetComponent<CharacterController>();
 
         speedMultiplier = 1;
