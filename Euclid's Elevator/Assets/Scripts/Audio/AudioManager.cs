@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct SourceSettings
@@ -42,14 +43,30 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PauseGame.Instance.OnPause += (object caller, EventArgs args) =>
+        TryPauseEvents();
+        SceneManager.activeSceneChanged += (Scene first, Scene second) =>
         {
-            Pause();
+            TryPauseEvents();
         };
-        PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+    }
+
+    void TryPauseEvents()
+    {
+        try
         {
-            Unpause();
-        };
+            PauseGame.Instance.OnPause += (object caller, EventArgs args) =>
+            {
+                Pause();
+            };
+            PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+            {
+                Unpause();
+            };
+        }
+        catch
+        {
+            Debug.Log("No pause");
+        }
     }
 
     void Pause()

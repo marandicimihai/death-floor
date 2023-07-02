@@ -61,6 +61,7 @@ public class MenuSettings : MonoBehaviour
             Debug.LogError("inputText is not matching the length of textDisplay!!!");
         }
     }
+
     void Start()
     {
         thisAnim = gameObject.GetComponent<Animator>();

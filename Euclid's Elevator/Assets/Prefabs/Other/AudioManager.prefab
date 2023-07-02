@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3795079936375908776}
   - component: {fileID: 3795079936375908779}
+  - component: {fileID: 1788257767104202394}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -609,14 +610,14 @@ MonoBehaviour:
     maxDistance: 10
     playPaused: 0
   - name: click
-    clip: {fileID: 8300000, guid: 6e0e12e67aac19147ab4410bcd3cacd1, type: 3}
+    clip: {fileID: 8300000, guid: bb4a110183e855c479d8b6b529f690f8, type: 3}
     group: {fileID: -1791524047358816221, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
     playOnAwake: 0
     loop: 0
     volume: 1
     pitch: 1
     spatialBlend: 0
-    maxDistance: 10
+    maxDistance: 500
     playPaused: 0
   - name: keybreak
     clip: {fileID: 8300000, guid: c329ec91d80b00d44864917ebdb48539, type: 3}
@@ -649,3 +650,15 @@ MonoBehaviour:
     maxDistance: 10
     playPaused: 0
   empty: {fileID: 5535761128504817408, guid: 72b12f349ed2e1843b015cac4fce795f, type: 3}
+--- !u!114 &1788257767104202394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795079936375908777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f433933d2bdd29142bb6efcbc0ed5f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
