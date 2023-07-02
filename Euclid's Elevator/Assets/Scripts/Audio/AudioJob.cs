@@ -45,7 +45,7 @@ public class AudioJob : MonoBehaviour
         source.Play();
         if (!source.loop)
         {
-            Invoke(nameof(StopPlaying), source.clip.length + 1);
+            Invoke(nameof(StopPlaying), source.clip.length + 0.2f);
         }
     }
 

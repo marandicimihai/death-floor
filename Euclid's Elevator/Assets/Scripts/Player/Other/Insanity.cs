@@ -7,9 +7,17 @@ public class Insanity : MonoBehaviour
     [SerializeField] float insanityTime;
     [SerializeField] float insanityEffectFadeTime;
 
+    [Header("Very Low Sanity")]
+    [SerializeField] float lowInsanitySoundAppearPercentage;
+    [SerializeField] string lowInsanitySound;
+    [Header("Low Sanity")]
+    [SerializeField] float lowInsanityEffectAppearPercentage;
+    [SerializeField] float lowInsanityEffectFadeTime;
+
     [Header("Animation")]
     [SerializeField] Animator sanityDeath;
 
+    AudioJob verylowsanity;
     float insanity;
 
     private void Start()
@@ -22,12 +30,28 @@ public class Insanity : MonoBehaviour
     {
         if (enemy.Visible)
         {
-            player.vfxmanager.Insanity(AnimationAction.FadeAppear, insanityEffectFadeTime);
+            player.vfxmanager.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
             insanity += Time.deltaTime / insanityTime;
         }
         else
         {
-            player.vfxmanager.Insanity(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+            player.vfxmanager.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+        }
+        if (insanity >= 1 - lowInsanityEffectAppearPercentage)
+        {
+            player.vfxmanager.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
+        }
+        else
+        {
+            player.vfxmanager.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
+        }
+        if (insanity >= 1 - lowInsanitySoundAppearPercentage && verylowsanity == null)
+        {
+            verylowsanity = AudioManager.Instance.PlayClip(lowInsanitySound);
+        }
+        else if (insanity < 1 - lowInsanitySoundAppearPercentage)
+        {
+            AudioManager.Instance.StopClip(verylowsanity);
         }
         if (insanity >= 1)
         {

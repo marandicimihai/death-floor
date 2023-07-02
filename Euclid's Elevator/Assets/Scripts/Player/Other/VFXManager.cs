@@ -12,7 +12,10 @@ public class VFXManager : MonoBehaviour
 {
     [SerializeField] Player player;
     [SerializeField] Volume blackScreen;
-    [SerializeField] Volume insanity;
+    [SerializeField] Volume visualContact;
+    [SerializeField] Volume lowInsanity;
+    [SerializeField] Volume bloom;
+    [SerializeField] Volume blur;
     [SerializeField] new Camera camera;
     [SerializeField] float shakeMagnitude;
 
@@ -25,15 +28,24 @@ public class VFXManager : MonoBehaviour
     float shakeTime;
     bool shaking;
 
-    float insanityInterpolation;
+    float visualContactInterpolation;
     float insanityTime;
-    bool insane;
+    bool hasVisualContact;
+
+    float lowInsanityInterpolation;
+    float lowInsanityTime;
+    bool isLowInsanity;
 
     private void Start()
     {
         blackScreenTime = 0.001f;
         insanityTime = 0.001f;
         shakeTime = 0.001f;
+        lowInsanityTime = 0.001f;
+
+        bloom.weight = (bool)SaveSystem.LoadSettings().bloom ? 1 : 0;
+        blur.weight = (bool)SaveSystem.LoadSettings().blur ? 1 : 0;
+
         player.OnSpawn += (SpawnArgs args) => ResetEffects(); // delayed
         initialPosition = camera.transform.localPosition;
     }
@@ -52,17 +64,29 @@ public class VFXManager : MonoBehaviour
         blackScreenInterpolation = Mathf.Clamp01(blackScreenInterpolation);
         blackScreen.weight = blackScreenInterpolation;
 
-        if (insane)
+        if (hasVisualContact)
         {
-            insanityInterpolation += Time.deltaTime / insanityTime;
+            visualContactInterpolation += Time.deltaTime / insanityTime;
         }
         else
         {
-            insanityInterpolation -= Time.deltaTime / insanityTime;
+            visualContactInterpolation -= Time.deltaTime / insanityTime;
         }
 
-        insanityInterpolation = Mathf.Clamp01(insanityInterpolation);
-        insanity.weight = insanityInterpolation;
+        visualContactInterpolation = Mathf.Clamp01(visualContactInterpolation);
+        visualContact.weight = visualContactInterpolation;
+
+        if (isLowInsanity)
+        {
+            lowInsanityInterpolation += Time.deltaTime / lowInsanityTime;
+        }
+        else
+        {
+            lowInsanityInterpolation -= Time.deltaTime / lowInsanityTime;
+        }
+
+        lowInsanityInterpolation = Mathf.Clamp01(lowInsanityInterpolation);
+        lowInsanity.weight = lowInsanityInterpolation;
 
         if (shaking)
         {
@@ -107,23 +131,38 @@ public class VFXManager : MonoBehaviour
         blackScreenTime = time;
     }
 
-    public void Insanity(AnimationAction action, float time)
+    public void VisualContact(AnimationAction action, float time)
     {
         if (action == AnimationAction.FadeAppear)
         {
-            insane = true;
+            hasVisualContact = true;
         }
         else if (action == AnimationAction.FadeDisappear)
         {
-            insane = false;
+            hasVisualContact = false;
         }
 
         insanityTime = time;
     }
 
+    public void LowInsanity(AnimationAction action, float time)
+    {
+        if (action == AnimationAction.FadeAppear)
+        {
+            isLowInsanity = true;
+        }
+        else if (action == AnimationAction.FadeDisappear)
+        {
+            isLowInsanity = false;
+        }
+
+        lowInsanityTime = time;
+    }
+
     void ResetEffects()
     {
         isBlackScreen = false;
-        insane = false;
+        hasVisualContact = false;
+        isLowInsanity = false;
     }
 }

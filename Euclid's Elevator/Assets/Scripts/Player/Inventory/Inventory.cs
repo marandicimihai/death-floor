@@ -111,7 +111,7 @@ public class Inventory : MonoBehaviour
 
     void UseItem()
     {
-        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(player))
+        if (Items[Index] != null && IsUsable(Index, out IUsable usable) && usable.OnUse(player))
         {
             if (Items[Index].properties.useUseSoundsInOrder)
             {
@@ -124,6 +124,47 @@ public class Inventory : MonoBehaviour
 
             DecreaseDurability();
         }
+    }
+
+    bool IsUsable(int id, out IUsable usable)
+    {
+        IUsable[] usables = inventory.GetComponents<IUsable>();
+
+        usable = null;
+
+        if (usables.Length == 0)
+        {
+            return false;
+        }
+        else if (usables.Length == 1)
+        {
+            Debug.Log(usables[0].GetHashCode());
+            Debug.Log(Items[Index].GetHashCode());
+            if (Items[id] != null && usables[0].GetHashCode() == Items[id].GetHashCode())
+            {
+                usable = usables[0];
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            foreach (IUsable current in usables)
+            {
+                Debug.Log(current.GetHashCode());
+                Debug.Log(Items[Index].GetHashCode());
+                if (Items[id] != null && current.GetHashCode() == Items[id].GetHashCode())
+                {
+                    usable = current;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return true;
     }
 
     public void DecreaseDurability(int id = -1)

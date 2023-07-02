@@ -649,6 +649,16 @@ MonoBehaviour:
     spatialBlend: 0
     maxDistance: 10
     playPaused: 0
+  - name: verylowsanity
+    clip: {fileID: 8300000, guid: 14f343af7f6c0144ebff90c5b90a62b4, type: 3}
+    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    maxDistance: 10
+    playPaused: 1
   empty: {fileID: 5535761128504817408, guid: 72b12f349ed2e1843b015cac4fce795f, type: 3}
 --- !u!114 &1788257767104202394
 MonoBehaviour:
