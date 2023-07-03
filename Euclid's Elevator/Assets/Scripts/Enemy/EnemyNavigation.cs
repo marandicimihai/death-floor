@@ -85,6 +85,7 @@ public class EnemyNavigation : MonoBehaviour
     float openDoorTimeElapsed;
     float timeSinceOpenDoor;
     bool patrolling;
+    bool ignoreInspectTime;
 
     private void Awake()
     {
@@ -122,7 +123,7 @@ public class EnemyNavigation : MonoBehaviour
                 {
                     InspectNoise(player.transform.position);
                 }
-                else if (State == State.Inspect)
+                else if (State == State.Inspect && !ignoreInspectTime)
                 {
                     inspectTimeElapsed += Time.deltaTime;
                     if (Vector3.Distance(agent.destination, transform.position) <= inspectThreshold || inspectTimeElapsed > maxInspectTime)
@@ -229,7 +230,7 @@ public class EnemyNavigation : MonoBehaviour
         agent.stoppingDistance = chaseStopDistance;
     }
 
-    public void InspectNoise(Vector3 noisePos, bool ignoreDistance = false)
+    public void InspectNoise(Vector3 noisePos, bool ignoreDistance = false, bool ignoreInspectTime = false)
     {
         if (Vector3.Distance(transform.position, player.transform.position) <= inspectDistance || ignoreDistance)
         {
@@ -239,6 +240,7 @@ public class EnemyNavigation : MonoBehaviour
             agent.speed = inspectSpeed;
             agent.stoppingDistance = inspectStopDistance;
         }
+        this.ignoreInspectTime = ignoreInspectTime;
     }
     
     void Patrol()

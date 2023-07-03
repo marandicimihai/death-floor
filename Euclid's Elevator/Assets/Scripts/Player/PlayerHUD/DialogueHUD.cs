@@ -1,11 +1,11 @@
+using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
 
 public class DialogueHUD : MonoBehaviour
 {
     [System.NonSerialized] public bool hideHUD;
     [SerializeField] DialogueManager dialogueManager;
-    [SerializeField] TMP_Text dialogue;
+    [SerializeField] Text dialogue;
     [SerializeField] float timeInBetweenLetters;
 
     Line line;

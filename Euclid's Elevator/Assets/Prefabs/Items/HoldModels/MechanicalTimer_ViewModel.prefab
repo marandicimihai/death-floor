@@ -41,6 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8900484089135824686}
+  - component: {fileID: -2051207454676538813}
   m_Layer: 0
   m_Name: MechanicalTimer_ViewModel
   m_TagString: Untagged
@@ -65,6 +66,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2051207454676538813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745547986693437957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3febee87964f4cb4dac1d03dacc7d1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties: {fileID: 11400000, guid: 7553058d6a16bea43982d75d3ef90cb5, type: 2}
+  knob: {fileID: 2914790202141057414}
+  duration: 10
+  windDuration: 1
+  ringDuration: 5
+  unwindedKnobAngles: {x: 15, y: 0, z: 0}
+  windedKnobAngles: {x: -15, y: 180, z: 0}
+  wind: alarmwind
+  tick: alarmtick
+  ring: alarmring
 --- !u!1 &4481375750768853222
 GameObject:
   m_ObjectHideFlags: 0

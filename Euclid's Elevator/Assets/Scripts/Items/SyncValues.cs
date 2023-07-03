@@ -7,9 +7,10 @@ public abstract class SyncValues : MonoBehaviour
 {
     public void SetValues(SyncValues variables)
     {
+        FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
         List<object> values = variables.GetValues();
         int i = 0;
-        foreach (FieldInfo field in GetFields())
+        foreach (FieldInfo field in fields)
         {
             if (field.GetCustomAttribute<SyncValueAttribute>() != null)
             {
@@ -30,11 +31,5 @@ public abstract class SyncValues : MonoBehaviour
         }
 
         return values;
-    }
-
-    //gets values as FieldInfos
-    FieldInfo[] GetFields()
-    {
-        return GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
     }
 }

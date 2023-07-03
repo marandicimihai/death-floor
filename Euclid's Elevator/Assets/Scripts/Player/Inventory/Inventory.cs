@@ -72,7 +72,7 @@ public class Inventory : MonoBehaviour
         {
             if (Items[i] == null)
             {
-                Item newItem = inventory.gameObject.AddComponent(itemComponent.GetType()) as Item;
+                Item newItem = Instantiate(itemComponent.properties.inHandObject, inventory).GetComponent<Item>();
                 newItem.SetValues(itemComponent);
 
                 Destroy(itemComponent.gameObject);
@@ -103,7 +103,7 @@ public class Inventory : MonoBehaviour
             AudioManager.Instance.PlayRandomClip(dropped, item.properties.drop);
         }
 
-        Destroy(Items[Index]);
+        Destroy(Items[Index].gameObject);
         Items[Index] = null;
 
         OnItemsChanged?.Invoke(this, new EventArgs());
@@ -111,7 +111,7 @@ public class Inventory : MonoBehaviour
 
     void UseItem()
     {
-        if (Items[Index] != null && IsUsable(Index, out IUsable usable) && usable.OnUse(player))
+        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(player))
         {
             if (Items[Index].properties.useUseSoundsInOrder)
             {
@@ -176,7 +176,7 @@ public class Inventory : MonoBehaviour
 
             if (Items[id].uses <= 0)
             {
-                Destroy(Items[id]);
+                Destroy(Items[id].gameObject);
                 Items[id] = null;
                 OnItemsChanged?.Invoke(this, new EventArgs());
             }
@@ -189,7 +189,7 @@ public class Inventory : MonoBehaviour
         {
             if (Items[i] != null)
             {
-                Destroy(Items[i]);
+                Destroy(Items[i].gameObject);
                 Items[i] = null;
 
                 OnItemsChanged?.Invoke(this, new EventArgs());

@@ -1,16 +1,20 @@
+using UnityEngine;
+
 public class Item : SyncValues
 {
     [SyncValue] public ItemProperties properties;
-    [System.NonSerialized] [SyncValue] public int uses;
-    [SyncValue] bool itemInit;
+    [SyncValue] public int uses;
+
+    bool visible = true;
 
     private void Start()
     {
-        if (!itemInit)
-        {
-            uses = properties.uses;
-            itemInit = true;
-        }
+        SetVisible(visible);
+    }
+
+    private void OnValidate()
+    {
+        uses = properties.uses;
     }
 
     public void DecreaseDurability()
@@ -22,6 +26,26 @@ public class Item : SyncValues
         }
         //Destruction is handled in Inventory.cs
         //Component is destroyed next frame
+    }
+
+    public void SetVisible(bool visible)
+    {
+        if (visible && !this.visible)
+        {
+            foreach (Renderer rend in GetComponentsInChildren<Renderer>())
+            {
+                rend.enabled = true;
+            }
+            this.visible = true;
+        }
+        else if (!visible && this.visible)
+        {
+            foreach (Renderer rend in GetComponentsInChildren<Renderer>())
+            {
+                rend.enabled = false;
+            }
+            this.visible = false;
+        }
     }
 
     protected virtual void OnBreak()

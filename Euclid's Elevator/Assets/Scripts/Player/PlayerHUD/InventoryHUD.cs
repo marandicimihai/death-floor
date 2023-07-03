@@ -38,10 +38,6 @@ public class InventoryHUD : MonoBehaviour
         if (hideHUD)
         {
             inventoryHUDParent.SetActive(false);
-            if (holdPos.childCount > 0)
-            {
-                DestroyChildren(holdPos);
-            }
             wasHidden = true;
         }
         else
@@ -59,34 +55,12 @@ public class InventoryHUD : MonoBehaviour
     void RefreshVisualModels()
     {
         if (hideHUD)
+        {
+            SetAllInvisible();
             return;
+        }
 
-        if (holdPos.childCount > 0)
-        {
-            if (inventory.Items[inventory.Index] != null && holdPos.GetComponentInChildren<Item>() &&
-                holdPos.GetComponentInChildren<Item>().properties.name != inventory.Items[inventory.Index].properties.name)
-            {
-                DestroyChildren(holdPos);
-                Item item = inventory.Items[inventory.Index];
-                GameObject model = Instantiate(item.properties.inHandObject, holdPos);
-                model.transform.localPosition = item.properties.offset;
-                model.transform.localEulerAngles = item.properties.holdAngles;
-            }
-            else if (inventory.Items[inventory.Index] == null)
-            {
-                DestroyChildren(holdPos);
-            }
-        }
-        else
-        {
-            if (inventory.Items[inventory.Index] != null)
-            {
-                Item item = inventory.Items[inventory.Index];
-                GameObject model = Instantiate(item.properties.inHandObject, holdPos);
-                model.transform.localPosition = item.properties.offset;
-                model.transform.localEulerAngles = item.properties.holdAngles;
-            }
-        }
+        SetActiveItemVisible();
     }
 
     void RefreshInventoryHUD()
@@ -132,16 +106,35 @@ public class InventoryHUD : MonoBehaviour
 
             Vector3 swayRot = new(swayRotLook.y, swayRotLook.x, swayRotLook.x);
 
-            holdPos.GetChild(0).localPosition = Vector3.Lerp(holdPos.GetChild(0).localPosition, swayPos + inventory.Items[inventory.Index].properties.offset, Time.deltaTime * swaySmooth);
-            holdPos.GetChild(0).localRotation = Quaternion.Slerp(holdPos.GetChild(0).localRotation, Quaternion.Euler(swayRot + inventory.Items[inventory.Index].properties.holdAngles), Time.deltaTime * swaySmoothRot);
+            inventory.Items[inventory.Index].transform.localPosition = Vector3.Lerp(inventory.Items[inventory.Index].transform.localPosition, swayPos + inventory.Items[inventory.Index].properties.offset, Time.deltaTime * swaySmooth);
+            inventory.Items[inventory.Index].transform.localRotation = Quaternion.Slerp(inventory.Items[inventory.Index].transform.localRotation, Quaternion.Euler(swayRot + inventory.Items[inventory.Index].properties.holdAngles), Time.deltaTime * swaySmoothRot);
         }
     }
 
-    void DestroyChildren(Transform parent)
+    void SetActiveItemVisible()
     {
-        for (int i = 0; i < parent.childCount; i++)
+        for (int i = 0; i < inventory.Items.Length; i++)
         {
-            Destroy(parent.GetChild(i).gameObject);
+            if (inventory.Items[i] != null && i == inventory.Index)
+            {
+                inventory.Items[i].SetVisible(true);
+            }
+            else if (inventory.Items[i] != null)
+            {
+                inventory.Items[i].SetVisible(false);
+            }
+            if (inventory.Items[i] != null)
+            {
+                inventory.Items[i].transform.localPosition = inventory.Items[i].properties.offset;
+                inventory.Items[i].transform.localEulerAngles = inventory.Items[i].properties.holdAngles;
+            }
+        }
+    }
+    void SetAllInvisible()
+    {
+        for (int i = 0; i < inventory.Items.Length; i++)
+        {
+            inventory.Items[i].SetVisible(false);
         }
     }
 }

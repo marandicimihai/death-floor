@@ -97,7 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
+  uses: 2
   key1: {fileID: 4987082097754390101, guid: d7f45d2b3f9f97744ab2fe8e36df8483, type: 3}
   key2: {fileID: 5334123188023769081, guid: 702828c57fd614248a723903c9432c6e, type: 3}
   timeLasting: 5
   force: 4
+  keybreak: 

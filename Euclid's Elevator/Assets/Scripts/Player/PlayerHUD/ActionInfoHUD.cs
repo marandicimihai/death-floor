@@ -1,6 +1,5 @@
 using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
 
 public enum SliderType
 {
@@ -12,7 +11,7 @@ public enum SliderType
 public class ActionInfoHUD : MonoBehaviour
 {
     [System.NonSerialized] public bool hideHUD;
-    [SerializeField] TMP_Text text;
+    [SerializeField] Text text;
     [SerializeField] GameObject circleSliderObject;
     [SerializeField] Image circleSlider;
     [SerializeField] GameObject lockSliderObject;

@@ -659,6 +659,36 @@ MonoBehaviour:
     spatialBlend: 0
     maxDistance: 10
     playPaused: 1
+  - name: alarmring
+    clip: {fileID: 8300000, guid: 5c43c0473f5db5a478274808781c6fec, type: 3}
+    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.8
+    maxDistance: 10
+    playPaused: 0
+  - name: alarmtick
+    clip: {fileID: 8300000, guid: c1bb2bbf0506e124ba3d218771156b2b, type: 3}
+    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.8
+    maxDistance: 10
+    playPaused: 1
+  - name: alarmwind
+    clip: {fileID: 8300000, guid: 6b7f5979c0bf3404f8224a6bd8764ee8, type: 3}
+    group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    maxDistance: 10
+    playPaused: 0
   empty: {fileID: 5535761128504817408, guid: 72b12f349ed2e1843b015cac4fce795f, type: 3}
 --- !u!114 &1788257767104202394
 MonoBehaviour:
