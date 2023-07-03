@@ -2403,14 +2403,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1781553531}
     m_Modifications:
-    - target: {fileID: 4699420239115013538, guid: 3884391b724c8414caff8acdf4df6bc8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -89.98021
-      objectReference: {fileID: 0}
-    - target: {fileID: 4699420239115013538, guid: 3884391b724c8414caff8acdf4df6bc8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 8.592991e-31
-      objectReference: {fileID: 0}
     - target: {fileID: 7413559450468427861, guid: 3884391b724c8414caff8acdf4df6bc8, type: 3}
       propertyPath: m_Name
       value: Journal

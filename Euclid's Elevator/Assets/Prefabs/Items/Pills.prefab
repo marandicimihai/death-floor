@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 4165175250175360889}
   - component: {fileID: 5745928874373773276}
   - component: {fileID: 5060697692260614044}
-  - component: {fileID: 1749272773495382773}
-  - component: {fileID: 3091505283034109047}
-  - component: {fileID: 7096135096812311093}
+  - component: {fileID: 3058406330472160731}
   m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
@@ -86,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1749272773495382773
+--- !u!65 &3058406330472160731
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,36 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1298212, y: 0.17798792, z: 0.14990455}
   m_Center: {x: 0, y: 0.014041625, z: 0}
---- !u!54 &3091505283034109047
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2249119556585327976}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
---- !u!114 &7096135096812311093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2249119556585327976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2631b6129a3c0744583512c74be7aa84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  properties: {fileID: 11400000, guid: 07a40d532db5b1145b58bc2340e3ebe1, type: 2}
-  sanityDecreasePercentage: 0.25
 --- !u!1 &5096525209911580625
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +111,7 @@ GameObject:
   - component: {fileID: 8316810766581796558}
   - component: {fileID: -4902575318409983860}
   - component: {fileID: 7495722503114407389}
-  m_Layer: 6
+  m_Layer: 18
   m_Name: Pills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +169,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!114 &-4902575318409983860
 MonoBehaviour:

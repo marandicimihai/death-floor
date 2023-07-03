@@ -39,6 +39,7 @@ public class Journal : MonoBehaviour
                 ToggleJournal(new InputAction.CallbackContext());
             }
         };
+        journalAnimator.gameObject.SetActive(open);
     }
 
     void ToggleJournal(InputAction.CallbackContext context)
@@ -49,6 +50,7 @@ public class Journal : MonoBehaviour
         }
 
         open = !open;
+        journalAnimator.gameObject.SetActive(true);
         journalAnimator.SetBool("Open", open);
         OnPagesChanged?.Invoke(this, new EventArgs());
         player.HUDManager.ToggleJournalView(open, HUDDelay);
