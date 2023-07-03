@@ -171,8 +171,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
   spilldrink: spilldrink
-  throwDistance: 3
+  throwDistance: 5
   stunTime: 8
+  trailSpeed: 4
+  coffeeTrail: {fileID: 4975129853458525291, guid: 3e286b5edb5ca1f46aee52615e3738e6, type: 3}
+  coffeeImpact: {fileID: 7290756457257517971, guid: fbf65a8a656d48c43b62c0a701c33a6c, type: 3}
+  coffeeDroplet: {fileID: 4915737364569293727, guid: 04ea13a84ee393b438cb189906fe90ab, type: 3}
 --- !u!95 &8357419288514067476
 Animator:
   serializedVersion: 5

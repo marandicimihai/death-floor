@@ -138,8 +138,6 @@ public class Inventory : MonoBehaviour
         }
         else if (usables.Length == 1)
         {
-            Debug.Log(usables[0].GetHashCode());
-            Debug.Log(Items[Index].GetHashCode());
             if (Items[id] != null && usables[0].GetHashCode() == Items[id].GetHashCode())
             {
                 usable = usables[0];
@@ -153,8 +151,6 @@ public class Inventory : MonoBehaviour
         {
             foreach (IUsable current in usables)
             {
-                Debug.Log(current.GetHashCode());
-                Debug.Log(Items[Index].GetHashCode());
                 if (Items[id] != null && current.GetHashCode() == Items[id].GetHashCode())
                 {
                     usable = current;

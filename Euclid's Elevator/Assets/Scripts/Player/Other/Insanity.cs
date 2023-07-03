@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Insanity : MonoBehaviour
 {
+    public delegate void InsanityDel(InsanityArgs args);
+    public InsanityDel OnInsanityChanged;
+
     [SerializeField] Player player;
     [SerializeField] EnemyNavigation enemy;
     [SerializeField] float insanityTime;
@@ -28,6 +31,8 @@ public class Insanity : MonoBehaviour
 
     private void Update()
     {
+        float insanityold = insanity;
+
         if (enemy.Visible)
         {
             player.vfxmanager.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
@@ -37,7 +42,10 @@ public class Insanity : MonoBehaviour
         {
             player.vfxmanager.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
         }
-        if (insanity >= 1 - lowInsanityEffectAppearPercentage)
+
+        #region Effects
+
+        if (insanity >= lowInsanityEffectAppearPercentage)
         {
             player.vfxmanager.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
         }
@@ -45,19 +53,27 @@ public class Insanity : MonoBehaviour
         {
             player.vfxmanager.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
         }
-        if (insanity >= 1 - lowInsanitySoundAppearPercentage && verylowsanity == null)
+        if (insanity >= lowInsanitySoundAppearPercentage && verylowsanity == null)
         {
             verylowsanity = AudioManager.Instance.PlayClip(lowInsanitySound);
         }
-        else if (insanity < 1 - lowInsanitySoundAppearPercentage)
+        else if (insanity < lowInsanitySoundAppearPercentage)
         {
             AudioManager.Instance.StopClip(verylowsanity);
         }
+
+        #endregion
+
         if (insanity >= 1)
         {
             player.Die(false);
             sanityDeath.SetBool("Dead", true);
             Invoke(nameof(ResetAnimation), 1);
+        }
+
+        if (insanity != insanityold)
+        {
+            OnInsanityChanged?.Invoke(new InsanityArgs(insanity));
         }
     }
 
@@ -70,5 +86,15 @@ public class Insanity : MonoBehaviour
     void ResetAnimation()
     {
         sanityDeath.SetBool("Dead", false);
+    }
+}
+
+public class InsanityArgs : System.EventArgs
+{
+    public float insanity;
+
+    public InsanityArgs(float insanity)
+    {
+        this.insanity = insanity;
     }
 }

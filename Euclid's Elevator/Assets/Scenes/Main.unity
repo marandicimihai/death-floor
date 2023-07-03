@@ -2638,7 +2638,7 @@ Transform:
   m_Children:
   - {fileID: 116717557}
   m_Father: {fileID: 1288032384}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &461027508
 Animator:
@@ -3187,6 +3187,7 @@ Transform:
   - {fileID: 1441404229}
   - {fileID: 1781553531}
   - {fileID: 491615136}
+  - {fileID: 1635518606}
   m_Father: {fileID: 1288032384}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3264,7 +3265,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32767
+    m_Bits: 163839
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3451,11 +3452,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   journal: {fileID: 1288032402}
+  insanity: {fileID: 1288032399}
   book: {fileID: 151523742}
   leftPage: {fileID: 597299125}
   rightPage: {fileID: 1978092826}
   leftPageNumber: {fileID: 1292862749}
   rightPageNumber: {fileID: 212668937}
+  journalBook: {fileID: 151523744}
+  damageLevels:
+  - sprite: {fileID: 21300000, guid: d265cd933077d4d4ba4af60ccf03aac2, type: 3}
+    insanityPercentage: 0
+  - sprite: {fileID: 21300000, guid: 0ef0b0da689c73d41bdf81435a90e767, type: 3}
+    insanityPercentage: 0.25
+  - sprite: {fileID: 21300000, guid: 3dd25eecfb2b34b4a8ce5627f42b61c6, type: 3}
+    insanityPercentage: 0.5
+  - sprite: {fileID: 21300000, guid: f6a1a2e0c1ed3c94bb539ced142fe52e, type: 3}
+    insanityPercentage: 0.75
 --- !u!1 &591109583
 GameObject:
   m_ObjectHideFlags: 0
@@ -3820,7 +3832,7 @@ RectTransform:
   m_Children:
   - {fileID: 185744095}
   m_Father: {fileID: 1288032384}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6933,7 +6945,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 575464966}
-  - {fileID: 1635518606}
   - {fileID: 1407645203}
   - {fileID: 632143725}
   - {fileID: 2119336645}
@@ -7190,11 +7201,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1288032390}
   enemy: {fileID: 2086231058}
-  insanityTime: 20
+  insanityTime: 120
   insanityEffectFadeTime: 3
-  lowInsanitySoundAppearPercentage: 0.25
+  lowInsanitySoundAppearPercentage: 0.75
   lowInsanitySound: verylowsanity
-  lowInsanityEffectAppearPercentage: 0.4
+  lowInsanityEffectAppearPercentage: 0.6
   lowInsanityEffectFadeTime: 3
   sanityDeath: {fileID: 461027508}
 --- !u!114 &1288032400
@@ -8143,7 +8154,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1288032384}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1407645204
 MonoBehaviour:
@@ -9328,11 +9339,11 @@ Transform:
   m_GameObject: {fileID: 1635518605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1.0000002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1288032384}
-  m_RootOrder: 1
+  m_Father: {fileID: 575464966}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1646084245 stripped
 GameObject:
@@ -12010,7 +12021,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1288032384}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2120239740
 PrefabInstance:

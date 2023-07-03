@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 883048461135598068}
   - component: {fileID: 883048461135598058}
   - component: {fileID: 883048461135598069}
-  m_Layer: 16
+  m_Layer: 17
   m_Name: KeyBrohken_PieceB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
