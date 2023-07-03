@@ -113,7 +113,6 @@ public class MenuSettings : MonoBehaviour
             SetPagesOff(); //just to make sure
         }
         pageDisplayText.text = pagesNames[pageIndex];
-        //pageDisplayIcon.sprite = pageIcons[pageIndex];
         pageDisplayButton.GetComponent<Image>().sprite = pageIcons[pageIndex];
         SpriteState ss = new SpriteState();
         ss.highlightedSprite = pageIconsHL[pageIndex];
@@ -129,7 +128,6 @@ public class MenuSettings : MonoBehaviour
         }
         pages[pageIndex].SetActive(true);
         pageDisplayText.text = pagesNames[pageIndex];
-        //pageDisplayIcon.sprite = pageIcons[pageIndex];
         pageDisplayButton.GetComponent<Image>().sprite = pageIcons[pageIndex];
         SpriteState ss = new SpriteState();
         ss.highlightedSprite = pageIconsHL[pageIndex];
@@ -163,12 +161,10 @@ public class MenuSettings : MonoBehaviour
     //AUDIO
     void UpdateAudio()
     {
-        /* !!!
-        if([saved settings != null]){
-            effectsVolume = [settings effects volume]; 
-            ambianceVolume = [settings ambiance volume]; 
+        if(SaveSystem.LoadSettings().effectsVolume != null){
+            effectsVolume = (float)SaveSystem.LoadSettings().effectsVolume; 
+            ambianceVolume = (float)SaveSystem.LoadSettings().ambianceVolume; 
         }
-        */
         effectsSlider.value = effectsVolume;
         ambianceSlider.value = ambianceVolume;
         SaveAudio();
@@ -182,21 +178,21 @@ public class MenuSettings : MonoBehaviour
     public void SaveAudio()
     {
         Debug.Log("Audio saved");
-        //SAVE AUDIO!!!
+        Settings old = SaveSystem.LoadSettings();
+        Settings newTop = new Settings(effectsVolume, ambianceVolume); //goes on top
+        SaveSystem.SaveSettings(old + newTop);
     }
     //GRAPHICS
     void UpdateGraphics()
     {
-        /* !!!
-        if([saved settings != null]){
-          qualityIndex = [SETTINGS QUALITY]; 
-          resIndex = [SETTINGS RES]; 
-          vSync = [SETTINGS VSYBC];
-          isfullscreen = [SETTINGS FULLSCREEN];
-          bloom = [SETTINGS BLOOM];
-          blur = [SETTINGS BLUR];
+        if(SaveSystem.LoadSettings().qualityIndex != null){
+             qualityIndex = (int)SaveSystem.LoadSettings().qualityIndex;
+            resIndex = (int)SaveSystem.LoadSettings().resIndex;
+            vSync = (bool)SaveSystem.LoadSettings().vSync;
+            isfullscreen = (bool)SaveSystem.LoadSettings().fullScreen;
+            bloom = (bool)SaveSystem.LoadSettings().bloom;
+            blur = (bool)SaveSystem.LoadSettings().blur;
         }
-        */
         textQuality.text = qualityNames[qualityIndex];
         QualitySettings.SetQualityLevel(qualityIndex);
         string width = resType[resIndex].width.ToString();
@@ -262,17 +258,18 @@ public class MenuSettings : MonoBehaviour
         QualitySettings.vSyncCount = vSync.GetHashCode();
         QualitySettings.SetQualityLevel(qualityIndex);
         Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
-        //SAVE GRAPHICS!!!
+        Settings old = SaveSystem.LoadSettings();
+        Settings newTop = new Settings(bloom, blur, resIndex, qualityIndex, vSync, isfullscreen); //goes on top
+        SaveSystem.SaveSettings(old + newTop);
     }
     //INPUT
     void UpdateInput()
     {
-        /* !!!
-        if([saved settings != null]){
-            mouseSensitivity = [SETTINGS SENS]; !!!
-            also the same for other INPUTS (that currently can not be changed >:\ )!
+        if (SaveSystem.LoadSettings().sensitivity != null)
+        {
+            mouseSensitivity = (float)SaveSystem.LoadSettings().sensitivity;
+            //also the same for other INPUTS (that currently can not be changed >:\ ) !!!!
         }
-        */
         for(int i = 0; i < inputText.Length; i++)
         {
             inputText[i].text = textDisplay[i];
@@ -289,7 +286,9 @@ public class MenuSettings : MonoBehaviour
     public void SaveInput()
     {
         Debug.Log("Input saved");
-        //SAVE INPUT!!!
+        Settings old = SaveSystem.LoadSettings();
+        Settings newTop = new Settings(mouseSensitivity);
+        SaveSystem.SaveSettings(old + newTop);
     }
 
     //OTHER
