@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Timer
   physicalObject: {fileID: 7211669551255390774, guid: 20071388feedd9442b04d1f912f62338, type: 3}
   uses: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 853c5e1f836efb54ebdf02e3061abbbd, type: 3}
   inHandObject: {fileID: 745547986693437957, guid: d1fd96f5efda3c04ebbc0420fe2fea44, type: 3}
   offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: 34.96, y: -114.36, z: 2.02}

@@ -27,6 +27,20 @@ public class Timer : Item, IUsable
     [SyncValue] float tickTimeElapsed;
     [SyncValue] float ringTimeElapsed;
 
+    private void Start()
+    {
+        GameManager.Instance.OnStageStart += DestroyTimer;
+        GameManager.Instance.OnDeath += DestroyTimer;
+    }
+
+    public void DestroyTimer(object caller, System.EventArgs args)
+    { 
+        if (started && gameObject != null) 
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Update()
     {
         if (winding)
@@ -87,5 +101,23 @@ public class Timer : Item, IUsable
             started = true;
         }
         return false;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnStageStart -= DestroyTimer;
+        GameManager.Instance.OnDeath -= DestroyTimer;
+        if (windJob != null)
+        {
+            AudioManager.Instance.StopClip(windJob);
+        }
+        if (tickJob != null)
+        {
+            AudioManager.Instance.StopClip(tickJob);
+        }
+        if (ringJob != null)
+        {
+            AudioManager.Instance.StopClip(ringJob);
+        }
     }
 }

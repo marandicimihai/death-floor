@@ -126,7 +126,7 @@ MonoBehaviour:
     loop: 0
     volume: 1
     pitch: 1
-    spatialBlend: 0.81
+    spatialBlend: 1
     maxDistance: 10
     playPaused: 0
   - name: closedoor
@@ -136,7 +136,7 @@ MonoBehaviour:
     loop: 0
     volume: 1
     pitch: 1
-    spatialBlend: 0.8
+    spatialBlend: 1
     maxDistance: 10
     playPaused: 0
   - name: skrtdoor
@@ -146,7 +146,7 @@ MonoBehaviour:
     loop: 0
     volume: 1
     pitch: 1
-    spatialBlend: 0.8
+    spatialBlend: 1
     maxDistance: 10
     playPaused: 0
   - name: elevatorclose

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-enum GameStage
+public enum GameStage
 {
     Loading,
     Lobby,
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public int Stage { get; private set; }
+    public GameStage GameStage { get; private set; }
 
     public Transform playerTransform;
     public Player player;
@@ -34,7 +35,6 @@ public class GameManager : MonoBehaviour
     public EventHandler OnStageStart;
     public EventHandler OnDeath;
 
-    GameStage stage;
 
     void Awake()
     {
@@ -48,27 +48,27 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (stage == GameStage.Loading)
+        if (GameStage == GameStage.Loading)
         {
 
         }
-        else if (stage == GameStage.Lobby)
+        else if (GameStage == GameStage.Lobby)
         {
 
         }
-        else if (stage == GameStage.SecondLoading)
+        else if (GameStage == GameStage.SecondLoading)
         {
 
         }
-        else if (stage == GameStage.GameLevel)
+        else if (GameStage == GameStage.GameLevel)
         {
 
         }
-        else if (stage == GameStage.WaitForPlayer)
+        else if (GameStage == GameStage.WaitForPlayer)
         {
             
         }
-        else if (stage == GameStage.End)
+        else if (GameStage == GameStage.End)
         {
 
         }
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
     void StartGame()
     {
-        stage = GameStage.GameLevel;
+        GameStage = GameStage.GameLevel;
         Stage = 1;
 
         OnStageStart?.Invoke(this, new EventArgs());
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         if (deaths == maxDeaths)
         {
-            stage = GameStage.End;
+            GameStage = GameStage.End;
         }
         else
         {
@@ -101,9 +101,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayerEnteredElevator()
+    public void ElevatorRideInitialized()
     {
-        if (stage == GameStage.WaitForPlayer)
+        if (GameStage == GameStage.WaitForPlayer)
         {
             NextStage();
         }
@@ -111,9 +111,9 @@ public class GameManager : MonoBehaviour
 
     public void KeycardInserted()
     {
-        if (stage == GameStage.GameLevel)
+        if (GameStage == GameStage.GameLevel)
         {
-            stage = GameStage.WaitForPlayer;
+            GameStage = GameStage.WaitForPlayer;
         }
     }
 
@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
         Stage++;
         if (Stage > stageCount)
         {
-            stage = GameStage.End;
+            GameStage = GameStage.End;
         }
         else
         {

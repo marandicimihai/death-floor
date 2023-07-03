@@ -46,7 +46,7 @@ public class VFXManager : MonoBehaviour
         bloom.weight = (bool)SaveSystem.LoadSettings().bloom ? 1 : 0;
         blur.weight = (bool)SaveSystem.LoadSettings().blur ? 1 : 0;
 
-        player.OnSpawn += (SpawnArgs args) => ResetEffects(); // delayed
+        player.OnSpawn += (SpawnArgs args) => ResetEffects();
         initialPosition = camera.transform.localPosition;
     }
 

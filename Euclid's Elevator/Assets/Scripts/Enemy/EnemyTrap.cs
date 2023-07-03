@@ -62,9 +62,13 @@ public class EnemyTrap : MonoBehaviour
 
     private void Update()
     {
-        if (pull && Vector3.ProjectOnPlane(transform.position - player.position, Vector3.up).magnitude >= minRadius && !used
-            && Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
+        if (used)
+            return;
+
+        if (pull && Vector3.ProjectOnPlane(transform.position - player.position, Vector3.up).magnitude >= minRadius && 
+            Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
         {
+
             anim.SetTrigger("Spot");
 
             baseBone.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(player.position - baseBone.position, Vector3.up).normalized, Vector3.up) * initial;
@@ -72,10 +76,14 @@ public class EnemyTrap : MonoBehaviour
             GameManager.Instance.player.controller.AddForce(transform.position - player.position, forceStrength);
             GameManager.Instance.enemy.InspectNoise(transform.position, true);
 
+            if (!hasPulled)
+            {
+                AudioManager.Instance.PlayClip(gameObject, screech);
+            }
+
             if (Vector3.Distance(player.position, transform.position) < deathRadius)
             {
                 AudioManager.Instance.PlayClip(gameObject, groundhit);
-                AudioManager.Instance.PlayClip(gameObject, screech);
                 AudioManager.Instance.StopClip(ambiencejob);
                 anim.SetTrigger("Kill");
                 GameManager.Instance.player.Die(false);
@@ -84,8 +92,7 @@ public class EnemyTrap : MonoBehaviour
 
             hasPulled = true;
         }
-
-        if (!pull && !used)
+        else
         {
             time += Time.deltaTime;
 

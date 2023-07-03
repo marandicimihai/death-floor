@@ -5160,25 +5160,25 @@ MonoBehaviour:
     probability: 7
   keySpawns:
   - points:
-    - {fileID: 333635357}
-    - {fileID: 2042328281}
-    - {fileID: 2107470686}
+    - {fileID: 2042328282}
+    - {fileID: 1865082365}
+    - {fileID: 2107470687}
     stage: 1
   - points:
-    - {fileID: 684742555}
-    - {fileID: 379174251}
-    - {fileID: 2046285271}
+    - {fileID: 684742556}
+    - {fileID: 379174252}
+    - {fileID: 1532288584}
     stage: 2
   - points:
-    - {fileID: 23516710}
-    - {fileID: 811475837}
-    - {fileID: 922634659}
+    - {fileID: 922634660}
+    - {fileID: 23516711}
+    - {fileID: 782979202}
     stage: 3
   - points:
-    - {fileID: 1061986958}
-    - {fileID: 1957283603}
-    - {fileID: 1426786857}
-    - {fileID: 826286762}
+    - {fileID: 684742556}
+    - {fileID: 1401353535}
+    - {fileID: 1957283604}
+    - {fileID: 1061986959}
     stage: 4
   toolbox: {fileID: 11400000, guid: dda90fce8e9402540bc0b5d0bff786f7, type: 2}
   keycard: {fileID: 11400000, guid: 577ccc289259c4c459026e8f185a64ff, type: 2}
@@ -8114,7 +8114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1288032390}
   enemy: {fileID: 2086231058}
-  insanityTime: 120
+  insanityTime: 20
   insanityEffectFadeTime: 3
   lowInsanitySoundAppearPercentage: 0.75
   lowInsanitySound: verylowsanity
@@ -12381,7 +12381,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1984876290
 Transform:
   m_ObjectHideFlags: 0
@@ -20563,14 +20563,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1288032390}
-    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: elevatorRideTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: elevatorAccelTime
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4860145061060307195, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
       propertyPath: m_RootOrder
       value: 1

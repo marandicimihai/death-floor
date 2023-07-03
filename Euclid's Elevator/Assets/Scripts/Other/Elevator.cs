@@ -26,6 +26,8 @@ public class Elevator : MonoBehaviour
     Animator animator;
 
     bool waiting;
+    bool canClose;
+    bool elevatorDoorClosed;
 
     private void Awake()
     {
@@ -48,12 +50,20 @@ public class Elevator : MonoBehaviour
     {
         if (!Broken && waiting && Vector3.Distance(transform.position, player.transform.position) <= waitForPlayerRadius)
         {
-            GameManager.Instance.PlayerEnteredElevator();
+            animator.SetBool("Open", false);
+            if (canClose)
+            {
+                CloseElevator();
+                canClose = false;
+            }
+            if (elevatorDoorClosed)
+            {
+                GameManager.Instance.ElevatorRideInitialized();
 
-            CloseElevator();
-            InitiateElevatorRide();
+                InitiateElevatorRide();
 
-            waiting = false;
+                waiting = false;
+            }
         }
     }
 
@@ -154,5 +164,20 @@ public class Elevator : MonoBehaviour
             AudioManager.Instance.PlayClip(close);
         }
         doorCollider.enabled = true;
+    }
+
+    public void ElevatorDoorClosed()
+    {
+        elevatorDoorClosed = true;
+    }
+
+    public void ElevatorDoorOpen()
+    {
+        elevatorDoorClosed = false;
+    }
+
+    public void CanClose()
+    {
+        canClose = true;
     }
 }

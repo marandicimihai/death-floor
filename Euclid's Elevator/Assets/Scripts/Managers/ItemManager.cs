@@ -17,7 +17,7 @@ struct ItemSpawn
 [System.Serializable]
 struct KeycardSpawn
 {
-    public Transform[] points;
+    public ItemSpawner[] points;
     public int stage;
 }
 
@@ -37,7 +37,7 @@ public class ItemManager : MonoBehaviour
             {
                 SpawnItem(toolbox);
             }
-            if (!GameObject.FindGameObjectWithTag("KeyCard"))
+            if (!GameObject.FindGameObjectWithTag("KeyCard") && GameManager.Instance.GameStage != GameStage.WaitForPlayer)
             {
                 SpawnKeycard(GameManager.Instance.Stage);
             }
@@ -50,6 +50,7 @@ public class ItemManager : MonoBehaviour
         };
 
         SpawnItems();
+        SpawnKeycard(1);
     }
 
     void SpawnItems()
@@ -97,6 +98,15 @@ public class ItemManager : MonoBehaviour
 
         int spawnerIndex = Random.Range(0, spawners.Count);
 
+        foreach(ItemSpawner spawner in spawners)
+        {
+            if (spawner.Spawn(item))
+            {
+                return;
+            }
+            spawnerIndex = (spawnerIndex + 1) % spawners.Count;
+        }
+
         spawners[spawnerIndex].ForceSpawn(item);
     }
 
@@ -106,9 +116,19 @@ public class ItemManager : MonoBehaviour
         {
             if (spawn.stage == stage)
             {
-                int i = Random.Range(0, spawn.points.Length);
-                Instantiate(keycard.physicalObject, spawn.points[i].position, Quaternion.identity);
-                break;
+                int spawnerIndex = Random.Range(0, spawn.points.Length);
+
+                foreach (ItemSpawner spawner in spawn.points)
+                {
+                    if (spawner.Spawn(keycard))
+                    {
+                        return;
+                    }
+                    spawnerIndex = (spawnerIndex + 1) % spawn.points.Length;
+                }
+
+                spawn.points[spawnerIndex].ForceSpawn(keycard);
+                return;
             }
         }
     }

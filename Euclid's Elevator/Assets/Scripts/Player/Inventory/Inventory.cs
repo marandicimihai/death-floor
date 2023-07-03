@@ -58,9 +58,9 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (input != Index && Items[Index] != null)
+        if (input != Index && Items[input] != null)
         {
-            AudioManager.Instance.PlayRandomClip(Items[Index].properties.holster);
+            AudioManager.Instance.PlayRandomClip(Items[input].properties.holster);
         }
         Index = input;
         OnItemsChanged?.Invoke(this, new EventArgs());

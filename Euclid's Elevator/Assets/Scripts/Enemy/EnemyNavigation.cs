@@ -97,7 +97,9 @@ public class EnemyNavigation : MonoBehaviour
         rigAnim.RigUpdate();
         if (!player.Dead)
         {
-            if (canKill && Vector3.Distance(transform.position, player.transform.position) <= killDistance)
+            if (canKill && Vector3.Distance(transform.position, player.transform.position) <= killDistance && 
+                !Physics.Raycast(transform.position, player.transform.position - transform.position,
+                    Vector3.Distance(player.transform.position, transform.position), solid))
             {
                 dragloop.StopPlaying();
                 rigAnim.KillAnimation();
