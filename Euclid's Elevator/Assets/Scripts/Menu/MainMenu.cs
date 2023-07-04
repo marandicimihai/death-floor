@@ -6,7 +6,14 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Canvas mainTab;
     [SerializeField] Canvas creditsTab;
     [SerializeField] Animator menuCameraAnim;
+    [SerializeField] float ambienceFadeTime;
     [SerializeField] string click;
+    [SerializeField] string airhum;
+    [SerializeField] string lightbuzz;
+
+    AudioJob humJob;
+    AudioJob buzzJob;
+
     MenuSettings settingsMenu;
     void Start()
     {
@@ -15,6 +22,11 @@ public class MainMenu : MonoBehaviour
         creditsTab.enabled = false;
         settingsMenu.SetPagesOff();
         settingsMenu.SetCanvasOff();
+
+        humJob = AudioManager.Instance.PlayClip(airhum);
+        humJob.DDOL();
+        buzzJob = AudioManager.Instance.PlayClip(lightbuzz);
+        buzzJob.DDOL();
     }
     public void OpenMainTab(bool open)
     {
@@ -37,6 +49,8 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
+        AudioManager.Instance.FadeAwayClip(humJob, ambienceFadeTime);
+        AudioManager.Instance.FadeAwayClip(buzzJob, ambienceFadeTime);
         SceneManager.LoadScene("Main");
     }
     public void DoClick()

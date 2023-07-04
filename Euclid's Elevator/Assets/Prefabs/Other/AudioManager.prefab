@@ -48,6 +48,7 @@ MonoBehaviour:
   jobs: []
   paused: {fileID: 2587515176096854133, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
   unpaused: {fileID: 24500006, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+  main: {fileID: 24100000, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
   settings:
   - name: carpetstep1
     clip: {fileID: 8300000, guid: fa3992d7e4fe62d4d9eedb8c08715301, type: 3}
@@ -224,7 +225,7 @@ MonoBehaviour:
     group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
     playOnAwake: 0
     loop: 0
-    volume: 1
+    volume: 0.7
     pitch: 1
     spatialBlend: 0
     maxDistance: 10
@@ -234,7 +235,7 @@ MonoBehaviour:
     group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
     playOnAwake: 0
     loop: 0
-    volume: 1
+    volume: 0.7
     pitch: 1
     spatialBlend: 0
     maxDistance: 10
@@ -264,7 +265,7 @@ MonoBehaviour:
     group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
     playOnAwake: 0
     loop: 0
-    volume: 1
+    volume: 0.7
     pitch: 1
     spatialBlend: 0
     maxDistance: 10
@@ -294,7 +295,7 @@ MonoBehaviour:
     group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
     playOnAwake: 0
     loop: 0
-    volume: 1
+    volume: 0.7
     pitch: 1
     spatialBlend: 0
     maxDistance: 10
@@ -364,7 +365,7 @@ MonoBehaviour:
     group: {fileID: -3459461368813400315, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
     playOnAwake: 0
     loop: 0
-    volume: 1
+    volume: 0.7
     pitch: 1
     spatialBlend: 0
     maxDistance: 10
@@ -689,6 +690,26 @@ MonoBehaviour:
     spatialBlend: 0
     maxDistance: 10
     playPaused: 0
+  - name: airhum
+    clip: {fileID: 8300000, guid: c1e54799c3dfd344abd6d7fa49f1cecf, type: 3}
+    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    maxDistance: 10
+    playPaused: 1
+  - name: lightbuzz
+    clip: {fileID: 8300000, guid: 5b6b3d3df7f16f641b15960b47c3de5c, type: 3}
+    group: {fileID: 5585461627508927413, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
+    playOnAwake: 0
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    maxDistance: 10
+    playPaused: 1
   empty: {fileID: 5535761128504817408, guid: 72b12f349ed2e1843b015cac4fce795f, type: 3}
 --- !u!114 &1788257767104202394
 MonoBehaviour:

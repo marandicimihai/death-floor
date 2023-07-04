@@ -5,11 +5,17 @@ public class AudioJob : MonoBehaviour
     public new string name;
     public AudioSource source;
     public bool playPaused;
+    bool ddol;
     bool destroyobject;
 
     System.Action action;
     bool stopqueued;
     float time;
+
+    bool fadequeued;
+    float fadeTime;
+
+    float initialSourceVolume;
 
     private void Update()
     {
@@ -17,6 +23,16 @@ public class AudioJob : MonoBehaviour
         {
             time += Time.deltaTime;
             if (time >= source.clip.length)
+            {
+                action?.Invoke();
+                StopPlaying();
+            }
+        }
+        if (fadequeued)
+        {
+            time += Time.deltaTime;
+            source.volume = (1 - (time / fadeTime)) * initialSourceVolume;
+            if (time >= fadeTime)
             {
                 action?.Invoke();
                 StopPlaying();
@@ -49,11 +65,35 @@ public class AudioJob : MonoBehaviour
         }
     }
 
+    public void DDOL()
+    {
+        gameObject.AddComponent<DDOL>();
+    }
+
     public void StopOnClipEnd(System.Action action)
     {
+        if (stopqueued || fadequeued)
+        {
+            return;
+        }
+
         stopqueued = true;
         this.action = action;
         time = source.time;
+    }
+
+    public void FadeAway(float time, System.Action action = null)
+    {
+        if (stopqueued || fadequeued)
+        {
+            return;
+        }
+
+        initialSourceVolume = source.volume;
+        fadequeued = true;
+        this.action = action;
+        fadeTime = time;
+        this.time = 0;
     }
 
     public void StopPlaying()

@@ -29,6 +29,9 @@ public class Inventory : MonoBehaviour
 
     public EventHandler OnItemsChanged;
 
+    //TO PREVENT HOLSTER OF ANOTHER ITEM PLAYING WHEN SWITCHED QUICKLY
+    AudioJob currentHolster;
+
     private void Awake()
     {
         Items = new Item[slots];
@@ -42,6 +45,31 @@ public class Inventory : MonoBehaviour
         Input.InputActions.General.Inventory2.performed += InventoryPerformed;
         Input.InputActions.General.Inventory3.performed += InventoryPerformed;
         Input.InputActions.General.Inventory4.performed += InventoryPerformed;
+        Input.InputActions.General.Scroll.performed += Scroll;
+    }
+
+    void Scroll(InputAction.CallbackContext context)
+    {
+
+        int scroll = (int)Mathf.Clamp(context.ReadValue<float>(), -1, 1);
+
+        Index += scroll;
+
+        if (Index >= slots)
+        {
+            Index = 0;
+        }
+        else if (Index < 0)
+        {
+            Index = slots - 1;
+        }
+
+        if (Items[Index] != null)
+        {
+            AudioManager.Instance.StopClip(currentHolster);
+            currentHolster = AudioManager.Instance.PlayRandomClip(Items[Index].properties.holster);
+        }
+        OnItemsChanged?.Invoke(this, new EventArgs());
     }
 
     void InventoryPerformed(InputAction.CallbackContext context)
@@ -60,7 +88,8 @@ public class Inventory : MonoBehaviour
 
         if (input != Index && Items[input] != null)
         {
-            AudioManager.Instance.PlayRandomClip(Items[input].properties.holster);
+            AudioManager.Instance.StopClip(currentHolster);
+            currentHolster = AudioManager.Instance.PlayRandomClip(Items[input].properties.holster);
         }
         Index = input;
         OnItemsChanged?.Invoke(this, new EventArgs());

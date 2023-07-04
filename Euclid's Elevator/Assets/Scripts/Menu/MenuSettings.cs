@@ -44,6 +44,7 @@ public class MenuSettings : MonoBehaviour
     [SerializeField] string click;
     [SerializeField] bool canvasOn;
     public bool refreshTest = false; //use this "trigger" to update the settings UI;
+    bool valuesLoaded;
     Animator thisAnim;
     Canvas thisCanvas;
     //Settings set; 
@@ -62,11 +63,12 @@ public class MenuSettings : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
         thisAnim = gameObject.GetComponent<Animator>();
         thisCanvas = gameObject.GetComponent<Canvas>();
         Refresh();
+        valuesLoaded = true;
     }
     void Update()
     {
@@ -161,13 +163,10 @@ public class MenuSettings : MonoBehaviour
     //AUDIO
     void UpdateAudio()
     {
-        if(SaveSystem.LoadSettings().effectsVolume != null){
-            effectsVolume = (float)SaveSystem.LoadSettings().effectsVolume; 
-            ambianceVolume = (float)SaveSystem.LoadSettings().ambianceVolume; 
-        }
+        effectsVolume = SaveSystem.Instance.LoadSettings().EffectsVolume; 
+        ambianceVolume = SaveSystem.Instance.LoadSettings().AmbienceVolume;
         effectsSlider.value = effectsVolume;
         ambianceSlider.value = ambianceVolume;
-        SaveAudio();
     }
     public void SyncVolume() //Syncs the stored values of the sound volume with the slider values
     {
@@ -177,22 +176,25 @@ public class MenuSettings : MonoBehaviour
     }
     public void SaveAudio()
     {
-        Debug.Log("Audio saved");
-        Settings old = SaveSystem.LoadSettings();
+        if (!valuesLoaded)
+            return;
+
+        Settings old = SaveSystem.Instance.LoadSettings();
         Settings newTop = new Settings(effectsVolume, ambianceVolume); //goes on top
-        SaveSystem.SaveSettings(old + newTop);
+
+        SaveSystem.Instance.SaveSettings(old + newTop);
     }
     //GRAPHICS
     void UpdateGraphics()
     {
-        if(SaveSystem.LoadSettings().qualityIndex != null){
-             qualityIndex = (int)SaveSystem.LoadSettings().qualityIndex;
-            resIndex = (int)SaveSystem.LoadSettings().resIndex;
-            vSync = (bool)SaveSystem.LoadSettings().vSync;
-            isfullscreen = (bool)SaveSystem.LoadSettings().fullScreen;
-            bloom = (bool)SaveSystem.LoadSettings().bloom;
-            blur = (bool)SaveSystem.LoadSettings().blur;
-        }
+        qualityIndex = SaveSystem.Instance.LoadSettings().QualityIndex;
+        resIndex = SaveSystem.Instance.LoadSettings().ResIndex;
+        vSync = SaveSystem.Instance.LoadSettings().VSync;
+        isfullscreen = SaveSystem.Instance.LoadSettings().Fullscreen;
+        bloom = SaveSystem.Instance.LoadSettings().Bloom;
+        blur = SaveSystem.Instance.LoadSettings().Blur;
+
+
         textQuality.text = qualityNames[qualityIndex];
         QualitySettings.SetQualityLevel(qualityIndex);
         string width = resType[resIndex].width.ToString();
@@ -201,13 +203,11 @@ public class MenuSettings : MonoBehaviour
         Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
         QualitySettings.vSyncCount = vSync.GetHashCode();
         Screen.fullScreen = isfullscreen;
-        //SO um? there is no actual parameter for bloom when updating settings??? !!!
-        //so does the blur !!!
+        
         imageBoxVsync.enabled = vSync;
         imageBoxFullscreen.enabled = isfullscreen;
         imageBoxBloom.enabled = bloom;
         imageBoxBlur.enabled = blur;
-        ApplyAndSaveGraphics();
     }
     public void NextQualityIndex()
     {
@@ -253,29 +253,24 @@ public class MenuSettings : MonoBehaviour
     }
     public void ApplyAndSaveGraphics()
     {
-        Debug.Log("Graphics saved");
-        Screen.fullScreen = isfullscreen;
-        QualitySettings.vSyncCount = vSync.GetHashCode();
-        QualitySettings.SetQualityLevel(qualityIndex);
-        Screen.SetResolution(resType[resIndex].width, resType[resIndex].height, isfullscreen);
-        Settings old = SaveSystem.LoadSettings();
-        Settings newTop = new Settings(bloom, blur, resIndex, qualityIndex, vSync, isfullscreen); //goes on top
-        SaveSystem.SaveSettings(old + newTop);
+        if (!valuesLoaded)
+            return;
+
+        Settings old = SaveSystem.Instance.LoadSettings();
+        Settings newTop = new Settings(bloom, blur, resIndex, resType[resIndex].width, resType[resIndex].height, qualityIndex, vSync, isfullscreen); //goes on top
+        SaveSystem.Instance.SaveSettings(old + newTop);
     }
     //INPUT
     void UpdateInput()
     {
-        if (SaveSystem.LoadSettings().sensitivity != null)
-        {
-            mouseSensitivity = (float)SaveSystem.LoadSettings().sensitivity;
-            //also the same for other INPUTS (that currently can not be changed >:\ ) !!!!
-        }
+        mouseSensitivity = SaveSystem.Instance.LoadSettings().Sensitivity;
+        //also the same for other INPUTS (that currently can not be changed >:\ ) !!!!
+
         for(int i = 0; i < inputText.Length; i++)
         {
             inputText[i].text = textDisplay[i];
         }
         mouseSensSlider.value = mouseSensitivity;
-        SaveInput();
     }
     public void SyncSens() //whenever the slider gets input; 
     {
@@ -285,10 +280,12 @@ public class MenuSettings : MonoBehaviour
     //BRO DO THE INPUT BROOOOOOO!!!! pls!
     public void SaveInput()
     {
-        Debug.Log("Input saved");
-        Settings old = SaveSystem.LoadSettings();
+        if (!valuesLoaded)
+            return;
+
+        Settings old = SaveSystem.Instance.LoadSettings();
         Settings newTop = new Settings(mouseSensitivity);
-        SaveSystem.SaveSettings(old + newTop);
+        SaveSystem.Instance.SaveSettings(old + newTop);
     }
 
     //OTHER

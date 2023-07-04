@@ -37,6 +37,20 @@ public class Timer : Item, IUsable
     { 
         if (started && gameObject != null) 
         {
+            GameManager.Instance.OnStageStart -= DestroyTimer;
+            GameManager.Instance.OnDeath -= DestroyTimer;
+            if (windJob != null)
+            {
+                AudioManager.Instance.StopClip(windJob);
+            }
+            if (tickJob != null)
+            {
+                AudioManager.Instance.StopClip(tickJob);
+            }
+            if (ringJob != null)
+            {
+                AudioManager.Instance.StopClip(ringJob);
+            }
             Destroy(gameObject);
         }
     }
@@ -101,23 +115,5 @@ public class Timer : Item, IUsable
             started = true;
         }
         return false;
-    }
-
-    private void OnDestroy()
-    {
-        GameManager.Instance.OnStageStart -= DestroyTimer;
-        GameManager.Instance.OnDeath -= DestroyTimer;
-        if (windJob != null)
-        {
-            AudioManager.Instance.StopClip(windJob);
-        }
-        if (tickJob != null)
-        {
-            AudioManager.Instance.StopClip(tickJob);
-        }
-        if (ringJob != null)
-        {
-            AudioManager.Instance.StopClip(ringJob);
-        }
     }
 }

@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] AudioMixerSnapshot paused;//muffles the sound
     [SerializeField] AudioMixerSnapshot unpaused;
+    [SerializeField] AudioMixer main;
     [SerializeField] SourceSettings[] settings;
     [SerializeField] GameObject empty;
 
@@ -34,7 +35,7 @@ public class AudioManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
             return;
         }
         jobs = new();
@@ -48,6 +49,20 @@ public class AudioManager : MonoBehaviour
         {
             TryPauseEvents();
         };
+        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        {
+            SetVolume(settings.EffectsVolume, settings.AmbienceVolume);
+        };
+    }
+
+    void SetVolume(float effectsVolume, float ambienceVolume)
+    {
+        effectsVolume = -40 + effectsVolume * 40;
+        ambienceVolume = -40 + ambienceVolume * 40;
+
+
+        main.SetFloat("effectsVolume", effectsVolume);
+        main.SetFloat("ambienceVolume", ambienceVolume);
     }
 
     void TryPauseEvents()
@@ -65,7 +80,7 @@ public class AudioManager : MonoBehaviour
         }
         catch
         {
-            Debug.Log("No pause");
+            
         }
     }
 
@@ -222,6 +237,14 @@ public class AudioManager : MonoBehaviour
             {
                 job.StopPlaying();
             }
+        }
+    }
+
+    public void FadeAwayClip(AudioJob job, float time, Action action = null)
+    {
+        if (job != null)
+        {
+            job.FadeAway(time, action);
         }
     }
 

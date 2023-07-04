@@ -116,6 +116,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""7038d422-a2cd-4377-8b62-1f52db7da394"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -272,6 +281,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Inventory4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""88e1f7f9-0244-4bf3-af6c-c404410171b9"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""9ca90dce-b8d6-448c-8605-8d758ff29641"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""28d36fd0-ffa7-4fe5-a9c3-a5c42e0766b2"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -400,6 +442,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_General_Inventory2 = m_General.FindAction("Inventory2", throwIfNotFound: true);
         m_General_Inventory3 = m_General.FindAction("Inventory3", throwIfNotFound: true);
         m_General_Inventory4 = m_General.FindAction("Inventory4", throwIfNotFound: true);
+        m_General_Scroll = m_General.FindAction("Scroll", throwIfNotFound: true);
         // Realtime
         m_Realtime = asset.FindActionMap("Realtime", throwIfNotFound: true);
         m_Realtime_Pause = m_Realtime.FindAction("Pause", throwIfNotFound: true);
@@ -475,6 +518,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Inventory2;
     private readonly InputAction m_General_Inventory3;
     private readonly InputAction m_General_Inventory4;
+    private readonly InputAction m_General_Scroll;
     public struct GeneralActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -489,6 +533,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Inventory2 => m_Wrapper.m_General_Inventory2;
         public InputAction @Inventory3 => m_Wrapper.m_General_Inventory3;
         public InputAction @Inventory4 => m_Wrapper.m_General_Inventory4;
+        public InputAction @Scroll => m_Wrapper.m_General_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_General; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -528,6 +573,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Inventory4.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
                 @Inventory4.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
                 @Inventory4.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnInventory4;
+                @Scroll.started -= m_Wrapper.m_GeneralActionsCallbackInterface.OnScroll;
+                @Scroll.performed -= m_Wrapper.m_GeneralActionsCallbackInterface.OnScroll;
+                @Scroll.canceled -= m_Wrapper.m_GeneralActionsCallbackInterface.OnScroll;
             }
             m_Wrapper.m_GeneralActionsCallbackInterface = instance;
             if (instance != null)
@@ -562,6 +610,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Inventory4.started += instance.OnInventory4;
                 @Inventory4.performed += instance.OnInventory4;
                 @Inventory4.canceled += instance.OnInventory4;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
             }
         }
     }
@@ -635,6 +686,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnInventory2(InputAction.CallbackContext context);
         void OnInventory3(InputAction.CallbackContext context);
         void OnInventory4(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
     public interface IRealtimeActions
     {

@@ -43,8 +43,11 @@ public class VFXManager : MonoBehaviour
         shakeTime = 0.001f;
         lowInsanityTime = 0.001f;
 
-        bloom.weight = (bool)SaveSystem.LoadSettings().bloom ? 1 : 0;
-        blur.weight = (bool)SaveSystem.LoadSettings().blur ? 1 : 0;
+        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        {
+            bloom.weight = settings.Bloom ? 1 : 0;
+            blur.weight = settings.Blur ? 1 : 0;
+        };
 
         player.OnSpawn += (SpawnArgs args) => ResetEffects();
         initialPosition = camera.transform.localPosition;
