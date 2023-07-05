@@ -50,7 +50,8 @@ public class InteractionManager : MonoBehaviour
         {
             inter.PickUp,
             inter.ToggleDoor,
-            inter.InsertInElevator
+            inter.InsertInElevator,
+            inter.EnterOrExitBox
         };
     }
 

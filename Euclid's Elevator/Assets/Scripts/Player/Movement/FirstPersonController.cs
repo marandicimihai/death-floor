@@ -75,21 +75,29 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
-        if (canMove)
+        if (controller.enabled)
         {
-            ComputeVelocity();
-            moveDirection = forces + velocity;
-            controller.Move(moveDirection * Time.deltaTime);
+            if (canMove)
+            {
+                ComputeVelocity();
+                moveDirection = forces + velocity;
+                controller.Move(moveDirection * Time.deltaTime);
+            }
+            else
+            {
+                velocity = Vector3.zero;
+            }
+
+            CalculateSteps(velocity);
+            ComputeGravity();
+            controller.Move(gravity * Time.deltaTime);
+            forces = Vector3.zero;
         }
         else
         {
             velocity = Vector3.zero;
+            forces = Vector3.zero;
         }
-
-        CalculateSteps(velocity);
-        ComputeGravity();
-        controller.Move(gravity * Time.deltaTime);
-        forces = Vector3.zero;
     }
 
     private void ComputeGravity()
@@ -255,10 +263,12 @@ public class FirstPersonController : MonoBehaviour
     public void Disable()
     {
         canMove = false;
+        controller.enabled = false;
     }
 
     public void Enable()
     {
+        controller.enabled = true;
         canMove = true;
     }
 }

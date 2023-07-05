@@ -46,11 +46,17 @@ public class Inventory : MonoBehaviour
         Input.InputActions.General.Inventory3.performed += InventoryPerformed;
         Input.InputActions.General.Inventory4.performed += InventoryPerformed;
         Input.InputActions.General.Scroll.performed += Scroll;
+
+        Input.InputActions.Box.Use.performed += (InputAction.CallbackContext context) => UseItem();
+        Input.InputActions.Box.Inventory1.performed += InventoryPerformed;
+        Input.InputActions.Box.Inventory2.performed += InventoryPerformed;
+        Input.InputActions.Box.Inventory3.performed += InventoryPerformed;
+        Input.InputActions.Box.Inventory4.performed += InventoryPerformed;
+        Input.InputActions.Box.Scroll.performed += Scroll;
     }
 
     void Scroll(InputAction.CallbackContext context)
     {
-
         int scroll = (int)Mathf.Clamp(context.ReadValue<float>(), -1, 1);
 
         Index += scroll;

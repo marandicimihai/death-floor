@@ -17,10 +17,12 @@ public class Input : MonoBehaviour
         PauseGame.Instance.OnPause += (object caller, EventArgs args) =>
         {
             InputActions.General.Disable();
+            InputActions.Box.Disable();
         };
         PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
         {
             InputActions.General.Enable();
+            InputActions.Box.Enable();
         };
         GameManager.Instance.OnGameOver += (object caller, EventArgs args) =>
         {

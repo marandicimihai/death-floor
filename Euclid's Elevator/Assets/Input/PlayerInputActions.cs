@@ -426,6 +426,176 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Box"",
+            ""id"": ""4e649078-f944-4e08-af7a-3862d78e65dd"",
+            ""actions"": [
+                {
+                    ""name"": ""ExitBox"",
+                    ""type"": ""Button"",
+                    ""id"": ""c24b6727-788f-43c1-b430-eeea0e80ed93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""bf956ac5-6686-4654-b903-7ac4d08cdfe8"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Inventory4"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2d2fd18-4298-42ec-bfbb-2616246ce788"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory3"",
+                    ""type"": ""Button"",
+                    ""id"": ""d8d927ca-cbe5-4d16-ad18-02bcc78ecea7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory2"",
+                    ""type"": ""Button"",
+                    ""id"": ""51e14d07-bbc7-4fca-a128-f55a62d09766"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory1"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e3e7d6d-9611-42a8-a48d-9933007aa0ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3e5b800-3750-4f49-9b8d-3e9ce4b08809"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c0f378dc-3cca-4ccc-98a2-982cc31c0097"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitBox"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""071c2af5-8bd0-460d-ae24-92edc29ac1f0"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47238009-795d-4cb0-b2f8-920b9f043fba"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7357dd47-0710-4014-ada1-d5aafee0584d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3163e494-607c-4bc9-a7b0-48b9d8a05512"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c94cba1f-485c-4372-b372-736e366fa549"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""1551578a-4e5b-479d-8898-eff31d645241"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""9b5d63e3-fc57-45c3-8a59-662977502223"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4011b116-6198-492f-b1ca-ad2a8b4e733d"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -449,6 +619,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Realtime_PageLeft = m_Realtime.FindAction("PageLeft", throwIfNotFound: true);
         m_Realtime_PageRight = m_Realtime.FindAction("PageRight", throwIfNotFound: true);
         m_Realtime_Journal = m_Realtime.FindAction("Journal", throwIfNotFound: true);
+        // Box
+        m_Box = asset.FindActionMap("Box", throwIfNotFound: true);
+        m_Box_ExitBox = m_Box.FindAction("ExitBox", throwIfNotFound: true);
+        m_Box_Scroll = m_Box.FindAction("Scroll", throwIfNotFound: true);
+        m_Box_Inventory4 = m_Box.FindAction("Inventory4", throwIfNotFound: true);
+        m_Box_Inventory3 = m_Box.FindAction("Inventory3", throwIfNotFound: true);
+        m_Box_Inventory2 = m_Box.FindAction("Inventory2", throwIfNotFound: true);
+        m_Box_Inventory1 = m_Box.FindAction("Inventory1", throwIfNotFound: true);
+        m_Box_Use = m_Box.FindAction("Use", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -674,6 +853,87 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public RealtimeActions @Realtime => new RealtimeActions(this);
+
+    // Box
+    private readonly InputActionMap m_Box;
+    private IBoxActions m_BoxActionsCallbackInterface;
+    private readonly InputAction m_Box_ExitBox;
+    private readonly InputAction m_Box_Scroll;
+    private readonly InputAction m_Box_Inventory4;
+    private readonly InputAction m_Box_Inventory3;
+    private readonly InputAction m_Box_Inventory2;
+    private readonly InputAction m_Box_Inventory1;
+    private readonly InputAction m_Box_Use;
+    public struct BoxActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public BoxActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ExitBox => m_Wrapper.m_Box_ExitBox;
+        public InputAction @Scroll => m_Wrapper.m_Box_Scroll;
+        public InputAction @Inventory4 => m_Wrapper.m_Box_Inventory4;
+        public InputAction @Inventory3 => m_Wrapper.m_Box_Inventory3;
+        public InputAction @Inventory2 => m_Wrapper.m_Box_Inventory2;
+        public InputAction @Inventory1 => m_Wrapper.m_Box_Inventory1;
+        public InputAction @Use => m_Wrapper.m_Box_Use;
+        public InputActionMap Get() { return m_Wrapper.m_Box; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BoxActions set) { return set.Get(); }
+        public void SetCallbacks(IBoxActions instance)
+        {
+            if (m_Wrapper.m_BoxActionsCallbackInterface != null)
+            {
+                @ExitBox.started -= m_Wrapper.m_BoxActionsCallbackInterface.OnExitBox;
+                @ExitBox.performed -= m_Wrapper.m_BoxActionsCallbackInterface.OnExitBox;
+                @ExitBox.canceled -= m_Wrapper.m_BoxActionsCallbackInterface.OnExitBox;
+                @Scroll.started -= m_Wrapper.m_BoxActionsCallbackInterface.OnScroll;
+                @Scroll.performed -= m_Wrapper.m_BoxActionsCallbackInterface.OnScroll;
+                @Scroll.canceled -= m_Wrapper.m_BoxActionsCallbackInterface.OnScroll;
+                @Inventory4.started -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory4;
+                @Inventory4.performed -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory4;
+                @Inventory4.canceled -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory4;
+                @Inventory3.started -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory3;
+                @Inventory3.performed -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory3;
+                @Inventory3.canceled -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory3;
+                @Inventory2.started -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory2;
+                @Inventory2.performed -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory2;
+                @Inventory2.canceled -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory2;
+                @Inventory1.started -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory1;
+                @Inventory1.performed -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory1;
+                @Inventory1.canceled -= m_Wrapper.m_BoxActionsCallbackInterface.OnInventory1;
+                @Use.started -= m_Wrapper.m_BoxActionsCallbackInterface.OnUse;
+                @Use.performed -= m_Wrapper.m_BoxActionsCallbackInterface.OnUse;
+                @Use.canceled -= m_Wrapper.m_BoxActionsCallbackInterface.OnUse;
+            }
+            m_Wrapper.m_BoxActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ExitBox.started += instance.OnExitBox;
+                @ExitBox.performed += instance.OnExitBox;
+                @ExitBox.canceled += instance.OnExitBox;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
+                @Inventory4.started += instance.OnInventory4;
+                @Inventory4.performed += instance.OnInventory4;
+                @Inventory4.canceled += instance.OnInventory4;
+                @Inventory3.started += instance.OnInventory3;
+                @Inventory3.performed += instance.OnInventory3;
+                @Inventory3.canceled += instance.OnInventory3;
+                @Inventory2.started += instance.OnInventory2;
+                @Inventory2.performed += instance.OnInventory2;
+                @Inventory2.canceled += instance.OnInventory2;
+                @Inventory1.started += instance.OnInventory1;
+                @Inventory1.performed += instance.OnInventory1;
+                @Inventory1.canceled += instance.OnInventory1;
+                @Use.started += instance.OnUse;
+                @Use.performed += instance.OnUse;
+                @Use.canceled += instance.OnUse;
+            }
+        }
+    }
+    public BoxActions @Box => new BoxActions(this);
     public interface IGeneralActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -694,5 +954,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnPageLeft(InputAction.CallbackContext context);
         void OnPageRight(InputAction.CallbackContext context);
         void OnJournal(InputAction.CallbackContext context);
+    }
+    public interface IBoxActions
+    {
+        void OnExitBox(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
+        void OnInventory4(InputAction.CallbackContext context);
+        void OnInventory3(InputAction.CallbackContext context);
+        void OnInventory2(InputAction.CallbackContext context);
+        void OnInventory1(InputAction.CallbackContext context);
+        void OnUse(InputAction.CallbackContext context);
     }
 }

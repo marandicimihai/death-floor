@@ -35,7 +35,7 @@ public class Timer : Item, IUsable
 
     public void DestroyTimer(object caller, System.EventArgs args)
     { 
-        if (started && gameObject != null) 
+        if (started) 
         {
             GameManager.Instance.OnStageStart -= DestroyTimer;
             GameManager.Instance.OnDeath -= DestroyTimer;
@@ -51,7 +51,8 @@ public class Timer : Item, IUsable
             {
                 AudioManager.Instance.StopClip(ringJob);
             }
-            Destroy(gameObject);
+
+            DestroyImmediate(gameObject);
         }
     }
 

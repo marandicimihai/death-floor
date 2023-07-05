@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3971019275459387583}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8900484089135824686}
   - component: {fileID: -2051207454676538813}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: MechanicalTimer_ViewModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 7553058d6a16bea43982d75d3ef90cb5, type: 2}
+  uses: 1
   knob: {fileID: 2914790202141057414}
   duration: 10
   windDuration: 1
@@ -97,7 +98,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7598874544936569898}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: RootBone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5158074111537267830}
   - component: {fileID: 1475912493201536520}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: TimerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2914790202141057414}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Knob
   m_TagString: Untagged
   m_Icon: {fileID: 0}

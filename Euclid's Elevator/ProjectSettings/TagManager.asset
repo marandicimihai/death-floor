@@ -9,6 +9,7 @@ TagManager:
   - Elevator
   - Toolbox
   - KeyCard
+  - HidingBox
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - HoldModel
   - Projectile
   - ItemBase
-  - 
+  - Norender
   - 
   - 
   - 

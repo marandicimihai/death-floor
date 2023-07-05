@@ -19,9 +19,9 @@ public class CameraAnimation : MonoBehaviour
     private void Awake()
     {
         defaultPosition = camera.transform.localPosition;
-        positionOnEnter = defaultPosition;
-
         defaultRotation = camera.transform.localRotation;
+
+        positionOnEnter = defaultPosition;
         rotationOnEnter = defaultRotation;
     }
 
@@ -45,22 +45,28 @@ public class CameraAnimation : MonoBehaviour
 
     public void EnterAnimation(Transform reference, bool hideHUD = false)
     {
-        if (inAnimation)
-            return;
+        if (!inAnimation)
+        {
+            defaultPosition = camera.transform.localPosition;
+            defaultRotation = camera.transform.localRotation;
+        }
 
-        player.HUDManager.HideAllHUD();
+        if (hideHUD)
+        {
+            player.HUDManager.HideAllHUD();
+        }
+
+        Input.InputActions.General.Disable();
 
         player.controller.Disable();
         player.cameraController.Disable();
-
-        defaultRotation = camera.transform.localRotation;
-        defaultPosition = camera.transform.localPosition;
 
         camera.transform.parent = reference;
 
         positionOnEnter = camera.transform.localPosition;
         rotationOnEnter = camera.transform.localRotation;
-        
+
+        interpolation = 0;
         inAnimation = true;
     }
 
@@ -70,6 +76,8 @@ public class CameraAnimation : MonoBehaviour
             return;
 
         player.HUDManager.DefaultHUD();
+
+        Input.InputActions.General.Enable();
 
         player.controller.Enable();
         player.cameraController.Enable();

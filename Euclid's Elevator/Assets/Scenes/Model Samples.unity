@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -423,7 +423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1052320834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -732,7 +732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1250241553
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -942,6 +942,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bob
       objectReference: {fileID: 0}
+    - target: {fileID: 2860928687429822707, guid: ca5b085a3cb69ac418bcc36ea2ad1eab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca5b085a3cb69ac418bcc36ea2ad1eab, type: 3}
 --- !u!1001 &1590002422
@@ -999,6 +1003,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Key 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7178980861119937168, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
 --- !u!4 &1590002423 stripped
@@ -1023,7 +1031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1645812902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1668,13 +1676,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993288880}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -9.782055, y: -0.0235, z: 2.753837}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_Father: {fileID: 3497297829495213546}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1993288884
 MonoBehaviour:
@@ -1792,6 +1800,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubicleD
       objectReference: {fileID: 0}
+    - target: {fileID: 8264661561268046595, guid: f222f573e9ae84240b3da96a13fd408e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8789383022693929401, guid: f222f573e9ae84240b3da96a13fd408e, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -1853,6 +1865,10 @@ PrefabInstance:
     - target: {fileID: 8449473179804418464, guid: 0590121d5cc525643a41aa480b0530e2, type: 3}
       propertyPath: m_Name
       value: OfficeChair
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449473179804418464, guid: 0590121d5cc525643a41aa480b0530e2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8841937896095532430, guid: 0590121d5cc525643a41aa480b0530e2, type: 3}
       propertyPath: m_RootOrder
@@ -1959,6 +1975,10 @@ PrefabInstance:
     - target: {fileID: 1324122302635139529, guid: b52f239ce74d62844a853184aa526dd7, type: 3}
       propertyPath: m_Name
       value: CubicleA
+      objectReference: {fileID: 0}
+    - target: {fileID: 1324122302635139529, guid: b52f239ce74d62844a853184aa526dd7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1813801228082953075, guid: b52f239ce74d62844a853184aa526dd7, type: 3}
       propertyPath: m_RootOrder
@@ -2077,7 +2097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1329329546456143102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7229659708984732186, guid: 09d72d0bb74e5894a9d71655368de661, type: 3}
@@ -2138,6 +2158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardboardBox
       objectReference: {fileID: 0}
+    - target: {fileID: 8255653340584055525, guid: 2c0f99c2e0828634d9e3b93911724d8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c0f99c2e0828634d9e3b93911724d8c, type: 3}
 --- !u!4 &1512549813023871837 stripped
@@ -2155,6 +2179,10 @@ PrefabInstance:
     - target: {fileID: 8176866369857315484, guid: d163e41110dbebc4e8938186388ba5a1, type: 3}
       propertyPath: m_Name
       value: Trash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8176866369857315484, guid: d163e41110dbebc4e8938186388ba5a1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9111688379550687660, guid: d163e41110dbebc4e8938186388ba5a1, type: 3}
       propertyPath: m_RootOrder
@@ -2329,6 +2357,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TableC
       objectReference: {fileID: 0}
+    - target: {fileID: 5609391189135446663, guid: 52cc2b72c6c6b224bb021d257aec477c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7995838182275686956, guid: 52cc2b72c6c6b224bb021d257aec477c, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -2391,6 +2423,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HidingBox
       objectReference: {fileID: 0}
+    - target: {fileID: 8497746525225932910, guid: 04b1ea9ffeebbd44ca93850a1b50e0c3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9125946362529481428, guid: 04b1ea9ffeebbd44ca93850a1b50e0c3, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2437,6 +2473,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04b1ea9ffeebbd44ca93850a1b50e0c3, type: 3}
+--- !u!4 &3497297829495213546 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3497297830147938877, guid: 04b1ea9ffeebbd44ca93850a1b50e0c3, type: 3}
+  m_PrefabInstance: {fileID: 3497297829495213545}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3522163203709356802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2629,6 +2670,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PottedPlant
       objectReference: {fileID: 0}
+    - target: {fileID: 5972914833971652436, guid: 5d425a09e09068b449829cd319758dc7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d425a09e09068b449829cd319758dc7, type: 3}
 --- !u!4 &3669896700003778937 stripped
@@ -2804,6 +2849,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechanicalTimer
       objectReference: {fileID: 0}
+    - target: {fileID: 7211669551255390774, guid: 20071388feedd9442b04d1f912f62338, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8025185373340848268, guid: 20071388feedd9442b04d1f912f62338, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2966,6 +3015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PaperStack
       objectReference: {fileID: 0}
+    - target: {fileID: 3513155626595224049, guid: 59bacda5269493047b8d8f2df8836efd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59bacda5269493047b8d8f2df8836efd, type: 3}
 --- !u!4 &4409452063526501493 stripped
@@ -3075,6 +3128,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterDispencerC
       objectReference: {fileID: 0}
+    - target: {fileID: 5334705774374332049, guid: 6654a3f8288477c42bd67c690412ea7d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6654a3f8288477c42bd67c690412ea7d, type: 3}
 --- !u!4 &4794540803339996740 stripped
@@ -3158,6 +3215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Droplet
       objectReference: {fileID: 0}
+    - target: {fileID: 4915737364569293727, guid: 04ea13a84ee393b438cb189906fe90ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04ea13a84ee393b438cb189906fe90ab, type: 3}
 --- !u!1001 &4922434893827801904
@@ -3214,6 +3275,10 @@ PrefabInstance:
     - target: {fileID: 5229076800260630031, guid: 4300d5186723f364fa9253fb5f924dee, type: 3}
       propertyPath: m_Name
       value: TheOther2/3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229076800260630031, guid: 4300d5186723f364fa9253fb5f924dee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4300d5186723f364fa9253fb5f924dee, type: 3}
@@ -3277,6 +3342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoffeeTrail
       objectReference: {fileID: 0}
+    - target: {fileID: 4975129853458525291, guid: 3e286b5edb5ca1f46aee52615e3738e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e286b5edb5ca1f46aee52615e3738e6, type: 3}
 --- !u!4 &5099793714191760005 stripped
@@ -3294,6 +3363,10 @@ PrefabInstance:
     - target: {fileID: 66177323411506429, guid: 57f43fb67a2202246b80e8e88d9d99fe, type: 3}
       propertyPath: m_Name
       value: CubicleB
+      objectReference: {fileID: 0}
+    - target: {fileID: 66177323411506429, guid: 57f43fb67a2202246b80e8e88d9d99fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1510700572170907367, guid: 57f43fb67a2202246b80e8e88d9d99fe, type: 3}
       propertyPath: m_RootOrder
@@ -3437,6 +3510,10 @@ PrefabInstance:
     - target: {fileID: 4592847939376725926, guid: a48467e08b7ca394ea6fba846cc59c2b, type: 3}
       propertyPath: m_Name
       value: TableA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592847939376725926, guid: a48467e08b7ca394ea6fba846cc59c2b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a48467e08b7ca394ea6fba846cc59c2b, type: 3}
@@ -3787,6 +3864,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubicleC
       objectReference: {fileID: 0}
+    - target: {fileID: 93878244963078071, guid: 1a9829e3372b0a541996237e341980d5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8005164926479453149, guid: 1a9829e3372b0a541996237e341980d5, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -3911,6 +3992,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyBrohken_PieceB
       objectReference: {fileID: 0}
+    - target: {fileID: 5334123188023769081, guid: 702828c57fd614248a723903c9432c6e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7641156362487023765, guid: 702828c57fd614248a723903c9432c6e, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -4011,6 +4096,10 @@ PrefabInstance:
     - target: {fileID: 7290756457257517971, guid: fbf65a8a656d48c43b62c0a701c33a6c, type: 3}
       propertyPath: m_Name
       value: CoffeExplode
+      objectReference: {fileID: 0}
+    - target: {fileID: 7290756457257517971, guid: fbf65a8a656d48c43b62c0a701c33a6c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbf65a8a656d48c43b62c0a701c33a6c, type: 3}
@@ -4125,6 +4214,10 @@ PrefabInstance:
     - target: {fileID: 4987082097754390101, guid: d7f45d2b3f9f97744ab2fe8e36df8483, type: 3}
       propertyPath: m_Name
       value: KeyBrohken_PieceA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987082097754390101, guid: d7f45d2b3f9f97744ab2fe8e36df8483, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7f45d2b3f9f97744ab2fe8e36df8483, type: 3}
@@ -4326,6 +4419,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TableB
       objectReference: {fileID: 0}
+    - target: {fileID: 6673305810335049044, guid: ba8033205bb7b1e4299ab5fa624d3398, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9201482549266863615, guid: ba8033205bb7b1e4299ab5fa624d3398, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -4431,6 +4528,10 @@ PrefabInstance:
     - target: {fileID: 5995495318709329459, guid: e4676e17ecc327d4dbf9ea598bd23b40, type: 3}
       propertyPath: m_Name
       value: WaterDispencerA
+      objectReference: {fileID: 0}
+    - target: {fileID: 5995495318709329459, guid: e4676e17ecc327d4dbf9ea598bd23b40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4676e17ecc327d4dbf9ea598bd23b40, type: 3}
@@ -4612,6 +4713,10 @@ PrefabInstance:
     - target: {fileID: 5962345312919593543, guid: c8617bf4fb290c645bc9d9c48e862ef8, type: 3}
       propertyPath: m_Name
       value: WaterDispencerB
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962345312919593543, guid: c8617bf4fb290c645bc9d9c48e862ef8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8617bf4fb290c645bc9d9c48e862ef8, type: 3}

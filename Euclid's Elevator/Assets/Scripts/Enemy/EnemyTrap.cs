@@ -81,7 +81,7 @@ public class EnemyTrap : MonoBehaviour
                 AudioManager.Instance.PlayClip(gameObject, screech);
             }
 
-            if (Vector3.Distance(player.position, transform.position) < deathRadius)
+            if (Vector3.Distance(player.position, transform.position) < deathRadius && !GameManager.Instance.player.Dead)
             {
                 AudioManager.Instance.PlayClip(gameObject, groundhit);
                 AudioManager.Instance.StopClip(ambiencejob);

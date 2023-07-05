@@ -1,10 +1,17 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerCameraAnimation : MonoBehaviour
 {
     [SerializeField] Transform cameraReference;
     [SerializeField] bool hideHUD;
     [SerializeField] bool instantExit;
+    Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     public void EnterAnimation()
     {
