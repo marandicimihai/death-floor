@@ -64,7 +64,7 @@ public class Insanity : MonoBehaviour
 
         #endregion
 
-        if (insanity >= 1)
+        if (insanity >= 1 && !player.Dead)
         {
             player.Die(false);
             sanityDeath.SetBool("Dead", true);

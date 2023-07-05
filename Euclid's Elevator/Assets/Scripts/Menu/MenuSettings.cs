@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System;
 public class MenuSettings : MonoBehaviour
 {
+    public static MenuSettings Instance;
+
     [Header("Page Paramaters")]
     [SerializeField] bool displayPages;
     [SerializeField] [Range(0, 2)] int pageIndex;
@@ -45,8 +47,8 @@ public class MenuSettings : MonoBehaviour
     [SerializeField] bool canvasOn;
     public bool refreshTest = false; //use this "trigger" to update the settings UI;
     bool valuesLoaded;
-    Animator thisAnim;
-    Canvas thisCanvas;
+    [SerializeField] Animator thisAnim;
+    [SerializeField] Canvas thisCanvas;
     //Settings set; 
 
     [Serializable] 
@@ -63,10 +65,15 @@ public class MenuSettings : MonoBehaviour
         }
     }
 
-    void Awake()
+    void Start()
     {
-        thisAnim = gameObject.GetComponent<Animator>();
-        thisCanvas = gameObject.GetComponent<Canvas>();
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+
         Refresh();
         valuesLoaded = true;
     }
@@ -163,7 +170,7 @@ public class MenuSettings : MonoBehaviour
     //AUDIO
     void UpdateAudio()
     {
-        effectsVolume = SaveSystem.Instance.LoadSettings().EffectsVolume; 
+        effectsVolume = SaveSystem.Instance.LoadSettings().EffectsVolume;
         ambianceVolume = SaveSystem.Instance.LoadSettings().AmbienceVolume;
         effectsSlider.value = effectsVolume;
         ambianceSlider.value = ambianceVolume;

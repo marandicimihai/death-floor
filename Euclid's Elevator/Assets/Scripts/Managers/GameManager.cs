@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     public EventHandler OnStageStart;
     public EventHandler OnDeath;
+    public EventHandler OnGameOver;
+    public EventHandler OnGameEnd;
 
 
     void Awake()
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
     {
         if (deaths == maxDeaths)
         {
+            OnGameOver?.Invoke(this, new EventArgs());
             GameStage = GameStage.End;
         }
         else
@@ -122,6 +125,7 @@ public class GameManager : MonoBehaviour
         Stage++;
         if (Stage > stageCount)
         {
+            OnGameEnd?.Invoke(this, new EventArgs());
             GameStage = GameStage.End;
         }
         else

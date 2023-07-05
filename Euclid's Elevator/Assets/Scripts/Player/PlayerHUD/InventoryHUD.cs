@@ -37,6 +37,7 @@ public class InventoryHUD : MonoBehaviour
     {
         if (hideHUD)
         {
+            SetAllInvisible();
             inventoryHUDParent.SetActive(false);
             wasHidden = true;
         }
@@ -134,7 +135,10 @@ public class InventoryHUD : MonoBehaviour
     {
         for (int i = 0; i < inventory.Items.Length; i++)
         {
-            inventory.Items[i].SetVisible(false);
+            if (inventory.Items[i] != null)
+            {
+                inventory.Items[i].SetVisible(false);
+            }
         }
     }
 }

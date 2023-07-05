@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine;
+
 public class SideMenu : MonoBehaviour
 {
     Animator thisAnim;
@@ -11,35 +11,27 @@ public class SideMenu : MonoBehaviour
     [SerializeField] GameObject restartBut;
     [SerializeField] Image pauseSprite;
     [SerializeField] Image gameoverSprite;
-    [SerializeField] bool open;
-    [SerializeField] bool test;
-    // "Start is called before the first frame update" WOAH REALLY!?
+    
     void Start()
     {
         thisAnim = GetComponent<Animator>();
         thisCanvas = GetComponent<Canvas>();
         thisCanvas.enabled = false;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(test)
+        PauseGame.Instance.OnTogglePause += (bool value) => OpenMenu(value);
+        GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
         {
-            test = false;
-            TEST();
-        }
+            isDeathMenu = true;
+            OpenMenu(true);
+        };
+    }
 
-    }
-    void TEST() //to test the sidemenu
-    {
-        OpenMenu(open);
-    }
-    public void SetMenuType(bool type) //0 - pause menu// 1 - death menu;
+    public void SetMenuType(bool type)
     {
         isDeathMenu = type;
         Refresh();
     }
+
     void Refresh()
     {
         restartBut.SetActive(isDeathMenu);
@@ -47,22 +39,23 @@ public class SideMenu : MonoBehaviour
         gameoverSprite.enabled = isDeathMenu;
         pauseSprite.enabled = !isDeathMenu;
     }
+
     public void OpenMenu(bool value)
     {
         Refresh();
         if (value)
         {
             thisAnim.SetTrigger("SlideIn");
-            open = true;
         }
         else
         {
+            MenuSettings.Instance.OpenSettings(value);
             thisAnim.SetTrigger("SlideOut");
-            open = false;
         }
     }
+
     public void SetCanvas(int mode)
-    { //0 - false/1 - true
+    {
         if(mode > 0)
         {
             thisCanvas.enabled = true;
@@ -72,22 +65,26 @@ public class SideMenu : MonoBehaviour
             thisCanvas.enabled = false;
         }
     }
+
     public void OpenSettings(bool value)
     {
         OpenMenu(!value);
-        FindObjectOfType<MenuSettings>().OpenSettings(value);
+        MenuSettings.Instance.OpenSettings(value);
     }
+
     public void Resume()
     {
         OpenMenu(false);
-        //do the resume !
+        PauseGame.Instance.Unpause();
     }
+
     public void Restart()
     {
         //do restart !
     }
+
     public void LoadMainMenu()
     {
-        //do that !
+        SceneManager.LoadScene("Menu");
     }
 }

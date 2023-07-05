@@ -9,6 +9,9 @@ public class PauseGame : MonoBehaviour
     public EventHandler OnPause;
     public EventHandler OnUnPause;
 
+    public delegate void PauseValue(bool value);
+    public PauseValue OnTogglePause;
+
     bool init;
 
     private void Awake()
@@ -43,20 +46,27 @@ public class PauseGame : MonoBehaviour
         {
             Pause();
         }
+        OnTogglePause?.Invoke(Paused);
     }
 
     public void Pause()
     {
-        Time.timeScale = 0;
-        OnPause?.Invoke(this, new EventArgs());
-        Paused = true;
+        if (!Paused)
+        {
+            Time.timeScale = 0;
+            OnPause?.Invoke(this, new EventArgs());
+            Paused = true;
+        }
     }
 
 
     public void Unpause()
     {
-        Time.timeScale = 1;
-        OnUnPause?.Invoke(this, new EventArgs());
-        Paused = false;
+        if (Paused)
+        {
+            Time.timeScale = 1;
+            OnUnPause?.Invoke(this, new EventArgs());
+            Paused = false;
+        }
     }
 }

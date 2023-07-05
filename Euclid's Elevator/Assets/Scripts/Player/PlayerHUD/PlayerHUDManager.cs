@@ -27,6 +27,8 @@ public class PlayerHUDManager : MonoBehaviour
     private void Awake()
     {
         DefaultHUD();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Start()
@@ -40,6 +42,18 @@ public class PlayerHUDManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        };
+        GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            HideAllHUD();
+        };
+        GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            HideAllHUD();
         };
     }
 

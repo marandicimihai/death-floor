@@ -116,7 +116,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c01a3b0ae3ae6754dbe8d1b47accbb63, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -141,8 +141,6 @@ MonoBehaviour:
   restartBut: {fileID: 6891929392239924985}
   pauseSprite: {fileID: 6891929391351959052}
   gameoverSprite: {fileID: 6891929392458769980}
-  open: 0
-  test: 0
 --- !u!1 &6891929391245514779
 GameObject:
   m_ObjectHideFlags: 0

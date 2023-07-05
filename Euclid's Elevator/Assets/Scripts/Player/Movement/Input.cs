@@ -22,5 +22,13 @@ public class Input : MonoBehaviour
         {
             InputActions.General.Enable();
         };
+        GameManager.Instance.OnGameOver += (object caller, EventArgs args) =>
+        {
+            InputActions.Disable();
+        };
+        GameManager.Instance.OnGameEnd += (object caller, EventArgs args) =>
+        {
+            InputActions.Disable();
+        };
     }
 }
