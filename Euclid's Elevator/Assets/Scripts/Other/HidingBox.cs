@@ -12,6 +12,10 @@ public class HidingBox : MonoBehaviour
     private void Start()
     {
         Input.InputActions.Box.ExitBox.performed += (InputAction.CallbackContext context) => ExitBox();
+        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
+        {
+            animator.SetTrigger("Reset");
+        };
     }
 
     public void EnterBox(Player player)
@@ -39,6 +43,7 @@ public class HidingBox : MonoBehaviour
             return;
 
         cameraRoot.localRotation = Quaternion.LookRotation(Vector3.Scale(enemyPos - cameraRoot.position, new Vector3(1, 0, 1)));
+        hasPlayer = false;
 
         animator.SetTrigger("Death");
     }
