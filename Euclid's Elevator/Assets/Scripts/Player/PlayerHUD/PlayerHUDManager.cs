@@ -4,9 +4,10 @@ public class PlayerHUDManager : MonoBehaviour
 {
     public ActionInfoHUD actionInfo;
     public InventoryHUD inventoryHUD;
+    public DialogueHUD dialogueHUD;
+    public PopUpHUD popupHUD;
     [SerializeField] GameObject crosshair;
     [SerializeField] JournalHUD journalHUD;
-    [SerializeField] DialogueHUD dialogueHUD;
 
     float journalHUDTime;
     float journalTimeElapsed;
@@ -65,6 +66,7 @@ public class PlayerHUDManager : MonoBehaviour
             actionInfo.hideHUD = true;
             inventoryHUD.hideHUD = true;
             dialogueHUD.hideHUD = true;
+            popupHUD.hideHUD = true;
             crosshair.SetActive(false);
             journalHUDTime = delay;
         }
@@ -79,8 +81,9 @@ public class PlayerHUDManager : MonoBehaviour
     {
         actionInfo.hideHUD = false;
         inventoryHUD.hideHUD = false;
-        journalHUD.hideHUD = true;
         dialogueHUD.hideHUD = false;
+        journalHUD.hideHUD = true;
+        popupHUD.hideHUD = false;
         crosshair.SetActive(true);
     }
 
@@ -90,6 +93,7 @@ public class PlayerHUDManager : MonoBehaviour
         inventoryHUD.hideHUD = true;
         journalHUD.hideHUD = true;
         dialogueHUD.hideHUD = true;
+        popupHUD.hideHUD = true;
         crosshair.SetActive(false);
     }
 }

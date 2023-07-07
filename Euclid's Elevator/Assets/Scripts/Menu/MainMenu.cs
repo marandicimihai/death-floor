@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
     MenuSettings settingsMenu;
     void Start()
     {
+        Time.timeScale = 1;
+
         settingsMenu = FindObjectOfType<MenuSettings>();
         mainTab.enabled = true;
         creditsTab.enabled = false;

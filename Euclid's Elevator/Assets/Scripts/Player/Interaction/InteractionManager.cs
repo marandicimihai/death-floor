@@ -42,7 +42,8 @@ public class InteractionManager : MonoBehaviour
             acte.PickLock,
             acte.Repair,
             acte.InsertKeycard,
-            acte.PickUpItem
+            acte.PickUpItem,
+            acte.Hide
         };
 
         Interactions inter = GetComponent<Interactions>();

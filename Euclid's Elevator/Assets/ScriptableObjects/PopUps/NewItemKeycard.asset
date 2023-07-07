@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89bd7bf547a041941ba9279474e1d61c, type: 3}
-  m_Name: Test
+  m_Name: NewItemKeycard
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: c1e274975d986764292c8ab5d7e0bf54, type: 3}
-  text: A fost odata ca in povesti...
+  image: {fileID: 21300000, guid: b46b5c10821fb1b4d97eac13122ef636, type: 3}
+  text: New Item Unlocked!
   oneTime: 1

@@ -16,6 +16,10 @@ public class ActionText : MonoBehaviour
     [Header("Items")]
     [SerializeField] string pickUpItem;
 
+    [Header("Box")]
+    [SerializeField] string hide;
+    [SerializeField] string getOut;
+
     public bool OpenDoor(Player player, RaycastHit hit)
     {
         if (hit.transform.GetComponentInParent<Door>() && !hit.transform.GetComponentInParent<Door>().StageLocked && 
@@ -107,6 +111,19 @@ public class ActionText : MonoBehaviour
         if (hit.transform.TryGetComponent(out Item item))
         {
             player.HUDManager.actionInfo.SetActionText(pickUpItem);
+            return true;
+        }
+        return false;
+    }
+
+    public bool Hide(Player player, RaycastHit hit)
+    {
+        if (hit.collider.CompareTag("HidingBox") && hit.collider.TryGetComponent(out HidingBox box))
+        {
+            if (!box.hasPlayer)
+            {
+                player.HUDManager.actionInfo.SetActionText(hide);
+            }
             return true;
         }
         return false;

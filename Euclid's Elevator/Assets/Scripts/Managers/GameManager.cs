@@ -4,9 +4,7 @@ using System;
 
 public enum GameStage
 {
-    Loading,
-    Lobby,
-    SecondLoading,
+    Tutorial,
     GameLevel,
     WaitForPlayer,
     End
@@ -41,52 +39,31 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        Inventory.OnPickUpKeycard += (object caller, EventArgs args) =>
+        {
+            if (GameStage == GameStage.Tutorial && player.Deaths == 0)
+            {
+                SpawnEnemy();
+            }
+        };
     }
 
     private void Start()
     {
-        StartGame();
-    }
-
-    private void Update()
-    {
-        if (GameStage == GameStage.Loading)
-        {
-
-        }
-        else if (GameStage == GameStage.Lobby)
-        {
-
-        }
-        else if (GameStage == GameStage.SecondLoading)
-        {
-
-        }
-        else if (GameStage == GameStage.GameLevel)
-        {
-
-        }
-        else if (GameStage == GameStage.WaitForPlayer)
-        {
-            
-        }
-        else if (GameStage == GameStage.End)
-        {
-
-        }
+        StartTutorial();
     }
 
     #region GameLevel
 
-    void StartGame()
+    void StartTutorial()
     {
-        GameStage = GameStage.GameLevel;
+        GameStage = GameStage.Tutorial;
         Stage = 1;
 
         OnStageStart?.Invoke(this, new EventArgs());
 
+        HideEnemy();
         SpawnPlayer();
-        SpawnEnemy();
     }
 
     public void PlayerDeath(int deaths, int maxDeaths)
@@ -100,7 +77,15 @@ public class GameManager : MonoBehaviour
         {
             OnDeath?.Invoke(this, new EventArgs());
             SpawnPlayer();
-            SpawnEnemy();
+            
+            if (GameStage == GameStage.GameLevel)
+            {
+                SpawnEnemy();
+            }
+            else if (GameStage == GameStage.Tutorial)
+            {
+                HideEnemy();
+            }
         }
     }
 
@@ -108,16 +93,14 @@ public class GameManager : MonoBehaviour
     {
         if (GameStage == GameStage.WaitForPlayer)
         {
+            GameStage = GameStage.GameLevel;
             NextStage();
         }
     }
 
     public void KeycardInserted()
     {
-        if (GameStage == GameStage.GameLevel)
-        {
-            GameStage = GameStage.WaitForPlayer;
-        }
+        GameStage = GameStage.WaitForPlayer;
     }
 
     void NextStage()
@@ -159,7 +142,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        enemy.gameObject.SetActive(true);
         enemy.Spawn(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position);
+    }
+
+    void HideEnemy()
+    {
+        enemy.gameObject.SetActive(false);
     }
 
     #endregion

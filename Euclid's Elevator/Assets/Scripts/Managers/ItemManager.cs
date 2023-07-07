@@ -49,7 +49,6 @@ public class ItemManager : MonoBehaviour
             SpawnKeycard(GameManager.Instance.Stage);
         };
 
-        SpawnItems();
         SpawnKeycard(1);
     }
 

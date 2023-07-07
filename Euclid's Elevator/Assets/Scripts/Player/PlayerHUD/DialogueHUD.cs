@@ -14,6 +14,11 @@ public class DialogueHUD : MonoBehaviour
     int currentLetter;
     bool typing;
 
+    private void Awake()
+    {
+        dialogueManager.OnSayLine += StartSaying;
+    }
+
     private void Update()
     {
         dialogue.enabled = !hideHUD;

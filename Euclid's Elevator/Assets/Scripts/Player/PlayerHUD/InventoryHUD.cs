@@ -29,8 +29,8 @@ public class InventoryHUD : MonoBehaviour
     {
         inventory = GetComponent<Inventory>();
 
-        inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshVisualModels();
-        inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshInventoryHUD();
+        Inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshVisualModels();
+        Inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshInventoryHUD();
     }
 
     private void Update()

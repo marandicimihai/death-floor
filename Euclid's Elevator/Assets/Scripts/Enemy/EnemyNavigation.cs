@@ -35,7 +35,6 @@ public class EnemyNavigation : MonoBehaviour
     [SerializeField] EnemyRigAnim rigAnim;
     [SerializeField] LayerMask visionMask;
     [SerializeField] LayerMask solidMask;
-    [SerializeField] LayerMask playerMask;
     [SerializeField] NavMeshAgent agent;
 
     [Header("Patrol")]
@@ -91,6 +90,7 @@ public class EnemyNavigation : MonoBehaviour
     float timeSinceOpenDoor;
     bool patrolling;
     bool ignoreInspectTime;
+    bool spawned;
 
     private void Awake()
     {
@@ -99,23 +99,28 @@ public class EnemyNavigation : MonoBehaviour
 
     private void Update()
     {
+        if (!spawned)
+        {
+            return;
+        }
+
         Transform cam = player.cameraController.camera;
-        Debug.DrawRay(cam.position, (transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position).normalized *
+        
+        /*Debug.DrawRay(cam.position, (transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position).normalized *
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));
         Debug.DrawRay(cam.position, (transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position).normalized *
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));
         Debug.DrawRay(cam.position, (transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f - Vector3.up * 0.49f - cam.position).normalized *
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));
         Debug.DrawRay(cam.position, (transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f - Vector3.up * 0.49f - cam.position).normalized *
-            Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));
-
+            Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));*/
+        
         rigAnim.RigUpdate();
         if (!player.Dead)
         {
-            if (canKill && Vector3.Distance(transform.position, player.transform.position) <= killDistance && 
-                Physics.Raycast(transform.position, player.transform.position - transform.position, out RaycastHit hit,
-                    Vector3.Distance(player.transform.position, transform.position), solidMask) && hit.transform.gameObject.layer == playerMask &&
-                    !player.Dead)
+            if (canKill && Vector3.Distance(transform.position, cam.transform.position) <= killDistance &&
+                Physics.Raycast(transform.position, cam.transform.position - transform.position, out RaycastHit hit,
+                    Vector3.Distance(cam.transform.position, transform.position), solidMask) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 PlayerKill();
             }
@@ -129,7 +134,7 @@ public class EnemyNavigation : MonoBehaviour
                 }
 
                 if (Physics.Raycast(transform.position, player.transform.position - transform.position, out RaycastHit hit2,
-                    Vector3.Distance(player.transform.position, transform.position), solidMask) && hit2.transform.gameObject.layer == playerMask 
+                    Vector3.Distance(player.transform.position, transform.position), solidMask) && hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player")
                     || Visible)
                 {
                     Chase();
@@ -184,7 +189,7 @@ public class EnemyNavigation : MonoBehaviour
             #region Sound
 
             if (Physics.Raycast(transform.position, player.transform.position - transform.position, out RaycastHit hit3,
-                    Vector3.Distance(player.transform.position, transform.position), solidMask) && hit3.transform.gameObject.layer == playerMask
+                    Vector3.Distance(player.transform.position, transform.position), solidMask) && hit3.transform.gameObject.layer == LayerMask.NameToLayer("Player")
                     || Visible)
             {
                 if (!ambiencestarted)
@@ -389,6 +394,7 @@ public class EnemyNavigation : MonoBehaviour
 
     public void Spawn(Vector3 position)
     {
+        spawned = true;
         canMove = false;
         agent.Warp(position);
         agent.ResetPath();

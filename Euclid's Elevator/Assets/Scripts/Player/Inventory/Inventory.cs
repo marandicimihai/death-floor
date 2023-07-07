@@ -4,6 +4,9 @@ using System;
 
 public class Inventory : MonoBehaviour
 {
+    public static EventHandler OnPickUpKeycard;
+    public static EventHandler OnItemsChanged;
+
     public Item[] Items 
     {
         get
@@ -27,7 +30,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] Transform dropPoint;
     [SerializeField] float dropForce;
 
-    public EventHandler OnItemsChanged;
+    [Header("Events")]
+    [SerializeField] ItemProperties keycard;
 
     //TO PREVENT HOLSTER OF ANOTHER ITEM PLAYING WHEN SWITCHED QUICKLY
     AudioJob currentHolster;
@@ -109,6 +113,11 @@ public class Inventory : MonoBehaviour
             {
                 Item newItem = Instantiate(itemComponent.properties.inHandObject, inventory).GetComponent<Item>();
                 newItem.SetValues(itemComponent);
+
+                if (itemComponent.properties.name == keycard.name)
+                {
+                    OnPickUpKeycard?.Invoke(this, new EventArgs());
+                }
 
                 Destroy(itemComponent.gameObject);
 

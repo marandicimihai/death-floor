@@ -4,10 +4,12 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-    [SerializeField] DialogueHUD hud;
 
-    Line currentLine;
-    List<Line> used;
+    static Line currentLine;
+    static List<Line> used;
+
+    public delegate void SayLineHUD(Line line);
+    public SayLineHUD OnSayLine;
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class DialogueManager : MonoBehaviour
 
         if (currentLine == null || line.name != currentLine.name)
         {
-            hud.StartSaying(line);
+            OnSayLine?.Invoke(line);
             currentLine = line;
         }
     }
