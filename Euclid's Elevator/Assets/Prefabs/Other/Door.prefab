@@ -419,6 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
+  obstacle: {fileID: 8738165599624732279}
   panel: {fileID: 3616655169289104357}
   animator: {fileID: 699835758}
   closedAngles: {x: 0, y: -180, z: 0}

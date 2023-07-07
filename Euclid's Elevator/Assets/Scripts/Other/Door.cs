@@ -1,3 +1,4 @@
+using UnityEngine.AI;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -9,6 +10,7 @@ public class Door : MonoBehaviour
     public bool StageLocked { get; private set; }
 
     [SerializeField] ItemProperties key;
+    [SerializeField] NavMeshObstacle obstacle;
     [SerializeField] Transform panel;
     [SerializeField] Animator animator;
     [SerializeField] Vector3 closedAngles;
@@ -31,6 +33,7 @@ public class Door : MonoBehaviour
 
     private void Awake()
     {
+        obstacle.carving = false;
         Locked = true;
 
         if (Open)
@@ -135,6 +138,7 @@ public class Door : MonoBehaviour
         if ((!Open && !Locked) || forced)
         {
             OnDoorOpened?.Invoke(this, new System.EventArgs());
+            obstacle.carving = true;
             animator.SetTrigger("PullHandle");
             skrtjob = AudioManager.Instance.PlayClip(panelObj, skrtDoorName);
             AudioManager.Instance.PlayClip(handle, openDoorName);
@@ -147,6 +151,7 @@ public class Door : MonoBehaviour
     {
         if (Open)
         {
+            obstacle.carving = false;
             Open = false;
         }
     }

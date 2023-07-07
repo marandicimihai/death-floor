@@ -22,6 +22,7 @@ public class Timer : Item, IUsable
     [SyncValue] bool ringing;
     [SyncValue] bool ticking;
     [SyncValue] bool started;
+    [SyncValue] bool destroy;
 
     [SyncValue] float windTimeElapsed;
     [SyncValue] float tickTimeElapsed;
@@ -52,12 +53,17 @@ public class Timer : Item, IUsable
                 AudioManager.Instance.StopClip(ringJob);
             }
 
-            DestroyImmediate(gameObject);
+            destroy = true;
         }
     }
 
     private void Update()
     {
+        if (destroy)
+        {
+            Destroy(gameObject);
+            return;
+        }
         if (winding)
         {
             if (windJob != null)
