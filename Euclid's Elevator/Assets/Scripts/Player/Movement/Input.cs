@@ -10,6 +10,7 @@ public class Input : MonoBehaviour
         InputActions = new PlayerInputActions();
 
         InputActions.Enable();
+        InputActions.Box.Disable();
     }
 
     private void Start()

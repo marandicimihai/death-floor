@@ -47,8 +47,8 @@ public class EnemyTrap : MonoBehaviour
         if (used)
         {
             Destroy(this.gameObject);
-            GameManager.Instance.OnDeath += OnClosed;
-            GameManager.Instance.OnStageStart += OnClosed;
+            GameManager.Instance.OnDeath -= OnClosed;
+            GameManager.Instance.OnStageStart -= OnClosed;
         }
     }
 

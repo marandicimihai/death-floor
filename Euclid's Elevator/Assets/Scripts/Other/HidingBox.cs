@@ -35,6 +35,7 @@ public class HidingBox : MonoBehaviour
 
         hasPlayer = false;
         animator.SetTrigger("GetOut");
+        Input.InputActions.Box.Disable();
     }
 
     public void TriggerDeath(Vector3 enemyPos)

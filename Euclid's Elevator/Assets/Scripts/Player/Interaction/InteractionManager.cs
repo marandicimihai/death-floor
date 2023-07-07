@@ -52,7 +52,7 @@ public class InteractionManager : MonoBehaviour
             inter.PickUp,
             inter.ToggleDoor,
             inter.InsertInElevator,
-            inter.EnterOrExitBox
+            inter.EnterBox
         };
     }
 

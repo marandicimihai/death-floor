@@ -63,12 +63,13 @@ public class Interactions : MonoBehaviour
         return false;
     }
 
-    public bool EnterOrExitBox(CallType type, Player player, RaycastHit hit)
+    public bool EnterBox(CallType type, Player player, RaycastHit hit)
     {
         if (type == CallType.Started && hit.collider.CompareTag("HidingBox") && hit.collider.TryGetComponent(out HidingBox box))
         {
             if (!box.hasPlayer)
             {
+                Input.InputActions.Box.Enable();
                 box.EnterBox(player);
             }
             return true;
