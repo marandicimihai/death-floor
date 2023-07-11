@@ -89,7 +89,6 @@ public class EnemyNavigation : MonoBehaviour
     float openDoorTimeElapsed;
     float timeSinceOpenDoor;
     bool patrolling;
-    bool ignoreInspectTime;
     bool spawned;
 
     private void Awake()
@@ -146,14 +145,6 @@ public class EnemyNavigation : MonoBehaviour
                 }
                 else if (State == State.Inspect)
                 {
-                    if (!ignoreInspectTime)
-                    {
-                        inspectTimeElapsed += Time.deltaTime;
-                        if (Vector3.Distance(agent.destination, transform.position) <= inspectThreshold || inspectTimeElapsed > maxInspectTime)
-                        {
-                            State = State.Patrol;
-                        }
-                    }
                     if (playerInspect)
                     {
                         /*Debug.DrawRay(transform.position, (cam.transform.position - transform.position).normalized * 
@@ -167,6 +158,7 @@ public class EnemyNavigation : MonoBehaviour
                             Invoke(nameof(PlayerKill), boxCameraTransitionTime);
                         }
                     }
+                    inspectTimeElapsed += Time.deltaTime;
                     if (Vector3.Distance(agent.destination, transform.position) <= inspectThreshold)
                     {
                         State = State.Patrol;
@@ -284,7 +276,7 @@ public class EnemyNavigation : MonoBehaviour
         agent.stoppingDistance = chaseStopDistance;
     }
 
-    public void InspectNoise(Vector3 noisePos, bool ignoreDistance = false, bool ignoreInspectTime = false, bool playerInspect = false)
+    public void InspectNoise(Vector3 noisePos, bool ignoreDistance = false, bool playerInspect = false)
     {
         if (this.playerInspect)
         {
@@ -308,7 +300,6 @@ public class EnemyNavigation : MonoBehaviour
             agent.speed = inspectSpeed;
             this.playerInspect = playerInspect;
         }
-        this.ignoreInspectTime = ignoreInspectTime;
     }
     
     void Patrol()
@@ -354,7 +345,7 @@ public class EnemyNavigation : MonoBehaviour
                             door.OpenDoor(true);
                             if (State == State.Patrol)
                             {
-                                //StartCoroutine(CloseDoor(door, true, closeDoorTime));
+                                StartCoroutine(CloseDoor(door, true, closeDoorTime));
                             }
                         }
                     }
@@ -367,7 +358,7 @@ public class EnemyNavigation : MonoBehaviour
                             door.OpenDoor(true);
                             if (State == State.Patrol)
                             {
-                                //StartCoroutine(CloseDoor(door, false, closeDoorTime));
+                                StartCoroutine(CloseDoor(door, false, closeDoorTime));
                             }
                         }
                     }

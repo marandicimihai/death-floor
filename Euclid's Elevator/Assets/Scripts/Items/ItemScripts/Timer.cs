@@ -103,7 +103,7 @@ public class Timer : Item, IUsable
                 ringJob.transform.position = transform.position;
             }
             ringTimeElapsed += Time.deltaTime;
-            GameManager.Instance.enemy.InspectNoise(transform.position, true, true);
+            GameManager.Instance.enemy.InspectNoise(transform.position, true);
             if (ringTimeElapsed >= ringDuration)
             {
                 AudioManager.Instance.StopClip(ringJob);

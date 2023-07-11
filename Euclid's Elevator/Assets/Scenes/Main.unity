@@ -8541,7 +8541,7 @@ MonoBehaviour:
   groundCheck: {fileID: 2119336645}
   walls:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1049600
   ground:
     serializedVersion: 2
     m_Bits: 1025
@@ -13936,16 +13936,16 @@ MonoBehaviour:
     m_Bits: 17929
   agent: {fileID: 2086231057}
   doorOpenCooldownTime: 5
-  maxPatrolStepTime: 10
-  patrolStep: 10
+  maxPatrolStepTime: 45
+  patrolStep: 30
   patrolThreshold: 2
   patrolSpeed: 5
   patrolStopDistance: 1.8
   inspectDistance: 15
-  inspectThreshold: 1
-  maxInspectTime: 20
+  inspectThreshold: 1.5
+  maxInspectTime: 80
   inspectSpeed: 7
-  inspectStopDistance: 1.8
+  inspectStopDistance: 1
   killDistance: 2
   chaseSpeed: 9
   chaseStopDistance: 1.4
@@ -21709,10 +21709,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1288032390}
-    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: elevatorRideTime
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 4860145061060307195, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
       propertyPath: m_RootOrder
       value: 1
