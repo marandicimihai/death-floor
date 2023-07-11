@@ -19,6 +19,8 @@ MonoBehaviour:
   inHandObject: {fileID: 1668860761680531593, guid: 2c51d40c79ccff04196bc0d14c16f7a1, type: 3}
   offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: -90, y: 0, z: -105}
+  page: {fileID: 0}
+  popUp: {fileID: 11400000, guid: 8a8e66cdffdaa264a890d1386bdb2fa1, type: 2}
   pickup:
   - keypickup
   - keypickup2

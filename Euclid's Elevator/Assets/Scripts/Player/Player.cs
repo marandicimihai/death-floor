@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public CameraAnimation cameraAnimation;
     public VFXManager vfxmanager;
     public Inventory inventory;
+    public Journal journal;
     public PlayerHUDManager HUDManager;
     public Lockpick lockpick;
     public InteractionManager interactionManager;

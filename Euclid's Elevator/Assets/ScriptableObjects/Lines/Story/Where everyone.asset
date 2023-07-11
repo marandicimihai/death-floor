@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c92ccff1a28d86c4c991fd0f3c91f45e, type: 3}
-  m_Name: 2
+  m_Name: Where everyone
   m_EditorClassIdentifier: 
-  name: 
-  text: 
-  timeLastingAfterTyping: 0
-  oneTime: 0
+  name: whereeveryone
+  text: Where is everyone? Must be a horrible prank.
+  timeLastingAfterTyping: 4
+  oneTime: 1

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c92ccff1a28d86c4c991fd0f3c91f45e, type: 3}
-  m_Name: Missing Keycard
+  m_Script: {fileID: 11500000, guid: 89bd7bf547a041941ba9279474e1d61c, type: 3}
+  m_Name: NewItemKey
   m_EditorClassIdentifier: 
-  name: amongussy
-  text: lorem ipsum dolor sit amet
-  timeLastingAfterTyping: 4
+  image: {fileID: 21300000, guid: 3945ba5c81cca1346bb6e11e4146e26d, type: 3}
+  text: New Item Unlocked!
   oneTime: 1

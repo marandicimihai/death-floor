@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c92ccff1a28d86c4c991fd0f3c91f45e, type: 3}
-  m_Name: Spawn
+  m_Script: {fileID: 11500000, guid: 89bd7bf547a041941ba9279474e1d61c, type: 3}
+  m_Name: NewItemSoda
   m_EditorClassIdentifier: 
-  name: 
-  text: 
-  timeLastingAfterTyping: 0
-  oneTime: 0
+  image: {fileID: 21300000, guid: 1a60353a1d878e14f9243c719cd3abfd, type: 3}
+  text: New Item Unlocked!
+  oneTime: 1

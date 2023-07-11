@@ -7,6 +7,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] ItemProperties keycard;
     [SerializeField] ItemProperties toolbox;
     [SerializeField] Collider doorCollider;
+    [SerializeField] Transform waitForPlayerCenter;
     [SerializeField] float waitForPlayerRadius;
     [SerializeField] float elevatorRideTime;
     [SerializeField] float elevatorAccelTime;
@@ -48,9 +49,8 @@ public class Elevator : MonoBehaviour
 
     private void Update()
     {
-        if (!Broken && waiting && Vector3.Distance(transform.position, player.transform.position) <= waitForPlayerRadius)
+        if (!Broken && waiting && Vector3.Distance(waitForPlayerCenter.position, player.transform.position) <= waitForPlayerRadius)
         {
-            animator.SetBool("Open", false);
             doorCollider.enabled = true;
             if (canClose)
             {

@@ -19,6 +19,8 @@ MonoBehaviour:
   inHandObject: {fileID: 745547986693437957, guid: d1fd96f5efda3c04ebbc0420fe2fea44, type: 3}
   offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: 34.96, y: -114.36, z: 2.02}
+  page: {fileID: 0}
+  popUp: {fileID: 11400000, guid: 3bbc90648de58314b9bddddbb691269c, type: 2}
   pickup:
   - itempickup
   holster:

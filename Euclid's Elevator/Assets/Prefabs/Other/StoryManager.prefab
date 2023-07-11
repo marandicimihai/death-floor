@@ -48,7 +48,10 @@ MonoBehaviour:
   journal: {fileID: 0}
   popUp: {fileID: 0}
   objective: {fileID: 0}
-  keycardDescription: {fileID: 0}
   newObjective: {fileID: 11400000, guid: 35abfcf767ef1204ebd82baab9edff30, type: 2}
-  newItemKeycard: {fileID: 11400000, guid: fa42717502596c142808de0279ae8c39, type: 2}
   line1: {fileID: 11400000, guid: 56ffe9a290cdc0943a67a230ccb5a1d8, type: 2}
+  line2: {fileID: 11400000, guid: 681623f04cec7e748a0badc202852171, type: 2}
+  line3: {fileID: 11400000, guid: 798634a34cbca2e40808152e09bb7f5b, type: 2}
+  stageLockedPage: {fileID: 0}
+  line4: {fileID: 11400000, guid: 4bdc3320f0725444f8d674cd8fc94eca, type: 2}
+  line5: {fileID: 11400000, guid: 70a25c69f75e152429d65d282f2604ba, type: 2}

@@ -95,6 +95,9 @@ public class Journal : MonoBehaviour
 
     public void AddPage(JournalPage newPage)
     {
+        if (newPage == null)
+            return;
+
         if (!pages.Contains(newPage))
         {
             pages.Add(newPage);

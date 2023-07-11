@@ -117,7 +117,7 @@ public class PopUpHUD : MonoBehaviour
 
     public void PopUp(PopUpProperties popUp)
     {
-        if (used.Contains(popUp) && popUp.oneTime)
+        if ((used.Contains(popUp) && popUp.oneTime) || popUp == null)
         {
             return;
         }

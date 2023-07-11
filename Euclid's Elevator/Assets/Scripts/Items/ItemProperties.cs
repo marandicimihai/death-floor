@@ -13,6 +13,10 @@ public class ItemProperties : ScriptableObject
     public Vector3 offset;
     public Vector3 holdAngles;
 
+    [Header("On pick up")]
+    public JournalPage page;
+    public PopUpProperties popUp;
+
     [Header("Sounds")]
     public string[] pickup;
     public string[] holster;

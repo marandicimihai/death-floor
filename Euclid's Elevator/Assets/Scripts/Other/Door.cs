@@ -1,8 +1,13 @@
 using UnityEngine.AI;
 using UnityEngine;
+using System;
 
 public class Door : MonoBehaviour
 {
+    public static EventHandler OnOpenAnyDoor;
+    public static EventHandler OnTryUnlockAnyDoor;
+    public static EventHandler OnTryUnlockStageDoor;
+
     public bool Locked { get; private set; }
     public bool Open { get; private set; }
     public bool StageLocked { get; private set; }
@@ -106,6 +111,14 @@ public class Door : MonoBehaviour
             }
             return a;
         }
+        if (StageLocked)
+        {
+            OnTryUnlockStageDoor?.Invoke(this, new EventArgs());
+        }
+        else
+        {
+            OnTryUnlockAnyDoor?.Invoke(this, new EventArgs());
+        }
         return false;
     }
 
@@ -135,6 +148,7 @@ public class Door : MonoBehaviour
     {
         if ((!Open && !Locked) || forced)
         {
+            OnOpenAnyDoor?.Invoke(this, new EventArgs());
             animator.SetTrigger("PullHandle");
             skrtjob = AudioManager.Instance.PlayClip(panelObj, skrtDoorName);
             AudioManager.Instance.PlayClip(handle, openDoorName);

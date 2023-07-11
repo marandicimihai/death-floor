@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c92ccff1a28d86c4c991fd0f3c91f45e, type: 3}
-  m_Name: Door locked
+  m_Name: Door blocked
   m_EditorClassIdentifier: 
-  name: 
-  text: 
-  timeLastingAfterTyping: 0
-  oneTime: 0
+  name: Door blocked
+  text: Seems to be... blocked by something?
+  timeLastingAfterTyping: 4
+  oneTime: 1

@@ -19,6 +19,8 @@ MonoBehaviour:
   inHandObject: {fileID: 3877704203069068449, guid: f775e253da020e548b5e01a3d2621b44, type: 3}
   offset: {x: 0, y: 0, z: 0}
   holdAngles: {x: 0, y: 0, z: 0}
+  page: {fileID: 0}
+  popUp: {fileID: 11400000, guid: 6fc3b05521662e9489ac308ce12700ab, type: 2}
   pickup:
   - pillpickup
   holster:

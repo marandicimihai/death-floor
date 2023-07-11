@@ -8590,6 +8590,7 @@ MonoBehaviour:
   cameraAnimation: {fileID: 1288032397}
   vfxmanager: {fileID: 1288032398}
   inventory: {fileID: 1288032394}
+  journal: {fileID: 1288032402}
   HUDManager: {fileID: 185744096}
   lockpick: {fileID: 1288032400}
   interactionManager: {fileID: 1288032392}
@@ -13335,7 +13336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1984876290
 Transform:
   m_ObjectHideFlags: 0

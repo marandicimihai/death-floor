@@ -119,6 +119,9 @@ public class Inventory : MonoBehaviour
                     OnPickUpKeycard?.Invoke(this, new EventArgs());
                 }
 
+                player.journal.AddPage(itemComponent.properties.page);
+                player.HUDManager.popupHUD.PopUp(itemComponent.properties.popUp);
+
                 Destroy(itemComponent.gameObject);
 
                 AudioManager.Instance.PlayRandomClip(newItem.properties.pickup);
