@@ -135,7 +135,6 @@ public class Door : MonoBehaviour
     {
         if ((!Open && !Locked) || forced)
         {
-            obstacle.carving = true;
             animator.SetTrigger("PullHandle");
             skrtjob = AudioManager.Instance.PlayClip(panelObj, skrtDoorName);
             AudioManager.Instance.PlayClip(handle, openDoorName);
@@ -148,7 +147,6 @@ public class Door : MonoBehaviour
     {
         if (Open)
         {
-            obstacle.carving = false;
             Open = false;
         }
     }
