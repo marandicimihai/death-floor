@@ -156,8 +156,8 @@ public class EnemyNavigation : MonoBehaviour
                     }
                     if (playerInspect)
                     {
-                        Debug.DrawRay(transform.position, (cam.transform.position - transform.position).normalized * 
-                        Vector3.Distance(cam.transform.position, transform.position), Color.red);
+                        /*Debug.DrawRay(transform.position, (cam.transform.position - transform.position).normalized * 
+                        Vector3.Distance(cam.transform.position, transform.position), Color.red);*/
                         if (Physics.Raycast(transform.position, cam.transform.position - transform.position, out RaycastHit hit4,
                         killDistance, solidMask) && hit4.collider.CompareTag("HidingBox") &&
                         hit4.collider.TryGetComponent(out HidingBox box) && box.hasPlayer)
@@ -185,7 +185,7 @@ public class EnemyNavigation : MonoBehaviour
                 agent.isStopped = true;
                 transform.rotation = stopRot;
             }
-
+            
             #region Sound
 
             if (Physics.Raycast(transform.position, player.transform.position - transform.position, out RaycastHit hit3,
@@ -337,49 +337,49 @@ public class EnemyNavigation : MonoBehaviour
 
     void DoorOpen()
     {
-        //checks for a door, if the door is open, if the player is patrolling and the cooldown is gone or if the player is not patrolling
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, openDoorDistance, door) && 
-            hit.collider.GetComponentInParent<Door>() != null && !hit.collider.GetComponentInParent<Door>().Open &&
-            !hit.collider.GetComponentInParent<Door>().StageLocked && 
-            ((State == State.Patrol && timeSinceOpenDoor >= doorOpenCooldownTime) || State != State.Patrol))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, openDoorDistance, door))
         {
             Door door = hit.collider.GetComponentInParent<Door>();
-            openDoorTimeElapsed += Time.deltaTime;
-            if (door.Locked)
+            if (door != null && !door.Open && !door.StageLocked)
             {
-                if (openDoorTimeElapsed >= openLockedDoorTime)
+                if ((State == State.Patrol && timeSinceOpenDoor >= doorOpenCooldownTime) || State != State.Patrol)
                 {
-                    openDoorTimeElapsed = 0;
-                    timeSinceOpenDoor = 0;
-                    door.OpenDoor(true);
-                    if (State == State.Patrol)
+                    openDoorTimeElapsed += Time.deltaTime;
+                    if (door.Locked)
                     {
-                        StartCoroutine(CloseDoor(door, true, closeDoorTime));
+                        if (openDoorTimeElapsed >= openLockedDoorTime)
+                        {
+                            openDoorTimeElapsed = 0;
+                            timeSinceOpenDoor = 0;
+                            door.OpenDoor(true);
+                            if (State == State.Patrol)
+                            {
+                                //StartCoroutine(CloseDoor(door, true, closeDoorTime));
+                            }
+                        }
                     }
-                }
-            }
-            else
-            {
-                if (openDoorTimeElapsed >= openUnlockedDoorTime)
-                {
-                    openDoorTimeElapsed = 0;
-                    timeSinceOpenDoor = 0;
-                    door.OpenDoor(true);
-                    if (State == State.Patrol)
+                    else
                     {
-                        StartCoroutine(CloseDoor(door, false, closeDoorTime));
+                        if (openDoorTimeElapsed >= openUnlockedDoorTime)
+                        {
+                            openDoorTimeElapsed = 0;
+                            timeSinceOpenDoor = 0;
+                            door.OpenDoor(true);
+                            if (State == State.Patrol)
+                            {
+                                //StartCoroutine(CloseDoor(door, false, closeDoorTime));
+                            }
+                        }
                     }
-                }
-            }
 
-            agent.isStopped = true;
+                    agent.isStopped = true;
+                    return;
+                }
+            }
         }
-        else
-        {
-            agent.isStopped = false;
-            openDoorTimeElapsed = 0;
-            timeSinceOpenDoor += Time.deltaTime;
-        }
+        agent.isStopped = false;
+        openDoorTimeElapsed = 0;
+        timeSinceOpenDoor += Time.deltaTime;
     }
 
     IEnumerator CloseDoor(Door door, bool locked, float time)
@@ -400,6 +400,7 @@ public class EnemyNavigation : MonoBehaviour
         agent.ResetPath();
         State = State.Patrol;
 
+        AudioManager.Instance.StopClip(dragloop);
         dragloop = AudioManager.Instance.PlayClip(gameObject, drag);
 
         Invoke(nameof(Enable), spawnFreezeTime);

@@ -21,7 +21,7 @@ public class EnemyTrap : MonoBehaviour
     [SerializeField] string whoosh;
 
     AudioJob ambiencejob;
-    Transform player;
+    Player player;
 
     Quaternion initial;
 
@@ -32,7 +32,7 @@ public class EnemyTrap : MonoBehaviour
 
     private void Start()
     {
-        player = GameManager.Instance.playerTransform;
+        player = GameManager.Instance.player;
 
         initial = baseBone.rotation;
 
@@ -65,15 +65,17 @@ public class EnemyTrap : MonoBehaviour
         if (used)
             return;
 
-        if (pull && Vector3.ProjectOnPlane(transform.position - player.position, Vector3.up).magnitude >= minRadius && 
-            Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
-        {
+        Transform cam = player.cameraController.camera;
 
+
+        if (pull && Vector3.ProjectOnPlane(baseBone.position - cam.position, Vector3.up).magnitude >= minRadius && 
+            Physics.Raycast(baseBone.position, cam.position - baseBone.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
+        {
             anim.SetTrigger("Spot");
 
-            baseBone.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(player.position - baseBone.position, Vector3.up).normalized, Vector3.up) * initial;
+            baseBone.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(cam.position - baseBone.position, Vector3.up).normalized, Vector3.up) * initial;
 
-            GameManager.Instance.player.controller.AddForce(transform.position - player.position, forceStrength);
+            GameManager.Instance.player.controller.AddForce(transform.position - cam.position, forceStrength);
             GameManager.Instance.enemy.InspectNoise(transform.position, true);
 
             if (!hasPulled)
@@ -81,7 +83,7 @@ public class EnemyTrap : MonoBehaviour
                 AudioManager.Instance.PlayClip(gameObject, screech);
             }
 
-            if (Vector3.Distance(player.position, transform.position) < deathRadius && !GameManager.Instance.player.Dead)
+            if (Vector3.Distance(cam.position, baseBone.position) < deathRadius && !GameManager.Instance.player.Dead)
             {
                 AudioManager.Instance.PlayClip(gameObject, groundhit);
                 AudioManager.Instance.StopClip(ambiencejob);
@@ -144,9 +146,9 @@ public class EnemyTrap : MonoBehaviour
                 anim.SetTrigger("Burrow");
                 AudioManager.Instance.StopClip(ambiencejob);
                 AudioManager.Instance.PlayClip(gameObject, whoosh);
+                pull = false;
+                used = true;
             }
-            pull = false;
-            used = true;
         }
     }
 }

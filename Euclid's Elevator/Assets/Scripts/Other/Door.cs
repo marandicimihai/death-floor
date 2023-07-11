@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public static System.EventHandler OnDoorOpened;
-
     public bool Locked { get; private set; }
     public bool Open { get; private set; }
     public bool StageLocked { get; private set; }
@@ -137,7 +135,6 @@ public class Door : MonoBehaviour
     {
         if ((!Open && !Locked) || forced)
         {
-            OnDoorOpened?.Invoke(this, new System.EventArgs());
             obstacle.carving = true;
             animator.SetTrigger("PullHandle");
             skrtjob = AudioManager.Instance.PlayClip(panelObj, skrtDoorName);

@@ -51,6 +51,7 @@ public class Elevator : MonoBehaviour
         if (!Broken && waiting && Vector3.Distance(transform.position, player.transform.position) <= waitForPlayerRadius)
         {
             animator.SetBool("Open", false);
+            doorCollider.enabled = true;
             if (canClose)
             {
                 CloseElevator();

@@ -106,6 +106,7 @@ public class ItemManager : MonoBehaviour
             spawnerIndex = (spawnerIndex + 1) % spawners.Count;
         }
 
+        spawnerIndex = Random.Range(0, spawners.Count);
         spawners[spawnerIndex].ForceSpawn(item);
     }
 
@@ -126,6 +127,7 @@ public class ItemManager : MonoBehaviour
                     spawnerIndex = (spawnerIndex + 1) % spawn.points.Length;
                 }
 
+                spawnerIndex = Random.Range(0, spawn.points.Length);
                 spawn.points[spawnerIndex].ForceSpawn(keycard);
                 return;
             }
