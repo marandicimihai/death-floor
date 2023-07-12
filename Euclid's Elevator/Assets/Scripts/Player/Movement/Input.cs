@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+﻿using UnityEngine.SceneManagement;
+using UnityEngine;
 using System;
 
 public class Input : MonoBehaviour
 {
     public static PlayerInputActions InputActions { get; private set; }
 
-    private void Awake()
+    bool eventsDone;
+
+    public static void Init()
     {
         InputActions = new PlayerInputActions();
 
@@ -15,23 +18,42 @@ public class Input : MonoBehaviour
 
     private void Start()
     {
-        PauseGame.Instance.OnPause += (object caller, EventArgs args) =>
+        TryEvents();
+        SceneManager.activeSceneChanged += (Scene first, Scene second) =>
         {
-            InputActions.General.Disable();
-            InputActions.Box.Disable();
+            TryEvents();
         };
-        PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+    }
+
+    void TryEvents()
+    {
+        if (eventsDone)
         {
-            InputActions.General.Enable();
-            InputActions.Box.Enable();
-        };
-        GameManager.Instance.OnGameOver += (object caller, EventArgs args) =>
+            return;
+        }
+
+        try
         {
-            InputActions.Disable();
-        };
-        GameManager.Instance.OnGameEnd += (object caller, EventArgs args) =>
-        {
-            InputActions.Disable();
-        };
+            PauseGame.Instance.OnPause += (object caller, EventArgs args) =>
+            {
+                InputActions.General.Disable();
+                InputActions.Box.Disable();
+            };
+            PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+            {
+                InputActions.General.Enable();
+                InputActions.Box.Enable();
+            };
+            GameManager.Instance.OnGameOver += (object caller, EventArgs args) =>
+            {
+                InputActions.Disable();
+            };
+            GameManager.Instance.OnGameEnd += (object caller, EventArgs args) =>
+            {
+                InputActions.Disable();
+            };
+            eventsDone = true;
+        }
+        catch { }
     }
 }

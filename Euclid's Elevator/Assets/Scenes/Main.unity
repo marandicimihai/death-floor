@@ -7066,10 +7066,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8476606589830563804, guid: ddbf9d2d08c2e404fb70dd12195ad352, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddbf9d2d08c2e404fb70dd12195ad352, type: 3}
 --- !u!1 &1011184289
@@ -8471,7 +8467,6 @@ GameObject:
   - component: {fileID: 1288032384}
   - component: {fileID: 1288032387}
   - component: {fileID: 1288032390}
-  - component: {fileID: 1288032391}
   - component: {fileID: 1288032388}
   - component: {fileID: 1288032389}
   - component: {fileID: 1288032392}
@@ -8610,18 +8605,6 @@ MonoBehaviour:
   insanity: {fileID: 1288032399}
   spawnFreezeTime: 0.5
   maxDeaths: 4
---- !u!114 &1288032391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1288032383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c82069fba4e4b429d9c36076a4beb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1288032392
 MonoBehaviour:
   m_ObjectHideFlags: 0

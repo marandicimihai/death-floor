@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using static UnityEngine.InputSystem.InputActionRebindingExtensions;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine;
+using System.Linq;
 using System;
+
 public class MenuSettings : MonoBehaviour
 {
     public static MenuSettings Instance;
@@ -51,6 +53,8 @@ public class MenuSettings : MonoBehaviour
     [SerializeField] Canvas thisCanvas;
     //Settings set; 
 
+    RebindingOperation operation;
+
     [Serializable] 
     public class Res
     {
@@ -73,6 +77,7 @@ public class MenuSettings : MonoBehaviour
             return;
         }
         Instance = this;
+        Input.Init();
 
         Refresh();
         valuesLoaded = true;
@@ -267,13 +272,148 @@ public class MenuSettings : MonoBehaviour
         Settings newTop = new Settings(bloom, blur, resIndex, resType[resIndex].width, resType[resIndex].height, qualityIndex, vSync, isfullscreen); //goes on top
         SaveSystem.Instance.SaveSettings(old + newTop);
     }
+
+    public void SetBinding(string bind)
+    {
+        RebindingComplete();
+
+        Input.InputActions.Disable();
+        
+        if (bind == "forward")
+        {
+            operation = Input.InputActions.General.Movement.PerformInteractiveRebinding(1)
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "backward")
+        {
+            operation = Input.InputActions.General.Movement.PerformInteractiveRebinding(2)
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "left")
+        {
+            operation = Input.InputActions.General.Movement.PerformInteractiveRebinding(3)
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "right")
+        {
+            operation = Input.InputActions.General.Movement.PerformInteractiveRebinding(4)
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "sneak")
+        {
+            operation = Input.InputActions.General.Sneak.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "pause")
+        {
+            operation = Input.InputActions.Realtime.Pause.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "interact")
+        {
+            operation = Input.InputActions.General.Interact.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "use")
+        {
+            operation = Input.InputActions.General.Use.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "drop")
+        {
+            operation = Input.InputActions.General.Drop.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        else if (bind == "journal")
+        {
+            operation = Input.InputActions.Realtime.Journal.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnMatchWaitForAnother(0.1f)
+                .OnComplete(x => RebindingComplete());
+        }
+        operation.Start();
+    }
+
+    void RebindingComplete()
+    {
+        if (operation != null)
+        {
+            operation.Dispose();
+        }
+
+        Input.InputActions.Enable();
+        SaveInput();
+        UpdateInput();
+    }
+
     //INPUT
     void UpdateInput()
     {
         mouseSensitivity = SaveSystem.Instance.LoadSettings().Sensitivity;
         //also the same for other INPUTS (that currently can not be changed >:\ ) !!!!
 
-        for(int i = 0; i < inputText.Length; i++)
+        string[] paths = SaveSystem.Instance.LoadSettings().InputPaths;
+        if (paths != null)
+        {
+            Input.InputActions.General.Movement.ApplyBindingOverride(1, paths[0]);
+            Input.InputActions.General.Movement.ApplyBindingOverride(2, paths[1]);
+            Input.InputActions.General.Movement.ApplyBindingOverride(3, paths[2]);
+            Input.InputActions.General.Movement.ApplyBindingOverride(4, paths[3]);
+            Input.InputActions.General.Sneak.ApplyBindingOverride(paths[4]);
+            Input.InputActions.Realtime.Pause.ApplyBindingOverride(paths[5]);
+            Input.InputActions.General.Interact.ApplyBindingOverride(paths[6]);
+            Input.InputActions.General.Use.ApplyBindingOverride(paths[7]);
+            Input.InputActions.General.Drop.ApplyBindingOverride(paths[8]);
+            Input.InputActions.Realtime.Journal.ApplyBindingOverride(paths[9]);
+        }
+        else
+        {
+            Input.InputActions.General.Movement.RemoveBindingOverride(1);
+            Input.InputActions.General.Movement.RemoveBindingOverride(2);
+            Input.InputActions.General.Movement.RemoveBindingOverride(3);
+            Input.InputActions.General.Movement.RemoveBindingOverride(4);
+            Input.InputActions.General.Sneak.RemoveBindingOverride(0);
+            Input.InputActions.Realtime.Pause.RemoveBindingOverride(0);
+            Input.InputActions.General.Interact.RemoveBindingOverride(0);
+            Input.InputActions.General.Use.RemoveBindingOverride(0);
+            Input.InputActions.General.Drop.RemoveBindingOverride(0);
+            Input.InputActions.Realtime.Journal.RemoveBindingOverride(0);
+        }
+
+        textDisplay[0] = Input.InputActions.General.Movement.bindings[1].ToDisplayString();
+        textDisplay[1] = Input.InputActions.General.Movement.bindings[2].ToDisplayString();
+        textDisplay[2] = Input.InputActions.General.Movement.bindings[3].ToDisplayString();
+        textDisplay[3] = Input.InputActions.General.Movement.bindings[4].ToDisplayString();
+        textDisplay[4] = Input.InputActions.General.Sneak.bindings[0].ToDisplayString();
+        textDisplay[5] = Input.InputActions.Realtime.Pause.bindings[0].ToDisplayString();
+        textDisplay[6] = Input.InputActions.General.Interact.bindings[0].ToDisplayString();
+        textDisplay[7] = Input.InputActions.General.Use.bindings[0].ToDisplayString();
+        textDisplay[8] = Input.InputActions.General.Drop.bindings[0].ToDisplayString();
+        textDisplay[9] = Input.InputActions.Realtime.Journal.bindings[0].ToDisplayString();
+
+        //special cases
+        Input.InputActions.Box.ExitBox.ApplyBindingOverride(Input.InputActions.General.Interact.controls[0].path);
+        Input.InputActions.Box.Use.ApplyBindingOverride(Input.InputActions.General.Use.controls[0].path);
+
+        for (int i = 0; i < inputText.Length; i++)
         {
             inputText[i].text = textDisplay[i];
         }
@@ -293,6 +433,51 @@ public class MenuSettings : MonoBehaviour
         Settings old = SaveSystem.Instance.LoadSettings();
         Settings newTop = new Settings(mouseSensitivity);
         SaveSystem.Instance.SaveSettings(old + newTop);
+        SaveKeys();
+    }
+
+    void SaveKeys()
+    {
+        Settings old = SaveSystem.Instance.LoadSettings();
+        Settings keys;
+        try
+        {
+            keys = new Settings(new string[]
+            {
+                Input.InputActions.General.Movement.controls[0].path,
+                Input.InputActions.General.Movement.controls[1].path,
+                Input.InputActions.General.Movement.controls[2].path,
+                Input.InputActions.General.Movement.controls[3].path,
+                Input.InputActions.General.Sneak.controls[0].path,
+                Input.InputActions.Realtime.Pause.controls[0].path,
+                Input.InputActions.General.Interact.controls[0].path,
+                Input.InputActions.General.Use.controls[0].path,
+                Input.InputActions.General.Drop.controls[0].path,
+                Input.InputActions.Realtime.Journal.controls[0].path
+            });
+        }
+        catch
+        {
+            Input.InputActions.General.Movement.RemoveBindingOverride(1);
+            Input.InputActions.General.Movement.RemoveBindingOverride(2);
+            Input.InputActions.General.Movement.RemoveBindingOverride(3);
+            Input.InputActions.General.Movement.RemoveBindingOverride(4);
+            keys = new Settings(new string[]
+            {
+                Input.InputActions.General.Movement.controls[0].path,
+                Input.InputActions.General.Movement.controls[1].path,
+                Input.InputActions.General.Movement.controls[2].path,
+                Input.InputActions.General.Movement.controls[3].path,
+                Input.InputActions.General.Sneak.controls[0].path,
+                Input.InputActions.Realtime.Pause.controls[0].path,
+                Input.InputActions.General.Interact.controls[0].path,
+                Input.InputActions.General.Use.controls[0].path,
+                Input.InputActions.General.Drop.controls[0].path,
+                Input.InputActions.Realtime.Journal.controls[0].path
+            });
+        }
+
+        SaveSystem.Instance.SaveSettings(old + keys);
     }
 
     //OTHER

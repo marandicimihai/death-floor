@@ -227,13 +227,15 @@ public class Settings
     }
     public bool? fullscreen;
 
+    public string[] InputPaths;
+
     public Settings()
     {
 
     }
 
     //ALL SETTINGS
-    public Settings(float effectsVolume, float ambianceVolume, bool bloom, bool blur, float sensitivity, int resIndex, int width, int height, int qualityIndex, bool vSync, bool fullScreen)
+    public Settings(float effectsVolume, float ambianceVolume, bool bloom, bool blur, float sensitivity, int resIndex, int width, int height, int qualityIndex, bool vSync, bool fullScreen, string[] inputPaths)
     {
         this.EffectsVolume = effectsVolume;
         this.AmbienceVolume = ambianceVolume;
@@ -246,6 +248,7 @@ public class Settings
         this.QualityIndex = qualityIndex;
         this.VSync = vSync;
         this.Fullscreen = fullScreen;
+        this.InputPaths = inputPaths;
     }
 
     //GRAPHICS
@@ -265,6 +268,11 @@ public class Settings
     public Settings(float sensitivity)
     {
         this.Sensitivity = sensitivity;
+    }
+
+    public Settings(string[] inputPaths)
+    {
+        InputPaths = inputPaths;
     }
 
     //AUDIO
