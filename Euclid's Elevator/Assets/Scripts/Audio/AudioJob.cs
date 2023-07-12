@@ -17,8 +17,58 @@ public class AudioJob : MonoBehaviour
 
     float initialSourceVolume;
 
+    LayerMask solid;
+    AudioLowPassFilter filter;
+    float interpolation;
+    bool occlude;
+    bool isoccluding;
+    bool occlusionInitialized;
+
     private void Update()
     {
+        if (occlude)
+        {
+            if (source != null)
+            {
+                if (AudioOcclusionTarget.target != null && !isoccluding)
+                {
+                    filter = gameObject.AddComponent<AudioLowPassFilter>();
+                    isoccluding = true;
+                }
+                else if (AudioOcclusionTarget.target != null)
+                {
+                    if (filter != null && AudioOcclusionTarget.target != null)
+                    {
+                        Vector3 listener = AudioOcclusionTarget.target.position;
+                        if (!occlusionInitialized)
+                        {
+                            if (!Physics.Raycast(transform.position, listener - transform.position, Vector3.Distance(transform.position, listener), solid))
+                            {
+                                filter.cutoffFrequency = 22000;
+                                interpolation = 1;
+                            }
+                            else
+                            {
+                                filter.cutoffFrequency = 5000;
+                                interpolation = 0;
+                            }
+                            occlusionInitialized = true;
+                        }
+
+                        if (!Physics.Raycast(transform.position, listener - transform.position, Vector3.Distance(transform.position, listener), solid))
+                        {
+                            interpolation += Time.deltaTime;
+                        }
+                        else
+                        {
+                            interpolation -= Time.deltaTime;
+                        }
+                        interpolation = Mathf.Clamp01(interpolation);
+                        filter.cutoffFrequency = Mathf.Lerp(5000, 22000, interpolation);
+                    }
+                }
+            }
+        }
         if (stopqueued)
         {
             time += Time.deltaTime;
@@ -40,7 +90,7 @@ public class AudioJob : MonoBehaviour
         }
     }
 
-    public void Init(SourceSettings settings, bool destroyobject = false)
+    public void Init(SourceSettings settings, LayerMask solid, bool destroyobject = false, bool audioocclusion = false)
     {
         AudioManager.Instance.jobs.Add(this);
         this.name = settings.name;
@@ -62,6 +112,19 @@ public class AudioJob : MonoBehaviour
         if (!source.loop)
         {
             Invoke(nameof(StopPlaying), source.clip.length + 0.2f);
+        }
+
+        this.solid = solid;
+        if (audioocclusion && TryGetComponent<AudioLowPassFilter>(out AudioLowPassFilter lowpass))
+        {
+            filter = lowpass;
+            occlusionInitialized = true;
+            isoccluding = true;
+            occlude = true;
+        }
+        else if (audioocclusion)
+        {
+            occlude = true;
         }
     }
 
@@ -107,6 +170,7 @@ public class AudioJob : MonoBehaviour
         }
         else
         {
+            Destroy(filter);
             Destroy(source);
             Destroy(this);
         }

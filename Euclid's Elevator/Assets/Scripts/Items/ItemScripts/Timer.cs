@@ -77,7 +77,7 @@ public class Timer : Item, IUsable
                 winding = false;
                 ticking = true;
                 AudioManager.Instance.StopClip(windJob);
-                tickJob = AudioManager.Instance.PlayClip(tick);
+                tickJob = AudioManager.Instance.PlayClip(transform.position, tick);
             }
         }
         if (ticking)
@@ -93,7 +93,7 @@ public class Timer : Item, IUsable
                 ticking = false;
                 ringing = true;
                 AudioManager.Instance.StopClip(tickJob);
-                ringJob = AudioManager.Instance.PlayClip(ring);
+                ringJob = AudioManager.Instance.PlayClip(transform.position, ring);
             }
         }
         if (ringing)
@@ -117,7 +117,7 @@ public class Timer : Item, IUsable
     {
         if (!started)
         {
-            windJob = AudioManager.Instance.PlayClip(wind);
+            windJob = AudioManager.Instance.PlayClip(transform.position, wind);
             winding = true;
             started = true;
         }

@@ -13,7 +13,6 @@ public class Door : MonoBehaviour
     public bool StageLocked { get; private set; }
 
     [SerializeField] ItemProperties key;
-    [SerializeField] NavMeshObstacle obstacle;
     [SerializeField] Transform panel;
     [SerializeField] Animator animator;
     [SerializeField] Vector3 closedAngles;
@@ -22,7 +21,7 @@ public class Door : MonoBehaviour
     [SerializeField] int unlockStage;
 
     [Header("Sounds")]
-    [SerializeField] GameObject handle;
+    public GameObject handle;
     [SerializeField] GameObject panelObj;
     [SerializeField] string openDoorName;
     [SerializeField] string closeDoorName;
@@ -36,7 +35,6 @@ public class Door : MonoBehaviour
 
     private void Awake()
     {
-        obstacle.carving = false;
         Locked = true;
 
         if (Open)
@@ -107,7 +105,7 @@ public class Door : MonoBehaviour
             if (a && !StageLocked)
             {
                 Locked = false;
-                player.inventory.DecreaseDurability(player.inventory.Index);
+                player.inventory.DecreaseDurability(player.inventory.Index, true);
             }
             return a;
         }
@@ -178,7 +176,7 @@ public class Door : MonoBehaviour
         }
         if (player != null)
         {
-            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(key));
+            player.inventory.DecreaseDurability(player.inventory.GetItemIndex(key), true);
         }
     }
 }

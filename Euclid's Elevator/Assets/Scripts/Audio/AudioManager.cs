@@ -25,6 +25,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
     public List<AudioJob> jobs;
 
+    [SerializeField] LayerMask solid;
     [SerializeField] AudioMixerSnapshot paused;//muffles the sound
     [SerializeField] AudioMixerSnapshot unpaused;
     [SerializeField] AudioMixer main;
@@ -116,11 +117,11 @@ public class AudioManager : MonoBehaviour
         }
 
         AudioJob job = Instantiate(empty).AddComponent<AudioJob>();
-        job.Init(GetSettings(name), true);
+        job.Init(GetSettings(name), solid, true);
         return job;
     }
 
-    public AudioJob PlayClip(Vector3 position, string name)
+    public AudioJob PlayClip(Vector3 position, string name, bool audioocclusion = true)
     {
         if (name == string.Empty)
         {
@@ -128,11 +129,11 @@ public class AudioManager : MonoBehaviour
         }
 
         AudioJob job = Instantiate(empty, position, Quaternion.identity).AddComponent<AudioJob>();
-        job.Init(GetSettings(name), true);
+        job.Init(GetSettings(name), solid, true, audioocclusion: audioocclusion);
         return job;
     }
 
-    public AudioJob PlayClip(GameObject parent, string name)
+    public AudioJob PlayClip(GameObject parent, string name, bool audioocclusion = true)
     {
         if (name == string.Empty)
         {
@@ -140,7 +141,7 @@ public class AudioManager : MonoBehaviour
         }
 
         AudioJob job = parent.AddComponent<AudioJob>();
-        job.Init(GetSettings(name));
+        job.Init(GetSettings(name), solid, audioocclusion: audioocclusion);
         return job;
     }
 
@@ -153,12 +154,12 @@ public class AudioManager : MonoBehaviour
 
         int i = UnityEngine.Random.Range(0, names.Length);
         AudioJob job = Instantiate(empty).AddComponent<AudioJob>();
-        job.Init(GetSettings(names[i]), true);
+        job.Init(GetSettings(names[i]), solid, true);
         return job;
 
     }
 
-    public AudioJob PlayRandomClip(Vector3 position, string[] names)
+    public AudioJob PlayRandomClip(Vector3 position, string[] names, bool audioocclusion = true)
     {
         if (names.Length == 0)
         {
@@ -167,11 +168,11 @@ public class AudioManager : MonoBehaviour
 
         int i = UnityEngine.Random.Range(0, names.Length);
         AudioJob job = Instantiate(empty, position, Quaternion.identity).AddComponent<AudioJob>();
-        job.Init(GetSettings(names[i]), true);
+        job.Init(GetSettings(names[i]), solid, true, audioocclusion: audioocclusion);
         return job;
     }
 
-    public AudioJob PlayRandomClip(GameObject parent, string[] names)
+    public AudioJob PlayRandomClip(GameObject parent, string[] names, bool audioocclusion = true)
     {
         if (names.Length == 0)
         {
@@ -180,7 +181,7 @@ public class AudioManager : MonoBehaviour
 
         int i = UnityEngine.Random.Range(0, names.Length);
         AudioJob job = parent.AddComponent<AudioJob>();
-        job.Init(GetSettings(names[i]));
+        job.Init(GetSettings(names[i]), solid, audioocclusion: audioocclusion);
         return job;
     }
 
@@ -199,7 +200,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayClips(Vector3 position, string[] names)
+    public void PlayClips(Vector3 position, string[] names, bool audioocclusion = true)
     {
         if (names.Length == 0)
         {
@@ -209,12 +210,12 @@ public class AudioManager : MonoBehaviour
         float time = 0;
         for (int i = 0; i < names.Length; i++)
         {
-            StartCoroutine(PlayClipInSeconds(position, GetSettings(names[i]), time));
+            StartCoroutine(PlayClipInSeconds(position, GetSettings(names[i]), time, audioocclusion: audioocclusion));
             time += GetSettings(names[i]).clip.length;
         }
     }
 
-    public void PlayClips(GameObject parent, string[] names)
+    public void PlayClips(GameObject parent, string[] names, bool audioocclusion = true)
     {
         if (names.Length == 0)
         {
@@ -224,7 +225,7 @@ public class AudioManager : MonoBehaviour
         float time = 0;
         for (int i = 0; i < names.Length; i++)
         {
-            StartCoroutine(PlayClipInSeconds(parent, GetSettings(names[i]), time));
+            StartCoroutine(PlayClipInSeconds(parent, GetSettings(names[i]), time, audioocclusion: audioocclusion));
             time += GetSettings(names[i]).clip.length;
         }
     }
@@ -265,20 +266,20 @@ public class AudioManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        Instantiate(empty).AddComponent<AudioJob>().Init(settings, true);
+        Instantiate(empty).AddComponent<AudioJob>().Init(settings, solid, true);
     }
 
-    IEnumerator PlayClipInSeconds(Vector3 position, SourceSettings settings, float time)
+    IEnumerator PlayClipInSeconds(Vector3 position, SourceSettings settings, float time, bool audioocclusion = true)
     {
         yield return new WaitForSeconds(time);
 
-        Instantiate(empty, position, Quaternion.identity).AddComponent<AudioJob>().Init(settings, true);
+        Instantiate(empty, position, Quaternion.identity).AddComponent<AudioJob>().Init(settings, solid, true, audioocclusion: audioocclusion);
     }
 
-    IEnumerator PlayClipInSeconds(GameObject parent, SourceSettings settings, float time)
+    IEnumerator PlayClipInSeconds(GameObject parent, SourceSettings settings, float time, bool audioocclusion = true)
     {
         yield return new WaitForSeconds(time);
 
-        parent.AddComponent<AudioJob>().Init(settings);
+        parent.AddComponent<AudioJob>().Init(settings, solid, audioocclusion: audioocclusion);
     }
 }

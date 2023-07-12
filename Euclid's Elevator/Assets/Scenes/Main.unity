@@ -4062,6 +4062,7 @@ GameObject:
   - component: {fileID: 575464969}
   - component: {fileID: 575464968}
   - component: {fileID: 575464967}
+  - component: {fileID: 575464970}
   m_Layer: 3
   m_Name: MainCamera
   m_TagString: Untagged
@@ -4173,6 +4174,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &575464970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575464965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076d1032cee4cff48a97a6c36e10bd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &576751796
 GameObject:
   m_ObjectHideFlags: 0
@@ -8668,6 +8681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a18334c7ec5794fbc1519a6a373ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 1288032394}
   holdPos: {fileID: 1202080400}
   swayStep: 0.01
   swayMaxStep: 0.06
@@ -21692,7 +21706,9 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2782998196967886541, guid: 8b6e79c95f6b0a343a8840bb92384237, type: 3}
+    - {fileID: 8495203649875246232, guid: 8b6e79c95f6b0a343a8840bb92384237, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8b6e79c95f6b0a343a8840bb92384237, type: 3}
 --- !u!4 &1792508362673512267 stripped
 Transform:

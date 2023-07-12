@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jobs: []
+  solid:
+    serializedVersion: 2
+    m_Bits: 17921
   paused: {fileID: 2587515176096854133, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
   unpaused: {fileID: 24500006, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}
   main: {fileID: 24100000, guid: 00c2338d8f306ae42ac67e321275b476, type: 2}

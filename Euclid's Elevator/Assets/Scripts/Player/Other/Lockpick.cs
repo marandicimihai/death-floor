@@ -70,7 +70,7 @@ public class Lockpick : MonoBehaviour
     {
         if (!picking && !locking && !door.StageLocked)
         {
-            AudioManager.Instance.PlayClip(door.gameObject, picklock);
+            AudioManager.Instance.PlayClip(door.handle, picklock);
             player.HUDManager.actionInfo.StartAction(SliderType.Unlock, this);
             timeElapsed = 0;
             target = door;

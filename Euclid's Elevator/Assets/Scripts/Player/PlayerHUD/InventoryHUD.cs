@@ -2,11 +2,11 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(Inventory))]
 public class InventoryHUD : MonoBehaviour
 {
     [System.NonSerialized] public bool hideHUD;
     [Header("ItemModels")]
+    [SerializeField] Inventory inventory;
     public Transform holdPos;
     [SerializeField] float swayStep;
     [SerializeField] float swayMaxStep;
@@ -22,15 +22,12 @@ public class InventoryHUD : MonoBehaviour
     [SerializeField] Image[] frames;
     [SerializeField] Image[] icons;
 
-    Inventory inventory;
     bool wasHidden;
 
     private void Awake()
     {
-        inventory = GetComponent<Inventory>();
-
-        Inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshVisualModels();
-        Inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshInventoryHUD();
+        inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshVisualModels();
+        inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshInventoryHUD();
     }
 
     private void Update()

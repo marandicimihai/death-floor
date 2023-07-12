@@ -17,6 +17,12 @@ public class EnemyNavigation : MonoBehaviour
         get
         {
             Transform cam = player.cameraController.camera;
+
+            if (!spawned)
+            {
+                return false;
+            }
+
             return (
             !Physics.Raycast(cam.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position,
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f), visionMask) ||

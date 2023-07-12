@@ -5,7 +5,7 @@ using System;
 public class Inventory : MonoBehaviour
 {
     public static EventHandler OnPickUpKeycard;
-    public static EventHandler OnItemsChanged;
+    public EventHandler OnItemsChanged;
 
     public Item[] Items 
     {
@@ -210,11 +210,23 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public void DecreaseDurability(int id = -1)
+    public void DecreaseDurability(int id = -1, bool shouldPlayUseSounds = false)
     {
         if (id == -1)
         {
             id = Index;
+        }
+
+        if (shouldPlayUseSounds)
+        {
+            if (Items[id].properties.useUseSoundsInOrder)
+            {
+                AudioManager.Instance.PlayClips(Items[id].properties.use);
+            }
+            else
+            {
+                AudioManager.Instance.PlayRandomClip(Items[id].properties.use);
+            }
         }
 
         if (Items[id] != null)
