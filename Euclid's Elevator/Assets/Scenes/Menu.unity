@@ -6490,5 +6490,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu_SceneCanvases
       objectReference: {fileID: 0}
+    - target: {fileID: 9123251132568925130, guid: 7d64e37102965c24ea3d5c61dcf37387, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d64e37102965c24ea3d5c61dcf37387, type: 3}
