@@ -4114,7 +4114,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 2
+  m_Antialiasing: 1
   m_AntialiasingQuality: 1
   m_StopNaN: 0
   m_Dithering: 0
@@ -4245,7 +4245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 0
-  priority: 2
+  priority: 3
   blendDistance: 0
   weight: 0
   sharedProfile: {fileID: 11400000, guid: fc113dc79b434ae4185115ae690c4c18, type: 2}
@@ -4753,7 +4753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 0
-  priority: 2
+  priority: 3
   blendDistance: 0
   weight: 0
   sharedProfile: {fileID: 11400000, guid: 0418126cae05922468448889fccd20d3, type: 2}

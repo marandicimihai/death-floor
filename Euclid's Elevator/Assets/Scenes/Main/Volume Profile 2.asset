@@ -28,14 +28,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   threshold:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.43
   scatter:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.85
   clamp:
     m_OverrideState: 0
     m_Value: 65472
@@ -49,9 +49,9 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 3
   dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
+    m_OverrideState: 1
+    m_Value: {fileID: 2800000, guid: 9e43de75c61947843905e4233d0f7379, type: 3}
     dimension: 1
   dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 10
