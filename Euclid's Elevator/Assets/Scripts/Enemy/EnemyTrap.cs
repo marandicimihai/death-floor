@@ -6,6 +6,7 @@ public class EnemyTrap : MonoBehaviour
 {
     [SerializeField] Animator anim;
     [SerializeField] Transform baseBone;
+    [SerializeField] Transform ray;
     [SerializeField] LayerMask playerMask;
     [SerializeField] float triggerRadius;
     [SerializeField] float deathRadius;
@@ -68,8 +69,8 @@ public class EnemyTrap : MonoBehaviour
         Transform cam = player.cameraController.camera;
 
 
-        if (pull && Vector3.ProjectOnPlane(baseBone.position - cam.position, Vector3.up).magnitude >= minRadius && 
-            Physics.Raycast(baseBone.position, cam.position - baseBone.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
+        if (pull && Vector3.ProjectOnPlane(ray.position - cam.position, Vector3.up).magnitude >= minRadius && 
+            Physics.Raycast(ray.position, cam.position - ray.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
         {
             anim.SetTrigger("Spot");
 
@@ -83,7 +84,7 @@ public class EnemyTrap : MonoBehaviour
                 AudioManager.Instance.PlayClip(gameObject, screech);
             }
 
-            if (Vector3.Distance(cam.position, baseBone.position) < deathRadius && !GameManager.Instance.player.Dead)
+            if (Vector3.Distance(cam.position, ray.position) < deathRadius && !GameManager.Instance.player.Dead)
             {
                 AudioManager.Instance.PlayClip(gameObject, groundhit);
                 AudioManager.Instance.StopClip(ambiencejob);

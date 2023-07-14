@@ -18,7 +18,7 @@ public class EnemyNavigation : MonoBehaviour
         {
             Transform cam = player.cameraController.camera;
 
-            if (!spawned)
+            if (!spawned || !gameObject.activeInHierarchy)
             {
                 return false;
             }
@@ -284,7 +284,7 @@ public class EnemyNavigation : MonoBehaviour
 
     public void InspectNoise(Vector3 noisePos, bool ignoreDistance = false, bool playerInspect = false)
     {
-        if (this.playerInspect)
+        if (this.playerInspect || !gameObject.activeInHierarchy)
         {
             return;
         }

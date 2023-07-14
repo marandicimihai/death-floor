@@ -4,7 +4,8 @@ public class CameraController : MonoBehaviour
 {
     public new Transform camera;
     [SerializeField] Player player;
-    [SerializeField] float sensitivity;
+    
+    float sensitivity;
 
     Vector2 rotation;
     bool canLook;
@@ -16,6 +17,14 @@ public class CameraController : MonoBehaviour
         player.OnSpawn += (SpawnArgs args) =>
         {
             Spawn(args.freezeTime);
+        };
+    }
+
+    private void Start()
+    {
+        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        {
+            sensitivity = 0.1f * settings.Sensitivity;
         };
     }
 
