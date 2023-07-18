@@ -8855,6 +8855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pages: []
   page: 0
+  scriptableObjects: {fileID: 0}
   player: {fileID: 1288032390}
   journalAnimator: {fileID: 424325022}
   HUDDelay: 1.2

@@ -19,6 +19,13 @@ public class SideMenu : MonoBehaviour
         thisCanvas.enabled = false;
 
         PauseGame.Instance.OnTogglePause += (bool value) => OpenMenu(value);
+
+        GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
+        {
+            SaveSystem.Instance.ClearData(0);
+            SceneManager.LoadScene("Menu");
+        };
+
         GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
         {
             isDeathMenu = true;
@@ -86,7 +93,14 @@ public class SideMenu : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SaveSystem.Instance.SaveGame();
+        if (GameManager.Instance.GameStage == GameStage.End)
+        {
+            SaveSystem.Instance.ClearData(0);
+        }
+        else
+        {
+            SaveSystem.Instance.SaveGame();
+        }
         SceneManager.LoadScene("Menu");
     }
 }
