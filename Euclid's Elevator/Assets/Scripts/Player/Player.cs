@@ -3,6 +3,9 @@ using System;
 
 public class Player : MonoBehaviour
 {
+    public delegate void OnDeathDel(int deaths, int maxDeaths);
+    public OnDeathDel PlayerDied;
+
     public delegate void OnSpawnDel(SpawnArgs args);
     public OnSpawnDel OnSpawn;
     public bool Dead { get; private set; }
@@ -20,6 +23,45 @@ public class Player : MonoBehaviour
     public Insanity insanity;
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
+
+    private void Start()
+    {
+        if (SaveSystem.Instance.currentSaveData != null)
+        {
+            if (SaveSystem.Instance.currentSaveData.PlayerPosition.Length != 0)
+            {
+                transform.position = new Vector3(SaveSystem.Instance.currentSaveData.PlayerPosition[0],
+                                                 SaveSystem.Instance.currentSaveData.PlayerPosition[1],
+                                                 SaveSystem.Instance.currentSaveData.PlayerPosition[2]);
+            }
+
+            if (SaveSystem.Instance.currentSaveData.PlayerRotation.Length != 0)
+            {
+                transform.rotation = new Quaternion(SaveSystem.Instance.currentSaveData.PlayerRotation[0],
+                                                    SaveSystem.Instance.currentSaveData.PlayerRotation[1],
+                                                    SaveSystem.Instance.currentSaveData.PlayerRotation[2],
+                                                    SaveSystem.Instance.currentSaveData.PlayerRotation[3]);
+            }
+        }
+
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            data.PlayerPosition = new float[]
+            {
+                transform.position.x,
+                transform.position.y,
+                transform.position.z
+            };
+            data.PlayerRotation = new float[]
+            {
+                transform.rotation.x,
+                transform.rotation.y,
+                transform.rotation.z,
+                transform.rotation.w
+            };
+            SaveSystem.Instance.CanSave = !Dead;
+        };
+    }
 
     public void Die(bool callDeath)
     {
@@ -40,7 +82,7 @@ public class Player : MonoBehaviour
 
     public void CallDeath()
     {
-        GameManager.Instance.PlayerDeath(Deaths, maxDeaths);
+        PlayerDied?.Invoke(Deaths, maxDeaths);
     }
 
     public void Spawn(Vector3 position)

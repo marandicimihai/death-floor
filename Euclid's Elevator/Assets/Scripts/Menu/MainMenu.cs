@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -53,7 +52,8 @@ public class MainMenu : MonoBehaviour
     {
         AudioManager.Instance.FadeAwayClip(humJob, ambienceFadeTime);
         AudioManager.Instance.FadeAwayClip(buzzJob, ambienceFadeTime);
-        SceneManager.LoadScene("Main");
+
+        SaveSystem.Instance.LoadGameData(0);
     }
     public void DoClick()
     {

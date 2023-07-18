@@ -1,5 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 using System;
 
 public class Inventory : MonoBehaviour
@@ -21,6 +23,8 @@ public class Inventory : MonoBehaviour
     Item[] items;
 
     public int Index { get; private set; }
+
+    [SerializeField] ItemProperties[] scriptableobjects;
 
     [SerializeField] int slots;
     [SerializeField] Transform inventory;
@@ -57,6 +61,76 @@ public class Inventory : MonoBehaviour
         Input.InputActions.Box.Inventory3.performed += InventoryPerformed;
         Input.InputActions.Box.Inventory4.performed += InventoryPerformed;
         Input.InputActions.Box.Scroll.performed += Scroll;
+
+        if (SaveSystem.Instance.currentSaveData != null 
+            && SaveSystem.Instance.currentSaveData.holdingitems.Length != 0
+            && SaveSystem.Instance.currentSaveData.variables.Length != 0
+            && SaveSystem.Instance.currentSaveData.lengths.Length != 0)
+        {
+            List<string> vars = SaveSystem.Instance.currentSaveData.variables.ToList();
+            for (int i = 0; i < SaveSystem.Instance.currentSaveData.holdingitems.Length; i++)
+            {
+                if (SaveSystem.Instance.currentSaveData.holdingitems[i] != string.Empty)
+                {
+                    Item newItem = Instantiate(GetProperties(SaveSystem.Instance.currentSaveData.holdingitems[i]).inHandObject, inventory).GetComponent<Item>();
+
+                    List<string> current = new();
+
+                    for (int j = 0; j < SaveSystem.Instance.currentSaveData.lengths[i]; j++)
+                    {
+                        current.Add(vars[0]);
+                        vars.Remove(vars[0]);
+                    }
+
+                    newItem.LoadValues(current.ToArray());
+                    Items[i] = newItem;
+                }
+            }
+            OnItemsChanged?.Invoke(this, new EventArgs());
+        }
+
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            List<string> strings = new();
+            List<string> values = new();
+            List<int> lengths = new();
+
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i] == null)
+                {
+                    strings.Add(string.Empty);
+                    lengths.Add(0);
+                }
+                else
+                {
+                    strings.Add(Items[i].properties.name);
+
+                    object[] objs = Items[i].GetSaveVariables().ToArray();
+                    for (int j = 0; j < objs.Length; j++)
+                    {
+                        values.Add(objs[j].ToString());
+                    }
+                    lengths.Add(objs.Length);
+                }
+            }
+
+            data.holdingitems = strings.ToArray();
+            data.variables = values.ToArray();
+            data.lengths = lengths.ToArray();
+        };
+    }
+
+    ItemProperties GetProperties(string name)
+    {
+        foreach (ItemProperties prop in scriptableobjects)
+        {
+            if (prop.name == name)
+            {
+                return prop;
+            }
+        }
+        return null;
     }
 
     void Scroll(InputAction.CallbackContext context)
@@ -147,6 +221,7 @@ public class Inventory : MonoBehaviour
         if (dropped.TryGetComponent(out Item item))
         {
             item.SetValues(Items[Index]);
+            ItemManager.spawnedItems.Add(item);
             AudioManager.Instance.PlayRandomClip(dropped, item.properties.drop);
         }
 
@@ -171,43 +246,6 @@ public class Inventory : MonoBehaviour
 
             DecreaseDurability();
         }
-    }
-
-    bool IsUsable(int id, out IUsable usable)
-    {
-        IUsable[] usables = inventory.GetComponents<IUsable>();
-
-        usable = null;
-
-        if (usables.Length == 0)
-        {
-            return false;
-        }
-        else if (usables.Length == 1)
-        {
-            if (Items[id] != null && usables[0].GetHashCode() == Items[id].GetHashCode())
-            {
-                usable = usables[0];
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            foreach (IUsable current in usables)
-            {
-                if (Items[id] != null && current.GetHashCode() == Items[id].GetHashCode())
-                {
-                    usable = current;
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        return true;
     }
 
     public void DecreaseDurability(int id = -1, bool shouldPlayUseSounds = false)

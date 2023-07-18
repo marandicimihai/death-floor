@@ -18,15 +18,15 @@ public class Timer : Item, IUsable
     [SyncValue] AudioJob tickJob;
     [SyncValue] AudioJob ringJob;
 
-    [SyncValue] bool winding;
-    [SyncValue] bool ringing;
-    [SyncValue] bool ticking;
-    [SyncValue] bool started;
-    [SyncValue] bool destroy;
+    [SyncValue] [SaveValue] bool winding;
+    [SyncValue] [SaveValue] bool ringing;
+    [SyncValue] [SaveValue] bool ticking;
+    [SyncValue] [SaveValue] bool started;
+    [SyncValue] [SaveValue] bool destroy;
 
-    [SyncValue] float windTimeElapsed;
-    [SyncValue] float tickTimeElapsed;
-    [SyncValue] float ringTimeElapsed;
+    [SyncValue] [SaveValue] float windTimeElapsed;
+    [SyncValue] [SaveValue] float tickTimeElapsed;
+    [SyncValue] [SaveValue] float ringTimeElapsed;
 
     private void Start()
     {
@@ -70,6 +70,10 @@ public class Timer : Item, IUsable
             {
                 windJob.transform.position = transform.position;
             }
+            else
+            {
+                windJob = AudioManager.Instance.PlayClip(transform.position, wind);
+            }
             windTimeElapsed += Time.deltaTime;
             knob.localRotation = Quaternion.Lerp(Quaternion.Euler(unwindedKnobAngles), Quaternion.Euler(windedKnobAngles), windTimeElapsed / windDuration);
             if (windTimeElapsed >= windDuration)
@@ -85,6 +89,10 @@ public class Timer : Item, IUsable
             if (tickJob != null)
             {
                 tickJob.transform.position = transform.position;
+            }
+            else
+            {
+                tickJob = AudioManager.Instance.PlayClip(transform.position, tick);
             }
             knob.localRotation = Quaternion.Lerp(Quaternion.Euler(windedKnobAngles), Quaternion.Euler(unwindedKnobAngles), tickTimeElapsed / duration);
             tickTimeElapsed += Time.deltaTime;
@@ -102,6 +110,10 @@ public class Timer : Item, IUsable
             {
                 ringJob.transform.position = transform.position;
             }
+            else
+            {
+                ringJob = AudioManager.Instance.PlayClip(transform.position, ring);
+            }
             ringTimeElapsed += Time.deltaTime;
             GameManager.Instance.enemy.InspectNoise(transform.position, true);
             if (ringTimeElapsed >= ringDuration)
@@ -109,6 +121,10 @@ public class Timer : Item, IUsable
                 AudioManager.Instance.StopClip(ringJob);
                 ringing = false;
                 gameObject.AddComponent<Lifetime>().Initiate(4);
+                if (ItemManager.spawnedItems.Contains(this))
+                {
+                    ItemManager.spawnedItems.Remove(this);
+                }
             }
         }
     }

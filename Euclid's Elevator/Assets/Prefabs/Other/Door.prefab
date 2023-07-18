@@ -418,6 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c72d01f21348764dab39e1b79ec848e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locked: 1
   key: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
   panel: {fileID: 3616655169289104357}
   animator: {fileID: 699835758}

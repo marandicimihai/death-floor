@@ -176,6 +176,12 @@ public class MenuSettings : MonoBehaviour
     //AUDIO
     void UpdateAudio()
     {
+        if (SaveSystem.Instance.LoadSettings() == null)
+        {
+            Debug.Log("No setting");
+            return;
+        }
+
         effectsVolume = SaveSystem.Instance.LoadSettings().EffectsVolume;
         ambianceVolume = SaveSystem.Instance.LoadSettings().AmbienceVolume;
         effectsSlider.value = effectsVolume;
@@ -200,6 +206,11 @@ public class MenuSettings : MonoBehaviour
     //GRAPHICS
     void UpdateGraphics()
     {
+        if (SaveSystem.Instance.LoadSettings() == null)
+        {
+            return;
+        }
+
         qualityIndex = SaveSystem.Instance.LoadSettings().QualityIndex;
         resIndex = SaveSystem.Instance.LoadSettings().ResIndex;
         vSync = SaveSystem.Instance.LoadSettings().VSync;
@@ -368,6 +379,11 @@ public class MenuSettings : MonoBehaviour
     //INPUT
     void UpdateInput()
     {
+        if (SaveSystem.Instance.LoadSettings() == null)
+        {
+            return;
+        }
+
         mouseSensitivity = SaveSystem.Instance.LoadSettings().Sensitivity;
         //also the same for other INPUTS (that currently can not be changed >:\ ) !!!!
 

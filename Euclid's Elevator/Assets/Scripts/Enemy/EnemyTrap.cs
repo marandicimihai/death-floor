@@ -53,6 +53,14 @@ public class EnemyTrap : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (TrapManager.spawnedtraps.Contains(transform))
+        {
+            TrapManager.spawnedtraps.Remove(transform);
+        }
+    }
+
     private void OnValidate()
     {
         if (TryGetComponent(out SphereCollider coll))

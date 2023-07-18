@@ -27,6 +27,15 @@ public class Insanity : MonoBehaviour
     {
         GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => insanity = 0;
         GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => insanity = 0;
+
+        if (SaveSystem.Instance.currentSaveData != null)
+        {
+            insanity = SaveSystem.Instance.currentSaveData.insanity;
+        }
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            data.insanity = insanity;
+        };
     }
 
     private void Update()

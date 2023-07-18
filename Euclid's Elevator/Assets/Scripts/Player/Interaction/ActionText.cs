@@ -20,12 +20,23 @@ public class ActionText : MonoBehaviour
     [SerializeField] string hide;
     [SerializeField] string getOut;
 
+    string interactInput;
+
+    private void Start()
+    {
+        interactInput = Input.InputActions.General.Interact.controls[0].displayName;
+        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        {
+            interactInput = Input.InputActions.General.Interact.controls[0].displayName;
+        };
+    }
+
     public bool OpenDoor(Player player, RaycastHit hit)
     {
         if (hit.transform.GetComponentInParent<Door>() && !hit.transform.GetComponentInParent<Door>().StageLocked && 
             !hit.transform.GetComponentInParent<Door>().Locked && !hit.transform.GetComponentInParent<Door>().Open)
         {
-            player.HUDManager.actionInfo.SetActionText(openDoor);
+            player.HUDManager.actionInfo.SetActionText(openDoor + $" ({interactInput})");
             return true;
         }
         return false;
@@ -36,7 +47,7 @@ public class ActionText : MonoBehaviour
         if (hit.transform.GetComponentInParent<Door>() && !hit.transform.GetComponentInParent<Door>().StageLocked &&
             !hit.transform.GetComponentInParent<Door>().Locked && hit.transform.GetComponentInParent<Door>().Open)
         {
-            player.HUDManager.actionInfo.SetActionText(closeDoor);
+            player.HUDManager.actionInfo.SetActionText(closeDoor + $" ({interactInput})");
             return true;
         }
         return false;
@@ -49,7 +60,7 @@ public class ActionText : MonoBehaviour
         {
             if (hit.transform.GetComponentInParent<Door>().MatchesRequirement(player))
             {
-                player.HUDManager.actionInfo.SetActionText(lockDoor);
+                player.HUDManager.actionInfo.SetActionText(lockDoor + $" ({interactInput})");
                 return true;
             }
         }
@@ -61,7 +72,7 @@ public class ActionText : MonoBehaviour
         if (hit.transform.GetComponentInParent<Door>() && !hit.transform.GetComponentInParent<Door>().StageLocked &&
             hit.transform.GetComponentInParent<Door>().Locked && !hit.transform.GetComponentInParent<Door>().Open)
         {
-            player.HUDManager.actionInfo.SetActionText(pickLock);
+            player.HUDManager.actionInfo.SetActionText(pickLock + $" ({interactInput})");
             return true;
         }
         return false;
@@ -73,7 +84,7 @@ public class ActionText : MonoBehaviour
             hit.transform.GetComponentInParent<Door>().Locked && !hit.transform.GetComponentInParent<Door>().Open &&
             hit.transform.GetComponentInParent<Door>().MatchesRequirement(player))
         {
-            player.HUDManager.actionInfo.SetActionText(unlockDoor);
+            player.HUDManager.actionInfo.SetActionText(unlockDoor + $" ({interactInput})");
             return true;
         }
         return false;
@@ -85,7 +96,7 @@ public class ActionText : MonoBehaviour
         {
             if (hit.collider.GetComponentInParent<Elevator>().MatchesRequirement(player))
             {
-                player.HUDManager.actionInfo.SetActionText(insertKeycard);
+                player.HUDManager.actionInfo.SetActionText(insertKeycard + $" ({interactInput})");
                 return true;
             }
         }
@@ -99,7 +110,7 @@ public class ActionText : MonoBehaviour
             if (hit.collider.GetComponentInParent<Elevator>().Broken &&
                 hit.collider.GetComponentInParent<Elevator>().MatchesRequirement(player))
             {
-                player.HUDManager.actionInfo.SetActionText(repairElevator);
+                player.HUDManager.actionInfo.SetActionText(repairElevator + $" ({interactInput})");
                 return true;
             }
         }
@@ -110,7 +121,7 @@ public class ActionText : MonoBehaviour
     {
         if (hit.transform.TryGetComponent(out Item item))
         {
-            player.HUDManager.actionInfo.SetActionText(pickUpItem);
+            player.HUDManager.actionInfo.SetActionText(pickUpItem + $" ({interactInput})");
             return true;
         }
         return false;
@@ -122,7 +133,7 @@ public class ActionText : MonoBehaviour
         {
             if (!box.hasPlayer)
             {
-                player.HUDManager.actionInfo.SetActionText(hide);
+                player.HUDManager.actionInfo.SetActionText(hide + $" ({interactInput})");
             }
             return true;
         }

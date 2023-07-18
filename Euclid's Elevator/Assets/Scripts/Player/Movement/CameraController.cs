@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        ResetAngle();
         Enable();
         player.OnSpawn += (SpawnArgs args) =>
         {
@@ -25,6 +24,25 @@ public class CameraController : MonoBehaviour
         SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
         {
             sensitivity = 0.1f * settings.Sensitivity;
+        };
+        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.CameraRotation.Length != 0)
+        {
+            rotation = new Vector2(SaveSystem.Instance.currentSaveData.CameraRotation[0],
+                                   SaveSystem.Instance.currentSaveData.CameraRotation[1]);
+
+        }
+        else
+        {
+            ResetAngle();
+        }
+
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            data.CameraRotation = new float[]
+            {
+                rotation.x,
+                rotation.y
+            };
         };
     }
 

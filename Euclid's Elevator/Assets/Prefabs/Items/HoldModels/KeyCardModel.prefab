@@ -97,3 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 577ccc289259c4c459026e8f185a64ff, type: 2}
+  uses: 1

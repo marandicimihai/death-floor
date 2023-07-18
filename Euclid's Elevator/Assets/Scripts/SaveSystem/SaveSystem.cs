@@ -4,10 +4,34 @@ using System.Reflection;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Text;
 
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem Instance;
+    public GameData currentSaveData;
+
+    public bool CanSave
+    {
+        get
+        {
+            return canSave;
+        }
+        set
+        {
+            if (!value)
+            {
+                canSave = false;
+            }
+        }
+    }
+    bool canSave = true;
+
+    [SerializeField] int saveSlots;
+    int? currentSave;
+
+    public delegate void SaveTheGame(ref GameData data);
+    public SaveTheGame OnSaveGame;
 
     public delegate void SettingsChanged(Settings settings);
     public SettingsChanged OnSettingsChanged;
@@ -24,6 +48,11 @@ public class SaveSystem : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        /////////TESTING
+        currentSave = 0;
+        currentSaveData = LoadGame(0);
+        /////////TESTING
     }
 
     private void Start()
@@ -38,27 +67,109 @@ public class SaveSystem : MonoBehaviour
     {
         if (!startedupdate)
         {
-            OnSettingsChanged?.Invoke(LoadSettings());
             startedupdate = true;
+            OnSettingsChanged?.Invoke(LoadSettings());
         }
     }
+
+    [MenuItem("Dev/Save Game")]
+    public static void SaveData()
+    {
+        Instance.SaveGame();
+    }
+
+    [MenuItem("Dev/Clear Save")]
+    public static void Clear()
+    {
+        Instance.ClearData(0);
+    }
+
+    public void LoadGameData(int index)
+    {
+        SceneManager.LoadScene("Main");
+        currentSaveData = LoadGame(index);
+        currentSave = index;
+    }
+
+    public bool SaveGame()
+    {
+        if (currentSave == null)
+        {
+            return false;
+        }
+
+        GameData data = new();
+        OnSaveGame?.Invoke(ref data);
+
+        if (!canSave)
+        {
+            return false;
+        }
+
+        if (CanSave)
+        {
+            string path = Path.Combine(Application.persistentDataPath, $"saveddata{currentSave}.owo");
+            using (FileStream stream = new(path, FileMode.Create))
+            {
+                byte[] info = new UTF8Encoding(true).GetBytes(JsonUtility.ToJson(data));
+                stream.Write(info, 0, info.Length);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void ClearData(int index)
+    {
+        GameData data = new();
+        string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
+        using (FileStream stream = new(path, FileMode.Create))
+        {
+            byte[] info = new UTF8Encoding(true).GetBytes(JsonUtility.ToJson(data));
+            stream.Write(info, 0, info.Length);
+        }
+    }
+
+    GameData LoadGame(int index)
+    {
+        string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
+        if (File.Exists(path))
+        {
+            using (FileStream stream = new(path, FileMode.Open))
+            {
+                StreamReader reader = new(stream);
+                GameData data = new();
+                JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), data);
+                return data;
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    #region Settings
 
     public void SaveSettings(Settings settings)
     {
         BinaryFormatter formatter = new();
 
-        string path = Application.persistentDataPath + "/settings.uwu";
+        string path = Path.Combine(Application.persistentDataPath, "settings.uwu");
         FileStream stream = new FileStream(path, FileMode.Create);
 
         formatter.Serialize(stream, settings);
         stream.Close();
 
-        OnSettingsChanged?.Invoke(settings);
+        if (settings != null)
+        {
+            OnSettingsChanged?.Invoke(settings);
+        }
     }
 
     public Settings LoadSettings()
     {
-        string path = Application.persistentDataPath + "/settings.uwu";
+        string path = Path.Combine(Application.persistentDataPath, "settings.uwu");
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new();
@@ -70,7 +181,11 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
-            return null;
+            Settings settings = new();
+
+            SaveSettings(settings);
+
+            return settings;
         }
     }
 
@@ -82,5 +197,15 @@ public class SaveSystem : MonoBehaviour
             Debug.Log(field.Name + ": " + field.GetValue(Instance.LoadSettings()));
         }
         Instance.SaveSettings(new Settings());
+    }
+
+    #endregion
+
+    private void OnApplicationQuit()
+    {
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            SaveGame();
+        }
     }
 }

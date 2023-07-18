@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89bd7bf547a041941ba9279474e1d61c, type: 3}
   m_Name: NewItemSoda
   m_EditorClassIdentifier: 
+  name: NewItemSoda
   image: {fileID: 21300000, guid: 1a60353a1d878e14f9243c719cd3abfd, type: 3}
   text: New Item Unlocked!
   oneTime: 1

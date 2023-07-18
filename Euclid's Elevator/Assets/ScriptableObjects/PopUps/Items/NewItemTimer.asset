@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89bd7bf547a041941ba9279474e1d61c, type: 3}
   m_Name: NewItemTimer
   m_EditorClassIdentifier: 
+  name: NewItemTimer
   image: {fileID: 0}
   text: New Item Unlocked!
   oneTime: 1

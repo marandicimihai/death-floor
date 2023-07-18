@@ -46,11 +46,28 @@ public class GameManager : MonoBehaviour
                 SpawnEnemy();
             }
         };
+        player.PlayerDied += PlayerDeath;
+        Stage = 1;
     }
 
     private void Start()
     {
-        StartTutorial();
+        if (SaveSystem.Instance.currentSaveData.stage >= 0)
+        {
+            if (SaveSystem.Instance.currentSaveData.gameStage >= 0)
+            {
+                GameStage = (GameStage)SaveSystem.Instance.currentSaveData.gameStage;
+            }
+        }
+        else
+        {
+            StartTutorial();
+        }
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            data.stage = Stage;
+            data.gameStage = (int)GameStage;
+        };
     }
 
     #region GameLevel

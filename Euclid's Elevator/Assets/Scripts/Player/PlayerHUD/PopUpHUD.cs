@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PopUpHUD : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PopUpHUD : MonoBehaviour
     [SerializeField] float slideOutTime;
 
     List<RectTransform> popups;
-    List<PopUpProperties> used;
+    List<string> used;
     float slideTimeElapsed;
     float timeElapsed;
 
@@ -23,6 +24,19 @@ public class PopUpHUD : MonoBehaviour
         center = new Vector3(-rect.rect.width / 2, rect.rect.height / 2, 0);
         popups = new();
         used = new();
+    }
+
+    private void Start()
+    {
+        if (SaveSystem.Instance.currentSaveData != null &&
+            SaveSystem.Instance.currentSaveData.usedPopUps.Length > 0)
+        {
+            used = SaveSystem.Instance.currentSaveData.usedPopUps.ToList();
+        }
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            data.usedPopUps = used.ToArray();
+        };
     }
 
     private void Update()
@@ -117,7 +131,7 @@ public class PopUpHUD : MonoBehaviour
 
     public void PopUp(PopUpProperties popUp)
     {
-        if ((used.Contains(popUp) && popUp.oneTime) || popUp == null)
+        if ((used.Contains(popUp.name) && popUp.oneTime) || popUp == null)
         {
             return;
         }
@@ -135,7 +149,7 @@ public class PopUpHUD : MonoBehaviour
         {
             if (popUp.oneTime)
             {
-                used.Add(popUp);
+                used.Add(popUp.name);
             }
             popUpScript.AssignProperties(popUp);
         }

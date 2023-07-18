@@ -1,4 +1,3 @@
-using UnityEngine.AI;
 using UnityEngine;
 using System;
 
@@ -12,13 +11,14 @@ public class Door : MonoBehaviour
     public bool Open { get; private set; }
     public bool StageLocked { get; private set; }
 
+    public bool locked = true;
     [SerializeField] ItemProperties key;
     [SerializeField] Transform panel;
     [SerializeField] Animator animator;
     [SerializeField] Vector3 closedAngles;
     [SerializeField] Vector3 openAngles;
     [SerializeField] float openTime;
-    [SerializeField] int unlockStage;
+    public int unlockStage;
 
     [Header("Sounds")]
     public GameObject handle;
@@ -35,7 +35,49 @@ public class Door : MonoBehaviour
 
     private void Awake()
     {
-        Locked = true;
+        playedCloseSound = true;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
+        {
+            if (GameManager.Instance.Stage == unlockStage)
+            {
+                StageLocked = false;
+                OpenDoor(true);
+            }
+        };
+    }
+
+    //CALLED BY DOOR MANAGER
+    public void Init(bool locked, bool open, int stage)
+    {
+        Locked = locked;
+
+        Open = open;
+        if (open)
+        {
+            interpolation = 1;
+        }
+        else
+        {
+            interpolation = 0;
+        }
+
+        if (unlockStage > stage)
+        {
+            StageLocked = true;
+        }
+        else
+        {
+            StageLocked = false;
+        }
+    }
+
+    public void StartedGame()
+    {
+        Locked = locked;
 
         if (Open)
         {
@@ -50,20 +92,6 @@ public class Door : MonoBehaviour
         {
             StageLocked = true;
         }
-
-        playedCloseSound = true;
-    }
-
-    private void Start()
-    {
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
-        {
-            if (GameManager.Instance.Stage == unlockStage)
-            {
-                StageLocked = false;
-                OpenDoor(true);
-            }
-        };
     }
 
     private void Update()

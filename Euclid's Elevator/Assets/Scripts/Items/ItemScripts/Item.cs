@@ -3,7 +3,7 @@ using UnityEngine;
 public class Item : SyncValues
 {
     [SyncValue] public ItemProperties properties;
-    [SyncValue] public int uses;
+    [SyncValue] [SaveValue] public int uses;
 
     bool visible = true;
 
@@ -50,6 +50,17 @@ public class Item : SyncValues
 
     protected virtual void OnBreak()
     {
+        if (ItemManager.spawnedItems.Contains(this))
+        {
+            ItemManager.spawnedItems.Remove(this);
+        }
+    }
 
+    private void OnDestroy()
+    {
+        if (ItemManager.spawnedItems.Contains(this))
+        {
+            ItemManager.spawnedItems.Remove(this);
+        }
     }
 }

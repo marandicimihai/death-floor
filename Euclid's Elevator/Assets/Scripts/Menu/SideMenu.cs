@@ -80,11 +80,13 @@ public class SideMenu : MonoBehaviour
 
     public void Restart()
     {
-        //do restart !
+        SaveSystem.Instance.ClearData(0);
+        SceneManager.LoadScene("Main");
     }
 
     public void LoadMainMenu()
     {
+        SaveSystem.Instance.SaveGame();
         SceneManager.LoadScene("Menu");
     }
 }

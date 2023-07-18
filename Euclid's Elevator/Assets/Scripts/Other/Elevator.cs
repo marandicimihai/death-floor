@@ -26,6 +26,7 @@ public class Elevator : MonoBehaviour
     AudioJob movejob;
     Animator animator;
 
+    bool riding;
     bool waiting;
     bool canClose;
     bool elevatorDoorClosed;
@@ -44,7 +45,31 @@ public class Elevator : MonoBehaviour
             InitiateElevatorRide();
         };
 
-        InitiateElevatorRide();
+        if (SaveSystem.Instance.currentSaveData != null)
+        {
+            if (SaveSystem.Instance.currentSaveData.stage < 0)
+            {
+                InitiateElevatorRide();
+            }
+            else
+            {
+                OpenElevator(true);
+            }
+            Broken = SaveSystem.Instance.currentSaveData.broken;
+            waiting = SaveSystem.Instance.currentSaveData.waiting;
+            canClose = SaveSystem.Instance.currentSaveData.canClose;
+        }
+
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            data.broken = Broken;
+            data.waiting = waiting;
+            if (waiting)
+            {
+                data.canClose = true;
+            }
+            SaveSystem.Instance.CanSave = !riding;
+        };
     }
 
     private void Update()
@@ -118,6 +143,7 @@ public class Elevator : MonoBehaviour
 
     void InitiateElevatorRide()
     {
+        riding = true;
         if (player.Deaths == 0)
         {
             movejob = AudioManager.Instance.PlayClip(move1);
@@ -134,7 +160,7 @@ public class Elevator : MonoBehaviour
         {
             movejob = AudioManager.Instance.PlayClip(move4);
         }
-        Invoke(nameof(OpenElevator), elevatorRideTime);
+        Invoke(nameof(OpenElevatorWithAnimation), elevatorRideTime);
         player.vfxmanager.CameraShake(AnimationAction.FadeAppear, elevatorAccelTime);
         Invoke(nameof(DeaccelerateElevator), elevatorRideTime - elevatorAccelTime);
     }
@@ -144,12 +170,27 @@ public class Elevator : MonoBehaviour
         player.vfxmanager.CameraShake(AnimationAction.FadeDisappear, elevatorAccelTime);
         movejob.StopPlaying();
         AudioManager.Instance.PlayClip(stop);
+        riding = false;
     }
 
-    void OpenElevator()
+    void OpenElevatorWithAnimation()
     {
-        AudioManager.Instance.PlayClip(open);
         animator.SetBool("Open", true);
+        AudioManager.Instance.PlayClip(open);
+        doorCollider.enabled = false;
+    }
+
+    void OpenElevator(bool instant = false)
+    {
+        animator.SetBool("Open", true);
+        if (instant)
+        {
+            animator.SetTrigger("InstaOpen");
+        }
+        else
+        {
+            AudioManager.Instance.PlayClip(open);
+        }
         doorCollider.enabled = false;
     }
 

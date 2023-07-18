@@ -9,6 +9,7 @@ public class Journal : MonoBehaviour
     public List<JournalPage> pages;
     public int page;
 
+    [SerializeField] JournalPage scriptableObjects;
     [SerializeField] Player player;
     [SerializeField] Animator journalAnimator;
     [SerializeField] float HUDDelay;
@@ -40,6 +41,38 @@ public class Journal : MonoBehaviour
             }
         };
         journalAnimator.gameObject.SetActive(open);
+
+        if (SaveSystem.Instance.currentSaveData != null &&
+            SaveSystem.Instance.currentSaveData.pages.Length > 0)
+        {
+            foreach(string name in SaveSystem.Instance.currentSaveData.pages)
+            {
+                pages.Add(GetPage(name));
+            }
+        }
+        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        {
+            List<string> names = new();
+
+            foreach (JournalPage page in pages)
+            {
+                names.Add(page.name);
+            }
+
+            data.pages = names.ToArray();
+        };
+    }
+
+    JournalPage GetPage(string name)
+    {
+        foreach (JournalPage page in pages)
+        {
+            if (page.name == name)
+            {
+                return page;
+            }
+        }
+        return null;
     }
 
     void ToggleJournal(InputAction.CallbackContext context)
