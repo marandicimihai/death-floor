@@ -132,7 +132,10 @@ public class EnemyNavigation : MonoBehaviour
     {
         if (!spawned)
         {
-            dragloop.source.volume = 0;
+            if(dragloop != null)
+            {
+                dragloop.source.volume = 0;
+            }
             agent.isStopped = true;
             return;
         }

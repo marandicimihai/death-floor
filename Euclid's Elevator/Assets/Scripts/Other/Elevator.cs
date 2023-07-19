@@ -47,6 +47,7 @@ public class Elevator : MonoBehaviour
 
         if (SaveSystem.Instance.currentSaveData != null)
         {
+
             if (SaveSystem.Instance.currentSaveData.stage < 0)
             {
                 InitiateElevatorRide();
@@ -59,7 +60,10 @@ public class Elevator : MonoBehaviour
             waiting = SaveSystem.Instance.currentSaveData.waiting;
             canClose = SaveSystem.Instance.currentSaveData.canClose;
         }
-
+        else
+        {
+            InitiateElevatorRide();
+        }
         SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
         {
             data.broken = Broken;

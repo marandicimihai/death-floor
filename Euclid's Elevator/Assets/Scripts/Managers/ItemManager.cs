@@ -71,11 +71,14 @@ public class ItemManager : MonoBehaviour
             }
         }
 
-        if (SaveSystem.Instance.currentSaveData.stage < 0)
+        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage < 0)
         {
             SpawnKeycard(1);
         }
-
+        else if (SaveSystem.Instance.currentSaveData == null)
+        {
+            SpawnKeycard(1);
+        }
         SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
         {
             List<string> spawnedItemNames = new();

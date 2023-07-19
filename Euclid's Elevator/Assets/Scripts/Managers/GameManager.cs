@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance.currentSaveData.stage >= 0)
+        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage >= 0)
         {
             if (SaveSystem.Instance.currentSaveData.gameStage >= 0)
             {
