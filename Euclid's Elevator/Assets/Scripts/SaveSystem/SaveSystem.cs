@@ -72,6 +72,8 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    #region Save Slots
+
     [MenuItem("Dev/Save Game")]
     public static void SaveData()
     {
@@ -149,6 +151,8 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    #endregion
+
     #region Settings
 
     public void SaveSettings(Settings settings)
@@ -192,10 +196,10 @@ public class SaveSystem : MonoBehaviour
     [MenuItem("Dev/ClearSettings")]
     public static void ClearSettings()
     {
-        foreach (FieldInfo field in typeof(Settings).GetFields())
+        /*foreach (FieldInfo field in typeof(Settings).GetFields())
         {
             Debug.Log(field.Name + ": " + field.GetValue(Instance.LoadSettings()));
-        }
+        }*/
         Instance.SaveSettings(new Settings());
     }
 

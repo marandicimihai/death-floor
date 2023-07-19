@@ -91,7 +91,7 @@ public class Settings
         {
             if (sensitivity == null)
             {
-                return 0;
+                return 0.1f;
             }
             else
             {

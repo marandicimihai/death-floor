@@ -27,7 +27,6 @@ public class EnemyTrap : MonoBehaviour
     Quaternion initial;
 
     float time;
-    bool pull;
     bool hasPulled;
     bool used;
 
@@ -43,32 +42,6 @@ public class EnemyTrap : MonoBehaviour
         ambiencejob = AudioManager.Instance.PlayClip(gameObject, ambience);
     }
 
-    void OnClosed(object sender, EventArgs args)
-    {
-        if (used)
-        {
-            Destroy(this.gameObject);
-            GameManager.Instance.OnDeath -= OnClosed;
-            GameManager.Instance.OnStageStart -= OnClosed;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (TrapManager.spawnedtraps.Contains(transform))
-        {
-            TrapManager.spawnedtraps.Remove(transform);
-        }
-    }
-
-    private void OnValidate()
-    {
-        if (TryGetComponent(out SphereCollider coll))
-        {
-            coll.radius = triggerRadius;
-        }
-    }
-
     private void Update()
     {
         if (used)
@@ -77,14 +50,17 @@ public class EnemyTrap : MonoBehaviour
         Transform cam = player.cameraController.camera;
 
 
-        if (pull && Vector3.ProjectOnPlane(ray.position - cam.position, Vector3.up).magnitude >= minRadius && 
-            Physics.Raycast(ray.position, cam.position - ray.position, out RaycastHit hitInfo, 20, playerMask) && hitInfo.collider.CompareTag("Player"))
+        if (Physics.Raycast(ray.position, cam.position - ray.position, out RaycastHit hitInfo, triggerRadius, playerMask) 
+            && hitInfo.collider.CompareTag("Player"))
         {
             anim.SetTrigger("Spot");
 
             baseBone.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(cam.position - baseBone.position, Vector3.up).normalized, Vector3.up) * initial;
 
-            GameManager.Instance.player.controller.AddForce(transform.position - cam.position, forceStrength);
+            if (Vector3.ProjectOnPlane(ray.position - cam.position, Vector3.up).magnitude >= minRadius)
+            {
+                GameManager.Instance.player.controller.AddForce(transform.position - cam.position, forceStrength);
+            }
             GameManager.Instance.enemy.InspectNoise(transform.position, true);
 
             if (!hasPulled)
@@ -96,12 +72,18 @@ public class EnemyTrap : MonoBehaviour
             {
                 AudioManager.Instance.PlayClip(gameObject, groundhit);
                 AudioManager.Instance.StopClip(ambiencejob);
-                anim.SetTrigger("Kill");
                 GameManager.Instance.player.Die(false);
-                used = true;
+                anim.SetTrigger("Kill");
             }
 
             hasPulled = true;
+        }
+        else if (hasPulled)
+        {
+            anim.SetTrigger("Burrow");
+            AudioManager.Instance.StopClip(ambiencejob);
+            AudioManager.Instance.PlayClip(gameObject, whoosh);
+            used = true;
         }
         else
         {
@@ -130,34 +112,21 @@ public class EnemyTrap : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnClosed(object sender, EventArgs args)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (used)
         {
-            pull = true;
+            Destroy(this.gameObject);
+            GameManager.Instance.OnDeath -= OnClosed;
+            GameManager.Instance.OnStageStart -= OnClosed;
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnDestroy()
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (TrapManager.spawnedtraps.Contains(transform))
         {
-            pull = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (!used && hasPulled)
-            {
-                anim.SetTrigger("Burrow");
-                AudioManager.Instance.StopClip(ambiencejob);
-                AudioManager.Instance.PlayClip(gameObject, whoosh);
-                pull = false;
-                used = true;
-            }
+            TrapManager.spawnedtraps.Remove(transform);
         }
     }
 }

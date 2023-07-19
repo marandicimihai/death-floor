@@ -472,15 +472,33 @@ public class MenuSettings : MonoBehaviour
                 Input.InputActions.General.Drop.controls[0].path,
                 Input.InputActions.Realtime.Journal.controls[0].path
             });
+            if (keys.InputPaths.Length != keys.InputPaths.Distinct().Count())
+            {
+                keys = ResetInputs();
+            }
         }
         catch
         {
-            Input.InputActions.General.Movement.RemoveBindingOverride(1);
-            Input.InputActions.General.Movement.RemoveBindingOverride(2);
-            Input.InputActions.General.Movement.RemoveBindingOverride(3);
-            Input.InputActions.General.Movement.RemoveBindingOverride(4);
-            keys = new Settings(new string[]
-            {
+            keys = ResetInputs();
+        }
+
+        SaveSystem.Instance.SaveSettings(old + keys);
+    }
+
+    Settings ResetInputs()
+    {
+        Input.InputActions.General.Movement.RemoveBindingOverride(1);
+        Input.InputActions.General.Movement.RemoveBindingOverride(2);
+        Input.InputActions.General.Movement.RemoveBindingOverride(3);
+        Input.InputActions.General.Movement.RemoveBindingOverride(4);
+        Input.InputActions.General.Sneak.RemoveBindingOverride(0);
+        Input.InputActions.Realtime.Pause.RemoveBindingOverride(0);
+        Input.InputActions.General.Interact.RemoveBindingOverride(0);
+        Input.InputActions.General.Use.RemoveBindingOverride(0);
+        Input.InputActions.General.Drop.RemoveBindingOverride(0);
+        Input.InputActions.Realtime.Journal.RemoveBindingOverride(0);
+        return new Settings(new string[]
+        {
                 Input.InputActions.General.Movement.controls[0].path,
                 Input.InputActions.General.Movement.controls[1].path,
                 Input.InputActions.General.Movement.controls[2].path,
@@ -491,10 +509,7 @@ public class MenuSettings : MonoBehaviour
                 Input.InputActions.General.Use.controls[0].path,
                 Input.InputActions.General.Drop.controls[0].path,
                 Input.InputActions.Realtime.Journal.controls[0].path
-            });
-        }
-
-        SaveSystem.Instance.SaveSettings(old + keys);
+        });
     }
 
     //OTHER
