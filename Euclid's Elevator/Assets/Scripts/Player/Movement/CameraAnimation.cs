@@ -27,10 +27,17 @@ public class CameraAnimation : MonoBehaviour
 
     private void Start()
     {
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        if (SaveSystem.Instance != null)
         {
-            SaveSystem.Instance.CanSave = !inAnimation;
-        };
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            {
+                SaveSystem.Instance.CanSave = !inAnimation;
+            };
+        }
+        else
+        {
+            Debug.Log("No save system.");
+        }
     }
 
     private void Update()
@@ -61,13 +68,18 @@ public class CameraAnimation : MonoBehaviour
 
         if (hideHUD)
         {
-            player.HUDManager.HideAllHUD();
+            player.HideHUD();
         }
+        player.UnFreeze();
 
-        Input.InputActions.General.Disable();
-
-        player.controller.Disable();
-        player.cameraController.Disable();
+        if (Input.InputActions != null)
+        {
+            Input.InputActions.General.Disable();
+        }
+        else
+        {
+            Debug.Log("Input class absent.");
+        }
 
         camera.transform.parent = reference;
 
@@ -83,12 +95,17 @@ public class CameraAnimation : MonoBehaviour
         if (!inAnimation)
             return;
 
-        player.HUDManager.DefaultHUD();
+        player.DefaultHUD();
+        player.Freeze();
 
-        Input.InputActions.General.Enable();
-
-        player.controller.Enable();
-        player.cameraController.Enable();
+        if (Input.InputActions != null)
+        {
+            Input.InputActions.General.Enable();
+        }
+        else
+        {
+            Debug.Log("Input class absent.");
+        }
 
         camera.transform.parent = defaultCameraParent;
 

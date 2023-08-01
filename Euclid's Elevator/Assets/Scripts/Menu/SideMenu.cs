@@ -18,19 +18,25 @@ public class SideMenu : MonoBehaviour
         thisCanvas = GetComponent<Canvas>();
         thisCanvas.enabled = false;
 
-        PauseGame.Instance.OnTogglePause += (bool value) => OpenMenu(value);
-
-        GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
+        if (PauseGame.Instance != null)
         {
-            SaveSystem.Instance.ClearData(0);
-            SceneManager.LoadScene("Menu");
-        };
+            PauseGame.Instance.OnTogglePause += (bool value) => OpenMenu(value);
+        }
 
-        GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
+        if (GameManager.Instance != null)
         {
-            isDeathMenu = true;
-            OpenMenu(true);
-        };
+            GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
+            {
+                SaveSystem.Instance.ClearData(0);
+                SceneManager.LoadScene("Menu");
+            };
+
+            GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
+            {
+                isDeathMenu = true;
+                OpenMenu(true);
+            };
+        }
     }
 
     public void SetMenuType(bool type)

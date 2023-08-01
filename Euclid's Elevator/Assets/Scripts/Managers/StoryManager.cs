@@ -27,7 +27,7 @@ public class StoryManager : MonoBehaviour
 
     private void Start()
     {
-        Inventory.OnPickUpKeycard += OnPickUpKeycard;
+        //Inventory.OnPickUpKeycard += OnPickUpKeycard;
         Door.OnOpenAnyDoor += OnOpenAnyDoor;
         Door.OnTryUnlockAnyDoor += DoorLocked;
         Door.OnTryUnlockStageDoor += StageDoor;
@@ -39,7 +39,7 @@ public class StoryManager : MonoBehaviour
         journal.AddPage(objective);
         popUp.PopUp(newObjective);
         dialogue.SayLine(line1);
-        Inventory.OnPickUpKeycard -= OnPickUpKeycard;
+        //Inventory.OnPickUpKeycard -= OnPickUpKeycard;
     }
 
     void OnOpenAnyDoor(object caller, System.EventArgs args)

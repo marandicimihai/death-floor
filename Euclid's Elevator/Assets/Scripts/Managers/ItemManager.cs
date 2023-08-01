@@ -24,8 +24,6 @@ struct KeycardSpawn
 
 public class ItemManager : MonoBehaviour
 {
-    public static List<Item> spawnedItems;
-
     [SerializeField] ItemProperties[] scriptableobjects;
     [SerializeField] SpawnerGroup[] spawnerGroups;
     [SerializeField] ItemSpawn[] spawns;
@@ -33,21 +31,24 @@ public class ItemManager : MonoBehaviour
     [SerializeField] ItemProperties toolbox;
     [SerializeField] ItemProperties keycard;
 
+    static List<Item> spawnedItems;
+
     private void Start()
     {
         spawnedItems = new();
-        if (SaveSystem.Instance.currentSaveData != null)
+        if (SaveSystem.Instance != null)
         {
-            if (SaveSystem.Instance.currentSaveData.spawneditems.Length != 0)
+            if (SaveSystem.Instance.currentSaveData != null &&
+                SaveSystem.Instance.currentSaveData.spawneditems.Length != 0)
             {
                 int i = 0;
                 List<float> positions = SaveSystem.Instance.currentSaveData.spawneditemPositions.ToList();
                 List<string> variables = SaveSystem.Instance.currentSaveData.spawnedvariables.ToList();
                 foreach (string itemName in SaveSystem.Instance.currentSaveData.spawneditems)
                 {
-                    Vector3 position = new Vector3(positions[i*3],
-                                                   positions[i*3 + 1],
-                                                   positions[i*3 + 2]);
+                    Vector3 position = new Vector3(positions[i * 3],
+                                                   positions[i * 3 + 1],
+                                                   positions[i * 3 + 2]);
 
                     Item newItem = Instantiate(GetProperties(SaveSystem.Instance.currentSaveData.spawneditems[i]).physicalObject, position, Quaternion.identity).GetComponent<Item>();
 
@@ -69,59 +70,70 @@ public class ItemManager : MonoBehaviour
                     i++;
                 }
             }
-        }
 
-        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage < 0)
-        {
-            SpawnKeycard(1);
-        }
-        else if (SaveSystem.Instance.currentSaveData == null)
-        {
-            SpawnKeycard(1);
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            List<string> spawnedItemNames = new();
-            List<float> spawnedItemPositions = new();
-            List<int> spawnedItemLengths = new();
-            List<string> spawnedItemVariables = new();
-
-            foreach (Item item in spawnedItems)
+            if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage < 0)
             {
-                spawnedItemNames.Add(item.properties.name);
-                spawnedItemPositions.Add(item.transform.position.x);
-                spawnedItemPositions.Add(item.transform.position.y);
-                spawnedItemPositions.Add(item.transform.position.z);
-                foreach (object obj in item.GetSaveVariables())
+                SpawnKeycard(1);
+            }
+            else if (SaveSystem.Instance.currentSaveData == null)
+            {
+                SpawnKeycard(1);
+            }
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            {
+                List<string> spawnedItemNames = new();
+                List<float> spawnedItemPositions = new();
+                List<int> spawnedItemLengths = new();
+                List<string> spawnedItemVariables = new();
+
+                foreach (Item item in spawnedItems)
                 {
-                    spawnedItemVariables.Add(obj.ToString());
+                    spawnedItemNames.Add(item.properties.name);
+                    spawnedItemPositions.Add(item.transform.position.x);
+                    spawnedItemPositions.Add(item.transform.position.y);
+                    spawnedItemPositions.Add(item.transform.position.z);
+                    foreach (object obj in item.GetSaveVariables())
+                    {
+                        spawnedItemVariables.Add(obj.ToString());
+                    }
+                    spawnedItemLengths.Add(item.GetSaveVariables().Count);
                 }
-                spawnedItemLengths.Add(item.GetSaveVariables().Count);
-            }
 
-            data.spawneditems = spawnedItemNames.ToArray();
-            data.spawneditemPositions = spawnedItemPositions.ToArray();
-            data.spawnedlengths = spawnedItemLengths.ToArray();
-            data.spawnedvariables = spawnedItemVariables.ToArray();
-        };
-
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
+                data.spawneditems = spawnedItemNames.ToArray();
+                data.spawneditemPositions = spawnedItemPositions.ToArray();
+                data.spawnedlengths = spawnedItemLengths.ToArray();
+                data.spawnedvariables = spawnedItemVariables.ToArray();
+            };
+        }
+        else
         {
-            SpawnItems();
-            SpawnKeycard(GameManager.Instance.Stage);
-        };
+            Debug.Log("No save system.");
+        }
 
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
+        if (GameManager.Instance != null)
         {
-            if (!GameObject.FindGameObjectWithTag("Toolbox"))
+            GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
             {
-                SpawnItem(toolbox);
-            }
-            if (!GameObject.FindGameObjectWithTag("KeyCard") && GameManager.Instance.GameStage != GameStage.WaitForPlayer)
-            {
+                SpawnItems(GameManager.Instance.Stage);
                 SpawnKeycard(GameManager.Instance.Stage);
-            }
-        };
+            };
+
+            GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
+            {
+                if (!GameObject.FindGameObjectWithTag("Toolbox"))
+                {
+                    SpawnItem(toolbox, GameManager.Instance.Stage);
+                }
+                if (!GameObject.FindGameObjectWithTag("KeyCard") && GameManager.Instance.GameStage != GameStage.WaitForPlayer)
+                {
+                    SpawnKeycard(GameManager.Instance.Stage);
+                }
+            };
+        }
+        else
+        {
+            Debug.Log("No game manager.");
+        }
     }
 
     ItemProperties GetProperties(string name)
@@ -136,13 +148,13 @@ public class ItemManager : MonoBehaviour
         return null;
     }
 
-    void SpawnItems()
+    void SpawnItems(int stage)
     {
         List<ItemSpawner> spawners = new();
 
         foreach (SpawnerGroup gr in spawnerGroups)
         {
-            if (gr.activeStage == GameManager.Instance.Stage)
+            if (gr.activeStage == stage)
             {
                 spawners.AddRange(gr.spawners);
             }
@@ -168,13 +180,13 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    void SpawnItem(ItemProperties item)
+    void SpawnItem(ItemProperties item, int stage)
     {
         List<ItemSpawner> spawners = new();
 
         foreach (SpawnerGroup gr in spawnerGroups)
         {
-            if (gr.activeStage == GameManager.Instance.Stage)
+            if (gr.activeStage == stage)
             {
                 spawners.AddRange(gr.spawners);
             }
@@ -221,5 +233,14 @@ public class ItemManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    /// <summary>
+    /// Adds the item passed in to a private array which will be saved using the save system. The list is shared amongst all item managers.
+    /// </summary>
+    /// <param name="toAdd">The item to add.</param>
+    public static void AddToPhysicalItems(Item toAdd)
+    {
+        spawnedItems.Add(toAdd);
     }
 }

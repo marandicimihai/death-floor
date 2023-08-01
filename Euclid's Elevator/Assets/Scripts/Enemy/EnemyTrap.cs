@@ -32,12 +32,19 @@ public class EnemyTrap : MonoBehaviour
 
     private void Start()
     {
-        player = GameManager.Instance.player;
-
         initial = baseBone.rotation;
 
-        GameManager.Instance.OnDeath += OnClosed;
-        GameManager.Instance.OnStageStart += OnClosed;
+        if (GameManager.Instance != null)
+        {
+            player = GameManager.Instance.player;
+
+            GameManager.Instance.OnDeath += OnClosed;
+            GameManager.Instance.OnStageStart += OnClosed;
+        }
+        else
+        {
+            Debug.Log("Game manager is absent");
+        }
 
         ambiencejob = AudioManager.Instance.PlayClip(gameObject, ambience);
     }
@@ -47,7 +54,7 @@ public class EnemyTrap : MonoBehaviour
         if (used)
             return;
 
-        Transform cam = player.cameraController.camera;
+        Transform cam = player.cameraController.GetComponent<Camera>().transform;
 
 
         if (Physics.Raycast(ray.position, cam.position - ray.position, out RaycastHit hitInfo, triggerRadius, playerMask) 

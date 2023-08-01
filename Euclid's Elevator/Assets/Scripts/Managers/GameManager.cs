@@ -39,13 +39,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        Inventory.OnPickUpKeycard += (object caller, EventArgs args) =>
+        /*Inventory.OnPickUpKeycard += (object caller, EventArgs args) =>
         {
             if (GameStage == GameStage.Tutorial && player.Deaths == 0)
             {
                 SpawnEnemy();
             }
-        };
+        };*/
         player.PlayerDied += PlayerDeath;
         Stage = 1;
     }

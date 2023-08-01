@@ -34,28 +34,34 @@ public class PlayerHUDManager : MonoBehaviour
 
     private void Start()
     {
-        PauseGame.Instance.OnPause += (object caller, System.EventArgs args) =>
+        if (PauseGame.Instance != null)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        };
-        PauseGame.Instance.OnUnPause += (object caller, System.EventArgs args) =>
+            PauseGame.Instance.OnPause += (object caller, System.EventArgs args) =>
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            };
+            PauseGame.Instance.OnUnPause += (object caller, System.EventArgs args) =>
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            };
+        }
+        if (GameManager.Instance != null)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        };
-        GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            HideAllHUD();
-        };
-        GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            HideAllHUD();
-        };
+            GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                HideAllHUD();
+            };
+            GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                HideAllHUD();
+            };
+        }
     }
 
     public void ToggleJournalView(bool value, float delay)

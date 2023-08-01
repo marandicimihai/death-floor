@@ -25,31 +25,43 @@ public class Insanity : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => insanity = 0;
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => insanity = 0;
-
-        if (SaveSystem.Instance.currentSaveData != null)
+        if (GameManager.Instance != null)
         {
-            insanity = SaveSystem.Instance.currentSaveData.insanity;
+            GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => insanity = 0;
+            GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => insanity = 0;
         }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+
+        if (SaveSystem.Instance != null)
         {
-            data.insanity = insanity;
-        };
+            if (SaveSystem.Instance.currentSaveData != null)
+            {
+                insanity = SaveSystem.Instance.currentSaveData.insanity;
+            }
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            {
+                data.insanity = insanity;
+            };
+        }
     }
 
     private void Update()
     {
         float insanityold = insanity;
-
-        if (enemy.Visible)
+        if (enemy != null)
         {
-            player.vfxmanager.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
-            insanity += Time.deltaTime / insanityTime;
+            if (enemy.Visible)
+            {
+                player.vfxmanager.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
+                insanity += Time.deltaTime / insanityTime;
+            }
+            else
+            {
+                player.vfxmanager.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+            }
         }
         else
         {
-            player.vfxmanager.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+            Debug.Log("No enemy!");
         }
 
         #region Effects

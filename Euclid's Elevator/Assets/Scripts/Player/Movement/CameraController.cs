@@ -2,64 +2,71 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public new Transform camera;
-    [SerializeField] Player player;
+    [SerializeField] new Transform camera;
     
     float sensitivity;
 
     Vector2 rotation;
-    bool canLook;
-
-    private void Awake()
-    {
-        Enable();
-        player.OnSpawn += (SpawnArgs args) =>
-        {
-            Spawn(args.freezeTime);
-        };
-    }
+    bool canLook = true;
 
     private void Start()
     {
-        if (SaveSystem.Instance.LoadSettings() != null)
+        if (SaveSystem.Instance != null)
         {
-            sensitivity = 0.1f * SaveSystem.Instance.LoadSettings().Sensitivity;
+            if (SaveSystem.Instance.LoadSettings() != null)
+            {
+                sensitivity = 0.1f * SaveSystem.Instance.LoadSettings().Sensitivity;
+            }
+            else
+            {
+                sensitivity = 0.1f * 0.1f;
+            }
+            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+            {
+                sensitivity = 0.1f * settings.Sensitivity;
+            };
+
+            if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.CameraRotation.Length != 0)
+            {
+                rotation = new Vector2(SaveSystem.Instance.currentSaveData.CameraRotation[0],
+                                       SaveSystem.Instance.currentSaveData.CameraRotation[1]);
+
+            }
+            else
+            {
+                ResetAngle();
+            }
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            {
+                data.CameraRotation = new float[]
+                {
+                    rotation.x,
+                    rotation.y
+                };
+            };
         }
         else
         {
+            Debug.Log("No save system.");
             sensitivity = 0.1f * 0.1f;
-        }
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
-        {
-            sensitivity = 0.1f * settings.Sensitivity;
-        };
-
-        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.CameraRotation.Length != 0)
-        {
-            rotation = new Vector2(SaveSystem.Instance.currentSaveData.CameraRotation[0],
-                                   SaveSystem.Instance.currentSaveData.CameraRotation[1]);
-
-        }
-        else
-        {
             ResetAngle();
         }
-
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.CameraRotation = new float[]
-            {
-                rotation.x,
-                rotation.y
-            };
-        };
     }
 
     private void Update()
     {
         if (canLook)
         {
-            Vector2 inputVec = Input.InputActions.General.Look.ReadValue<Vector2>() * Time.timeScale;
+            Vector2 inputVec;
+            if (Input.InputActions != null)
+            {
+               inputVec = Input.InputActions.General.Look.ReadValue<Vector2>() * Time.timeScale;
+            }
+            else
+            {
+                Debug.Log("Input class absent.");
+                return;
+            }
 
             rotation.x -= inputVec.y * sensitivity;
             rotation.y += inputVec.x * sensitivity;
@@ -77,14 +84,6 @@ public class CameraController : MonoBehaviour
         rotation.y = 90;
         camera.localEulerAngles = new Vector3(rotation.x, 0, 0);
         transform.localEulerAngles = new Vector3(0, rotation.y, 0);
-    }
-
-    public void Spawn(float freezeTime)
-    {
-        canLook = false;
-        ResetAngle();
-
-        Invoke(nameof(Enable), freezeTime);
     }
 
     public void Disable()

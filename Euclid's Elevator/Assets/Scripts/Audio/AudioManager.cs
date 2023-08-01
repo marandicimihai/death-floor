@@ -45,15 +45,22 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        TryPauseEvents();
+        TryPauseEvents(() => Debug.Log("Pause instance absent"));
         SceneManager.activeSceneChanged += (Scene first, Scene second) =>
         {
-            TryPauseEvents();
+            TryPauseEvents(() => Debug.Log("Pause instance absent"));
         };
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        if (SaveSystem.Instance != null)
         {
-            SetVolume(settings.EffectsVolume, settings.AmbienceVolume);
-        };
+            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+            {
+                SetVolume(settings.EffectsVolume, settings.AmbienceVolume);
+            };
+        }
+        else
+        {
+            Debug.Log("No save system.");
+        }
     }
 
     void SetVolume(float effectsVolume, float ambienceVolume)
@@ -66,7 +73,7 @@ public class AudioManager : MonoBehaviour
         main.SetFloat("ambienceVolume", ambienceVolume);
     }
 
-    void TryPauseEvents()
+    void TryPauseEvents(Action OnCatch = null)
     {
         try
         {
@@ -81,7 +88,7 @@ public class AudioManager : MonoBehaviour
         }
         catch
         {
-            
+            OnCatch?.Invoke();
         }
     }
 

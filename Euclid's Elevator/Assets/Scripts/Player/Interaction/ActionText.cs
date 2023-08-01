@@ -25,10 +25,13 @@ public class ActionText : MonoBehaviour
     private void Start()
     {
         interactInput = Input.InputActions.General.Interact.controls[0].displayName;
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        if (SaveSystem.Instance != null)
         {
-            interactInput = Input.InputActions.General.Interact.controls[0].displayName;
-        };
+            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+            {
+                interactInput = Input.InputActions.General.Interact.controls[0].displayName;
+            };
+        }
     }
 
     public bool OpenDoor(Player player, RaycastHit hit)

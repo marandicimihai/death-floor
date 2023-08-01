@@ -6,7 +6,7 @@ using System;
 
 public class Inventory : MonoBehaviour
 {
-    public static EventHandler OnPickUpKeycard;
+    public EventHandler OnPickUpKeycard;
     public EventHandler OnItemsChanged;
 
     public Item[] Items 
@@ -47,78 +47,92 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        Input.InputActions.General.Drop.performed += (InputAction.CallbackContext context) => DropItem();
-        Input.InputActions.General.Use.performed += (InputAction.CallbackContext context) => UseItem();
-        Input.InputActions.General.Inventory1.performed += InventoryPerformed;
-        Input.InputActions.General.Inventory2.performed += InventoryPerformed;
-        Input.InputActions.General.Inventory3.performed += InventoryPerformed;
-        Input.InputActions.General.Inventory4.performed += InventoryPerformed;
-        Input.InputActions.General.Scroll.performed += Scroll;
-
-        Input.InputActions.Box.Use.performed += (InputAction.CallbackContext context) => UseItem();
-        Input.InputActions.Box.Inventory1.performed += InventoryPerformed;
-        Input.InputActions.Box.Inventory2.performed += InventoryPerformed;
-        Input.InputActions.Box.Inventory3.performed += InventoryPerformed;
-        Input.InputActions.Box.Inventory4.performed += InventoryPerformed;
-        Input.InputActions.Box.Scroll.performed += Scroll;
-
-        if (SaveSystem.Instance.currentSaveData != null 
-            && SaveSystem.Instance.currentSaveData.holdingitems.Length != 0
-            && SaveSystem.Instance.currentSaveData.variables.Length != 0
-            && SaveSystem.Instance.currentSaveData.lengths.Length != 0)
+        if (Input.InputActions != null)
         {
-            List<string> vars = SaveSystem.Instance.currentSaveData.variables.ToList();
-            for (int i = 0; i < SaveSystem.Instance.currentSaveData.holdingitems.Length; i++)
-            {
-                if (SaveSystem.Instance.currentSaveData.holdingitems[i] != string.Empty)
-                {
-                    Item newItem = Instantiate(GetProperties(SaveSystem.Instance.currentSaveData.holdingitems[i]).inHandObject, inventory).GetComponent<Item>();
+            Input.InputActions.General.Drop.performed += (InputAction.CallbackContext context) => DropItem();
+            Input.InputActions.General.Use.performed += (InputAction.CallbackContext context) => UseItem();
+            Input.InputActions.General.Inventory1.performed += InventoryPerformed;
+            Input.InputActions.General.Inventory2.performed += InventoryPerformed;
+            Input.InputActions.General.Inventory3.performed += InventoryPerformed;
+            Input.InputActions.General.Inventory4.performed += InventoryPerformed;
+            Input.InputActions.General.Scroll.performed += Scroll;
 
-                    List<string> current = new();
-
-                    for (int j = 0; j < SaveSystem.Instance.currentSaveData.lengths[i]; j++)
-                    {
-                        current.Add(vars[0]);
-                        vars.Remove(vars[0]);
-                    }
-
-                    newItem.LoadValues(current.ToArray());
-                    Items[i] = newItem;
-                }
-            }
-            OnItemsChanged?.Invoke(this, new EventArgs());
+            Input.InputActions.Box.Use.performed += (InputAction.CallbackContext context) => UseItem();
+            Input.InputActions.Box.Inventory1.performed += InventoryPerformed;
+            Input.InputActions.Box.Inventory2.performed += InventoryPerformed;
+            Input.InputActions.Box.Inventory3.performed += InventoryPerformed;
+            Input.InputActions.Box.Inventory4.performed += InventoryPerformed;
+            Input.InputActions.Box.Scroll.performed += Scroll;
+        }
+        else
+        {
+            Debug.Log("Input class absent.");
         }
 
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        if (SaveSystem.Instance != null)
         {
-            List<string> strings = new();
-            List<string> values = new();
-            List<int> lengths = new();
-
-            for (int i = 0; i < Items.Length; i++)
+            if (SaveSystem.Instance.currentSaveData != null 
+                && SaveSystem.Instance.currentSaveData.holdingitems.Length != 0
+                && SaveSystem.Instance.currentSaveData.variables.Length != 0
+                && SaveSystem.Instance.currentSaveData.lengths.Length != 0)
             {
-                if (Items[i] == null)
+                List<string> vars = SaveSystem.Instance.currentSaveData.variables.ToList();
+                for (int i = 0; i < SaveSystem.Instance.currentSaveData.holdingitems.Length; i++)
                 {
-                    strings.Add(string.Empty);
-                    lengths.Add(0);
-                }
-                else
-                {
-                    strings.Add(Items[i].properties.name);
-
-                    object[] objs = Items[i].GetSaveVariables().ToArray();
-                    for (int j = 0; j < objs.Length; j++)
+                    if (SaveSystem.Instance.currentSaveData.holdingitems[i] != string.Empty)
                     {
-                        values.Add(objs[j].ToString());
+                        Item newItem = Instantiate(GetProperties(SaveSystem.Instance.currentSaveData.holdingitems[i]).inHandObject, inventory).GetComponent<Item>();
+
+                        List<string> current = new();
+
+                        for (int j = 0; j < SaveSystem.Instance.currentSaveData.lengths[i]; j++)
+                        {
+                            current.Add(vars[0]);
+                            vars.Remove(vars[0]);
+                        }
+
+                        newItem.LoadValues(current.ToArray());
+                        Items[i] = newItem;
                     }
-                    lengths.Add(objs.Length);
                 }
+                OnItemsChanged?.Invoke(this, new EventArgs());
             }
 
-            data.holdingitems = strings.ToArray();
-            data.variables = values.ToArray();
-            data.lengths = lengths.ToArray();
-        };
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            {
+                List<string> strings = new();
+                List<string> values = new();
+                List<int> lengths = new();
+
+                for (int i = 0; i < Items.Length; i++)
+                {
+                    if (Items[i] == null)
+                    {
+                        strings.Add(string.Empty);
+                        lengths.Add(0);
+                    }
+                    else
+                    {
+                        strings.Add(Items[i].properties.name);
+
+                        object[] objs = Items[i].GetSaveVariables().ToArray();
+                        for (int j = 0; j < objs.Length; j++)
+                        {
+                            values.Add(objs[j].ToString());
+                        }
+                        lengths.Add(objs.Length);
+                    }
+                }
+
+                data.holdingitems = strings.ToArray();
+                data.variables = values.ToArray();
+                data.lengths = lengths.ToArray();
+            };
+        }
+        else
+        {
+            Debug.Log("No save system.");
+        }
     }
 
     ItemProperties GetProperties(string name)
@@ -193,8 +207,8 @@ public class Inventory : MonoBehaviour
                     OnPickUpKeycard?.Invoke(this, new EventArgs());
                 }
 
-                player.journal.AddPage(itemComponent.properties.page);
-                player.HUDManager.popupHUD.PopUp(itemComponent.properties.popUp);
+                /*player.journal.AddPage(itemComponent.properties.page);
+                player.HUDManager.popupHUD.PopUp(itemComponent.properties.popUp);*/
 
                 Destroy(itemComponent.gameObject);
 
@@ -207,6 +221,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Drops current item
+    /// </summary>
     void DropItem()
     {
         if (Items[Index] == null)
@@ -221,7 +238,13 @@ public class Inventory : MonoBehaviour
         if (dropped.TryGetComponent(out Item item))
         {
             item.SetValues(Items[Index]);
-            ItemManager.spawnedItems.Add(item);
+
+            try
+            {
+                ItemManager.AddToPhysicalItems(item);
+            }
+            catch { Debug.Log("Item manager issue"); }
+
             AudioManager.Instance.PlayRandomClip(dropped, item.properties.drop);
         }
 
@@ -231,6 +254,9 @@ public class Inventory : MonoBehaviour
         OnItemsChanged?.Invoke(this, new EventArgs());
     }
 
+    /// <summary>
+    /// Uses current item
+    /// </summary>
     void UseItem()
     {
         if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(player))

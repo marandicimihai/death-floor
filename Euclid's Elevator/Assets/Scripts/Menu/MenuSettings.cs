@@ -176,7 +176,7 @@ public class MenuSettings : MonoBehaviour
     //AUDIO
     void UpdateAudio()
     {
-        if (SaveSystem.Instance.LoadSettings() == null)
+        if (SaveSystem.Instance == null || SaveSystem.Instance.LoadSettings() == null)
         {
             Debug.Log("No setting");
             return;
@@ -195,7 +195,7 @@ public class MenuSettings : MonoBehaviour
     }
     public void SaveAudio()
     {
-        if (!valuesLoaded)
+        if (SaveSystem.Instance == null || !valuesLoaded)
             return;
 
         Settings old = SaveSystem.Instance.LoadSettings();
@@ -206,7 +206,7 @@ public class MenuSettings : MonoBehaviour
     //GRAPHICS
     void UpdateGraphics()
     {
-        if (SaveSystem.Instance.LoadSettings() == null)
+        if (SaveSystem.Instance == null || SaveSystem.Instance.LoadSettings() == null)
         {
             return;
         }
@@ -277,7 +277,7 @@ public class MenuSettings : MonoBehaviour
     }
     public void ApplyAndSaveGraphics()
     {
-        if (!valuesLoaded)
+        if (SaveSystem.Instance == null || !valuesLoaded)
             return;
 
         Settings old = SaveSystem.Instance.LoadSettings();
@@ -379,7 +379,7 @@ public class MenuSettings : MonoBehaviour
     //INPUT
     void UpdateInput()
     {
-        if (SaveSystem.Instance.LoadSettings() == null)
+        if (SaveSystem.Instance == null || SaveSystem.Instance.LoadSettings() == null)
         {
             return;
         }

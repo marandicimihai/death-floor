@@ -16,7 +16,7 @@ public class EnemyNavigation : MonoBehaviour
     {
         get
         {
-            Transform cam = player.cameraController.camera;
+            Transform cam = player.cameraController.GetComponent<Camera>().transform;
 
             if (!spawned || !gameObject.activeInHierarchy)
             {
@@ -140,7 +140,7 @@ public class EnemyNavigation : MonoBehaviour
             return;
         }
 
-        Transform cam = player.cameraController.camera;
+        Transform cam = player.cameraController.GetComponent<Camera>().transform;
         
         /*Debug.DrawRay(cam.position, (transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position).normalized *
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));
@@ -308,7 +308,7 @@ public class EnemyNavigation : MonoBehaviour
     void Chase()
     {
         State = State.Chase;
-        agent.destination = player.cameraController.camera.transform.position;
+        agent.destination = player.cameraController.GetComponent<Camera>().transform.position;
         agent.speed = chaseSpeed;
         agent.stoppingDistance = chaseStopDistance;
     }

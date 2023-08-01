@@ -33,24 +33,29 @@ public class Journal : MonoBehaviour
         Input.InputActions.Realtime.Journal.performed += ToggleJournal;
         Input.InputActions.Realtime.PageLeft.performed += PageLeft;
         Input.InputActions.Realtime.PageRight.performed += PageRight;
-        PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
+        if (PauseGame.Instance != null)
+        {
+            PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
         {
             if (open)
             {
                 ToggleJournal(new InputAction.CallbackContext());
             }
         };
+        }
         journalAnimator.gameObject.SetActive(open);
 
-        if (SaveSystem.Instance.currentSaveData != null &&
-            SaveSystem.Instance.currentSaveData.pages.Length > 0)
+        if (SaveSystem.Instance != null)
         {
-            foreach(string name in SaveSystem.Instance.currentSaveData.pages)
+            if (SaveSystem.Instance.currentSaveData != null &&
+                SaveSystem.Instance.currentSaveData.pages.Length > 0)
             {
-                pages.Add(GetPage(name));
+                foreach(string name in SaveSystem.Instance.currentSaveData.pages)
+                {
+                    pages.Add(GetPage(name));
+                }
             }
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
         {
             List<string> names = new();
 
@@ -61,6 +66,7 @@ public class Journal : MonoBehaviour
 
             data.pages = names.ToArray();
         };
+        }
     }
 
     JournalPage GetPage(string name)
