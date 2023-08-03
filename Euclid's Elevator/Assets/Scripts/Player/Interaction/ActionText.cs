@@ -24,13 +24,25 @@ public class ActionText : MonoBehaviour
 
     private void Start()
     {
-        interactInput = Input.InputActions.General.Interact.controls[0].displayName;
+        if (Input.InputActions != null)
+        {
+            interactInput = Input.InputActions.General.Interact.controls[0].displayName;
+        }
+        else
+        {
+            Debug.Log("Input class absent");
+        }
+
         if (SaveSystem.Instance != null)
         {
             SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
             {
                 interactInput = Input.InputActions.General.Interact.controls[0].displayName;
             };
+        }
+        else
+        {
+            Debug.Log("No save system");
         }
     }
 
@@ -39,7 +51,7 @@ public class ActionText : MonoBehaviour
         if (hit.transform.GetComponentInParent<Door>() && !hit.transform.GetComponentInParent<Door>().StageLocked && 
             !hit.transform.GetComponentInParent<Door>().Locked && !hit.transform.GetComponentInParent<Door>().Open)
         {
-            player.HUDManager.actionInfo.SetActionText(openDoor + $" ({interactInput})");
+            player.SetActionText(openDoor + $" ({interactInput})");
             return true;
         }
         return false;
@@ -50,7 +62,7 @@ public class ActionText : MonoBehaviour
         if (hit.transform.GetComponentInParent<Door>() && !hit.transform.GetComponentInParent<Door>().StageLocked &&
             !hit.transform.GetComponentInParent<Door>().Locked && hit.transform.GetComponentInParent<Door>().Open)
         {
-            player.HUDManager.actionInfo.SetActionText(closeDoor + $" ({interactInput})");
+            player.SetActionText(closeDoor + $" ({interactInput})");
             return true;
         }
         return false;
@@ -63,7 +75,7 @@ public class ActionText : MonoBehaviour
         {
             if (hit.transform.GetComponentInParent<Door>().MatchesRequirement(player))
             {
-                player.HUDManager.actionInfo.SetActionText(lockDoor + $" ({interactInput})");
+                player.SetActionText(lockDoor + $" ({interactInput})");
                 return true;
             }
         }
@@ -75,7 +87,7 @@ public class ActionText : MonoBehaviour
         if (hit.transform.GetComponentInParent<Door>() && !hit.transform.GetComponentInParent<Door>().StageLocked &&
             hit.transform.GetComponentInParent<Door>().Locked && !hit.transform.GetComponentInParent<Door>().Open)
         {
-            player.HUDManager.actionInfo.SetActionText(pickLock + $" ({interactInput})");
+            player.SetActionText(pickLock + $" ({interactInput})");
             return true;
         }
         return false;
@@ -87,7 +99,7 @@ public class ActionText : MonoBehaviour
             hit.transform.GetComponentInParent<Door>().Locked && !hit.transform.GetComponentInParent<Door>().Open &&
             hit.transform.GetComponentInParent<Door>().MatchesRequirement(player))
         {
-            player.HUDManager.actionInfo.SetActionText(unlockDoor + $" ({interactInput})");
+            player.SetActionText(unlockDoor + $" ({interactInput})");
             return true;
         }
         return false;
@@ -99,7 +111,7 @@ public class ActionText : MonoBehaviour
         {
             if (hit.collider.GetComponentInParent<Elevator>().MatchesRequirement(player))
             {
-                player.HUDManager.actionInfo.SetActionText(insertKeycard + $" ({interactInput})");
+                player.SetActionText(insertKeycard + $" ({interactInput})");
                 return true;
             }
         }
@@ -113,7 +125,7 @@ public class ActionText : MonoBehaviour
             if (hit.collider.GetComponentInParent<Elevator>().Broken &&
                 hit.collider.GetComponentInParent<Elevator>().MatchesRequirement(player))
             {
-                player.HUDManager.actionInfo.SetActionText(repairElevator + $" ({interactInput})");
+                player.SetActionText(repairElevator + $" ({interactInput})");
                 return true;
             }
         }
@@ -124,7 +136,7 @@ public class ActionText : MonoBehaviour
     {
         if (hit.transform.TryGetComponent(out Item item))
         {
-            player.HUDManager.actionInfo.SetActionText(pickUpItem + $" ({interactInput})");
+            player.SetActionText(pickUpItem + $" ({interactInput})");
             return true;
         }
         return false;
@@ -136,7 +148,7 @@ public class ActionText : MonoBehaviour
         {
             if (!box.hasPlayer)
             {
-                player.HUDManager.actionInfo.SetActionText(hide + $" ({interactInput})");
+                player.SetActionText(hide + $" ({interactInput})");
             }
             return true;
         }

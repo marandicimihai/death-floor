@@ -133,5 +133,7 @@ public class Player : MonoBehaviour
 
     public void StopAction(object caller) => HUDManager.StopAction(caller);
 
+    public void SetActionText(string text) => HUDManager.SetActionText(text);
+
     public bool GetInteractionRaycast(out RaycastHit hit) => interactionManager.GetInteractionRaycast(out hit);
 }

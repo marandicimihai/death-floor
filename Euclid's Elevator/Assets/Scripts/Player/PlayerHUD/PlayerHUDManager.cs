@@ -118,4 +118,6 @@ public class PlayerHUDManager : MonoBehaviour
     public void SetSliderValue(float value, object caller) => actionInfo.SetSliderValue(value, caller);
 
     public void StopAction(object caller) => actionInfo.StopAction(caller);
+
+    public void SetActionText(string text) => actionInfo.SetActionText(text);
 }

@@ -1,4 +1,3 @@
-using UnityEngine.InputSystem;
 using UnityEngine;
 
 public enum CallType
@@ -7,28 +6,22 @@ public enum CallType
     Canceled
 }
 
-[RequireComponent(typeof(Interactions))]
 [RequireComponent(typeof(ActionText))]
 public class InteractionManager : MonoBehaviour
 {
+    [SerializeField] Player player;
     [SerializeField] new Camera camera;
     [SerializeField] LayerMask interactionLayerMask;
     [SerializeField] float interactionDistance;
-
-    Player player;
-    delegate bool interaction(CallType type, Player player, RaycastHit hit);
-    interaction[] interactions;
 
     delegate bool action(Player player, RaycastHit hit);
     action[] actions;
 
     private void Awake()
     {
-        player = GetComponent<Player>();
-
         if (player == null)
         {
-            Debug.LogError("Interactions cannot be executed without the presence of the player script!");
+            Debug.Log("No player class.");
         }
 
         //sorted by priority
@@ -46,20 +39,15 @@ public class InteractionManager : MonoBehaviour
             acte.Hide
         };
 
-        Interactions inter = GetComponent<Interactions>();
+        //AVAILABLE INTERACTIONS ATM
+        /*Interactions inter = GetComponent<Interactions>();
         interactions = new interaction[]
         {
             inter.PickUp,
             inter.ToggleDoor,
             inter.InsertInElevator,
             inter.EnterBox
-        };
-    }
-
-    private void Start()
-    {
-        Input.InputActions.General.Interact.performed += Interact;
-        Input.InputActions.General.Interact.canceled += InteractionCanceled;
+        };*/
     }
 
     private void Update()
@@ -77,39 +65,12 @@ public class InteractionManager : MonoBehaviour
             }
             if (!gate)
             {
-                player.HUDManager.actionInfo.SetActionText(string.Empty);
+                player.SetActionText(string.Empty);
             }
         }
         else
         {
-            player.HUDManager.actionInfo.SetActionText(string.Empty);
-        }
-    }
-
-    void Interact(InputAction.CallbackContext context)
-    {
-        if (GetInteractionRaycast(out RaycastHit hit))
-        {
-            foreach (interaction t in interactions)
-            {
-                if (t.Invoke(CallType.Started, player, hit))
-                {
-                    break;
-                }
-            }
-        }
-    }
-
-    void InteractionCanceled(InputAction.CallbackContext context)
-    {
-        GetInteractionRaycast(out RaycastHit hit);
-        
-        foreach (interaction t in interactions)
-        {
-            if (t.Invoke(CallType.Canceled, player, hit))
-            {
-                break;
-            }
+            player.SetActionText(string.Empty);
         }
     }
 
