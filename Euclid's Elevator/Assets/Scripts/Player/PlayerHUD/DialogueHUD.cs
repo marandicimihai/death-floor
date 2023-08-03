@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class DialogueHUD : MonoBehaviour
 {
-    [System.NonSerialized] public bool hideHUD;
     [SerializeField] DialogueManager dialogueManager;
     [SerializeField] Text dialogue;
     [SerializeField] float timeInBetweenLetters;
@@ -16,12 +15,18 @@ public class DialogueHUD : MonoBehaviour
 
     private void Awake()
     {
-        dialogueManager.OnSayLine += StartSaying;
+        if (dialogueManager != null)
+        {
+            dialogueManager.OnSayLine += StartSaying;
+        }
+        else
+        {
+            Debug.Log("No dialogue manager");
+        }
     }
 
     private void Update()
     {
-        dialogue.enabled = !hideHUD;
         if (typing)
         {
             letterTimeElapsed += Time.deltaTime;
@@ -70,4 +75,6 @@ public class DialogueHUD : MonoBehaviour
         
         typing = true;
     }
+
+    public void HideHUD(bool value) => dialogue.enabled = !value;
 }

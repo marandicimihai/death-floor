@@ -4,7 +4,6 @@ using System;
 
 public class InventoryHUD : MonoBehaviour
 {
-    [System.NonSerialized] public bool hideHUD;
     [Header("ItemModels")]
     [SerializeField] Inventory inventory;
     public Transform holdPos;
@@ -22,30 +21,25 @@ public class InventoryHUD : MonoBehaviour
     [SerializeField] Image[] frames;
     [SerializeField] Image[] icons;
 
-    bool wasHidden;
+    bool hideHUD;
 
     private void Awake()
     {
-        inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshVisualModels();
-        inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshInventoryHUD();
+        if (inventory != null)
+        {
+            inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshVisualModels();
+            inventory.OnItemsChanged += (object caller, EventArgs args) => RefreshInventoryHUD();
+        }
+        else
+        {
+            Debug.Log("No inventory.");
+        }
     }
 
     private void Update()
     {
-        if (hideHUD)
+        if (!hideHUD)
         {
-            SetAllInvisible();
-            inventoryHUDParent.SetActive(false);
-            wasHidden = true;
-        }
-        else
-        {
-            if (wasHidden)
-            {
-                RefreshVisualModels();
-                wasHidden = false;
-            }
-            inventoryHUDParent.SetActive(true);
             Sway();
         }
     }
@@ -63,6 +57,11 @@ public class InventoryHUD : MonoBehaviour
 
     void RefreshInventoryHUD()
     {
+        if (inventory == null)
+        {
+            Debug.Log("No inventory.");
+        }
+
         for (int i = 0; i < frames.Length; i++)
         {
             if (i == inventory.Index)
@@ -90,6 +89,11 @@ public class InventoryHUD : MonoBehaviour
 
     void Sway()
     {
+        if (inventory == null)
+        {
+            Debug.Log("No inventory.");
+        }
+
         if (inventory.Items[inventory.Index] != null && holdPos.childCount > 0)
         {
             Vector2 invertLook = Input.InputActions.General.Look.ReadValue<Vector2>() * -swayStep;
@@ -111,6 +115,11 @@ public class InventoryHUD : MonoBehaviour
 
     void SetActiveItemVisible()
     {
+        if (inventory == null)
+        {
+            Debug.Log("No inventory.");
+        }
+
         for (int i = 0; i < inventory.Items.Length; i++)
         {
             if (inventory.Items[i] != null && i == inventory.Index)
@@ -128,14 +137,35 @@ public class InventoryHUD : MonoBehaviour
             }
         }
     }
+
     void SetAllInvisible()
     {
+        if (inventory == null)
+        {
+            Debug.Log("No inventory.");
+        }
+
         for (int i = 0; i < inventory.Items.Length; i++)
         {
             if (inventory.Items[i] != null)
             {
                 inventory.Items[i].SetVisible(false);
             }
+        }
+    }
+
+    public void HideHUD(bool value)
+    {
+        hideHUD = value;
+        if (value)
+        {
+            SetAllInvisible();
+            inventoryHUDParent.SetActive(false);
+        }
+        else
+        {
+            RefreshVisualModels(); 
+            inventoryHUDParent.SetActive(true);
         }
     }
 }

@@ -6,10 +6,10 @@ using System;
 public class Journal : MonoBehaviour
 {
     public EventHandler OnPagesChanged;
-    public List<JournalPage> pages;
-    public int page;
+    public int Page { get => page; }
+    public List<JournalPage> Pages { get => pages; }
 
-    [SerializeField] JournalPage scriptableObjects;
+    [SerializeField] JournalPage[] scriptableObjects;
     [SerializeField] Player player;
     [SerializeField] Animator journalAnimator;
     [SerializeField] float HUDDelay;
@@ -20,6 +20,8 @@ public class Journal : MonoBehaviour
     [SerializeField] string scribble;
     [SerializeField] string[] pageFlip;
 
+    List<JournalPage> pages;
+    int page;
     bool open;
 
     private void Awake()
@@ -30,9 +32,16 @@ public class Journal : MonoBehaviour
 
     private void Start()
     {
-        Input.InputActions.Realtime.Journal.performed += ToggleJournal;
-        Input.InputActions.Realtime.PageLeft.performed += PageLeft;
-        Input.InputActions.Realtime.PageRight.performed += PageRight;
+        if (Input.InputActions != null)
+        {
+            Input.InputActions.Realtime.Journal.performed += ToggleJournal;
+            Input.InputActions.Realtime.PageLeft.performed += PageLeft;
+            Input.InputActions.Realtime.PageRight.performed += PageRight;
+        }
+        else
+        {
+            Debug.Log("Input class absent");
+        }
         if (PauseGame.Instance != null)
         {
             PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
@@ -43,6 +52,11 @@ public class Journal : MonoBehaviour
             }
         };
         }
+        else
+        {
+            Debug.Log("No pause class.");
+        }
+
         journalAnimator.gameObject.SetActive(open);
 
         if (SaveSystem.Instance != null)
@@ -67,11 +81,15 @@ public class Journal : MonoBehaviour
             data.pages = names.ToArray();
         };
         }
+        else
+        {
+            Debug.Log("No save system.");
+        }
     }
 
     JournalPage GetPage(string name)
     {
-        foreach (JournalPage page in pages)
+        foreach (JournalPage page in scriptableObjects)
         {
             if (page.name == name)
             {
@@ -83,25 +101,58 @@ public class Journal : MonoBehaviour
 
     void ToggleJournal(InputAction.CallbackContext context)
     {
-        if (player.Dead || (PauseGame.Instance.Paused && !open))
+        if (PauseGame.Instance != null)
         {
-            return;
+            if (player.Dead || (PauseGame.Instance.Paused && !open))
+            {
+                return;
+            }
+        }
+        else
+        {
+            Debug.Log("No pause class");
+            if (player.Dead)
+            {
+                return;
+            }
         }
 
         open = !open;
         journalAnimator.gameObject.SetActive(true);
         journalAnimator.SetBool("Open", open);
         OnPagesChanged?.Invoke(this, new EventArgs());
-        player.HUDManager.ToggleJournalView(open, HUDDelay);
+
+        if (player != null)
+        {
+            player.ToggleJournalView(open, HUDDelay);
+        }
+        else
+        {
+            Debug.Log("No player class");
+        }
 
         if (open)
         {
-            PauseGame.Instance.Pause();
+            if (PauseGame.Instance != null)
+            {
+                PauseGame.Instance.Pause();
+            }
+            else
+            {
+                Debug.Log("No pause class");
+            }
             AudioManager.Instance.PlayClip(openJournal);
         }
         else
         {
-            PauseGame.Instance.Unpause();
+            if (PauseGame.Instance != null)
+            {
+                PauseGame.Instance.Unpause();
+            }
+            else
+            {
+                Debug.Log("No pause class");
+            }
             AudioManager.Instance.PlayClip(closeJournal);
         }
     }

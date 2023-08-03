@@ -119,4 +119,5 @@ public class Player : MonoBehaviour
 
     public void HideHUD() => HUDManager.HideAllHUD();
     public void DefaultHUD() => HUDManager.DefaultHUD();
+    public void ToggleJournalView(bool value, float delay) => HUDManager.ToggleJournalView(value, delay);
 }

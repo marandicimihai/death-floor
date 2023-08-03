@@ -4,7 +4,6 @@ using System.Linq;
 
 public class PopUpHUD : MonoBehaviour
 {
-    [System.NonSerialized] public bool hideHUD;
     [SerializeField] RectTransform rect;
     [SerializeField] GameObject popUp;
     [SerializeField] float timePerPopUp;
@@ -40,26 +39,14 @@ public class PopUpHUD : MonoBehaviour
                 data.usedPopUps = used.ToArray();
             };
         }
+        else
+        {
+            Debug.Log("No save system.");
+        }
     }
 
     private void Update()
     {
-        if (hideHUD)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                popups[i].gameObject.SetActive(false);
-            }
-            return;
-        }
-        else
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                popups[i].gameObject.SetActive(true);
-            }
-        }
-
         if (transform.childCount > 0)
         {
             if (slideIn)
@@ -155,6 +142,24 @@ public class PopUpHUD : MonoBehaviour
                 used.Add(popUp.name);
             }
             popUpScript.AssignProperties(popUp);
+        }
+    }
+
+    public void HideHUD(bool value)
+    {
+        if (value)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                popups[i].gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                popups[i].gameObject.SetActive(true);
+            }
         }
     }
 }
