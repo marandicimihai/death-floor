@@ -25,7 +25,7 @@ public class Lockpick : MonoBehaviour
 
     private void Update()
     {
-        if (!player.interactionManager.GetInteractionRaycast(out RaycastHit hit) ||
+        if (!player.GetInteractionRaycast(out RaycastHit hit) ||
             hit.transform.GetComponentInParent<Door>() == null ||
             hit.transform.GetComponentInParent<Door>() != target)
         {
@@ -40,7 +40,7 @@ public class Lockpick : MonoBehaviour
         }
         if (picking)
         {
-            player.HUDManager.actionInfo.SetSliderValue(timeElapsed / lockPickTime, this);
+            player.SetSliderValue(timeElapsed / lockPickTime, this);
             timeElapsed += Time.deltaTime * lockpickMultiplier;
             if (timeElapsed >= lockPickTime)
             {
@@ -53,7 +53,7 @@ public class Lockpick : MonoBehaviour
         {
             if (timeElapsed >= lockHoldTime)
             {
-                player.HUDManager.actionInfo.SetSliderValue((timeElapsed - lockHoldTime) / (lockTime - lockHoldTime), this);
+                player.SetSliderValue((timeElapsed - lockHoldTime) / (lockTime - lockHoldTime), this);
             }
 
             timeElapsed += Time.deltaTime * lockpickMultiplier;
@@ -71,7 +71,7 @@ public class Lockpick : MonoBehaviour
         if (!picking && !locking && !door.StageLocked)
         {
             AudioManager.Instance.PlayClip(door.handle, picklock);
-            player.HUDManager.actionInfo.StartAction(SliderType.Unlock, this);
+            player.StartAction(SliderType.Unlock, this);
             timeElapsed = 0;
             target = door;
             picking = true;
@@ -82,7 +82,7 @@ public class Lockpick : MonoBehaviour
     {
         if (!picking && !locking && !door.Open)
         {
-            player.HUDManager.actionInfo.StartAction(SliderType.Lock, this);
+            player.StartAction(SliderType.Lock, this);
             timeElapsed = 0;
             target = door;
             locking = true;
@@ -106,7 +106,7 @@ public class Lockpick : MonoBehaviour
     {
         if (picking || locking)
         {
-            player.HUDManager.actionInfo.StopAction(this);
+            player.StopAction(this);
         }
         AudioManager.Instance.StopClipsWithName(picklock);
     }

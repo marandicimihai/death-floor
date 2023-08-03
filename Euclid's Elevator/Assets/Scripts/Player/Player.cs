@@ -118,6 +118,20 @@ public class Player : MonoBehaviour
     }
 
     public void HideHUD() => HUDManager.HideAllHUD();
+
     public void DefaultHUD() => HUDManager.DefaultHUD();
+
     public void ToggleJournalView(bool value, float delay) => HUDManager.ToggleJournalView(value, delay);
+
+    public void VisualContact(AnimationAction ac, float time) => vfxmanager.VisualContact(ac, time);
+
+    public void LowInsanity(AnimationAction ac, float time) => vfxmanager.LowInsanity(ac, time);
+
+    public void StartAction(SliderType type, object caller) => HUDManager.StartAction(type, caller);
+
+    public void SetSliderValue(float value, object caller) => HUDManager.SetSliderValue(value, caller);
+
+    public void StopAction(object caller) => HUDManager.StopAction(caller);
+
+    public bool GetInteractionRaycast(out RaycastHit hit) => interactionManager.GetInteractionRaycast(out hit);
 }

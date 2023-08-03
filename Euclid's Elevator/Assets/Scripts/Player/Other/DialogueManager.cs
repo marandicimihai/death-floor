@@ -4,8 +4,6 @@ using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance;
-
     static Line currentLine;
     static List<string> used;
 
@@ -14,7 +12,6 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         used = new();
     }
 
@@ -31,6 +28,10 @@ public class DialogueManager : MonoBehaviour
             {
                 data.usedLines = used.ToArray();
             };
+        }
+        else
+        {
+            Debug.Log("No save system.");
         }
     }
 

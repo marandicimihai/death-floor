@@ -4,13 +4,13 @@ using System.Linq;
 
 public class PopUpHUD : MonoBehaviour
 {
+    [SerializeField] PopUpManager manager;
     [SerializeField] RectTransform rect;
     [SerializeField] GameObject popUp;
     [SerializeField] float timePerPopUp;
     [SerializeField] float slideOutTime;
 
     List<RectTransform> popups;
-    List<string> used;
     float slideTimeElapsed;
     float timeElapsed;
 
@@ -22,26 +22,14 @@ public class PopUpHUD : MonoBehaviour
     {
         center = new Vector3(-rect.rect.width / 2, rect.rect.height / 2, 0);
         popups = new();
-        used = new();
-    }
 
-    private void Start()
-    {
-        if (SaveSystem.Instance != null)
+        if (manager != null)
         {
-            if (SaveSystem.Instance.currentSaveData != null &&
-                SaveSystem.Instance.currentSaveData.usedPopUps.Length > 0)
-            {
-                used = SaveSystem.Instance.currentSaveData.usedPopUps.ToList();
-            }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                data.usedPopUps = used.ToArray();
-            };
+            manager.PopUpShow += PopUp;
         }
         else
         {
-            Debug.Log("No save system.");
+            Debug.Log("No pop up manager.");
         }
     }
 
@@ -119,13 +107,8 @@ public class PopUpHUD : MonoBehaviour
         }
     }
 
-    public void PopUp(PopUpProperties popUp)
+    void PopUp(PopUpProperties popUp)
     {
-        if ((used.Contains(popUp.name) && popUp.oneTime) || popUp == null)
-        {
-            return;
-        }
-
         GameObject newpop = Instantiate(this.popUp, this.transform);
         popups.Add(newpop.GetComponent<RectTransform>());
         
@@ -137,10 +120,6 @@ public class PopUpHUD : MonoBehaviour
 
         if (newpop.TryGetComponent(out PopUp popUpScript))
         {
-            if (popUp.oneTime)
-            {
-                used.Add(popUp.name);
-            }
             popUpScript.AssignProperties(popUp);
         }
     }

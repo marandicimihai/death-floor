@@ -57,7 +57,7 @@ public class PlayerHUDManager : MonoBehaviour
             journalTimeElapsed += Time.unscaledDeltaTime;
             if (journalTimeElapsed >= journalHUDTime)
             {
-                journalHUD.hideHUD = false;
+                journalHUD.HideHUD(false);
             }
         }
     }
@@ -101,15 +101,21 @@ public class PlayerHUDManager : MonoBehaviour
         crosshair.SetActive(false);
     }
 
-    void HideCursor()
+    public void HideCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    void ShowCursor()
+    public void ShowCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
+
+    public void StartAction(SliderType type, object caller) => actionInfo.StartAction(type, caller);
+
+    public void SetSliderValue(float value, object caller) => actionInfo.SetSliderValue(value, caller);
+
+    public void StopAction(object caller) => actionInfo.StopAction(caller);
 }

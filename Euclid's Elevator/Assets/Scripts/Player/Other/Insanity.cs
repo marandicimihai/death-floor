@@ -30,6 +30,10 @@ public class Insanity : MonoBehaviour
             GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => insanity = 0;
             GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => insanity = 0;
         }
+        else
+        {
+            Debug.Log("No game manager.");
+        }
 
         if (SaveSystem.Instance != null)
         {
@@ -42,6 +46,10 @@ public class Insanity : MonoBehaviour
                 data.insanity = insanity;
             };
         }
+        else
+        {
+            Debug.Log("No save system.");
+        }
     }
 
     private void Update()
@@ -51,12 +59,12 @@ public class Insanity : MonoBehaviour
         {
             if (enemy.Visible)
             {
-                player.vfxmanager.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
+                player.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
                 insanity += Time.deltaTime / insanityTime;
             }
             else
             {
-                player.vfxmanager.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+                player.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
             }
         }
         else
@@ -68,11 +76,11 @@ public class Insanity : MonoBehaviour
 
         if (insanity >= lowInsanityEffectAppearPercentage)
         {
-            player.vfxmanager.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
+            player.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
         }
         else
         {
-            player.vfxmanager.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
+            player.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
         }
         if (insanity >= lowInsanitySoundAppearPercentage && verylowsanity == null)
         {

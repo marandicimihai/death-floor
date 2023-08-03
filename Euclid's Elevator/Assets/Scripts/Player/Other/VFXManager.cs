@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine.Rendering;
 using UnityEngine;
 
@@ -50,6 +49,10 @@ public class VFXManager : MonoBehaviour
                 bloom.weight = settings.Bloom ? 1 : 0;
                 blur.weight = settings.Blur ? 1 : 0;
             };
+        }
+        else
+        {
+            Debug.Log("No save system");
         }
         initialPosition = camera.transform.localPosition;
     }

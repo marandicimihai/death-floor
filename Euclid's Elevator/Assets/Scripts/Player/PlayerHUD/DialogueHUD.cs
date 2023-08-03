@@ -21,7 +21,7 @@ public class DialogueHUD : MonoBehaviour
         }
         else
         {
-            Debug.Log("No dialogue manager");
+            Debug.Log("No dialogue manager.");
         }
     }
 
