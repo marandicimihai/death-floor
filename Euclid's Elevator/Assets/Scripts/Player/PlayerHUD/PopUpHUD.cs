@@ -4,7 +4,6 @@ using System.Linq;
 
 public class PopUpHUD : MonoBehaviour
 {
-    [SerializeField] PopUpManager manager;
     [SerializeField] RectTransform rect;
     [SerializeField] GameObject popUp;
     [SerializeField] float timePerPopUp;
@@ -22,15 +21,6 @@ public class PopUpHUD : MonoBehaviour
     {
         center = new Vector3(-rect.rect.width / 2, rect.rect.height / 2, 0);
         popups = new();
-
-        if (manager != null)
-        {
-            manager.PopUpShow += PopUp;
-        }
-        else
-        {
-            Debug.Log("No pop up manager.");
-        }
     }
 
     private void Update()
@@ -107,7 +97,7 @@ public class PopUpHUD : MonoBehaviour
         }
     }
 
-    void PopUp(PopUpProperties popUp)
+    public void PopUp(PopUpProperties popUp)
     {
         GameObject newpop = Instantiate(this.popUp, this.transform);
         popups.Add(newpop.GetComponent<RectTransform>());

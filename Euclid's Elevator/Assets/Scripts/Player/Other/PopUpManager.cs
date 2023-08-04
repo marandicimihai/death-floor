@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PopUpManager : MonoBehaviour
 {
-    public delegate void ShowPopUp(PopUpProperties properties);
-    public ShowPopUp PopUpShow;
-
+    [SerializeField] PopUpHUD hud;
     List<string> used;
 
     private void Awake()
@@ -41,7 +39,14 @@ public class PopUpManager : MonoBehaviour
             return;
         }
 
-        PopUpShow?.Invoke(popUp);
+        if (hud != null)
+        {
+            hud.PopUp(popUp);
+        }
+        else
+        {
+            Debug.Log("No hud.");
+        }
 
         if (popUp.oneTime)
         {

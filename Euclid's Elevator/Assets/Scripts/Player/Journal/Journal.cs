@@ -10,7 +10,7 @@ public class Journal : MonoBehaviour
     public List<JournalPage> Pages { get => pages; }
 
     [SerializeField] JournalPage[] scriptableObjects;
-    [SerializeField] Player player;
+    [SerializeField] PlayerHUDManager hud;
     [SerializeField] Animator journalAnimator;
     [SerializeField] float HUDDelay;
 
@@ -41,20 +41,6 @@ public class Journal : MonoBehaviour
         else
         {
             Debug.Log("Input class absent");
-        }
-        if (PauseGame.Instance != null)
-        {
-            PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
-        {
-            if (open)
-            {
-                ToggleJournal(new InputAction.CallbackContext());
-            }
-        };
-        }
-        else
-        {
-            Debug.Log("No pause class.");
         }
 
         journalAnimator.gameObject.SetActive(open);
@@ -101,59 +87,35 @@ public class Journal : MonoBehaviour
 
     void ToggleJournal(InputAction.CallbackContext context)
     {
-        if (PauseGame.Instance != null)
-        {
-            if (player.Dead || (PauseGame.Instance.Paused && !open))
-            {
-                return;
-            }
-        }
-        else
-        {
-            Debug.Log("No pause class");
-            if (player.Dead)
-            {
-                return;
-            }
-        }
-
         open = !open;
         journalAnimator.gameObject.SetActive(true);
         journalAnimator.SetBool("Open", open);
         OnPagesChanged?.Invoke(this, new EventArgs());
 
-        if (player != null)
+        if (hud != null)
         {
-            player.ToggleJournalView(open, HUDDelay);
+            hud.ToggleJournalView(open, HUDDelay);
         }
         else
         {
-            Debug.Log("No player class");
+            Debug.Log("No hud class.");
         }
 
         if (open)
         {
-            if (PauseGame.Instance != null)
-            {
-                PauseGame.Instance.Pause();
-            }
-            else
-            {
-                Debug.Log("No pause class");
-            }
             AudioManager.Instance.PlayClip(openJournal);
         }
         else
         {
-            if (PauseGame.Instance != null)
-            {
-                PauseGame.Instance.Unpause();
-            }
-            else
-            {
-                Debug.Log("No pause class");
-            }
             AudioManager.Instance.PlayClip(closeJournal);
+        }
+    }
+
+    public void CloseJournal()
+    {
+        if (open)
+        {
+            ToggleJournal(new InputAction.CallbackContext());
         }
     }
 

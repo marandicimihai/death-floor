@@ -5,6 +5,7 @@ using UnityEngine;
 public class FirstPersonController : MonoBehaviour
 {
     #region Private Serialized
+
     [Header("Input Movement Speed")]
     [SerializeField] float forwardScale;
     [SerializeField] float strafeScale;
@@ -111,7 +112,15 @@ public class FirstPersonController : MonoBehaviour
 
     private void ComputeVelocity()
     {
-        Vector2 inputVec = Input.InputActions.General.Movement.ReadValue<Vector2>();
+        Vector2 inputVec = Vector2.zero;
+        if (Input.InputActions != null)
+        {
+            inputVec = Input.InputActions.General.Movement.ReadValue<Vector2>();
+        }
+        else
+        {
+            Debug.Log("Input class is absent.");
+        }
         inputVec.x *= strafeScale;
         inputVec.y *= forwardScale;
         inputVec.Normalize();

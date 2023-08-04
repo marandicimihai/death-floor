@@ -4,11 +4,10 @@ using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] DialogueHUD hud;
+
     static Line currentLine;
     static List<string> used;
-
-    public delegate void SayLineHUD(Line line);
-    public SayLineHUD OnSayLine;
 
     private void Awake()
     {
@@ -35,6 +34,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles requests. The event is fired and the HUD class displays the line. When it is finished it will call FinishedLine().
+    /// </summary>
+    /// <param name="line"></param>
     public void SayLine(Line line)
     {
         if (line.oneTime && used.Contains(line.name))
@@ -42,7 +45,10 @@ public class DialogueManager : MonoBehaviour
 
         if (currentLine == null || line.name != currentLine.name)
         {
-            OnSayLine?.Invoke(line);
+            if (hud != null)
+            {
+                hud.StartSaying(line);
+            }
             currentLine = line;
         }
     }

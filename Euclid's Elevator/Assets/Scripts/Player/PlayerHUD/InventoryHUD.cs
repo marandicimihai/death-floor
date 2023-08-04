@@ -6,7 +6,7 @@ public class InventoryHUD : MonoBehaviour
 {
     [Header("ItemModels")]
     [SerializeField] Inventory inventory;
-    public Transform holdPos;
+    [SerializeField] Transform holdPos;
     [SerializeField] float swayStep;
     [SerializeField] float swayMaxStep;
     [SerializeField] float swayRotStep;
@@ -60,6 +60,7 @@ public class InventoryHUD : MonoBehaviour
         if (inventory == null)
         {
             Debug.Log("No inventory.");
+            return;
         }
 
         for (int i = 0; i < frames.Length; i++)
@@ -92,6 +93,7 @@ public class InventoryHUD : MonoBehaviour
         if (inventory == null)
         {
             Debug.Log("No inventory.");
+            return;
         }
 
         if (inventory.Items[inventory.Index] != null && holdPos.childCount > 0)
@@ -118,6 +120,7 @@ public class InventoryHUD : MonoBehaviour
         if (inventory == null)
         {
             Debug.Log("No inventory.");
+            return;
         }
 
         for (int i = 0; i < inventory.Items.Length; i++)
@@ -143,6 +146,7 @@ public class InventoryHUD : MonoBehaviour
         if (inventory == null)
         {
             Debug.Log("No inventory.");
+            return;
         }
 
         for (int i = 0; i < inventory.Items.Length; i++)

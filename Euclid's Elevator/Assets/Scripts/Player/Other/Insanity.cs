@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Insanity : MonoBehaviour
 {
-    public delegate void InsanityDel(InsanityArgs args);
-    public InsanityDel OnInsanityChanged;
+    public float InsanityValue { get => insanity; }
 
     [SerializeField] Player player;
+    [SerializeField] VFXManager vfx;
     [SerializeField] EnemyNavigation enemy;
     [SerializeField] float insanityTime;
     [SerializeField] float insanityEffectFadeTime;
@@ -25,16 +25,6 @@ public class Insanity : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => insanity = 0;
-            GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => insanity = 0;
-        }
-        else
-        {
-            Debug.Log("No game manager.");
-        }
-
         if (SaveSystem.Instance != null)
         {
             if (SaveSystem.Instance.currentSaveData != null)
@@ -54,17 +44,30 @@ public class Insanity : MonoBehaviour
 
     private void Update()
     {
-        float insanityold = insanity;
         if (enemy != null)
         {
             if (enemy.Visible)
             {
-                player.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
+                if (vfx != null)
+                {
+                    vfx.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
+                }
+                else
+                {
+                    Debug.Log("No vfx class.");
+                }
                 insanity += Time.deltaTime / insanityTime;
             }
             else
             {
-                player.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+                if (vfx != null)
+                {
+                    vfx.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+                }
+                else
+                {
+                    Debug.Log("No vfx class.");
+                }
             }
         }
         else
@@ -76,11 +79,25 @@ public class Insanity : MonoBehaviour
 
         if (insanity >= lowInsanityEffectAppearPercentage)
         {
-            player.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
+            if (vfx != null)
+            {
+                vfx.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
+            }
+            else
+            {
+                Debug.Log("No vfx class.");
+            }
         }
         else
         {
-            player.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
+            if (vfx != null)
+            {
+                vfx.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
+            }
+            else
+            {
+                Debug.Log("No vfx class.");
+            };
         }
         if (insanity >= lowInsanitySoundAppearPercentage && verylowsanity == null)
         {
@@ -93,19 +110,25 @@ public class Insanity : MonoBehaviour
 
         #endregion
 
-        if (insanity >= 1 && !player.Dead)
+        if (player != null)
         {
-            player.Die(false);
-            sanityDeath.SetBool("Dead", true);
-            Invoke(nameof(ResetAnimation), 1);
+            if (insanity >= 1 && !player.Dead)
+            {
+                player.Die(false);
+                sanityDeath.SetBool("Dead", true);
+                Invoke(nameof(ResetAnimation), 1);
+            }
         }
-
-        if (insanity != insanityold)
+        else
         {
-            OnInsanityChanged?.Invoke(new InsanityArgs(insanity));
+            Debug.Log("No player class.");
         }
     }
 
+    /// <summary>
+    /// Use 1 to reset it.
+    /// </summary>
+    /// <param name="delta"></param>
     public void ReduceSanity(float delta)
     {
         insanity -= delta;
@@ -115,15 +138,5 @@ public class Insanity : MonoBehaviour
     void ResetAnimation()
     {
         sanityDeath.SetBool("Dead", false);
-    }
-}
-
-public class InsanityArgs : System.EventArgs
-{
-    public float insanity;
-
-    public InsanityArgs(float insanity)
-    {
-        this.insanity = insanity;
     }
 }

@@ -9,16 +9,10 @@ public class Inventory : MonoBehaviour
     public EventHandler OnPickUpKeycard;
     public EventHandler OnItemsChanged;
 
-    public Item[] Items 
+    public Item[] Items
     {
-        get
-        {
-            return items;
-        }
-        set
-        {
-            items = value;
-        }
+        get => items;
+        private set => items = value;
     }
     Item[] items;
 
@@ -29,6 +23,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] int slots;
     [SerializeField] Transform inventory;
     [SerializeField] Player player;
+    [SerializeField] Journal journal;
+    [SerializeField] PopUpManager popup;
 
     [Header("Drop Properties")]
     [SerializeField] Transform dropPoint;
@@ -207,8 +203,22 @@ public class Inventory : MonoBehaviour
                     OnPickUpKeycard?.Invoke(this, new EventArgs());
                 }
 
-                /*player.journal.AddPage(itemComponent.properties.page);
-                player.HUDManager.popupHUD.PopUp(itemComponent.properties.popUp);*/
+                if (journal != null)
+                {
+                    journal.AddPage(itemComponent.properties.page);
+                }
+                else
+                {
+                    Debug.Log("No journal.");
+                }
+                if (popup != null)
+                {
+                    popup.PopUp(itemComponent.properties.popUp);
+                }
+                else
+                {
+                    Debug.Log("No popup class.");
+                }
 
                 Destroy(itemComponent.gameObject);
 

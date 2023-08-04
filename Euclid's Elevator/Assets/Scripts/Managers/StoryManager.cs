@@ -4,7 +4,6 @@ public class StoryManager : MonoBehaviour
 {
     [SerializeField] DialogueManager dialogue;
     [SerializeField] Journal journal;
-    [SerializeField] PopUpHUD popUp;
 
     [Header("First keycard pickup")]
     [SerializeField] JournalPage objective;

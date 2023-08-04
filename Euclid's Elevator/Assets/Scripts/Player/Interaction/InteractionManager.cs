@@ -1,3 +1,4 @@
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public enum CallType
@@ -17,11 +18,23 @@ public class InteractionManager : MonoBehaviour
     delegate bool action(Player player, RaycastHit hit);
     action[] actions;
 
+    IInteractable currentInteracting;
+
     private void Awake()
     {
         if (player == null)
         {
             Debug.Log("No player class.");
+        }
+
+        if (Input.InputActions != null)
+        {
+            Input.InputActions.General.Interact.performed += Interact;
+            Input.InputActions.General.Interact.canceled += CancelInteract;
+        }
+        else
+        {
+            Debug.Log("No input class.");
         }
 
         //sorted by priority
@@ -67,11 +80,43 @@ public class InteractionManager : MonoBehaviour
             {
                 player.SetActionText(string.Empty);
             }
+
+            if (currentInteracting != null)
+            {
+                if (!hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
+                {
+                    currentInteracting.OnInteractCanceled(player, hit);
+                }
+                else if (interactable != currentInteracting)
+                {
+                    currentInteracting.OnInteractCanceled(player, hit);
+                }
+            }
         }
         else
         {
+            if (currentInteracting != null)
+            {
+                currentInteracting.OnInteractCanceled(player, hit);
+            }
             player.SetActionText(string.Empty);
         }
+    }
+
+    void Interact(InputAction.CallbackContext context)
+    {
+        if (GetInteractionRaycast(out RaycastHit hit) &&
+            hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
+        {
+            interactable.OnInteractPerformed(player, hit);
+            currentInteracting = interactable;
+        }
+    }
+
+    void CancelInteract(InputAction.CallbackContext context)
+    {
+        GetInteractionRaycast(out RaycastHit hit);
+        currentInteracting.OnInteractCanceled(player, hit);
     }
 
     public bool GetInteractionRaycast(out RaycastHit hit)

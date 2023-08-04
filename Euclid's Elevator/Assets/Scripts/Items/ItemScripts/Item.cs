@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Item : SyncValues
+public class Item : SyncValues, IInteractable
 {
     [SyncValue] public ItemProperties properties;
     [SyncValue] [SaveValue] public int uses;
@@ -62,5 +62,15 @@ public class Item : SyncValues
         {
             ItemManager.spawnedItems.Remove(this);
         }
+    }
+
+    public bool OnInteractPerformed(Player player, RaycastHit hit)
+    {
+        
+    }
+
+    public bool OnInteractCanceled(Player player, RaycastHit hit)
+    {
+        
     }
 }

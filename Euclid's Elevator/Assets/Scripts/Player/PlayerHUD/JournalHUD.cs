@@ -22,7 +22,6 @@ public class JournalHUD : MonoBehaviour
     [SerializeField] Image journalBook;
     [SerializeField] JournalDamageLevel[] damageLevels;
 
-
     private void Awake()
     {
         if (journal != null)
@@ -33,18 +32,14 @@ public class JournalHUD : MonoBehaviour
         {
             Debug.Log("No journal.");
         }
-
-        if (insanity != null)
-        {
-            insanity.OnInsanityChanged += UpdatePageHUD;
-        }
-        else
-        {
-            Debug.Log("No insanity.");
-        }
     }
-    
-    void UpdatePageHUD(InsanityArgs args)
+
+    private void Update()
+    {
+        UpdatePageHUD();
+    }
+
+    void UpdatePageHUD()
     {
         if (damageLevels.Length == 0)
         {
@@ -55,9 +50,19 @@ public class JournalHUD : MonoBehaviour
 
         foreach (JournalDamageLevel level in damageLevels)
         {
-            if (level.insanityPercentage > highestAvailableLevel.insanityPercentage && level.insanityPercentage <= args.insanity)
+            if (level.insanityPercentage > highestAvailableLevel.insanityPercentage)
             {
-                highestAvailableLevel = level;
+                if (insanity != null)
+                {
+                    if (level.insanityPercentage <= insanity.InsanityValue)
+                    {
+                        highestAvailableLevel = level;
+                    }
+                }
+                else
+                {
+                    Debug.Log("No insanity.");
+                }
             }
         }
 
@@ -69,6 +74,7 @@ public class JournalHUD : MonoBehaviour
         if (journal == null)
         {
             Debug.Log("No journal.");
+            return;
         }
 
         DestroyChildren(leftPage);

@@ -13,18 +13,6 @@ public class DialogueHUD : MonoBehaviour
     int currentLetter;
     bool typing;
 
-    private void Awake()
-    {
-        if (dialogueManager != null)
-        {
-            dialogueManager.OnSayLine += StartSaying;
-        }
-        else
-        {
-            Debug.Log("No dialogue manager.");
-        }
-    }
-
     private void Update()
     {
         if (typing)
@@ -38,7 +26,14 @@ public class DialogueHUD : MonoBehaviour
                 }
                 catch
                 {
-                    dialogueManager.FinishedLine(line);
+                    if (dialogueManager != null)
+                    {
+                        dialogueManager.FinishedLine(line);
+                    }
+                    else
+                    {
+                        Debug.Log("No dialogue manager.");
+                    }
                     currentLetter = 0;
                     typing = false;
                 }

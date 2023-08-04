@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraAnimation : MonoBehaviour
 {
     [SerializeField] Player player;
+    [SerializeField] PlayerHUDManager hudManager;
     [SerializeField] new Camera camera;
     [SerializeField] Transform defaultCameraParent;
     [SerializeField] float animationTransitionTime;
@@ -68,13 +69,28 @@ public class CameraAnimation : MonoBehaviour
 
         if (hideHUD)
         {
-            player.HideHUD();
+            if (hudManager != null)
+            {
+                hudManager.HideAllHUD();
+            }
+            else
+            {
+                Debug.Log("No hud manager.");
+            }
         }
-        player.UnFreeze();
+
+        if (player != null)
+        {
+            player.UnFreeze();
+        }
+        else
+        {
+            Debug.Log("No player class.");
+        }
 
         if (Input.InputActions != null)
         {
-            Input.InputActions.General.Disable();
+            Input.InputActions.Disable();
         }
         else
         {
@@ -95,12 +111,27 @@ public class CameraAnimation : MonoBehaviour
         if (!inAnimation)
             return;
 
-        player.DefaultHUD();
-        player.Freeze();
+        if (hudManager != null)
+        {
+            hudManager.DefaultHUD();
+        }
+        else
+        {
+            Debug.Log("No hud manager.");
+        }
+
+        if (player != null)
+        {
+            player.Freeze();
+        }
+        else
+        {
+            Debug.Log("No player class.");
+        }
 
         if (Input.InputActions != null)
         {
-            Input.InputActions.General.Enable();
+            Input.InputActions.Enable();
         }
         else
         {

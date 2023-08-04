@@ -1,23 +1,20 @@
 using UnityEngine;
-using System;
 
 public class Player : MonoBehaviour
 {
     public delegate void OnDeathDel(int deaths, int maxDeaths);
     public OnDeathDel PlayerDied;
+
     public bool Dead { get; private set; }
     public int Deaths { get; private set; }
 
     [SerializeField] FirstPersonController controller;
     [SerializeField] CameraController cameraController;
-    [SerializeField] CameraAnimation cameraAnimation;
     [SerializeField] VFXManager vfxmanager;
     [SerializeField] Inventory inventory;
+    [SerializeField] Insanity insanity;
     [SerializeField] Journal journal;
     [SerializeField] PlayerHUDManager HUDManager;
-    [SerializeField] Lockpick lockpick;
-    [SerializeField] InteractionManager interactionManager;
-    [SerializeField] Insanity insanity;
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
 
@@ -77,6 +74,18 @@ public class Player : MonoBehaviour
             controller.Disable();
             cameraController.Disable();
             inventory.ClearInventory();
+            insanity.ReduceSanity(1);
+            journal.CloseJournal();
+
+            if (Input.InputActions != null)
+            {
+                Input.InputActions.Disable();
+            }
+            else
+            {
+                Debug.Log("Input class absent.");
+            }
+
             if (callDeath)
             {
                 CallDeath();
@@ -90,12 +99,21 @@ public class Player : MonoBehaviour
 
     public void CallDeath()
     {
-        //ONLY GAME MANAGER USES IT
+        //ONLY GAME MANAGER USES IT ATM
         PlayerDied?.Invoke(Deaths, maxDeaths);
     }
 
     public void Spawn(Vector3 position)
     {
+        if (Input.InputActions != null)
+        {
+            Input.InputActions.Enable();
+        }
+        else
+        {
+            Debug.Log("Input class absent.");
+        }
+
         Freeze();
         transform.position = position;
 
@@ -116,24 +134,4 @@ public class Player : MonoBehaviour
         controller.Enable();
         cameraController.Enable();
     }
-
-    public void HideHUD() => HUDManager.HideAllHUD();
-
-    public void DefaultHUD() => HUDManager.DefaultHUD();
-
-    public void ToggleJournalView(bool value, float delay) => HUDManager.ToggleJournalView(value, delay);
-
-    public void VisualContact(AnimationAction ac, float time) => vfxmanager.VisualContact(ac, time);
-
-    public void LowInsanity(AnimationAction ac, float time) => vfxmanager.LowInsanity(ac, time);
-
-    public void StartAction(SliderType type, object caller) => HUDManager.StartAction(type, caller);
-
-    public void SetSliderValue(float value, object caller) => HUDManager.SetSliderValue(value, caller);
-
-    public void StopAction(object caller) => HUDManager.StopAction(caller);
-
-    public void SetActionText(string text) => HUDManager.SetActionText(text);
-
-    public bool GetInteractionRaycast(out RaycastHit hit) => interactionManager.GetInteractionRaycast(out hit);
 }
