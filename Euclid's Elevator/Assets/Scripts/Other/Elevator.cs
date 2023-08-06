@@ -38,42 +38,56 @@ public class Elevator : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
+        if (GameManager.Instance != null)
         {
-            Broken = true;
-            CloseElevator(true);
-            InitiateElevatorRide();
-        };
-
-        if (SaveSystem.Instance.currentSaveData != null)
-        {
-
-            if (SaveSystem.Instance.currentSaveData.stage < 0)
+            GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
             {
+                Broken = true;
+                CloseElevator(true);
                 InitiateElevatorRide();
-            }
-            else
-            {
-                OpenElevator(true);
-            }
-            Broken = SaveSystem.Instance.currentSaveData.broken;
-            waiting = SaveSystem.Instance.currentSaveData.waiting;
-            canClose = SaveSystem.Instance.currentSaveData.canClose;
+            };
         }
         else
         {
-            InitiateElevatorRide();
+            Debug.Log("No game manager.");
         }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+
+        if (SaveSystem.Instance != null)
         {
-            data.broken = Broken;
-            data.waiting = waiting;
-            if (waiting)
+            if (SaveSystem.Instance.currentSaveData != null)
             {
-                data.canClose = true;
+
+                if (SaveSystem.Instance.currentSaveData.stage < 0)
+                {
+                    InitiateElevatorRide();
+                }
+                else
+                {
+                    OpenElevator(true);
+                }
+                Broken = SaveSystem.Instance.currentSaveData.broken;
+                waiting = SaveSystem.Instance.currentSaveData.waiting;
+                canClose = SaveSystem.Instance.currentSaveData.canClose;
             }
-            SaveSystem.Instance.CanSave = !riding;
-        };
+            else
+            {
+                InitiateElevatorRide();
+            }
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            {
+                data.broken = Broken;
+                data.waiting = waiting;
+                if (waiting)
+                {
+                    data.canClose = true;
+                }
+                SaveSystem.Instance.CanSave = !riding;
+            };
+        }
+        else
+        {
+            Debug.Log("No save system.");
+        }
     }
 
     private void Update()

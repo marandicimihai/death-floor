@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-
-public interface IInteractable
+﻿public interface IInteractable
 {
-    bool OnInteractPerformed(Player player, RaycastHit hit);
-    bool OnInteractCanceled(Player player, RaycastHit hit);
+    public bool IsInteractable { get; }
+
+    public string InteractionPrompt();
+    public bool OnInteractPerformed(IBehaviourService behaviourRequest);
+    public bool OnInteractCanceled(IBehaviourService behaviourRequest);
 }

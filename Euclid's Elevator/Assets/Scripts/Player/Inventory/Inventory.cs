@@ -26,6 +26,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] Journal journal;
     [SerializeField] PopUpManager popup;
 
+    [RequireInterface(typeof(IBehaviourService))]
+    [SerializeField] MonoBehaviour behaviourService;
+
+    IBehaviourService Service => behaviourService as IBehaviourService;
+
     [Header("Drop Properties")]
     [SerializeField] Transform dropPoint;
     [SerializeField] float dropForce;
@@ -269,7 +274,7 @@ public class Inventory : MonoBehaviour
     /// </summary>
     void UseItem()
     {
-        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(player))
+        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(Service))
         {
             if (Items[Index].properties.useUseSoundsInOrder)
             {

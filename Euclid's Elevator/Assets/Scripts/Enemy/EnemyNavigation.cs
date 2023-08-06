@@ -16,28 +16,28 @@ public class EnemyNavigation : MonoBehaviour
     {
         get
         {
-            Transform cam = player.cameraController.GetComponent<Camera>().transform;
-
             if (!spawned || !gameObject.activeInHierarchy)
             {
                 return false;
             }
 
             return (
-            !Physics.Raycast(cam.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position,
-            Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f), visionMask) ||
-            !Physics.Raycast(cam.position, transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position,
-            Vector3.Distance(cam.transform.position, transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f), visionMask) ||
-            !Physics.Raycast(cam.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f - Vector3.up * 0.49f - cam.position,
-            Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f - Vector3.up * 0.49f), visionMask) ||
-            !Physics.Raycast(cam.position, transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f - Vector3.up * 0.49f - cam.position,
-            Vector3.Distance(cam.transform.position, transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f - Vector3.up * 0.49f), visionMask) ||
-            !Physics.Raycast(transform.position, cam.transform.position - transform.position, Vector3.Distance(cam.transform.position, transform.position), visionMask)) &&
-            cam.TryGetComponent(out Camera camera) && TryGetComponent(out Collider col) &&
-            GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), col.bounds);
+            !Physics.Raycast(camera.position, transform.position + Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f + Vector3.up * 0.49f - camera.position,
+            Vector3.Distance(camera.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f + Vector3.up * 0.49f), visionMask) ||
+            !Physics.Raycast(camera.position, transform.position - Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f + Vector3.up * 0.49f - camera.position,
+            Vector3.Distance(camera.transform.position, transform.position - Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f + Vector3.up * 0.49f), visionMask) ||
+            !Physics.Raycast(camera.position, transform.position + Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f - Vector3.up * 0.49f - camera.position,
+            Vector3.Distance(camera.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f - Vector3.up * 0.49f), visionMask) ||
+            !Physics.Raycast(camera.position, transform.position - Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f - Vector3.up * 0.49f - camera.position,
+            Vector3.Distance(camera.transform.position, transform.position - Vector3.Cross(Vector3.up, transform.position - camera.position).normalized * 0.24f - Vector3.up * 0.49f), visionMask) ||
+            !Physics.Raycast(transform.position, camera.transform.position - transform.position, Vector3.Distance(camera.transform.position, transform.position), visionMask)) &&
+            camera.TryGetComponent(out Camera camera1) && TryGetComponent(out Collider col) &&
+            GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera1), col.bounds);
         }
     }
     [SerializeField] Player player;
+    [SerializeField] Transform playerTransform;
+    [SerializeField] new Transform camera;
     [SerializeField] EnemyRigAnim rigAnim;
     [SerializeField] LayerMask visionMask;
     [SerializeField] LayerMask solidMask;
@@ -104,28 +104,35 @@ public class EnemyNavigation : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance.currentSaveData != null)
+        if (SaveSystem.Instance != null)
         {
-            if (SaveSystem.Instance.currentSaveData.EnemyPosition.Length != 0)
+            if (SaveSystem.Instance.currentSaveData != null)
             {
-                Spawn(new Vector3(SaveSystem.Instance.currentSaveData.EnemyPosition[0],
-                                  SaveSystem.Instance.currentSaveData.EnemyPosition[1],
-                                  SaveSystem.Instance.currentSaveData.EnemyPosition[2]));
+                if (SaveSystem.Instance.currentSaveData.EnemyPosition.Length != 0)
+                {
+                    Spawn(new Vector3(SaveSystem.Instance.currentSaveData.EnemyPosition[0],
+                                      SaveSystem.Instance.currentSaveData.EnemyPosition[1],
+                                      SaveSystem.Instance.currentSaveData.EnemyPosition[2]));
+                }
+                spawned = SaveSystem.Instance.currentSaveData.enemySpawned;
             }
-            spawned = SaveSystem.Instance.currentSaveData.enemySpawned;
-        }
 
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.EnemyPosition = new float[]
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
             {
-                transform.position.x,
-                transform.position.y,
-                transform.position.z
+                data.EnemyPosition = new float[]
+                {
+                    transform.position.x,
+                    transform.position.y,
+                    transform.position.z
+                };
+                data.enemySpawned = spawned;
+                SaveSystem.Instance.CanSave = !Visible && State == State.Patrol;
             };
-            data.enemySpawned = spawned;
-            SaveSystem.Instance.CanSave = !Visible && State == State.Patrol;
-        };
+        }
+        else
+        {
+            Debug.Log("No save system");
+        }
     }
 
     private void Update()
@@ -139,9 +146,6 @@ public class EnemyNavigation : MonoBehaviour
             agent.isStopped = true;
             return;
         }
-
-        Transform cam = player.cameraController.GetComponent<Camera>().transform;
-        
         /*Debug.DrawRay(cam.position, (transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position).normalized *
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));
         Debug.DrawRay(cam.position, (transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f - cam.position).normalized *
@@ -154,9 +158,9 @@ public class EnemyNavigation : MonoBehaviour
         rigAnim.RigUpdate();
         if (!player.Dead)
         {
-            if (canKill && Vector3.Distance(transform.position, cam.transform.position) <= killDistance &&
-                Physics.Raycast(transform.position, cam.transform.position - transform.position, out RaycastHit hit,
-                    Vector3.Distance(cam.transform.position, transform.position), solidMask) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (canKill && Vector3.Distance(transform.position, camera.transform.position) <= killDistance &&
+                Physics.Raycast(transform.position, camera.transform.position - transform.position, out RaycastHit hit,
+                    Vector3.Distance(camera.transform.position, transform.position), solidMask) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 PlayerKill();
             }
@@ -169,8 +173,8 @@ public class EnemyNavigation : MonoBehaviour
                     transform.rotation = stopRot;
                 }
 
-                if (Physics.Raycast(transform.position, player.transform.position - transform.position, out RaycastHit hit2,
-                    Vector3.Distance(player.transform.position, transform.position), solidMask) && hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player")
+                if (Physics.Raycast(transform.position, playerTransform.position - transform.position, out RaycastHit hit2,
+                    Vector3.Distance(playerTransform.position, transform.position), solidMask) && hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player")
                     || Visible)
                 {
                     Chase();
@@ -178,7 +182,7 @@ public class EnemyNavigation : MonoBehaviour
                 }
                 else if (State == State.Chase)
                 {
-                    InspectNoise(cam.transform.position, playerInspect: true);
+                    InspectNoise(camera.transform.position, playerInspect: true);
                 }
                 else if (State == State.Inspect)
                 {
@@ -186,7 +190,7 @@ public class EnemyNavigation : MonoBehaviour
                     {
                         /*Debug.DrawRay(transform.position, (cam.transform.position - transform.position).normalized * 
                         Vector3.Distance(cam.transform.position, transform.position), Color.red);*/
-                        if (Physics.Raycast(transform.position, cam.transform.position - transform.position, out RaycastHit hit4,
+                        if (Physics.Raycast(transform.position, camera.transform.position - transform.position, out RaycastHit hit4,
                         killDistance, solidMask) && hit4.collider.CompareTag("HidingBox") &&
                         hit4.collider.TryGetComponent(out HidingBox box) && box.hasPlayer)
                         {
@@ -217,8 +221,8 @@ public class EnemyNavigation : MonoBehaviour
             
             #region Sound
 
-            if (Physics.Raycast(transform.position, player.transform.position - transform.position, out RaycastHit hit3,
-                    Vector3.Distance(player.transform.position, transform.position), solidMask) && hit3.transform.gameObject.layer == LayerMask.NameToLayer("Player")
+            if (Physics.Raycast(transform.position, playerTransform.position - transform.position, out RaycastHit hit3,
+                    Vector3.Distance(playerTransform.position, transform.position), solidMask) && hit3.transform.gameObject.layer == LayerMask.NameToLayer("Player")
                     || Visible)
             {
                 if (!ambiencestarted)
@@ -308,7 +312,7 @@ public class EnemyNavigation : MonoBehaviour
     void Chase()
     {
         State = State.Chase;
-        agent.destination = player.cameraController.GetComponent<Camera>().transform.position;
+        agent.destination = camera.position;
         agent.speed = chaseSpeed;
         agent.stoppingDistance = chaseStopDistance;
     }
@@ -320,7 +324,7 @@ public class EnemyNavigation : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(transform.position, player.transform.position) <= inspectDistance || ignoreDistance)
+        if (Vector3.Distance(transform.position, playerTransform.position) <= inspectDistance || ignoreDistance)
         {
             State = State.Inspect;
             if (!playerInspect)

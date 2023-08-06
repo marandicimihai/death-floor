@@ -243,4 +243,12 @@ public class ItemManager : MonoBehaviour
     {
         spawnedItems.Add(toAdd);
     }
+
+    public static void RemoveFromPhysicalItems(Item toRemove)
+    {
+        if (spawnedItems.Contains(toRemove))
+        {
+            spawnedItems.Remove(toRemove);
+        }
+    }
 }

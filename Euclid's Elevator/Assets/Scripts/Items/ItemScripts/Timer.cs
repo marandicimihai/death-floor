@@ -28,18 +28,36 @@ public class Timer : Item, IUsable
     [SyncValue] [SaveValue] float tickTimeElapsed;
     [SyncValue] [SaveValue] float ringTimeElapsed;
 
+    IBehaviourService service;
+
+    bool requestedService;
+
     private void Start()
     {
-        GameManager.Instance.OnStageStart += DestroyTimer;
-        GameManager.Instance.OnDeath += DestroyTimer;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnStageStart += DestroyTimer;
+            GameManager.Instance.OnDeath += DestroyTimer;
+        }
+        else
+        {
+            Debug.Log("No game manager");
+        }
     }
 
     public void DestroyTimer(object caller, System.EventArgs args)
     { 
         if (started) 
         {
-            GameManager.Instance.OnStageStart -= DestroyTimer;
-            GameManager.Instance.OnDeath -= DestroyTimer;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnStageStart -= DestroyTimer;
+                GameManager.Instance.OnDeath -= DestroyTimer;
+            }
+            else
+            {
+                Debug.Log("No game manager");
+            }
             if (windJob != null)
             {
                 AudioManager.Instance.StopClip(windJob);
@@ -115,21 +133,34 @@ public class Timer : Item, IUsable
                 ringJob = AudioManager.Instance.PlayClip(transform.position, ring);
             }
             ringTimeElapsed += Time.deltaTime;
-            GameManager.Instance.enemy.InspectNoise(transform.position, true);
+
+            if (service == null && !requestedService)
+            {
+                service = IBehaviourService.GetAvailableService();
+                requestedService = true;
+            }
+
+            if (service != null && service.RequestComponentOfType(out EnemyNavigation navigation))
+            {
+                navigation.InspectNoise(transform.position, true);
+                requestedService = false;
+            }
+
             if (ringTimeElapsed >= ringDuration)
             {
                 AudioManager.Instance.StopClip(ringJob);
                 ringing = false;
                 gameObject.AddComponent<Lifetime>().Initiate(4);
-                if (ItemManager.spawnedItems.Contains(this))
+                try
                 {
-                    ItemManager.spawnedItems.Remove(this);
+                    ItemManager.RemoveFromPhysicalItems(this);
                 }
+                catch { Debug.Log("Item manager issue"); }
             }
         }
     }
 
-    public bool OnUse(Player player)
+    public bool OnUse(IBehaviourService service)
     {
         if (!started)
         {
@@ -137,6 +168,7 @@ public class Timer : Item, IUsable
             winding = true;
             started = true;
         }
+        this.service = service;
         return false;
     }
 }

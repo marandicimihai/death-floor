@@ -21,8 +21,13 @@ public class EnemyTrap : MonoBehaviour
     [SerializeField] string ambience;
     [SerializeField] string whoosh;
 
+    IBehaviourService service;
+
+    Transform cam;
     AudioJob ambiencejob;
     Player player;
+    EnemyNavigation nav;
+    FirstPersonController controller;
 
     Quaternion initial;
 
@@ -30,14 +35,15 @@ public class EnemyTrap : MonoBehaviour
     bool hasPulled;
     bool used;
 
+    bool initialized;
+    bool requestedService;
+
     private void Start()
     {
         initial = baseBone.rotation;
 
         if (GameManager.Instance != null)
         {
-            player = GameManager.Instance.player;
-
             GameManager.Instance.OnDeath += OnClosed;
             GameManager.Instance.OnStageStart += OnClosed;
         }
@@ -49,13 +55,37 @@ public class EnemyTrap : MonoBehaviour
         ambiencejob = AudioManager.Instance.PlayClip(gameObject, ambience);
     }
 
+    public void Initialize(IBehaviourService service)
+    {
+        if (service == null) return;
+
+        if (service.RequestComponentOfType(out Player player))
+        {
+            this.player = player;
+            cam = player.transform;
+        }
+        if (service.RequestComponentOfType(out FirstPersonController controller))
+        {
+            this.controller = controller;
+        }
+        if (service.RequestComponentOfType(out EnemyNavigation nav))
+        {
+            this.nav = nav;
+        }
+        this.service = service;
+        initialized = true;
+    }
+
     private void Update()
     {
-        if (used)
+        if (used || !initialized)
             return;
 
-        Transform cam = player.cameraController.GetComponent<Camera>().transform;
-
+        if (service == null && !requestedService)
+        {
+            service = IBehaviourService.GetAvailableService();
+            requestedService = true;
+        }
 
         if (Physics.Raycast(ray.position, cam.position - ray.position, out RaycastHit hitInfo, triggerRadius, playerMask) 
             && hitInfo.collider.CompareTag("Player"))
@@ -66,20 +96,44 @@ public class EnemyTrap : MonoBehaviour
 
             if (Vector3.ProjectOnPlane(ray.position - cam.position, Vector3.up).magnitude >= minRadius)
             {
-                GameManager.Instance.player.controller.AddForce(transform.position - cam.position, forceStrength);
+                if (controller != null)
+                {
+                    requestedService = false;
+                    controller.AddForce(transform.position - cam.position, forceStrength);
+                }
+                else if (service != null && service.RequestComponentOfType(out FirstPersonController controller1))
+                {
+                    controller = controller1;
+
+                    requestedService = false;
+                    controller.AddForce(transform.position - cam.position, forceStrength);
+                }
             }
-            GameManager.Instance.enemy.InspectNoise(transform.position, true);
+
+            if (nav != null)
+            {
+                requestedService = false;
+                nav.InspectNoise(transform.position, true);
+            }
+            else if (service != null && service.RequestComponentOfType(out EnemyNavigation nav1))
+            {
+                nav = nav1;
+
+                requestedService = false;
+                nav.InspectNoise(transform.position, true);
+            }
 
             if (!hasPulled)
             {
                 AudioManager.Instance.PlayClip(gameObject, screech);
             }
 
-            if (Vector3.Distance(cam.position, ray.position) < deathRadius && !GameManager.Instance.player.Dead)
+            if (player != null && Vector3.Distance(cam.position, ray.position) < deathRadius && !player.Dead)
             {
                 AudioManager.Instance.PlayClip(gameObject, groundhit);
                 AudioManager.Instance.StopClip(ambiencejob);
-                GameManager.Instance.player.Die(false);
+
+                player.Die(false);
                 anim.SetTrigger("Kill");
             }
 
@@ -124,16 +178,23 @@ public class EnemyTrap : MonoBehaviour
         if (used)
         {
             Destroy(this.gameObject);
-            GameManager.Instance.OnDeath -= OnClosed;
-            GameManager.Instance.OnStageStart -= OnClosed;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnDeath -= OnClosed;
+                GameManager.Instance.OnStageStart -= OnClosed;
+            }
+            else
+            {
+                Debug.Log("No game manager.");
+            }
         }
     }
 
     private void OnDestroy()
     {
-        if (TrapManager.spawnedtraps.Contains(transform))
+        try
         {
-            TrapManager.spawnedtraps.Remove(transform);
-        }
+            TrapManager.RemoveFromTraps(transform);
+        } catch { Debug.Log("Trap manager issue"); }
     }
 }

@@ -7,31 +7,34 @@ public class Coffee : Item, IUsable
     [SerializeField] [SyncValue] GameObject coffeeTrail;
     [SerializeField] [SyncValue] GameObject coffeeDroplet;
 
-    public bool OnUse(Player player)
+    public bool OnUse(IBehaviourService service)
     {
-        if (Vector3.Distance(GameManager.Instance.enemy.transform.position, transform.position) <= throwDistance &&
-            GameManager.Instance.enemy.Visible)
+        if (service.RequestComponentOfType(out EnemyNavigation navigation))
         {
-            GameObject instance = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
-            if (instance.TryGetComponent(out Rigidbody rb))
+            if (Vector3.Distance(navigation.transform.position, transform.position) <= throwDistance &&
+                navigation.Visible)
             {
-                rb.velocity = HitTargetByAngle(transform.position, GameManager.Instance.enemy.transform.position, Physics.gravity, 45);
+                GameObject instance = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
+                if (instance.TryGetComponent(out Rigidbody rb))
+                {
+                    rb.velocity = HitTargetByAngle(transform.position, navigation.transform.position, Physics.gravity, 45);
+                }
+                if (instance.TryGetComponent(out CoffeeTrail trail))
+                {
+                    trail.stunTime = stunTime;
+                }
+                return true;
             }
-            if (instance.TryGetComponent(out CoffeeTrail trail))
-            {
-                trail.stunTime = stunTime;
-            }
-            return true;
-        }
 
-        GameObject instance2 = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
-        if (instance2.TryGetComponent(out Rigidbody rb2))
-        {
-            rb2.velocity = 5 * transform.forward;
-        }
-        if (instance2.TryGetComponent(out CoffeeTrail trail2))
-        {
-            trail2.stunTime = stunTime;
+            GameObject instance2 = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
+            if (instance2.TryGetComponent(out Rigidbody rb2))
+            {
+                rb2.velocity = 5 * transform.forward;
+            }
+            if (instance2.TryGetComponent(out CoffeeTrail trail2))
+            {
+                trail2.stunTime = stunTime;
+            }
         }
 
         return true;

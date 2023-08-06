@@ -4,8 +4,11 @@ public class Item : SyncValues, IInteractable
 {
     [SyncValue] public ItemProperties properties;
     [SyncValue] [SaveValue] public int uses;
+    [SyncValue] [SaveValue] [SerializeField] bool isInteractable = true;
 
     bool visible = true;
+
+    public bool IsInteractable { get => isInteractable; }
 
     private void Start()
     {
@@ -50,27 +53,41 @@ public class Item : SyncValues, IInteractable
 
     protected virtual void OnBreak()
     {
-        if (ItemManager.spawnedItems.Contains(this))
+        try
         {
-            ItemManager.spawnedItems.Remove(this);
+            ItemManager.RemoveFromPhysicalItems(this);
         }
+        catch { Debug.Log("Item manager issue"); }
     }
 
     private void OnDestroy()
     {
-        if (ItemManager.spawnedItems.Contains(this))
+        try
         {
-            ItemManager.spawnedItems.Remove(this);
+            ItemManager.RemoveFromPhysicalItems(this);
         }
+        catch { Debug.Log("Item manager issue"); }
     }
 
-    public bool OnInteractPerformed(Player player, RaycastHit hit)
+    public bool OnInteractPerformed(IBehaviourService behaviourRequest)
     {
-        
+        if (!IsInteractable) return false;
+
+        if (behaviourRequest.RequestComponentOfType(out Inventory inventory))
+        {
+            inventory.PickUpItem(this);
+        }
+        return true;
     }
 
-    public bool OnInteractCanceled(Player player, RaycastHit hit)
+    public bool OnInteractCanceled(IBehaviourService behaviourRequest)
     {
-        
+        if (!IsInteractable) return false;
+        return true;
+    }
+
+    public string InteractionPrompt()
+    {
+        return !IsInteractable ? string.Empty : "Pick up";
     }
 }

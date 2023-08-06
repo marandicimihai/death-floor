@@ -17,6 +17,11 @@ public class TrapManager : MonoBehaviour
     [SerializeField] TrapSpawn[] spawns;
     [SerializeField] GameObject trapPrefab;
 
+    [RequireInterface(typeof(IBehaviourService))]
+    [SerializeField] MonoBehaviour behaviourService;
+
+    IBehaviourService Service => behaviourService as IBehaviourService;
+
     private void Start()
     {
         GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
@@ -37,6 +42,10 @@ public class TrapManager : MonoBehaviour
                     Vector3 position = new(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 
                     GameObject newTrap = Instantiate(trapPrefab, position, Quaternion.identity);
+                    if (newTrap.TryGetComponent(out EnemyTrap trap))
+                    {
+                        trap.Initialize(Service);
+                    }
                     spawnedtraps.Add(newTrap.transform);
                 }
             }
@@ -60,9 +69,7 @@ public class TrapManager : MonoBehaviour
 
     void SpawnTraps(int stage)
     {
-        EnemyTrap[] traps = FindObjectsOfType<EnemyTrap>();
-
-        foreach (EnemyTrap tr in traps)
+        foreach (Transform tr in spawnedtraps)
         {
             Destroy(tr.gameObject);
         }
@@ -85,6 +92,10 @@ public class TrapManager : MonoBehaviour
                             if (!used.Contains(spawn.spawnPoints[point]))
                             {
                                 GameObject newTrap = Instantiate(trapPrefab, spawn.spawnPoints[point].position, Quaternion.identity);
+                                if (newTrap.TryGetComponent(out EnemyTrap trap))
+                                {
+                                    trap.Initialize(Service);
+                                }
                                 spawnedtraps.Add(newTrap.transform);
                                 used.Add(spawn.spawnPoints[point]);
                                 break;
@@ -98,6 +109,14 @@ public class TrapManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public static void RemoveFromTraps(Transform tr)
+    {
+        if (spawnedtraps.Contains(tr))
+        {
+            spawnedtraps.Remove(tr);
         }
     }
 }

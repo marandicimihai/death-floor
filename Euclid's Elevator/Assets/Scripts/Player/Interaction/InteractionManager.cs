@@ -7,24 +7,34 @@ public enum CallType
     Canceled
 }
 
-[RequireComponent(typeof(ActionText))]
 public class InteractionManager : MonoBehaviour
 {
-    [SerializeField] Player player;
+    [SerializeField] ActionInfoHUD info;
     [SerializeField] new Camera camera;
     [SerializeField] LayerMask interactionLayerMask;
     [SerializeField] float interactionDistance;
 
-    delegate bool action(Player player, RaycastHit hit);
-    action[] actions;
+    [RequireInterface(typeof(IBehaviourService))] 
+    [SerializeField] MonoBehaviour behaviourService;
+
+    IBehaviourService Service => behaviourService as IBehaviourService;
 
     IInteractable currentInteracting;
 
+    string interactInput;
+
     private void Awake()
     {
-        if (player == null)
+        if (SaveSystem.Instance != null)
         {
-            Debug.Log("No player class.");
+            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+            {
+                interactInput = Input.InputActions.General.Interact.controls[0].displayName;
+            };
+        }
+        else
+        {
+            Debug.Log("No save system");
         }
 
         if (Input.InputActions != null)
@@ -36,21 +46,6 @@ public class InteractionManager : MonoBehaviour
         {
             Debug.Log("No input class.");
         }
-
-        //sorted by priority
-        ActionText acte = GetComponent<ActionText>();
-        actions = new action[]
-        {
-            acte.LockDoor,
-            acte.OpenDoor,
-            acte.CloseDoor,
-            acte.UnlockDoor,
-            acte.PickLock,
-            acte.Repair,
-            acte.InsertKeycard,
-            acte.PickUpItem,
-            acte.Hide
-        };
 
         //AVAILABLE INTERACTIONS ATM
         /*Interactions inter = GetComponent<Interactions>();
@@ -67,56 +62,69 @@ public class InteractionManager : MonoBehaviour
     {
         if (GetInteractionRaycast(out RaycastHit hit))
         {
-            bool gate = false;
-            foreach (action ac in actions)
+            if (info != null)
             {
-                if (ac.Invoke(player, hit))
+                if (hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable) && interactable.IsInteractable)
                 {
-                    gate = true;
-                    break;
+                    string toDisplay = interactable.InteractionPrompt();
+                    if (interactInput != string.Empty)
+                    {
+                        toDisplay += $" ({interactInput})";
+                    }
+                    info.SetActionText(toDisplay);
                 }
             }
-            if (!gate)
+            else
             {
-                player.SetActionText(string.Empty);
+                Debug.Log("No hud.");
             }
-
             if (currentInteracting != null)
             {
                 if (!hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
                 {
-                    currentInteracting.OnInteractCanceled(player, hit);
+                    CancelInteract(new InputAction.CallbackContext());
                 }
                 else if (interactable != currentInteracting)
                 {
-                    currentInteracting.OnInteractCanceled(player, hit);
+                    CancelInteract(new InputAction.CallbackContext());
                 }
             }
         }
         else
         {
-            if (currentInteracting != null)
+            if (currentInteracting != null && currentInteracting.IsInteractable)
             {
-                currentInteracting.OnInteractCanceled(player, hit);
+                CancelInteract(new InputAction.CallbackContext());
             }
-            player.SetActionText(string.Empty);
+            if (info != null)
+            {
+                info.SetActionText(string.Empty);
+            }
+            else
+            {
+                Debug.Log("No hud.");
+            }
         }
     }
 
     void Interact(InputAction.CallbackContext context)
     {
         if (GetInteractionRaycast(out RaycastHit hit) &&
-            hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
+            hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable) &&
+            interactable.IsInteractable)
         {
-            interactable.OnInteractPerformed(player, hit);
+            CancelInteract(new InputAction.CallbackContext());
+            interactable.OnInteractPerformed(Service);
             currentInteracting = interactable;
         }
     }
 
     void CancelInteract(InputAction.CallbackContext context)
     {
-        GetInteractionRaycast(out RaycastHit hit);
-        currentInteracting.OnInteractCanceled(player, hit);
+        if (currentInteracting != null && currentInteracting.IsInteractable)
+        {
+            currentInteracting.OnInteractCanceled(Service);
+        }
     }
 
     public bool GetInteractionRaycast(out RaycastHit hit)

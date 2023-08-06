@@ -4,9 +4,12 @@ public class Pills : Item, IUsable
 {
     [SerializeField] [SyncValue] float sanityDecreasePercentage;
 
-    public bool OnUse(Player player)
+    public bool OnUse(IBehaviourService service)
     {
-        player.insanity.ReduceSanity(sanityDecreasePercentage);
+        if (service.RequestComponentOfType(out Insanity insanity))
+        {
+            insanity.ReduceSanity(sanityDecreasePercentage);
+        }
         return true;
     }
 }

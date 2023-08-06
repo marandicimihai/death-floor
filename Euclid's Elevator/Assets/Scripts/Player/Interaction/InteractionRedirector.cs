@@ -4,18 +4,12 @@ public class InteractionRedirector : MonoBehaviour, IInteractable
 {
     [SerializeField] IInteractable redirectTo;
 
-    public bool OnInteractCanceled(Player player, RaycastHit hit)
+    public string InteractionPrompt()
     {
-        if (redirectTo == null)
-        {
-            Debug.Log("Nothing to redirect to.");
-            return false;
-        }
-
-        return redirectTo.OnInteractCanceled(player, hit);
+        return redirectTo.InteractionPrompt();
     }
 
-    public bool OnInteractPerformed(Player player, RaycastHit hit)
+    public bool OnInteractCanceled()
     {
         if (redirectTo == null)
         {
@@ -23,6 +17,17 @@ public class InteractionRedirector : MonoBehaviour, IInteractable
             return false;
         }
 
-        return redirectTo.OnInteractPerformed(player, hit);
+        return redirectTo.OnInteractCanceled();
+    }
+
+    public bool OnInteractPerformed()
+    {
+        if (redirectTo == null)
+        {
+            Debug.Log("Nothing to redirect to.");
+            return false;
+        }
+
+        return redirectTo.OnInteractPerformed();
     }
 }

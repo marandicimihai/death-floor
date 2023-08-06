@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyRigAnim : MonoBehaviour
 {
-    [SerializeField] Player player;
+    [SerializeField] Transform playerTransform;
     [SerializeField] EnemyNavigation enemy;
     [SerializeField] Animator animator;
 
@@ -22,7 +22,7 @@ public class EnemyRigAnim : MonoBehaviour
     {
         if (!enemy.Visible)
         {
-            Quaternion rotation = Quaternion.LookRotation(Vector3.Scale((player.transform.position - transform.position), new Vector3(1, 0, 1)).normalized, Vector3.up);
+            Quaternion rotation = Quaternion.LookRotation(Vector3.Scale((playerTransform.position - transform.position), new Vector3(1, 0, 1)).normalized, Vector3.up);
             transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
 
             cooldown += Time.deltaTime;

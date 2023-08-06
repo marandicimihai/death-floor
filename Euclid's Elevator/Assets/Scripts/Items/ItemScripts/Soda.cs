@@ -6,9 +6,12 @@ public class Soda : Item, IUsable
     [SerializeField] [SyncValue] float lockpickBoost;
     [SerializeField] [SyncValue] float time;
 
-    public bool OnUse(Player player)
+    public bool OnUse(IBehaviourService service)
     {
-        player.controller.BoostForTime(speedBoost, time);
+        if (service.RequestComponentOfType(out FirstPersonController controller))
+        {
+            controller.BoostForTime(speedBoost, time);
+        }
         player.lockpick.BoostForTime(lockpickBoost, time);
         return true;
     }
