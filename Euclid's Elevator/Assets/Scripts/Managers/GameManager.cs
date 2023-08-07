@@ -30,10 +30,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform playerSpawn;
     [SerializeField] EnemySpawn[] enemySpawns;
 
-    public EventHandler OnStageStart;
+    public EventHandler OnElevatorDoorClosed;
     public EventHandler OnDeath;
     public EventHandler OnGameOver;
-    public EventHandler OnGameEnd;
+    public EventHandler OnGameWin;
 
 
     void Awake()
@@ -52,22 +52,29 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage >= 0)
+        if (SaveSystem.Instance != null)
         {
-            if (SaveSystem.Instance.currentSaveData.gameStage >= 0)
+            if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage >= 0)
             {
-                GameStage = (GameStage)SaveSystem.Instance.currentSaveData.gameStage;
+                if (SaveSystem.Instance.currentSaveData.gameStage >= 0)
+                {
+                    GameStage = (GameStage)SaveSystem.Instance.currentSaveData.gameStage;
+                }
             }
+            else
+            {
+                StartTutorial();
+            }
+            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            {
+                data.stage = Stage;
+                data.gameStage = (int)GameStage;
+            };
         }
         else
         {
-            StartTutorial();
+            Debug.Log("No save system");
         }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.stage = Stage;
-            data.gameStage = (int)GameStage;
-        };
     }
 
     #region GameLevel
@@ -77,7 +84,7 @@ public class GameManager : MonoBehaviour
         GameStage = GameStage.Tutorial;
         Stage = 1;
 
-        OnStageStart?.Invoke(this, new EventArgs());
+        OnElevatorDoorClosed?.Invoke(this, new EventArgs());
 
         HideEnemy();
         SpawnPlayer();
@@ -125,12 +132,12 @@ public class GameManager : MonoBehaviour
         Stage++;
         if (Stage > stageCount)
         {
-            OnGameEnd?.Invoke(this, new EventArgs());
+            OnGameWin?.Invoke(this, new EventArgs());
             GameStage = GameStage.End;
         }
         else
         {
-            OnStageStart?.Invoke(this, new EventArgs());
+            OnElevatorDoorClosed?.Invoke(this, new EventArgs());
             SpawnEnemy();
         }
     }

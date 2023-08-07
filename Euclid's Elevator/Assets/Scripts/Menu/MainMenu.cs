@@ -1,3 +1,4 @@
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -14,11 +15,12 @@ public class MainMenu : MonoBehaviour
     AudioJob buzzJob;
 
     MenuSettings settingsMenu;
+
     void Start()
     {
         Time.timeScale = 1;
 
-        settingsMenu = FindObjectOfType<MenuSettings>();
+        settingsMenu = MenuSettings.Instance;
         mainTab.enabled = true;
         creditsTab.enabled = false;
         settingsMenu.SetPagesOff();
@@ -40,12 +42,17 @@ public class MainMenu : MonoBehaviour
     }
     public void OpenSettings(bool open)
     {
+        if (settingsMenu == null)
+        {
+            Debug.Log("No settings menu");
+            return;
+        }
+
         settingsMenu.OpenSettings(open);
         menuCameraAnim.SetBool("Settings", open);
     }
     public void QuitGame()
     {
-        Debug.Log("this is it, my final message... [dies]");
         Application.Quit();
     }
     public void StartGame()
@@ -53,7 +60,15 @@ public class MainMenu : MonoBehaviour
         AudioManager.Instance.FadeAwayClip(humJob, ambienceFadeTime);
         AudioManager.Instance.FadeAwayClip(buzzJob, ambienceFadeTime);
 
-        SaveSystem.Instance.LoadGameData(0);
+        if (SaveSystem.Instance != null)
+        {
+            SaveSystem.Instance.LoadGameData(0);
+        }
+        else
+        {
+            SceneManager.LoadScene("Main");
+            Debug.Log("No save system.");
+        }
     }
     public void DoClick()
     {

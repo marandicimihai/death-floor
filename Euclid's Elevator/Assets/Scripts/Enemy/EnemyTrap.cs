@@ -21,8 +21,6 @@ public class EnemyTrap : MonoBehaviour
     [SerializeField] string ambience;
     [SerializeField] string whoosh;
 
-    IBehaviourService service;
-
     Transform cam;
     AudioJob ambiencejob;
     Player player;
@@ -35,17 +33,19 @@ public class EnemyTrap : MonoBehaviour
     bool hasPulled;
     bool used;
 
-    bool initialized;
-    bool requestedService;
-
     private void Start()
     {
+        controller = FindObjectOfType<FirstPersonController>();
+        nav = FindObjectOfType<EnemyNavigation>();
+        cam = FindObjectOfType<Camera>().transform;
+        player = FindObjectOfType<Player>();
+
         initial = baseBone.rotation;
 
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnDeath += OnClosed;
-            GameManager.Instance.OnStageStart += OnClosed;
+            GameManager.Instance.OnElevatorDoorClosed += OnClosed;
         }
         else
         {
@@ -55,37 +55,10 @@ public class EnemyTrap : MonoBehaviour
         ambiencejob = AudioManager.Instance.PlayClip(gameObject, ambience);
     }
 
-    public void Initialize(IBehaviourService service)
-    {
-        if (service == null) return;
-
-        if (service.RequestComponentOfType(out Player player))
-        {
-            this.player = player;
-            cam = player.transform;
-        }
-        if (service.RequestComponentOfType(out FirstPersonController controller))
-        {
-            this.controller = controller;
-        }
-        if (service.RequestComponentOfType(out EnemyNavigation nav))
-        {
-            this.nav = nav;
-        }
-        this.service = service;
-        initialized = true;
-    }
-
     private void Update()
     {
-        if (used || !initialized)
+        if (used)
             return;
-
-        if (service == null && !requestedService)
-        {
-            service = IBehaviourService.GetAvailableService();
-            requestedService = true;
-        }
 
         if (Physics.Raycast(ray.position, cam.position - ray.position, out RaycastHit hitInfo, triggerRadius, playerMask) 
             && hitInfo.collider.CompareTag("Player"))
@@ -98,29 +71,21 @@ public class EnemyTrap : MonoBehaviour
             {
                 if (controller != null)
                 {
-                    requestedService = false;
                     controller.AddForce(transform.position - cam.position, forceStrength);
                 }
-                else if (service != null && service.RequestComponentOfType(out FirstPersonController controller1))
+                else
                 {
-                    controller = controller1;
-
-                    requestedService = false;
-                    controller.AddForce(transform.position - cam.position, forceStrength);
+                    Debug.Log("No controller.");
                 }
             }
 
             if (nav != null)
             {
-                requestedService = false;
                 nav.InspectNoise(transform.position, true);
             }
-            else if (service != null && service.RequestComponentOfType(out EnemyNavigation nav1))
+            else
             {
-                nav = nav1;
-
-                requestedService = false;
-                nav.InspectNoise(transform.position, true);
+                Debug.Log("No enemy navigation.");
             }
 
             if (!hasPulled)
@@ -135,6 +100,10 @@ public class EnemyTrap : MonoBehaviour
 
                 player.Die(false);
                 anim.SetTrigger("Kill");
+            }
+            else if (player == null)
+            {
+                Debug.Log("No player.");
             }
 
             hasPulled = true;
@@ -181,7 +150,7 @@ public class EnemyTrap : MonoBehaviour
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.OnDeath -= OnClosed;
-                GameManager.Instance.OnStageStart -= OnClosed;
+                GameManager.Instance.OnElevatorDoorClosed -= OnClosed;
             }
             else
             {

@@ -4,6 +4,8 @@ public class InteractionRedirector : MonoBehaviour, IInteractable
 {
     [SerializeField] IInteractable redirectTo;
 
+    public bool IsInteractable => true;
+
     public string InteractionPrompt()
     {
         return redirectTo.InteractionPrompt();

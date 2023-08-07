@@ -7,9 +7,20 @@ public class Coffee : Item, IUsable
     [SerializeField] [SyncValue] GameObject coffeeTrail;
     [SerializeField] [SyncValue] GameObject coffeeDroplet;
 
-    public bool OnUse(IBehaviourService service)
+    EnemyNavigation navigation;
+
+    private void Start()
     {
-        if (service.RequestComponentOfType(out EnemyNavigation navigation))
+        navigation = FindObjectOfType<EnemyNavigation>();
+    }
+
+    public bool OnUse()
+    {
+        if (navigation == null)
+        {
+            Debug.Log("No enemy");
+        }
+        else
         {
             if (Vector3.Distance(navigation.transform.position, transform.position) <= throwDistance &&
                 navigation.Visible)
@@ -25,16 +36,16 @@ public class Coffee : Item, IUsable
                 }
                 return true;
             }
+        }
 
-            GameObject instance2 = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
-            if (instance2.TryGetComponent(out Rigidbody rb2))
-            {
-                rb2.velocity = 5 * transform.forward;
-            }
-            if (instance2.TryGetComponent(out CoffeeTrail trail2))
-            {
-                trail2.stunTime = stunTime;
-            }
+        GameObject instance2 = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
+        if (instance2.TryGetComponent(out Rigidbody rb2))
+        {
+            rb2.velocity = 5 * transform.forward;
+        }
+        if (instance2.TryGetComponent(out CoffeeTrail trail2))
+        {
+            trail2.stunTime = stunTime;
         }
 
         return true;

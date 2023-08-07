@@ -210,7 +210,7 @@ public class EnemyNavigation : MonoBehaviour
                     playerInspect = false;
                     Patrol();
                 }
-                DoorOpen();
+                agent.isStopped = false;
             }   
             else
             {
@@ -365,63 +365,6 @@ public class EnemyNavigation : MonoBehaviour
             patrolling = false;
         }
         stepTimeElapsed += Time.deltaTime;
-    }
-
-    void DoorOpen()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, openDoorDistance, door))
-        {
-            Door door = hit.collider.GetComponentInParent<Door>();
-            if (door != null && !door.Open && !door.StageLocked)
-            {
-                if ((State == State.Patrol && timeSinceOpenDoor >= doorOpenCooldownTime) || State != State.Patrol)
-                {
-                    openDoorTimeElapsed += Time.deltaTime;
-                    if (door.Locked)
-                    {
-                        if (openDoorTimeElapsed >= openLockedDoorTime)
-                        {
-                            openDoorTimeElapsed = 0;
-                            timeSinceOpenDoor = 0;
-                            door.OpenDoor(true);
-                            if (State == State.Patrol)
-                            {
-                                StartCoroutine(CloseDoor(door, true, closeDoorTime));
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (openDoorTimeElapsed >= openUnlockedDoorTime)
-                        {
-                            openDoorTimeElapsed = 0;
-                            timeSinceOpenDoor = 0;
-                            door.OpenDoor(true);
-                            if (State == State.Patrol)
-                            {
-                                StartCoroutine(CloseDoor(door, false, closeDoorTime));
-                            }
-                        }
-                    }
-
-                    agent.isStopped = true;
-                    return;
-                }
-            }
-        }
-        agent.isStopped = false;
-        openDoorTimeElapsed = 0;
-        timeSinceOpenDoor += Time.deltaTime;
-    }
-
-    IEnumerator CloseDoor(Door door, bool locked, float time)
-    {
-        yield return new WaitForSeconds(time);
-        door.CloseDoor();
-        if (locked)
-        {
-            door.LockDoor();
-        }
     }
 
     public void Spawn(Vector3 position)

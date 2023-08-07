@@ -112,7 +112,7 @@ public class ItemManager : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
+            GameManager.Instance.OnElevatorDoorClosed += (object caller, System.EventArgs args) =>
             {
                 SpawnItems(GameManager.Instance.Stage);
                 SpawnKeycard(GameManager.Instance.Stage);

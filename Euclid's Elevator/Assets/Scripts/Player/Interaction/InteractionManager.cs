@@ -14,11 +14,6 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] LayerMask interactionLayerMask;
     [SerializeField] float interactionDistance;
 
-    [RequireInterface(typeof(IBehaviourService))] 
-    [SerializeField] MonoBehaviour behaviourService;
-
-    IBehaviourService Service => behaviourService as IBehaviourService;
-
     IInteractable currentInteracting;
 
     string interactInput;
@@ -29,7 +24,7 @@ public class InteractionManager : MonoBehaviour
         {
             SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
             {
-                interactInput = Input.InputActions.General.Interact.controls[0].displayName;
+                interactInput = Input.Instance.InputActions.General.Interact.controls[0].displayName;
             };
         }
         else
@@ -37,25 +32,8 @@ public class InteractionManager : MonoBehaviour
             Debug.Log("No save system");
         }
 
-        if (Input.InputActions != null)
-        {
-            Input.InputActions.General.Interact.performed += Interact;
-            Input.InputActions.General.Interact.canceled += CancelInteract;
-        }
-        else
-        {
-            Debug.Log("No input class.");
-        }
-
-        //AVAILABLE INTERACTIONS ATM
-        /*Interactions inter = GetComponent<Interactions>();
-        interactions = new interaction[]
-        {
-            inter.PickUp,
-            inter.ToggleDoor,
-            inter.InsertInElevator,
-            inter.EnterBox
-        };*/
+        Input.Instance.InputActions.General.Interact.performed += Interact;
+        Input.Instance.InputActions.General.Interact.canceled += CancelInteract;
     }
 
     private void Update()
@@ -114,7 +92,7 @@ public class InteractionManager : MonoBehaviour
             interactable.IsInteractable)
         {
             CancelInteract(new InputAction.CallbackContext());
-            interactable.OnInteractPerformed(Service);
+            interactable.OnInteractPerformed();
             currentInteracting = interactable;
         }
     }
@@ -123,7 +101,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (currentInteracting != null && currentInteracting.IsInteractable)
         {
-            currentInteracting.OnInteractCanceled(Service);
+            currentInteracting.OnInteractCanceled();
         }
     }
 

@@ -28,15 +28,14 @@ public class Timer : Item, IUsable
     [SyncValue] [SaveValue] float tickTimeElapsed;
     [SyncValue] [SaveValue] float ringTimeElapsed;
 
-    IBehaviourService service;
-
-    bool requestedService;
+    EnemyNavigation navigation;
 
     private void Start()
     {
+        navigation = FindObjectOfType<EnemyNavigation>();
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnStageStart += DestroyTimer;
+            GameManager.Instance.OnElevatorDoorClosed += DestroyTimer;
             GameManager.Instance.OnDeath += DestroyTimer;
         }
         else
@@ -51,7 +50,7 @@ public class Timer : Item, IUsable
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.OnStageStart -= DestroyTimer;
+                GameManager.Instance.OnElevatorDoorClosed -= DestroyTimer;
                 GameManager.Instance.OnDeath -= DestroyTimer;
             }
             else
@@ -134,16 +133,13 @@ public class Timer : Item, IUsable
             }
             ringTimeElapsed += Time.deltaTime;
 
-            if (service == null && !requestedService)
-            {
-                service = IBehaviourService.GetAvailableService();
-                requestedService = true;
-            }
-
-            if (service != null && service.RequestComponentOfType(out EnemyNavigation navigation))
+            if (navigation != null)
             {
                 navigation.InspectNoise(transform.position, true);
-                requestedService = false;
+            }
+            else
+            {
+                Debug.Log("No enemy navigation.");
             }
 
             if (ringTimeElapsed >= ringDuration)
@@ -160,7 +156,7 @@ public class Timer : Item, IUsable
         }
     }
 
-    public bool OnUse(IBehaviourService service)
+    public bool OnUse()
     {
         if (!started)
         {
@@ -168,7 +164,6 @@ public class Timer : Item, IUsable
             winding = true;
             started = true;
         }
-        this.service = service;
         return false;
     }
 }

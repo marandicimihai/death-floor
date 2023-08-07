@@ -26,11 +26,6 @@ public class Inventory : MonoBehaviour
     [SerializeField] Journal journal;
     [SerializeField] PopUpManager popup;
 
-    [RequireInterface(typeof(IBehaviourService))]
-    [SerializeField] MonoBehaviour behaviourService;
-
-    IBehaviourService Service => behaviourService as IBehaviourService;
-
     [Header("Drop Properties")]
     [SerializeField] Transform dropPoint;
     [SerializeField] float dropForce;
@@ -48,31 +43,24 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        if (Input.InputActions != null)
-        {
-            Input.InputActions.General.Drop.performed += (InputAction.CallbackContext context) => DropItem();
-            Input.InputActions.General.Use.performed += (InputAction.CallbackContext context) => UseItem();
-            Input.InputActions.General.Inventory1.performed += InventoryPerformed;
-            Input.InputActions.General.Inventory2.performed += InventoryPerformed;
-            Input.InputActions.General.Inventory3.performed += InventoryPerformed;
-            Input.InputActions.General.Inventory4.performed += InventoryPerformed;
-            Input.InputActions.General.Scroll.performed += Scroll;
+        Input.Instance.InputActions.General.Drop.performed += (InputAction.CallbackContext context) => DropItem();
+        Input.Instance.InputActions.General.Use.performed += (InputAction.CallbackContext context) => UseItem();
+        Input.Instance.InputActions.General.Inventory1.performed += InventoryPerformed;
+        Input.Instance.InputActions.General.Inventory2.performed += InventoryPerformed;
+        Input.Instance.InputActions.General.Inventory3.performed += InventoryPerformed;
+        Input.Instance.InputActions.General.Inventory4.performed += InventoryPerformed;
+        Input.Instance.InputActions.General.Scroll.performed += Scroll;
 
-            Input.InputActions.Box.Use.performed += (InputAction.CallbackContext context) => UseItem();
-            Input.InputActions.Box.Inventory1.performed += InventoryPerformed;
-            Input.InputActions.Box.Inventory2.performed += InventoryPerformed;
-            Input.InputActions.Box.Inventory3.performed += InventoryPerformed;
-            Input.InputActions.Box.Inventory4.performed += InventoryPerformed;
-            Input.InputActions.Box.Scroll.performed += Scroll;
-        }
-        else
-        {
-            Debug.Log("Input class absent.");
-        }
+        Input.Instance.InputActions.Box.Use.performed += (InputAction.CallbackContext context) => UseItem();
+        Input.Instance.InputActions.Box.Inventory1.performed += InventoryPerformed;
+        Input.Instance.InputActions.Box.Inventory2.performed += InventoryPerformed;
+        Input.Instance.InputActions.Box.Inventory3.performed += InventoryPerformed;
+        Input.Instance.InputActions.Box.Inventory4.performed += InventoryPerformed;
+        Input.Instance.InputActions.Box.Scroll.performed += Scroll;
 
         if (SaveSystem.Instance != null)
         {
-            if (SaveSystem.Instance.currentSaveData != null 
+            if (SaveSystem.Instance.currentSaveData != null
                 && SaveSystem.Instance.currentSaveData.holdingitems.Length != 0
                 && SaveSystem.Instance.currentSaveData.variables.Length != 0
                 && SaveSystem.Instance.currentSaveData.lengths.Length != 0)
@@ -274,12 +262,12 @@ public class Inventory : MonoBehaviour
     /// </summary>
     void UseItem()
     {
-        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse(Service))
+        if (Items[Index] != null && Items[Index].TryGetComponent(out IUsable usable) && usable.OnUse())
         {
             if (Items[Index].properties.useUseSoundsInOrder)
             {
                 AudioManager.Instance.PlayClips(Items[Index].properties.use);
-            }    
+            }
             else
             {
                 AudioManager.Instance.PlayRandomClip(Items[Index].properties.use);

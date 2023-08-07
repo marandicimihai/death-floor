@@ -17,14 +17,9 @@ public class TrapManager : MonoBehaviour
     [SerializeField] TrapSpawn[] spawns;
     [SerializeField] GameObject trapPrefab;
 
-    [RequireInterface(typeof(IBehaviourService))]
-    [SerializeField] MonoBehaviour behaviourService;
-
-    IBehaviourService Service => behaviourService as IBehaviourService;
-
     private void Start()
     {
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
+        GameManager.Instance.OnElevatorDoorClosed += (object caller, System.EventArgs args) =>
         {
             SpawnTraps(GameManager.Instance.Stage);
         };
@@ -42,10 +37,6 @@ public class TrapManager : MonoBehaviour
                     Vector3 position = new(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 
                     GameObject newTrap = Instantiate(trapPrefab, position, Quaternion.identity);
-                    if (newTrap.TryGetComponent(out EnemyTrap trap))
-                    {
-                        trap.Initialize(Service);
-                    }
                     spawnedtraps.Add(newTrap.transform);
                 }
             }
@@ -92,10 +83,6 @@ public class TrapManager : MonoBehaviour
                             if (!used.Contains(spawn.spawnPoints[point]))
                             {
                                 GameObject newTrap = Instantiate(trapPrefab, spawn.spawnPoints[point].position, Quaternion.identity);
-                                if (newTrap.TryGetComponent(out EnemyTrap trap))
-                                {
-                                    trap.Initialize(Service);
-                                }
                                 spawnedtraps.Add(newTrap.transform);
                                 used.Add(spawn.spawnPoints[point]);
                                 break;

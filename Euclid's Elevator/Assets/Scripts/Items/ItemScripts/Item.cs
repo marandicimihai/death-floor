@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class Item : SyncValues, IInteractable
 {
+    public bool IsInteractable { get => isInteractable; }
     [SyncValue] public ItemProperties properties;
     [SyncValue] [SaveValue] public int uses;
     [SyncValue] [SaveValue] [SerializeField] bool isInteractable = true;
 
     bool visible = true;
-
-    public bool IsInteractable { get => isInteractable; }
+    Inventory playerInventory;
 
     private void Start()
     {
         SetVisible(visible);
+        playerInventory = FindObjectOfType<Inventory>();
     }
 
     private void OnValidate()
@@ -69,18 +70,23 @@ public class Item : SyncValues, IInteractable
         catch { Debug.Log("Item manager issue"); }
     }
 
-    public bool OnInteractPerformed(IBehaviourService behaviourRequest)
+    public bool OnInteractPerformed()
     {
         if (!IsInteractable) return false;
 
-        if (behaviourRequest.RequestComponentOfType(out Inventory inventory))
+        if (playerInventory != null)
         {
-            inventory.PickUpItem(this);
+            playerInventory.PickUpItem(this);
         }
+        else
+        {
+            Debug.Log("No inventory");
+        }
+        
         return true;
     }
 
-    public bool OnInteractCanceled(IBehaviourService behaviourRequest)
+    public bool OnInteractCanceled()
     {
         if (!IsInteractable) return false;
         return true;

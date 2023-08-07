@@ -10,7 +10,7 @@ public class CameraAnimation : MonoBehaviour
 
     Vector3 positionOnEnter;
     Quaternion rotationOnEnter;
-    
+
     Vector3 defaultPosition;
     Quaternion defaultRotation;
 
@@ -88,14 +88,7 @@ public class CameraAnimation : MonoBehaviour
             Debug.Log("No player class.");
         }
 
-        if (Input.InputActions != null)
-        {
-            Input.InputActions.Disable();
-        }
-        else
-        {
-            Debug.Log("Input class absent.");
-        }
+        Input.Instance.InputActions.Disable();
 
         camera.transform.parent = reference;
 
@@ -129,14 +122,7 @@ public class CameraAnimation : MonoBehaviour
             Debug.Log("No player class.");
         }
 
-        if (Input.InputActions != null)
-        {
-            Input.InputActions.Enable();
-        }
-        else
-        {
-            Debug.Log("Input class absent.");
-        }
+        Input.Instance.InputActions.Enable();
 
         camera.transform.parent = defaultCameraParent;
 

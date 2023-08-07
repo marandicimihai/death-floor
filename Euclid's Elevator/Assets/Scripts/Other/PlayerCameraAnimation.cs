@@ -6,20 +6,32 @@ public class PlayerCameraAnimation : MonoBehaviour
     [SerializeField] Transform cameraReference;
     [SerializeField] bool hideHUD;
     [SerializeField] bool instantExit;
-    Animator animator;
 
-    private void Awake()
+    CameraAnimation cameraAnimation;
+
+    private void Start()
     {
-        animator = GetComponent<Animator>();
+        cameraAnimation = FindObjectOfType<CameraAnimation>();
     }
-
     public void EnterAnimation()
     {
-        GameManager.Instance.player.cameraAnimation.EnterAnimation(cameraReference, hideHUD);
+        if (cameraAnimation == null)
+        {
+            Debug.Log("No camera animation.");
+            return;
+        }
+
+        cameraAnimation.EnterAnimation(cameraReference, hideHUD);
     }
 
     public void ExitAnimation()
     {
-        GameManager.Instance.player.cameraAnimation.ExitAnimation(instantExit);
+        if (cameraAnimation == null)
+        {
+            Debug.Log("No camera animation.");
+            return;
+        }
+
+        cameraAnimation.ExitAnimation(instantExit);
     }
 }

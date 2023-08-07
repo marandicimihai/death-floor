@@ -77,14 +77,7 @@ public class Player : MonoBehaviour
             insanity.ReduceSanity(1);
             journal.CloseJournal();
 
-            if (Input.InputActions != null)
-            {
-                Input.InputActions.Disable();
-            }
-            else
-            {
-                Debug.Log("Input class absent.");
-            }
+            Input.Instance.InputActions.Disable();
 
             if (callDeath)
             {
@@ -105,14 +98,7 @@ public class Player : MonoBehaviour
 
     public void Spawn(Vector3 position)
     {
-        if (Input.InputActions != null)
-        {
-            Input.InputActions.Enable();
-        }
-        else
-        {
-            Debug.Log("Input class absent.");
-        }
+        Input.Instance.InputActions.Enable();
 
         Freeze();
         transform.position = position;

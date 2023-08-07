@@ -15,12 +15,12 @@ public class PlayerHUDManager : MonoBehaviour
 
     private void Awake()
     {
-        DefaultHUD();
         HideCursor();
     }
 
     private void Start()
     {
+        DefaultHUD();
         if (PauseGame.Instance != null)
         {
             PauseGame.Instance.OnPause += (object caller, System.EventArgs args) => ShowCursor();
@@ -37,7 +37,7 @@ public class PlayerHUDManager : MonoBehaviour
                 ShowCursor();
                 HideAllHUD();
             };
-            GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
+            GameManager.Instance.OnGameWin += (object caller, System.EventArgs args) =>
             {
                 Cursor.lockState = CursorLockMode.None;
                 ShowCursor();

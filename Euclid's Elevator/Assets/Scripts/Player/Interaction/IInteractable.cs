@@ -3,6 +3,6 @@
     public bool IsInteractable { get; }
 
     public string InteractionPrompt();
-    public bool OnInteractPerformed(IBehaviourService behaviourRequest);
-    public bool OnInteractCanceled(IBehaviourService behaviourRequest);
+    public bool OnInteractPerformed();
+    public bool OnInteractCanceled();
 }

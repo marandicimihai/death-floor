@@ -32,16 +32,9 @@ public class Journal : MonoBehaviour
 
     private void Start()
     {
-        if (Input.InputActions != null)
-        {
-            Input.InputActions.Realtime.Journal.performed += ToggleJournal;
-            Input.InputActions.Realtime.PageLeft.performed += PageLeft;
-            Input.InputActions.Realtime.PageRight.performed += PageRight;
-        }
-        else
-        {
-            Debug.Log("Input class absent");
-        }
+        Input.Instance.InputActions.Realtime.Journal.performed += ToggleJournal;
+        Input.Instance.InputActions.Realtime.PageLeft.performed += PageLeft;
+        Input.Instance.InputActions.Realtime.PageRight.performed += PageRight;
 
         journalAnimator.gameObject.SetActive(open);
 
@@ -50,7 +43,7 @@ public class Journal : MonoBehaviour
             if (SaveSystem.Instance.currentSaveData != null &&
                 SaveSystem.Instance.currentSaveData.pages.Length > 0)
             {
-                foreach(string name in SaveSystem.Instance.currentSaveData.pages)
+                foreach (string name in SaveSystem.Instance.currentSaveData.pages)
                 {
                     pages.Add(GetPage(name));
                 }

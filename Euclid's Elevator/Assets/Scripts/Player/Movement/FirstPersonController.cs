@@ -21,7 +21,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] LayerMask ground;
     [SerializeField] float checkRadius;
     [SerializeField] float checkExtension;
-        
+
     [Header("Gravity")]
     [SerializeField] float gravityForce;
 
@@ -29,7 +29,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] float stepLength;
     [SerializeField] string[] carpetStepNames;
     [SerializeField] string[] concreteStepNames;
-    
+
     #endregion
 
     #region Private
@@ -60,15 +60,8 @@ public class FirstPersonController : MonoBehaviour
 
     private void Start()
     {
-        if (Input.InputActions != null)
-        {
-            Input.InputActions.General.Sneak.started += (InputAction.CallbackContext context) => sneaking = true;
-            Input.InputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => sneaking = false;
-        }
-        else
-        {
-            Debug.Log("Input class absent.");
-        }
+        Input.Instance.InputActions.General.Sneak.started += (InputAction.CallbackContext context) => sneaking = true;
+        Input.Instance.InputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => sneaking = false;
     }
 
     private void Update()
@@ -113,14 +106,7 @@ public class FirstPersonController : MonoBehaviour
     private void ComputeVelocity()
     {
         Vector2 inputVec = Vector2.zero;
-        if (Input.InputActions != null)
-        {
-            inputVec = Input.InputActions.General.Movement.ReadValue<Vector2>();
-        }
-        else
-        {
-            Debug.Log("Input class is absent.");
-        }
+        inputVec = Input.Instance.InputActions.General.Movement.ReadValue<Vector2>();
         inputVec.x *= strafeScale;
         inputVec.y *= forwardScale;
         inputVec.Normalize();

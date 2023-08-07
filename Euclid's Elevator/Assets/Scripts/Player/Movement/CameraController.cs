@@ -58,15 +58,7 @@ public class CameraController : MonoBehaviour
         if (canLook)
         {
             Vector2 inputVec;
-            if (Input.InputActions != null)
-            {
-               inputVec = Input.InputActions.General.Look.ReadValue<Vector2>() * Time.timeScale;
-            }
-            else
-            {
-                Debug.Log("Input class absent.");
-                return;
-            }
+            inputVec = Input.Instance.InputActions.General.Look.ReadValue<Vector2>() * Time.timeScale;
 
             rotation.x -= inputVec.y * sensitivity;
             rotation.y += inputVec.x * sensitivity;

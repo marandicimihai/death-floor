@@ -21,7 +21,7 @@ public class PauseGame : MonoBehaviour
 
     private void Start()
     {
-        Input.InputActions.Realtime.Pause.performed += (InputAction.CallbackContext context) => 
+        Input.Instance.InputActions.Realtime.Pause.performed += (InputAction.CallbackContext context) =>
         {
             TogglePause();
         };
@@ -35,7 +35,7 @@ public class PauseGame : MonoBehaviour
             init = true;
         }
     }
-    
+
     void TogglePause()
     {
         if (Paused)

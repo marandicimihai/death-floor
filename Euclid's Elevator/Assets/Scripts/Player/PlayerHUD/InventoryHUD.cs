@@ -98,13 +98,13 @@ public class InventoryHUD : MonoBehaviour
 
         if (inventory.Items[inventory.Index] != null && holdPos.childCount > 0)
         {
-            Vector2 invertLook = Input.InputActions.General.Look.ReadValue<Vector2>() * -swayStep;
+            Vector2 invertLook = Input.Instance.InputActions.General.Look.ReadValue<Vector2>() * -swayStep;
             invertLook.x = Mathf.Clamp(invertLook.x, -swayMaxStep, swayMaxStep);
             invertLook.y = Mathf.Clamp(invertLook.y, -swayMaxStep, swayMaxStep);
 
             Vector3 swayPos = invertLook;
 
-            Vector3 swayRotLook = Input.InputActions.General.Look.ReadValue<Vector2>() * -swayRotStep;
+            Vector3 swayRotLook = Input.Instance.InputActions.General.Look.ReadValue<Vector2>() * -swayRotStep;
             swayRotLook.x = Mathf.Clamp(swayRotLook.x, -swayMaxRotStep, swayMaxRotStep);
             swayRotLook.y = Mathf.Clamp(swayRotLook.y, -swayMaxRotStep, swayMaxRotStep);
 
