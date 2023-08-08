@@ -30,8 +30,9 @@ public class Timer : Item, IUsable
 
     EnemyNavigation navigation;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         navigation = FindObjectOfType<EnemyNavigation>();
         if (GameManager.Instance != null)
         {

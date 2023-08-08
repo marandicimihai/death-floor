@@ -28,17 +28,10 @@ public class CameraAnimation : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
+        SaveSystem.OnSaveGame += (ref GameData data) =>
         {
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                SaveSystem.Instance.CanSave = !inAnimation;
-            };
-        }
-        else
-        {
-            Debug.Log("No save system.");
-        }
+            SaveSystem.CanSave = !inAnimation;
+        };
     }
 
     private void Update()

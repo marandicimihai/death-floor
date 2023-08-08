@@ -52,29 +52,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null && SaveSystem.CurrentSaveData.stage >= 0)
         {
-            if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage >= 0)
+            if (SaveSystem.CurrentSaveData.gameStage >= 0)
             {
-                if (SaveSystem.Instance.currentSaveData.gameStage >= 0)
-                {
-                    GameStage = (GameStage)SaveSystem.Instance.currentSaveData.gameStage;
-                }
+                GameStage = (GameStage)SaveSystem.CurrentSaveData.gameStage;
             }
-            else
-            {
-                StartTutorial();
-            }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                data.stage = Stage;
-                data.gameStage = (int)GameStage;
-            };
         }
         else
         {
-            Debug.Log("No save system");
+            StartTutorial();
         }
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+        {
+            data.stage = Stage;
+            data.gameStage = (int)GameStage;
+        };
     }
 
     #region GameLevel
@@ -101,7 +94,7 @@ public class GameManager : MonoBehaviour
         {
             OnDeath?.Invoke(this, new EventArgs());
             SpawnPlayer();
-            
+
             if (GameStage == GameStage.GameLevel)
             {
                 SpawnEnemy();

@@ -38,32 +38,25 @@ public class Journal : MonoBehaviour
 
         journalAnimator.gameObject.SetActive(open);
 
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null &&
+            SaveSystem.CurrentSaveData.pages.Length > 0)
         {
-            if (SaveSystem.Instance.currentSaveData != null &&
-                SaveSystem.Instance.currentSaveData.pages.Length > 0)
+            foreach (string name in SaveSystem.CurrentSaveData.pages)
             {
-                foreach (string name in SaveSystem.Instance.currentSaveData.pages)
-                {
-                    pages.Add(GetPage(name));
-                }
+                pages.Add(GetPage(name));
             }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            List<string> names = new();
-
-            foreach (JournalPage page in pages)
-            {
-                names.Add(page.name);
-            }
-
-            data.pages = names.ToArray();
-        };
         }
-        else
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+    {
+        List<string> names = new();
+
+        foreach (JournalPage page in pages)
         {
-            Debug.Log("No save system.");
+            names.Add(page.name);
         }
+
+        data.pages = names.ToArray();
+    };
     }
 
     JournalPage GetPage(string name)

@@ -26,13 +26,13 @@ public class TrapManager : MonoBehaviour
 
         spawnedtraps = new();
 
-        if (SaveSystem.Instance.currentSaveData != null)
+        if (SaveSystem.CurrentSaveData != null)
         {
-            if (SaveSystem.Instance.currentSaveData.trapCount > 0 &&
-                SaveSystem.Instance.currentSaveData.trapPositions.Length > 0)
+            if (SaveSystem.CurrentSaveData.trapCount > 0 &&
+                SaveSystem.CurrentSaveData.trapPositions.Length > 0)
             {
-                List<float> positions = SaveSystem.Instance.currentSaveData.trapPositions.ToList();
-                for (int i = 0; i < SaveSystem.Instance.currentSaveData.trapCount; i++)
+                List<float> positions = SaveSystem.CurrentSaveData.trapPositions.ToList();
+                for (int i = 0; i < SaveSystem.CurrentSaveData.trapCount; i++)
                 {
                     Vector3 position = new(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 
@@ -42,7 +42,7 @@ public class TrapManager : MonoBehaviour
             }
         }
 
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        SaveSystem.OnSaveGame += (ref GameData data) =>
         {
             List<float> positions = new();
 

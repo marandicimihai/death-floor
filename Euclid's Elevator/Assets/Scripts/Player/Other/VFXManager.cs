@@ -42,18 +42,11 @@ public class VFXManager : MonoBehaviour
         shakeTime = 0.001f;
         lowInsanityTime = 0.001f;
 
-        if (SaveSystem.Instance != null)
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
-            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
-            {
-                bloom.weight = settings.Bloom ? 1 : 0;
-                blur.weight = settings.Blur ? 1 : 0;
-            };
-        }
-        else
-        {
-            Debug.Log("No save system");
-        }
+            bloom.weight = settings.Bloom ? 1 : 0;
+            blur.weight = settings.Blur ? 1 : 0;
+        };
         initialPosition = camera.transform.localPosition;
     }
 

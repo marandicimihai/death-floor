@@ -31,7 +31,7 @@ public class SideMenu : MonoBehaviour
         {
             GameManager.Instance.OnGameWin += (object caller, System.EventArgs args) =>
             {
-                SaveSystem.Instance.ClearData(0);
+                SaveSystem.ClearSlotData(0);
                 SceneManager.LoadScene("Menu");
             };
 
@@ -122,33 +122,26 @@ public class SideMenu : MonoBehaviour
 
     public void Restart()
     {
-        if (SaveSystem.Instance != null)
-        {
-            SaveSystem.Instance.ClearData(0);
-        }
-        else
-        {
-            Debug.Log("No save system");
-        }
+        SaveSystem.ClearSlotData(0);
         SceneManager.LoadScene("Main");
     }
 
     public void LoadMainMenu()
     {
-        if (GameManager.Instance != null && SaveSystem.Instance != null)
+        if (GameManager.Instance != null)
         {
             if (GameManager.Instance.GameStage == GameStage.End)
             {
-                SaveSystem.Instance.ClearData(0);
+                SaveSystem.ClearSlotData(0);
             }
             else
             {
-                SaveSystem.Instance.SaveGame();
+                SaveSystem.SaveGame(0);
             }
         }
         else
         {
-            Debug.Log("No game manager or save system.");
+            Debug.Log("No game manager.");
         }
         SceneManager.LoadScene("Menu");
     }

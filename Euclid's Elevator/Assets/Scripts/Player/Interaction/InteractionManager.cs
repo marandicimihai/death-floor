@@ -20,17 +20,10 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
-        if (SaveSystem.Instance != null)
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
-            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
-            {
-                interactInput = Input.Instance.InputActions.General.Interact.controls[0].displayName;
-            };
-        }
-        else
-        {
-            Debug.Log("No save system");
-        }
+            interactInput = Input.Instance.InputActions.General.Interact.controls[0].displayName;
+        };
 
         Input.Instance.InputActions.General.Interact.performed += Interact;
         Input.Instance.InputActions.General.Interact.canceled += CancelInteract;

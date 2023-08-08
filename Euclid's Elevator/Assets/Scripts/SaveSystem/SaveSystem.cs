@@ -6,12 +6,9 @@ using UnityEditor;
 using System.IO;
 using System.Text;
 
-public class SaveSystem : MonoBehaviour
+public static class SaveSystem
 {
-    public static SaveSystem Instance;
-    public GameData currentSaveData;
-
-    public bool CanSave
+    public static bool CanSave
     {
         get
         {
@@ -25,92 +22,92 @@ public class SaveSystem : MonoBehaviour
             }
         }
     }
-    bool canSave = true;
-
-    [SerializeField] int saveSlots;
-    int? currentSave;
-
     public delegate void SaveTheGame(ref GameData data);
-    public SaveTheGame OnSaveGame;
+    public static SaveTheGame OnSaveGame;
 
     public delegate void SettingsChanged(Settings settings);
-    public SettingsChanged OnSettingsChanged;
-
-    bool startedupdate;
-
-    private void Awake()
+    public static SettingsChanged OnSettingsChanged;
+    public static GameData CurrentSaveData
     {
-        if (Instance == null)
+        get
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-
-        /////////TESTING
-        currentSave = 0;
-        currentSaveData = LoadGame(0);
-        /////////TESTING
-    }
-
-    private void Start()
-    {
-        SceneManager.activeSceneChanged += (Scene first, Scene second) =>
-        {
-            OnSettingsChanged?.Invoke(LoadSettings());
-        };
-    }
-
-    private void Update()
-    {
-        if (!startedupdate)
-        {
-            startedupdate = true;
-            OnSettingsChanged?.Invoke(LoadSettings());
+            if (!hasLoadedData)
+            {
+                currentSaveData = LoadGame(CurrentSave);
+                hasLoadedData = true;
+            }
+            return currentSaveData;
         }
     }
+
+    static GameData currentSaveData;
+    static bool canSave = true;
+
+    static readonly int saveSlots = 4;
+    static int CurrentSave
+    {
+        get
+        {
+            return currentSave;
+        }
+        set
+        {
+            currentSave = value;
+            hasLoadedData = false;
+        }
+    }
+    static int currentSave;
+    static bool hasLoadedData;
 
     #region Save Slots
 
-    [MenuItem("Dev/Save Game")]
+    [MenuItem("Dev/Save System/Save Slot")]
     public static void SaveData()
     {
-        Instance.SaveGame();
+        SaveGame(CurrentSave);
     }
 
-    [MenuItem("Dev/Clear Save")]
-    public static void Clear()
+    [MenuItem("Dev/Save System/Clear Save Slot")]
+    static void Clear()
     {
-        Instance.ClearData(0);
+        ClearSlotData(CurrentSave);
     }
 
-    public void LoadGameData(int index)
+    [MenuItem("Dev/Save System/Save Up")]
+    public static void SaveUp()
     {
-        SceneManager.LoadScene("Main");
-        currentSaveData = LoadGame(index);
-        currentSave = index;
-    }
-
-    public bool SaveGame()
-    {
-        if (currentSave == null)
+        CurrentSave += 1;
+        if (CurrentSave >= saveSlots)
         {
-            return false;
+            CurrentSave = 0;
         }
+        Debug.Log($"Save slot set to {CurrentSave}.");
+    }
 
+    [MenuItem("Dev/Save System/Save Down")]
+    public static void SaveDown()
+    {
+        CurrentSave -= 1;
+        if (CurrentSave <= -1)
+        {
+            CurrentSave = 3;
+        }
+        Debug.Log($"Save slot set to {CurrentSave}.");
+    }
+
+    public static bool SaveGame(int index)
+    {
         GameData data = new();
         OnSaveGame?.Invoke(ref data);
 
-        if (!canSave)
+        if (!CanSave)
         {
             return false;
         }
 
         if (CanSave)
         {
-            string path = Path.Combine(Application.persistentDataPath, $"saveddata{currentSave}.owo");
+            string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
             using (FileStream stream = new(path, FileMode.Create))
             {
                 byte[] info = new UTF8Encoding(true).GetBytes(JsonUtility.ToJson(data));
@@ -121,7 +118,7 @@ public class SaveSystem : MonoBehaviour
         return false;
     }
 
-    public void ClearData(int index)
+    public static void ClearSlotData(int index)
     {
         GameData data = new();
         string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
@@ -132,7 +129,7 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-    GameData LoadGame(int index)
+    static GameData LoadGame(int index)
     {
         string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
         if (File.Exists(path))
@@ -151,11 +148,16 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    public static void SetSlot(int index)
+    {
+        CurrentSave = index;
+    }
+
     #endregion
 
     #region Settings
 
-    public void SaveSettings(Settings settings)
+    public static void SaveSettings(Settings settings)
     {
         BinaryFormatter formatter = new();
 
@@ -171,7 +173,7 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-    public Settings LoadSettings()
+    public static Settings LoadSettings()
     {
         string path = Path.Combine(Application.persistentDataPath, "settings.uwu");
         if (File.Exists(path))
@@ -196,20 +198,8 @@ public class SaveSystem : MonoBehaviour
     [MenuItem("Dev/ClearSettings")]
     public static void ClearSettings()
     {
-        /*foreach (FieldInfo field in typeof(Settings).GetFields())
-        {
-            Debug.Log(field.Name + ": " + field.GetValue(Instance.LoadSettings()));
-        }*/
-        Instance.SaveSettings(new Settings());
+        SaveSettings(new Settings());
     }
 
     #endregion
-
-    private void OnApplicationQuit()
-    {
-        if (SceneManager.GetActiveScene().name == "Main")
-        {
-            SaveGame();
-        }
-    }
 }

@@ -57,42 +57,35 @@ public class Elevator : MonoBehaviour, IInteractable
             Debug.Log("No game manager.");
         }
 
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null)
         {
-            if (SaveSystem.Instance.currentSaveData != null)
-            {
 
-                if (SaveSystem.Instance.currentSaveData.stage < 0)
-                {
-                    InitiateElevatorRide();
-                }
-                else
-                {
-                    OpenElevator(true);
-                }
-                Broken = SaveSystem.Instance.currentSaveData.broken;
-                waiting = SaveSystem.Instance.currentSaveData.waiting;
-                canClose = SaveSystem.Instance.currentSaveData.canClose;
-            }
-            else
+            if (SaveSystem.CurrentSaveData.stage < 0)
             {
                 InitiateElevatorRide();
             }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            else
             {
-                data.broken = Broken;
-                data.waiting = waiting;
-                if (waiting)
-                {
-                    data.canClose = true;
-                }
-                SaveSystem.Instance.CanSave = !riding;
-            };
+                OpenElevator(true);
+            }
+            Broken = SaveSystem.CurrentSaveData.broken;
+            waiting = SaveSystem.CurrentSaveData.waiting;
+            canClose = SaveSystem.CurrentSaveData.canClose;
         }
         else
         {
-            Debug.Log("No save system.");
+            InitiateElevatorRide();
         }
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+        {
+            data.broken = Broken;
+            data.waiting = waiting;
+            if (waiting)
+            {
+                data.canClose = true;
+            }
+            SaveSystem.CanSave = !riding;
+        };
     }
 
     private void Update()

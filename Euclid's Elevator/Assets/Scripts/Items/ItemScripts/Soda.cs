@@ -8,8 +8,9 @@ public class Soda : Item, IUsable
 
     FirstPersonController controller;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         controller = FindObjectOfType<FirstPersonController>();
     }
 

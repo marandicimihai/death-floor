@@ -60,15 +60,8 @@ public class MainMenu : MonoBehaviour
         AudioManager.Instance.FadeAwayClip(humJob, ambienceFadeTime);
         AudioManager.Instance.FadeAwayClip(buzzJob, ambienceFadeTime);
 
-        if (SaveSystem.Instance != null)
-        {
-            SaveSystem.Instance.LoadGameData(0);
-        }
-        else
-        {
-            SceneManager.LoadScene("Main");
-            Debug.Log("No save system.");
-        }
+        SaveSystem.SetSlot(0);
+        SceneManager.LoadScene("Main");
     }
     public void DoClick()
     {

@@ -10,15 +10,32 @@ public class Item : SyncValues, IInteractable
     bool visible = true;
     Inventory playerInventory;
 
-    private void Start()
+    protected virtual void Start()
     {
-        SetVisible(visible);
         playerInventory = FindObjectOfType<Inventory>();
     }
 
     private void OnValidate()
     {
         uses = properties.uses;
+    }
+
+    protected virtual void OnBreak()
+    {
+        try
+        {
+            ItemManager.RemoveFromPhysicalItems(this);
+        }
+        catch { Debug.Log("Item manager issue"); }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        try
+        {
+            ItemManager.RemoveFromPhysicalItems(this);
+        }
+        catch { Debug.Log("Item manager issue"); }
     }
 
     public void DecreaseDurability()
@@ -50,24 +67,6 @@ public class Item : SyncValues, IInteractable
             }
             this.visible = false;
         }
-    }
-
-    protected virtual void OnBreak()
-    {
-        try
-        {
-            ItemManager.RemoveFromPhysicalItems(this);
-        }
-        catch { Debug.Log("Item manager issue"); }
-    }
-
-    private void OnDestroy()
-    {
-        try
-        {
-            ItemManager.RemoveFromPhysicalItems(this);
-        }
-        catch { Debug.Log("Item manager issue"); }
     }
 
     public bool OnInteractPerformed()

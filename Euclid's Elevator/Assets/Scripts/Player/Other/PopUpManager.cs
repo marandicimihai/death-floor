@@ -14,22 +14,15 @@ public class PopUpManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null &&
+            SaveSystem.CurrentSaveData.usedPopUps.Length > 0)
         {
-            if (SaveSystem.Instance.currentSaveData != null &&
-                SaveSystem.Instance.currentSaveData.usedPopUps.Length > 0)
-            {
-                used = SaveSystem.Instance.currentSaveData.usedPopUps.ToList();
-            }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                data.usedPopUps = used.ToArray();
-            };
+            used = SaveSystem.CurrentSaveData.usedPopUps.ToList();
         }
-        else
+        SaveSystem.OnSaveGame += (ref GameData data) =>
         {
-            Debug.Log("No save system.");
-        }
+            data.usedPopUps = used.ToArray();
+        };
     }
 
     public void PopUp(PopUpProperties popUp)

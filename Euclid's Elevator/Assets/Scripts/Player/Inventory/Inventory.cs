@@ -58,70 +58,63 @@ public class Inventory : MonoBehaviour
         Input.Instance.InputActions.Box.Inventory4.performed += InventoryPerformed;
         Input.Instance.InputActions.Box.Scroll.performed += Scroll;
 
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null
+            && SaveSystem.CurrentSaveData.holdingitems.Length != 0
+            && SaveSystem.CurrentSaveData.variables.Length != 0
+            && SaveSystem.CurrentSaveData.lengths.Length != 0)
         {
-            if (SaveSystem.Instance.currentSaveData != null
-                && SaveSystem.Instance.currentSaveData.holdingitems.Length != 0
-                && SaveSystem.Instance.currentSaveData.variables.Length != 0
-                && SaveSystem.Instance.currentSaveData.lengths.Length != 0)
+            List<string> vars = SaveSystem.CurrentSaveData.variables.ToList();
+            for (int i = 0; i < SaveSystem.CurrentSaveData.holdingitems.Length; i++)
             {
-                List<string> vars = SaveSystem.Instance.currentSaveData.variables.ToList();
-                for (int i = 0; i < SaveSystem.Instance.currentSaveData.holdingitems.Length; i++)
+                if (SaveSystem.CurrentSaveData.holdingitems[i] != string.Empty)
                 {
-                    if (SaveSystem.Instance.currentSaveData.holdingitems[i] != string.Empty)
+                    Item newItem = Instantiate(GetProperties(SaveSystem.CurrentSaveData.holdingitems[i]).inHandObject, inventory).GetComponent<Item>();
+
+                    List<string> current = new();
+
+                    for (int j = 0; j < SaveSystem.CurrentSaveData.lengths[i]; j++)
                     {
-                        Item newItem = Instantiate(GetProperties(SaveSystem.Instance.currentSaveData.holdingitems[i]).inHandObject, inventory).GetComponent<Item>();
-
-                        List<string> current = new();
-
-                        for (int j = 0; j < SaveSystem.Instance.currentSaveData.lengths[i]; j++)
-                        {
-                            current.Add(vars[0]);
-                            vars.Remove(vars[0]);
-                        }
-
-                        newItem.LoadValues(current.ToArray());
-                        Items[i] = newItem;
+                        current.Add(vars[0]);
+                        vars.Remove(vars[0]);
                     }
+
+                    newItem.LoadValues(current.ToArray());
+                    Items[i] = newItem;
                 }
-                OnItemsChanged?.Invoke(this, new EventArgs());
+            }
+            OnItemsChanged?.Invoke(this, new EventArgs());
+        }
+
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+        {
+            List<string> strings = new();
+            List<string> values = new();
+            List<int> lengths = new();
+
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i] == null)
+                {
+                    strings.Add(string.Empty);
+                    lengths.Add(0);
+                }
+                else
+                {
+                    strings.Add(Items[i].properties.name);
+
+                    object[] objs = Items[i].GetSaveVariables().ToArray();
+                    for (int j = 0; j < objs.Length; j++)
+                    {
+                        values.Add(objs[j].ToString());
+                    }
+                    lengths.Add(objs.Length);
+                }
             }
 
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                List<string> strings = new();
-                List<string> values = new();
-                List<int> lengths = new();
-
-                for (int i = 0; i < Items.Length; i++)
-                {
-                    if (Items[i] == null)
-                    {
-                        strings.Add(string.Empty);
-                        lengths.Add(0);
-                    }
-                    else
-                    {
-                        strings.Add(Items[i].properties.name);
-
-                        object[] objs = Items[i].GetSaveVariables().ToArray();
-                        for (int j = 0; j < objs.Length; j++)
-                        {
-                            values.Add(objs[j].ToString());
-                        }
-                        lengths.Add(objs.Length);
-                    }
-                }
-
-                data.holdingitems = strings.ToArray();
-                data.variables = values.ToArray();
-                data.lengths = lengths.ToArray();
-            };
-        }
-        else
-        {
-            Debug.Log("No save system.");
-        }
+            data.holdingitems = strings.ToArray();
+            data.variables = values.ToArray();
+            data.lengths = lengths.ToArray();
+        };
     }
 
     ItemProperties GetProperties(string name)

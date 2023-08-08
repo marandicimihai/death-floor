@@ -20,48 +20,41 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null)
         {
-            if (SaveSystem.Instance.currentSaveData != null)
+            if (SaveSystem.CurrentSaveData.PlayerPosition.Length != 0)
             {
-                if (SaveSystem.Instance.currentSaveData.PlayerPosition.Length != 0)
-                {
-                    transform.position = new Vector3(SaveSystem.Instance.currentSaveData.PlayerPosition[0],
-                                                     SaveSystem.Instance.currentSaveData.PlayerPosition[1],
-                                                     SaveSystem.Instance.currentSaveData.PlayerPosition[2]);
-                }
-
-                if (SaveSystem.Instance.currentSaveData.PlayerRotation.Length != 0)
-                {
-                    transform.rotation = new Quaternion(SaveSystem.Instance.currentSaveData.PlayerRotation[0],
-                                                        SaveSystem.Instance.currentSaveData.PlayerRotation[1],
-                                                        SaveSystem.Instance.currentSaveData.PlayerRotation[2],
-                                                        SaveSystem.Instance.currentSaveData.PlayerRotation[3]);
-                }
+                transform.position = new Vector3(SaveSystem.CurrentSaveData.PlayerPosition[0],
+                                                 SaveSystem.CurrentSaveData.PlayerPosition[1],
+                                                 SaveSystem.CurrentSaveData.PlayerPosition[2]);
             }
 
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+            if (SaveSystem.CurrentSaveData.PlayerRotation.Length != 0)
             {
-                data.PlayerPosition = new float[]
-                {
+                transform.rotation = new Quaternion(SaveSystem.CurrentSaveData.PlayerRotation[0],
+                                                    SaveSystem.CurrentSaveData.PlayerRotation[1],
+                                                    SaveSystem.CurrentSaveData.PlayerRotation[2],
+                                                    SaveSystem.CurrentSaveData.PlayerRotation[3]);
+            }
+        }
+
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+        {
+            data.PlayerPosition = new float[]
+            {
                     transform.position.x,
                     transform.position.y,
                     transform.position.z
-                };
-                data.PlayerRotation = new float[]
-                {
+            };
+            data.PlayerRotation = new float[]
+            {
                     transform.rotation.x,
                     transform.rotation.y,
                     transform.rotation.z,
                     transform.rotation.w
-                };
-                SaveSystem.Instance.CanSave = !Dead;
             };
-        }
-        else
-        {
-            Debug.Log("No save system");
-        }
+            SaveSystem.CanSave = !Dead;
+        };
     }
 
     public void Die(bool callDeath)

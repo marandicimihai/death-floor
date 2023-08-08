@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] new Transform camera;
-    
+
     float sensitivity;
 
     Vector2 rotation;
@@ -11,46 +11,31 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
+        sensitivity = 0.1f * SaveSystem.LoadSettings().Sensitivity;
+
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
-            if (SaveSystem.Instance.LoadSettings() != null)
-            {
-                sensitivity = 0.1f * SaveSystem.Instance.LoadSettings().Sensitivity;
-            }
-            else
-            {
-                sensitivity = 0.1f * 0.1f;
-            }
-            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
-            {
-                sensitivity = 0.1f * settings.Sensitivity;
-            };
+            sensitivity = 0.1f * settings.Sensitivity;
+        };
 
-            if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.CameraRotation.Length != 0)
-            {
-                rotation = new Vector2(SaveSystem.Instance.currentSaveData.CameraRotation[0],
-                                       SaveSystem.Instance.currentSaveData.CameraRotation[1]);
+        if (SaveSystem.CurrentSaveData != null && SaveSystem.CurrentSaveData.CameraRotation.Length != 0)
+        {
+            rotation = new Vector2(SaveSystem.CurrentSaveData.CameraRotation[0],
+                                   SaveSystem.CurrentSaveData.CameraRotation[1]);
 
-            }
-            else
-            {
-                ResetAngle();
-            }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                data.CameraRotation = new float[]
-                {
-                    rotation.x,
-                    rotation.y
-                };
-            };
         }
         else
         {
-            Debug.Log("No save system.");
-            sensitivity = 0.1f * 0.1f;
             ResetAngle();
         }
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+        {
+            data.CameraRotation = new float[]
+            {
+                    rotation.x,
+                    rotation.y
+            };
+        };
     }
 
     private void Update()
@@ -67,9 +52,9 @@ public class CameraController : MonoBehaviour
 
             camera.localEulerAngles = new Vector3(rotation.x, 0, 0);
             transform.localEulerAngles = new Vector3(0, rotation.y, 0);
-        }    
+        }
     }
-    
+
     public void ResetAngle()
     {
         rotation.x = 0;

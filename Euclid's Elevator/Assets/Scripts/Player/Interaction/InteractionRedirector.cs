@@ -2,13 +2,28 @@
 
 public class InteractionRedirector : MonoBehaviour, IInteractable
 {
-    [SerializeField] IInteractable redirectTo;
+    [SerializeField] MonoBehaviour redirectTo;
+
+    IInteractable x;
+
+    void OnValidate()
+    {
+        if (redirectTo != null && !(redirectTo is IInteractable))
+        {
+            Debug.Log("Not IInteractable.");
+            redirectTo = null;
+        }
+        else if (redirectTo != null)
+        {
+            x = redirectTo as IInteractable;
+        }
+    }
 
     public bool IsInteractable => true;
 
     public string InteractionPrompt()
     {
-        return redirectTo.InteractionPrompt();
+        return x.InteractionPrompt();
     }
 
     public bool OnInteractCanceled()
@@ -19,7 +34,7 @@ public class InteractionRedirector : MonoBehaviour, IInteractable
             return false;
         }
 
-        return redirectTo.OnInteractCanceled();
+        return x.OnInteractCanceled();
     }
 
     public bool OnInteractPerformed()
@@ -30,6 +45,6 @@ public class InteractionRedirector : MonoBehaviour, IInteractable
             return false;
         }
 
-        return redirectTo.OnInteractPerformed();
+        return x.OnInteractPerformed();
     }
 }

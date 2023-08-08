@@ -36,79 +36,72 @@ public class ItemManager : MonoBehaviour
     private void Start()
     {
         spawnedItems = new();
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null &&
+            SaveSystem.CurrentSaveData.spawneditems.Length != 0)
         {
-            if (SaveSystem.Instance.currentSaveData != null &&
-                SaveSystem.Instance.currentSaveData.spawneditems.Length != 0)
+            int i = 0;
+            List<float> positions = SaveSystem.CurrentSaveData.spawneditemPositions.ToList();
+            List<string> variables = SaveSystem.CurrentSaveData.spawnedvariables.ToList();
+            foreach (string itemName in SaveSystem.CurrentSaveData.spawneditems)
             {
-                int i = 0;
-                List<float> positions = SaveSystem.Instance.currentSaveData.spawneditemPositions.ToList();
-                List<string> variables = SaveSystem.Instance.currentSaveData.spawnedvariables.ToList();
-                foreach (string itemName in SaveSystem.Instance.currentSaveData.spawneditems)
+                Vector3 position = new Vector3(positions[i * 3],
+                                               positions[i * 3 + 1],
+                                               positions[i * 3 + 2]);
+
+                Item newItem = Instantiate(GetProperties(SaveSystem.CurrentSaveData.spawneditems[i]).physicalObject, position, Quaternion.identity).GetComponent<Item>();
+
+                if (newItem.TryGetComponent(out Rigidbody rb))
                 {
-                    Vector3 position = new Vector3(positions[i * 3],
-                                                   positions[i * 3 + 1],
-                                                   positions[i * 3 + 2]);
-
-                    Item newItem = Instantiate(GetProperties(SaveSystem.Instance.currentSaveData.spawneditems[i]).physicalObject, position, Quaternion.identity).GetComponent<Item>();
-
-                    if (newItem.TryGetComponent(out Rigidbody rb))
-                    {
-                        rb.isKinematic = true;
-                    }
-
-                    List<string> currentvars = new();
-
-                    for (int j = 0; j < SaveSystem.Instance.currentSaveData.spawnedlengths[i]; j++)
-                    {
-                        currentvars.Add(variables[0]);
-                        variables.Remove(variables[0]);
-                    }
-
-                    newItem.LoadValues(currentvars.ToArray());
-                    spawnedItems.Add(newItem);
-                    i++;
-                }
-            }
-
-            if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage < 0)
-            {
-                SpawnKeycard(1);
-            }
-            else if (SaveSystem.Instance.currentSaveData == null)
-            {
-                SpawnKeycard(1);
-            }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                List<string> spawnedItemNames = new();
-                List<float> spawnedItemPositions = new();
-                List<int> spawnedItemLengths = new();
-                List<string> spawnedItemVariables = new();
-
-                foreach (Item item in spawnedItems)
-                {
-                    spawnedItemNames.Add(item.properties.name);
-                    spawnedItemPositions.Add(item.transform.position.x);
-                    spawnedItemPositions.Add(item.transform.position.y);
-                    spawnedItemPositions.Add(item.transform.position.z);
-                    foreach (object obj in item.GetSaveVariables())
-                    {
-                        spawnedItemVariables.Add(obj.ToString());
-                    }
-                    spawnedItemLengths.Add(item.GetSaveVariables().Count);
+                    rb.isKinematic = true;
                 }
 
-                data.spawneditems = spawnedItemNames.ToArray();
-                data.spawneditemPositions = spawnedItemPositions.ToArray();
-                data.spawnedlengths = spawnedItemLengths.ToArray();
-                data.spawnedvariables = spawnedItemVariables.ToArray();
-            };
+                List<string> currentvars = new();
+
+                for (int j = 0; j < SaveSystem.CurrentSaveData.spawnedlengths[i]; j++)
+                {
+                    currentvars.Add(variables[0]);
+                    variables.Remove(variables[0]);
+                }
+
+                newItem.LoadValues(currentvars.ToArray());
+                spawnedItems.Add(newItem);
+                i++;
+            }
         }
-        else
+
+        if (SaveSystem.CurrentSaveData != null && SaveSystem.CurrentSaveData.stage < 0)
         {
-            Debug.Log("No save system.");
+            SpawnKeycard(1);
         }
+        else if (SaveSystem.CurrentSaveData == null)
+        {
+            SpawnKeycard(1);
+        }
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+        {
+            List<string> spawnedItemNames = new();
+            List<float> spawnedItemPositions = new();
+            List<int> spawnedItemLengths = new();
+            List<string> spawnedItemVariables = new();
+
+            foreach (Item item in spawnedItems)
+            {
+                spawnedItemNames.Add(item.properties.name);
+                spawnedItemPositions.Add(item.transform.position.x);
+                spawnedItemPositions.Add(item.transform.position.y);
+                spawnedItemPositions.Add(item.transform.position.z);
+                foreach (object obj in item.GetSaveVariables())
+                {
+                    spawnedItemVariables.Add(obj.ToString());
+                }
+                spawnedItemLengths.Add(item.GetSaveVariables().Count);
+            }
+
+            data.spawneditems = spawnedItemNames.ToArray();
+            data.spawneditemPositions = spawnedItemPositions.ToArray();
+            data.spawnedlengths = spawnedItemLengths.ToArray();
+            data.spawnedvariables = spawnedItemVariables.ToArray();
+        };
 
         if (GameManager.Instance != null)
         {
@@ -194,7 +187,7 @@ public class ItemManager : MonoBehaviour
 
         int spawnerIndex = Random.Range(0, spawners.Count);
 
-        foreach(ItemSpawner spawner in spawners)
+        foreach (ItemSpawner spawner in spawners)
         {
             if (spawner.Spawn(item, out Item spawned))
             {

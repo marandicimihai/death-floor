@@ -16,22 +16,15 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null &&
+            SaveSystem.CurrentSaveData.usedLines.Length > 0)
         {
-            if (SaveSystem.Instance.currentSaveData != null &&
-                SaveSystem.Instance.currentSaveData.usedLines.Length > 0)
-            {
-                used = SaveSystem.Instance.currentSaveData.usedLines.ToList();
-            }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                data.usedLines = used.ToArray();
-            };
+            used = SaveSystem.CurrentSaveData.usedLines.ToList();
         }
-        else
+        SaveSystem.OnSaveGame += (ref GameData data) =>
         {
-            Debug.Log("No save system.");
-        }
+            data.usedLines = used.ToArray();
+        };
     }
 
     /// <summary>

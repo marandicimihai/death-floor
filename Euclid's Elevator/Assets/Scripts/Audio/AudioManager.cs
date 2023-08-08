@@ -50,17 +50,10 @@ public class AudioManager : MonoBehaviour
         {
             TryPauseEvents(() => Debug.Log("Pause instance absent"));
         };
-        if (SaveSystem.Instance != null)
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
-            SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
-            {
-                SetVolume(settings.EffectsVolume, settings.AmbienceVolume);
-            };
-        }
-        else
-        {
-            Debug.Log("No save system.");
-        }
+            SetVolume(settings.EffectsVolume, settings.AmbienceVolume);
+        };
     }
 
     void SetVolume(float effectsVolume, float ambienceVolume)

@@ -35,9 +35,6 @@ public class EnemyNavigation : MonoBehaviour
             GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera1), col.bounds);
         }
     }
-    [SerializeField] Player player;
-    [SerializeField] Transform playerTransform;
-    [SerializeField] new Transform camera;
     [SerializeField] EnemyRigAnim rigAnim;
     [SerializeField] LayerMask visionMask;
     [SerializeField] LayerMask solidMask;
@@ -46,7 +43,7 @@ public class EnemyNavigation : MonoBehaviour
     [Header("Patrol")]
     [SerializeField] float doorOpenCooldownTime;
     [SerializeField] float maxPatrolStepTime;
-    [SerializeField] float patrolStep; 
+    [SerializeField] float patrolStep;
     [SerializeField] float patrolThreshold;
     [SerializeField] float patrolSpeed;
     [SerializeField] float patrolStopDistance;
@@ -78,6 +75,9 @@ public class EnemyNavigation : MonoBehaviour
     [SerializeField] string ambend;
     [SerializeField] string drag;
 
+    Player player;
+    Transform playerTransform;
+    new Transform camera;
     AudioJob dragloop;
     AudioJob midamb;
     Quaternion stopRot;
@@ -104,42 +104,39 @@ public class EnemyNavigation : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
-        {
-            if (SaveSystem.Instance.currentSaveData != null)
-            {
-                if (SaveSystem.Instance.currentSaveData.EnemyPosition.Length != 0)
-                {
-                    Spawn(new Vector3(SaveSystem.Instance.currentSaveData.EnemyPosition[0],
-                                      SaveSystem.Instance.currentSaveData.EnemyPosition[1],
-                                      SaveSystem.Instance.currentSaveData.EnemyPosition[2]));
-                }
-                spawned = SaveSystem.Instance.currentSaveData.enemySpawned;
-            }
+        player = FindObjectOfType<Player>();
+        playerTransform = player.transform;
+        camera = GameObject.Find("MainCamera").transform;
 
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        if (SaveSystem.CurrentSaveData != null)
+        {
+            if (SaveSystem.CurrentSaveData.EnemyPosition.Length != 0)
             {
-                data.EnemyPosition = new float[]
-                {
+                Spawn(new Vector3(SaveSystem.CurrentSaveData.EnemyPosition[0],
+                                  SaveSystem.CurrentSaveData.EnemyPosition[1],
+                                  SaveSystem.CurrentSaveData.EnemyPosition[2]));
+            }
+            spawned = SaveSystem.CurrentSaveData.enemySpawned;
+        }
+
+        SaveSystem.OnSaveGame += (ref GameData data) =>
+        {
+            data.EnemyPosition = new float[]
+            {
                     transform.position.x,
                     transform.position.y,
                     transform.position.z
-                };
-                data.enemySpawned = spawned;
-                SaveSystem.Instance.CanSave = !Visible && State == State.Patrol;
             };
-        }
-        else
-        {
-            Debug.Log("No save system");
-        }
+            data.enemySpawned = spawned;
+            SaveSystem.CanSave = !Visible && State == State.Patrol;
+        };
     }
 
     private void Update()
     {
         if (!spawned)
         {
-            if(dragloop != null)
+            if (dragloop != null)
             {
                 dragloop.source.volume = 0;
             }
@@ -154,7 +151,7 @@ public class EnemyNavigation : MonoBehaviour
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));
         Debug.DrawRay(cam.position, (transform.position - Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f - Vector3.up * 0.49f - cam.position).normalized *
             Vector3.Distance(cam.transform.position, transform.position + Vector3.Cross(Vector3.up, transform.position - cam.position).normalized * 0.24f + Vector3.up * 0.49f));*/
-        
+
         rigAnim.RigUpdate();
         if (!player.Dead)
         {
@@ -211,14 +208,14 @@ public class EnemyNavigation : MonoBehaviour
                     Patrol();
                 }
                 agent.isStopped = false;
-            }   
+            }
             else
             {
                 agent.velocity = Vector3.zero;
                 agent.isStopped = true;
                 transform.rotation = stopRot;
             }
-            
+
             #region Sound
 
             if (Physics.Raycast(transform.position, playerTransform.position - transform.position, out RaycastHit hit3,
@@ -342,7 +339,7 @@ public class EnemyNavigation : MonoBehaviour
             this.playerInspect = playerInspect;
         }
     }
-    
+
     void Patrol()
     {
         if (!patrolling || State != State.Patrol)

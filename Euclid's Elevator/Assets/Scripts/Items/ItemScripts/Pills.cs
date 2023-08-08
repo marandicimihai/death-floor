@@ -6,8 +6,9 @@ public class Pills : Item, IUsable
 
     Insanity insanity;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         insanity = FindObjectOfType<Insanity>();
     }
 

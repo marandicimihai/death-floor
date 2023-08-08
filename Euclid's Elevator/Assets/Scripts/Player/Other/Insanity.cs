@@ -25,21 +25,14 @@ public class Insanity : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData != null)
         {
-            if (SaveSystem.Instance.currentSaveData != null)
-            {
-                insanity = SaveSystem.Instance.currentSaveData.insanity;
-            }
-            SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-            {
-                data.insanity = insanity;
-            };
+            insanity = SaveSystem.CurrentSaveData.insanity;
         }
-        else
+        SaveSystem.OnSaveGame += (ref GameData data) =>
         {
-            Debug.Log("No save system.");
-        }
+            data.insanity = insanity;
+        };
     }
 
     private void Update()

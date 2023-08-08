@@ -79,16 +79,9 @@ public class MenuSettings : MonoBehaviour
     }
     void Start()
     {
-        if (SaveSystem.Instance != null)
+        if (SaveSystem.CurrentSaveData == null)
         {
-            if (SaveSystem.Instance.currentSaveData == null)
-            {
-                SaveSystem.Instance.SaveSettings(SaveSystem.Instance.LoadSettings() + ResetInputs());
-            }
-        }
-        else
-        {
-            Debug.Log("No save system.");
+            SaveSystem.SaveSettings(SaveSystem.LoadSettings() + ResetInputs());
         }
         Refresh();
         valuesLoaded = true;
@@ -186,14 +179,8 @@ public class MenuSettings : MonoBehaviour
     //AUDIO
     void UpdateAudio()
     {
-        if (SaveSystem.Instance == null || SaveSystem.Instance.LoadSettings() == null)
-        {
-            Debug.Log("No setting or no save system.");
-            return;
-        }
-
-        effectsVolume = SaveSystem.Instance.LoadSettings().EffectsVolume;
-        ambianceVolume = SaveSystem.Instance.LoadSettings().AmbienceVolume;
+        effectsVolume = SaveSystem.LoadSettings().EffectsVolume;
+        ambianceVolume = SaveSystem.LoadSettings().AmbienceVolume;
         effectsSlider.value = effectsVolume;
         ambianceSlider.value = ambianceVolume;
     }
@@ -205,31 +192,25 @@ public class MenuSettings : MonoBehaviour
     }
     public void SaveAudio()
     {
-        if (SaveSystem.Instance == null || !valuesLoaded)
+        if (!valuesLoaded)
         {
             return;
         }
 
-        Settings old = SaveSystem.Instance.LoadSettings();
+        Settings old = SaveSystem.LoadSettings();
         Settings newTop = new Settings(effectsVolume, ambianceVolume); //goes on top
 
-        SaveSystem.Instance.SaveSettings(old + newTop);
+        SaveSystem.SaveSettings(old + newTop);
     }
     //GRAPHICS
     void UpdateGraphics()
     {
-        if (SaveSystem.Instance == null || SaveSystem.Instance.LoadSettings() == null)
-        {
-            Debug.Log("no save system or no settings.");
-            return;
-        }
-
-        qualityIndex = SaveSystem.Instance.LoadSettings().QualityIndex;
-        resIndex = SaveSystem.Instance.LoadSettings().ResIndex;
-        vSync = SaveSystem.Instance.LoadSettings().VSync;
-        isfullscreen = SaveSystem.Instance.LoadSettings().Fullscreen;
-        bloom = SaveSystem.Instance.LoadSettings().Bloom;
-        blur = SaveSystem.Instance.LoadSettings().Blur;
+        qualityIndex = SaveSystem.LoadSettings().QualityIndex;
+        resIndex = SaveSystem.LoadSettings().ResIndex;
+        vSync = SaveSystem.LoadSettings().VSync;
+        isfullscreen = SaveSystem.LoadSettings().Fullscreen;
+        bloom = SaveSystem.LoadSettings().Bloom;
+        blur = SaveSystem.LoadSettings().Blur;
 
 
         textQuality.text = qualityNames[qualityIndex];
@@ -290,15 +271,14 @@ public class MenuSettings : MonoBehaviour
     }
     public void ApplyAndSaveGraphics()
     {
-        if (SaveSystem.Instance == null || !valuesLoaded)
+        if (!valuesLoaded)
         {
-            Debug.Log("No settings or no save system.");
             return;
         }
 
-        Settings old = SaveSystem.Instance.LoadSettings();
+        Settings old = SaveSystem.LoadSettings();
         Settings newTop = new Settings(bloom, blur, resIndex, resType[resIndex].width, resType[resIndex].height, qualityIndex, vSync, isfullscreen); //goes on top
-        SaveSystem.Instance.SaveSettings(old + newTop);
+        SaveSystem.SaveSettings(old + newTop);
     }
     public void SetBinding(string bind)
     {
@@ -393,15 +373,9 @@ public class MenuSettings : MonoBehaviour
     //INPUT
     void UpdateInput()
     {
-        if (SaveSystem.Instance == null || SaveSystem.Instance.LoadSettings() == null)
-        {
-            Debug.Log("No save system or no settings.");
-            return;
-        }
+        mouseSensitivity = SaveSystem.LoadSettings().Sensitivity;
 
-        mouseSensitivity = SaveSystem.Instance.LoadSettings().Sensitivity;
-
-        string[] paths = SaveSystem.Instance.LoadSettings().InputPaths;
+        string[] paths = SaveSystem.LoadSettings().InputPaths;
         if (paths != null)
         {
             Input.Instance.InputActions.General.Movement.ApplyBindingOverride(1, paths[0]);
@@ -457,25 +431,19 @@ public class MenuSettings : MonoBehaviour
     }
     public void SaveInput()
     {
-        if (!valuesLoaded || SaveSystem.Instance == null)
+        if (!valuesLoaded)
         {
             return;
         }
 
-        Settings old = SaveSystem.Instance.LoadSettings();
+        Settings old = SaveSystem.LoadSettings();
         Settings newTop = new Settings(mouseSensitivity);
-        SaveSystem.Instance.SaveSettings(old + newTop);
+        SaveSystem.SaveSettings(old + newTop);
         SaveKeys();
     }
     void SaveKeys()
     {
-        if (SaveSystem.Instance == null)
-        {
-            Debug.Log("No save system.");
-            return;
-        }
-
-        Settings old = SaveSystem.Instance.LoadSettings();
+        Settings old = SaveSystem.LoadSettings();
         Settings keys;
         try
         {
@@ -502,7 +470,7 @@ public class MenuSettings : MonoBehaviour
             keys = ResetInputs();
         }
 
-        SaveSystem.Instance.SaveSettings(old + keys);
+        SaveSystem.SaveSettings(old + keys);
     }
     Settings ResetInputs()
     {
