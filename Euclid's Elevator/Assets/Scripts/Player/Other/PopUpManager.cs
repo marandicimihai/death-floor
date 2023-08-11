@@ -1,33 +1,36 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using DeathFloor.SaveSystem;
 using UnityEngine;
 
-public class PopUpManager : MonoBehaviour
+public class PopUpManager : MonoBehaviour, ISaveData<PopUpData>
 {
+    public bool CanSave => true;
     [SerializeField] PopUpHUD hud;
-    List<string> used;
+    List<PopUpProperties> used;
 
     private void Awake()
     {
         used = new();
     }
 
-    private void Start()
+    public void OnFirstTimeLoaded()
     {
-        if (SaveSystem.CurrentSaveData != null &&
-            SaveSystem.CurrentSaveData.usedPopUps.Length > 0)
-        {
-            used = SaveSystem.CurrentSaveData.usedPopUps.ToList();
-        }
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.usedPopUps = used.ToArray();
-        };
+
+    }
+
+    public PopUpData OnSaveData()
+    {
+        return new PopUpData(used);
+    }
+
+    public void LoadData(PopUpData data)
+    {
+        used = data.UsedPopUps;
     }
 
     public void PopUp(PopUpProperties popUp)
     {
-        if ((used.Contains(popUp.name) && popUp.oneTime) || popUp == null)
+        if ((used.Contains(popUp) && popUp.oneTime) || popUp == null)
         {
             return;
         }
@@ -43,7 +46,7 @@ public class PopUpManager : MonoBehaviour
 
         if (popUp.oneTime)
         {
-            used.Add(popUp.name);
+            used.Add(popUp);
         }
     }
 }

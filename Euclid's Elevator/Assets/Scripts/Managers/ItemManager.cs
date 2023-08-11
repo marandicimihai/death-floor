@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DeathFloor.SaveSystem;
 using System.Linq;
 using UnityEngine;
 
@@ -22,9 +23,8 @@ struct KeycardSpawn
     public int stage;
 }
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : MonoBehaviour, ISaveData<ItemData>
 {
-    [SerializeField] ItemProperties[] scriptableobjects;
     [SerializeField] SpawnerGroup[] spawnerGroups;
     [SerializeField] ItemSpawn[] spawns;
     [SerializeField] KeycardSpawn[] keySpawns;
@@ -33,75 +33,11 @@ public class ItemManager : MonoBehaviour
 
     static List<Item> spawnedItems;
 
+    public bool CanSave => true;
+
     private void Start()
     {
         spawnedItems = new();
-        if (SaveSystem.CurrentSaveData != null &&
-            SaveSystem.CurrentSaveData.spawneditems.Length != 0)
-        {
-            int i = 0;
-            List<float> positions = SaveSystem.CurrentSaveData.spawneditemPositions.ToList();
-            List<string> variables = SaveSystem.CurrentSaveData.spawnedvariables.ToList();
-            foreach (string itemName in SaveSystem.CurrentSaveData.spawneditems)
-            {
-                Vector3 position = new Vector3(positions[i * 3],
-                                               positions[i * 3 + 1],
-                                               positions[i * 3 + 2]);
-
-                Item newItem = Instantiate(GetProperties(SaveSystem.CurrentSaveData.spawneditems[i]).physicalObject, position, Quaternion.identity).GetComponent<Item>();
-
-                if (newItem.TryGetComponent(out Rigidbody rb))
-                {
-                    rb.isKinematic = true;
-                }
-
-                List<string> currentvars = new();
-
-                for (int j = 0; j < SaveSystem.CurrentSaveData.spawnedlengths[i]; j++)
-                {
-                    currentvars.Add(variables[0]);
-                    variables.Remove(variables[0]);
-                }
-
-                newItem.LoadValues(currentvars.ToArray());
-                spawnedItems.Add(newItem);
-                i++;
-            }
-        }
-
-        if (SaveSystem.CurrentSaveData != null && SaveSystem.CurrentSaveData.stage < 0)
-        {
-            SpawnKeycard(1);
-        }
-        else if (SaveSystem.CurrentSaveData == null)
-        {
-            SpawnKeycard(1);
-        }
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            List<string> spawnedItemNames = new();
-            List<float> spawnedItemPositions = new();
-            List<int> spawnedItemLengths = new();
-            List<string> spawnedItemVariables = new();
-
-            foreach (Item item in spawnedItems)
-            {
-                spawnedItemNames.Add(item.properties.name);
-                spawnedItemPositions.Add(item.transform.position.x);
-                spawnedItemPositions.Add(item.transform.position.y);
-                spawnedItemPositions.Add(item.transform.position.z);
-                foreach (object obj in item.GetSaveVariables())
-                {
-                    spawnedItemVariables.Add(obj.ToString());
-                }
-                spawnedItemLengths.Add(item.GetSaveVariables().Count);
-            }
-
-            data.spawneditems = spawnedItemNames.ToArray();
-            data.spawneditemPositions = spawnedItemPositions.ToArray();
-            data.spawnedlengths = spawnedItemLengths.ToArray();
-            data.spawnedvariables = spawnedItemVariables.ToArray();
-        };
 
         if (GameManager.Instance != null)
         {
@@ -129,16 +65,42 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    ItemProperties GetProperties(string name)
+    public void OnFirstTimeLoaded()
     {
-        foreach (ItemProperties prop in scriptableobjects)
+        SpawnKeycard(1);
+    }
+
+    public ItemData OnSaveData()
+    {
+        ItemProperties[] props = new ItemProperties[spawnedItems.Count];
+        Vector3[] positions = new Vector3[spawnedItems.Count];
+        string[][] vars = new string[spawnedItems.Count][];
+        for (int i = 0; i < spawnedItems.Count; i++)
         {
-            if (prop.name == name)
-            {
-                return prop;
-            }
+            Item current = spawnedItems[i];
+            props[i] = current.properties;
+            positions[i] = current.transform.position;
+            vars[i] = current.GetValues().ToArray();
         }
-        return null;
+
+        return new ItemData(props, positions, vars);
+    }
+
+    public void LoadData(ItemData data)
+    {
+        ItemProperties[] props = data.ItemsProperties;
+        Vector3[] positions = data.ItemPositions;
+        string[][] vars = data.ItemVariables;
+        for (int i = 0; i < props.Length; i++)
+        {
+            Item newItem = Instantiate(props[i].physicalObject, positions[i], Quaternion.identity).GetComponent<Item>();
+            if (newItem.TryGetComponent(out Rigidbody rb))
+            {
+                rb.isKinematic = true;
+            }
+            newItem.LoadValues(vars[i]);
+            AddToPhysicalItems(newItem);
+        }
     }
 
     void SpawnItems(int stage)

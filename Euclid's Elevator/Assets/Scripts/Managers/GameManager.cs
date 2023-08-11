@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DeathFloor.SaveSystem;
 
 public enum GameStage
 {
@@ -17,11 +18,13 @@ struct EnemySpawn
     public int stage;
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISaveData<GameManagerData>
 {
     public static GameManager Instance { get; private set; }
     public int Stage { get; private set; }
     public GameStage GameStage { get; private set; }
+
+    public bool CanSave => true;
 
     public Transform playerTransform;
     public Player player;
@@ -50,24 +53,25 @@ public class GameManager : MonoBehaviour
         Stage = 1;
     }
 
-    private void Start()
+    public void OnFirstTimeLoaded()
     {
-        if (SaveSystem.CurrentSaveData != null && SaveSystem.CurrentSaveData.stage >= 0)
-        {
-            if (SaveSystem.CurrentSaveData.gameStage >= 0)
-            {
-                GameStage = (GameStage)SaveSystem.CurrentSaveData.gameStage;
-            }
-        }
-        else
-        {
-            StartTutorial();
-        }
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.stage = Stage;
-            data.gameStage = (int)GameStage;
-        };
+        StartTutorial();
+    }
+
+    public GameManagerData OnSaveData()
+    {
+        return new GameManagerData(Stage, (int)GameStage);
+    }
+
+    public void LoadData(GameManagerData data)
+    {
+        Stage = data.Stage;
+        GameStage = (GameStage)data.GameStage;
+    }
+
+    void HideEnemy()
+    {
+        enemy.gameObject.SetActive(false);
     }
 
     #region GameLevel
@@ -161,11 +165,6 @@ public class GameManager : MonoBehaviour
 
         enemy.gameObject.SetActive(true);
         enemy.Spawn(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position);
-    }
-
-    void HideEnemy()
-    {
-        enemy.gameObject.SetActive(false);
     }
 
     #endregion

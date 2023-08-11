@@ -1,12 +1,14 @@
+using DeathFloor.SaveSystem;
 using UnityEngine;
 
-public class Insanity : MonoBehaviour
+public class Insanity : MonoBehaviour, ISaveData<InsanityData>
 {
     public float InsanityValue { get => insanity; }
 
+    public bool CanSave => true;
+
     [SerializeField] Player player;
     [SerializeField] VFXManager vfx;
-    [SerializeField] EnemyNavigation enemy;
     [SerializeField] float insanityTime;
     [SerializeField] float insanityEffectFadeTime;
 
@@ -20,19 +22,28 @@ public class Insanity : MonoBehaviour
     [Header("Animation")]
     [SerializeField] Animator sanityDeath;
 
+    EnemyNavigation enemy;
     AudioJob verylowsanity;
     float insanity;
 
     private void Start()
     {
-        if (SaveSystem.CurrentSaveData != null)
-        {
-            insanity = SaveSystem.CurrentSaveData.insanity;
-        }
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.insanity = insanity;
-        };
+        enemy = FindObjectOfType<EnemyNavigation>();
+    }
+
+    public void OnFirstTimeLoaded()
+    {
+
+    }
+
+    public InsanityData OnSaveData()
+    {
+        return new InsanityData(insanity);
+    }
+
+    public void LoadData(InsanityData data)
+    {
+        insanity = data.Insanity;
     }
 
     private void Update()

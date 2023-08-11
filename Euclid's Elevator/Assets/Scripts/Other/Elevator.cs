@@ -1,10 +1,13 @@
 using UnityEngine;
+using DeathFloor.SaveSystem;
 
-public class Elevator : MonoBehaviour, IInteractable
+public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
 {
     public bool Broken { get; private set; }
 
     public bool IsInteractable => isInteractable;
+
+    public bool CanSave => !riding;
 
     [SerializeField] Player player;
     [SerializeField] ItemProperties keycard;
@@ -56,36 +59,24 @@ public class Elevator : MonoBehaviour, IInteractable
         {
             Debug.Log("No game manager.");
         }
+    }
 
-        if (SaveSystem.CurrentSaveData != null)
-        {
+    public void OnFirstTimeLoaded()
+    {
+        InitiateElevatorRide();
+    }
 
-            if (SaveSystem.CurrentSaveData.stage < 0)
-            {
-                InitiateElevatorRide();
-            }
-            else
-            {
-                OpenElevator(true);
-            }
-            Broken = SaveSystem.CurrentSaveData.broken;
-            waiting = SaveSystem.CurrentSaveData.waiting;
-            canClose = SaveSystem.CurrentSaveData.canClose;
-        }
-        else
-        {
-            InitiateElevatorRide();
-        }
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.broken = Broken;
-            data.waiting = waiting;
-            if (waiting)
-            {
-                data.canClose = true;
-            }
-            SaveSystem.CanSave = !riding;
-        };
+    public ElevatorData OnSaveData()
+    {
+        return new ElevatorData(Broken, waiting);
+    }
+
+    public void LoadData(ElevatorData data)
+    {
+        OpenElevator(true);
+        Broken = data.Broken;
+        waiting = data.Waiting;
+        canClose = waiting;
     }
 
     private void Update()

@@ -1,12 +1,15 @@
+using DeathFloor.SaveSystem;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ISaveData<PlayerData>
 {
     public delegate void OnDeathDel(int deaths, int maxDeaths);
     public OnDeathDel PlayerDied;
 
     public bool Dead { get; private set; }
     public int Deaths { get; private set; }
+
+    public bool CanSave => !Dead;
 
     [SerializeField] FirstPersonController controller;
     [SerializeField] CameraController cameraController;
@@ -18,43 +21,19 @@ public class Player : MonoBehaviour
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
 
-    private void Start()
+    public void OnFirstTimeLoaded()
     {
-        if (SaveSystem.CurrentSaveData != null)
-        {
-            if (SaveSystem.CurrentSaveData.PlayerPosition.Length != 0)
-            {
-                transform.position = new Vector3(SaveSystem.CurrentSaveData.PlayerPosition[0],
-                                                 SaveSystem.CurrentSaveData.PlayerPosition[1],
-                                                 SaveSystem.CurrentSaveData.PlayerPosition[2]);
-            }
+        
+    }
 
-            if (SaveSystem.CurrentSaveData.PlayerRotation.Length != 0)
-            {
-                transform.rotation = new Quaternion(SaveSystem.CurrentSaveData.PlayerRotation[0],
-                                                    SaveSystem.CurrentSaveData.PlayerRotation[1],
-                                                    SaveSystem.CurrentSaveData.PlayerRotation[2],
-                                                    SaveSystem.CurrentSaveData.PlayerRotation[3]);
-            }
-        }
+    public PlayerData OnSaveData()
+    {
+        return new PlayerData(transform.position, transform.rotation);
+    }
 
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.PlayerPosition = new float[]
-            {
-                    transform.position.x,
-                    transform.position.y,
-                    transform.position.z
-            };
-            data.PlayerRotation = new float[]
-            {
-                    transform.rotation.x,
-                    transform.rotation.y,
-                    transform.rotation.z,
-                    transform.rotation.w
-            };
-            SaveSystem.CanSave = !Dead;
-        };
+    public void LoadData(PlayerData data)
+    {
+        transform.SetPositionAndRotation(data.PlayerPosition, data.PlayerRotation);
     }
 
     public void Die(bool callDeath)
@@ -113,4 +92,5 @@ public class Player : MonoBehaviour
         controller.Enable();
         cameraController.Enable();
     }
+
 }

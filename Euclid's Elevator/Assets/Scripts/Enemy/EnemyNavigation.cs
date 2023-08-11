@@ -1,4 +1,4 @@
-using System.Collections;
+using DeathFloor.SaveSystem;
 using UnityEngine.AI;
 using UnityEngine;
 
@@ -10,8 +10,9 @@ public enum State
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyNavigation : MonoBehaviour
+public class EnemyNavigation : MonoBehaviour, ISaveData<EnemyData>
 {
+    public bool CanSave => !Visible && State == State.Patrol;
     public bool Visible
     {
         get
@@ -92,8 +93,6 @@ public class EnemyNavigation : MonoBehaviour
 
     float stepTimeElapsed;
     float inspectTimeElapsed;
-    float openDoorTimeElapsed;
-    float timeSinceOpenDoor;
     bool patrolling;
     bool spawned;
 
@@ -107,29 +106,22 @@ public class EnemyNavigation : MonoBehaviour
         player = FindObjectOfType<Player>();
         playerTransform = player.transform;
         camera = GameObject.Find("MainCamera").transform;
+    }
 
-        if (SaveSystem.CurrentSaveData != null)
-        {
-            if (SaveSystem.CurrentSaveData.EnemyPosition.Length != 0)
-            {
-                Spawn(new Vector3(SaveSystem.CurrentSaveData.EnemyPosition[0],
-                                  SaveSystem.CurrentSaveData.EnemyPosition[1],
-                                  SaveSystem.CurrentSaveData.EnemyPosition[2]));
-            }
-            spawned = SaveSystem.CurrentSaveData.enemySpawned;
-        }
+    public void OnFirstTimeLoaded()
+    {
 
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.EnemyPosition = new float[]
-            {
-                    transform.position.x,
-                    transform.position.y,
-                    transform.position.z
-            };
-            data.enemySpawned = spawned;
-            SaveSystem.CanSave = !Visible && State == State.Patrol;
-        };
+    }
+
+    public EnemyData OnSaveData()
+    {
+        return new EnemyData(transform.position, spawned);
+    }
+
+    public void LoadData(EnemyData data)
+    {
+        Spawn(data.EnemyPosition);
+        spawned = data.Spawned;
     }
 
     private void Update()

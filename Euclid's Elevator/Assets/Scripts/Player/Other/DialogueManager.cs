@@ -1,30 +1,35 @@
 using System.Collections.Generic;
+using DeathFloor.SaveSystem;
 using UnityEngine;
 using System.Linq;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, ISaveData<DialogueData>
 {
+    public bool CanSave => true;
+
     [SerializeField] DialogueHUD hud;
 
     static Line currentLine;
-    static List<string> used;
+    static List<Line> used;
 
-    private void Awake()
+    private void Start()
     {
         used = new();
     }
 
-    private void Start()
+    public void OnFirstTimeLoaded()
     {
-        if (SaveSystem.CurrentSaveData != null &&
-            SaveSystem.CurrentSaveData.usedLines.Length > 0)
-        {
-            used = SaveSystem.CurrentSaveData.usedLines.ToList();
-        }
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.usedLines = used.ToArray();
-        };
+        
+    }
+
+    public DialogueData OnSaveData()
+    {
+        return new DialogueData(used);
+    }
+
+    public void LoadData(DialogueData data)
+    {
+        used = data.UsedLines;
     }
 
     /// <summary>
@@ -33,7 +38,7 @@ public class DialogueManager : MonoBehaviour
     /// <param name="line"></param>
     public void SayLine(Line line)
     {
-        if (line.oneTime && used.Contains(line.name))
+        if (line.oneTime && used.Contains(line))
             return;
 
         if (currentLine == null || line.name != currentLine.name)
@@ -48,7 +53,7 @@ public class DialogueManager : MonoBehaviour
 
     public void FinishedLine(Line line)
     {
-        used.Add(line.name);
+        used.Add(line);
         currentLine = null;
     }
 }

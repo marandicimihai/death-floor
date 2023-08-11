@@ -1,8 +1,11 @@
 using UnityEngine;
+using DeathFloor.SaveSystem;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, ISaveData<CameraData>
 {
     [SerializeField] new Transform camera;
+
+    public bool CanSave => true;
 
     float sensitivity;
 
@@ -17,25 +20,21 @@ public class CameraController : MonoBehaviour
         {
             sensitivity = 0.1f * settings.Sensitivity;
         };
+    }
 
-        if (SaveSystem.CurrentSaveData != null && SaveSystem.CurrentSaveData.CameraRotation.Length != 0)
-        {
-            rotation = new Vector2(SaveSystem.CurrentSaveData.CameraRotation[0],
-                                   SaveSystem.CurrentSaveData.CameraRotation[1]);
+    public void OnFirstTimeLoaded()
+    {
+        ResetAngle();
+    }
 
-        }
-        else
-        {
-            ResetAngle();
-        }
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            data.CameraRotation = new float[]
-            {
-                    rotation.x,
-                    rotation.y
-            };
-        };
+    public CameraData OnSaveData()
+    {
+        return new CameraData(rotation);
+    }
+
+    public void LoadData(CameraData data)
+    {
+        rotation = data.CameraRotation;
     }
 
     private void Update()

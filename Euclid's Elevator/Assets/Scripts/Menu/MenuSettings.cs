@@ -1,5 +1,6 @@
 using static UnityEngine.InputSystem.InputActionRebindingExtensions;
 using UnityEngine.InputSystem;
+using DeathFloor.SaveSystem;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
@@ -79,10 +80,6 @@ public class MenuSettings : MonoBehaviour
     }
     void Start()
     {
-        if (SaveSystem.CurrentSaveData == null)
-        {
-            SaveSystem.SaveSettings(SaveSystem.LoadSettings() + ResetInputs());
-        }
         Refresh();
         valuesLoaded = true;
     }

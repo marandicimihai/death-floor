@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Instantiates an object and adds component T to it when it is required to (not on awake). The class doesn't have to be in the hierarchy.
+/// </summary>
+/// <typeparam name="T">The type of the singleton</typeparam>
 public class Singleton<T> : MonoBehaviour 
     where T : Component
 {
@@ -28,5 +32,6 @@ public class Singleton<T> : MonoBehaviour
         {
             Destroy(this);
         }
+        DontDestroyOnLoad(gameObject);
     }
 }
