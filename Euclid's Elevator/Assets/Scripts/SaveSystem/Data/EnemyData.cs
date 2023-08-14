@@ -22,5 +22,10 @@ namespace DeathFloor.SaveSystem
             EnemyPosition = position;
             Spawned = spawned;
         }
+
+        public EnemyData()
+        {
+
+        }
     }
 }

@@ -47,6 +47,10 @@ namespace DeathFloor.SaveSystem
 
         string[][] GetVariables(int[] lengths, string[] vars)
         {
+            if (lengths == null || lengths.Length == 0)
+            {
+                return null;
+            }
             int count = 0;
             int index = 0;
             string[][] strings = new string[lengths.Length][];
@@ -102,6 +106,11 @@ namespace DeathFloor.SaveSystem
             ItemsProperties = itemsProperties;
             ItemPositions = itemPositions;
             ItemVariables = itemVariables;
+        }
+
+        public ItemData()
+        {
+
         }
     }
 }

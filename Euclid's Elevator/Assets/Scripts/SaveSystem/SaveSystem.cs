@@ -4,45 +4,14 @@ using UnityEditor;
 using System.IO;
 using System.Text;
 using System.Reflection;
-using System.Linq;
 using System;
 
 namespace DeathFloor.SaveSystem
 {
     public static class SaveSystem
     {
-        public static bool CanSave
-        {
-            get
-            {
-                return canSave;
-            }
-            set
-            {
-                if (!value)
-                {
-                    canSave = false;
-                }
-            }
-        }
-
         public delegate void SettingsChanged(Settings settings);
         public static SettingsChanged OnSettingsChanged;
-        static SaveData CurrentSaveData
-        {
-            get
-            {
-                if (!hasLoadedData)
-                {
-                    currentSaveData = LoadGame(CurrentSaveIndex);
-                    hasLoadedData = true;
-                }
-                return currentSaveData;
-            }
-        }
-
-        static SaveData currentSaveData;
-        static bool canSave = true;
 
         static readonly int saveSlots = 4;
         static int CurrentSaveIndex
@@ -54,11 +23,9 @@ namespace DeathFloor.SaveSystem
             set
             {
                 currentSaveIndex = value;
-                hasLoadedData = false;
             }
         }
         static int currentSaveIndex;
-        static bool hasLoadedData;
 
         #region Save Slots
 
@@ -96,71 +63,102 @@ namespace DeathFloor.SaveSystem
             Debug.Log($"Save slot set to {CurrentSaveIndex}.");
         }
 
-        public static bool SaveGame(int index)
+        public static void SaveGame(int index)
         {
             SaveData data = new();
 
-            var saveType = typeof(ISaveData<>);
-
-            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t => t.GetInterfaces().Contains(saveType)))
+            foreach (Type behaviourType in Assembly.GetExecutingAssembly().GetTypes())
             {
-                var objs = GameObject.FindObjectsOfType(type);
-                if (objs.Length > 1)
+                foreach (Type interfaceType in behaviourType.GetInterfaces())
                 {
-                    Debug.Log("sum weird");
-                }
-                else if (objs.Length == 1)
-                {
-                    type.GetMethod("OnSaveData").Invoke(objs[0], null);
+                    if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(ISaveData<>))
+                    {
+                        UnityEngine.Object found = GameObject.FindObjectOfType(behaviourType, true);
+                        if (found != null)
+                        {
+                            if ((bool)behaviourType.GetProperty("CanSave").GetValue(found) == false)
+                            {
+                                Debug.Log($"Can't save because of object of type {behaviourType}.");
+                                return;
+                            }
+                            data += (SaveData)behaviourType.GetMethod("OnSaveData").Invoke(found, null);
+                        }
+                        else
+                        {
+                            Debug.Log($"Couldn't find object of type {behaviourType}.");
+                        }
+                    }
                 }
             }
 
-            if (!CanSave)
-            {
-                return false;
-            }
-
-            if (CanSave)
-            {
-                string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
-                using (FileStream stream = new(path, FileMode.Create))
-                {
-                    byte[] info = new UTF8Encoding(true).GetBytes(JsonUtility.ToJson(data));
-                    stream.Write(info, 0, info.Length);
-                }
-                return true;
-            }
-            return false;
+            string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
+            using FileStream stream = new(path, FileMode.Create);
+            byte[] info = new UTF8Encoding(true).GetBytes(JsonUtility.ToJson(data));
+            stream.Write(info, 0, info.Length);
         }
 
         public static void ClearSlotData(int index)
         {
-            SaveData data = new();
             string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
-            using (FileStream stream = new(path, FileMode.Create))
-            {
-                byte[] info = new UTF8Encoding(true).GetBytes(JsonUtility.ToJson(data));
-                stream.Write(info, 0, info.Length);
-            }
+            File.Delete(path);
         }
 
-        static SaveData LoadGame(int index)
+        public static void LoadGame(int index)
         {
             string path = Path.Combine(Application.persistentDataPath, $"saveddata{index}.owo");
             if (File.Exists(path))
             {
-                using (FileStream stream = new(path, FileMode.Open))
+                SaveData data = new();
+                using (FileStream stream = new(path, FileMode.Open, FileAccess.Read))
+                using (StreamReader reader = new StreamReader(stream))
                 {
-                    StreamReader reader = new(stream);
-                    SaveData data = new();
                     JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), data);
-                    return data;
+                }
+
+                foreach (Type behaviourType in Assembly.GetExecutingAssembly().GetTypes())
+                {
+                    foreach (Type interfaceType in behaviourType.GetInterfaces())
+                    {
+                        if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(ISaveData<>))
+                        {
+                            UnityEngine.Object found = GameObject.FindObjectOfType(behaviourType, true);
+                            if (found != null)
+                            {
+                                MethodInfo info = behaviourType.GetMethod("LoadData");
+                                Type paramType = info.GetParameters()[0].ParameterType;
+                                object param = Activator.CreateInstance(paramType);
+                                paramType.GetMethod("CopyData").Invoke(param, new object[] { data });
+                                info.Invoke(found, new object[] { param });
+                            }
+                            else
+                            {
+                                Debug.Log($"Couldn't find object of type {behaviourType}.");
+                            }
+                        }
+                    }
                 }
             }
             else
             {
-                return null;
+                Debug.Log("No save found.");
+                foreach (Type behaviourType in Assembly.GetExecutingAssembly().GetTypes())
+                {
+                    foreach (Type interfaceType in behaviourType.GetInterfaces())
+                    {
+                        if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(ISaveData<>))
+                        {
+                            UnityEngine.Object found = GameObject.FindObjectOfType(behaviourType, true);
+                            if (found != null)
+                            {
+                                behaviourType.GetMethod("OnFirstTimeLoaded").Invoke(found, null);
+                            }
+                            else
+                            {
+                                Debug.Log($"Couldn't find object of type {behaviourType}.");
+                            }
+                        }
+                    }
+                }
             }
         }
 

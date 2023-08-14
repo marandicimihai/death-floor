@@ -31,14 +31,28 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
     [SerializeField] ItemProperties toolbox;
     [SerializeField] ItemProperties keycard;
 
+    static List<Item> SpawnedItems
+    {
+        get
+        {
+            if (spawnedItems == null)
+            {
+                spawnedItems = new();
+            }
+            return spawnedItems;
+        }
+        set
+        {
+            spawnedItems = value;
+        }
+    }
+
     static List<Item> spawnedItems;
 
     public bool CanSave => true;
 
     private void Start()
     {
-        spawnedItems = new();
-
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnElevatorDoorClosed += (object caller, System.EventArgs args) =>
@@ -72,12 +86,12 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
 
     public ItemData OnSaveData()
     {
-        ItemProperties[] props = new ItemProperties[spawnedItems.Count];
-        Vector3[] positions = new Vector3[spawnedItems.Count];
-        string[][] vars = new string[spawnedItems.Count][];
-        for (int i = 0; i < spawnedItems.Count; i++)
+        ItemProperties[] props = new ItemProperties[SpawnedItems.Count];
+        Vector3[] positions = new Vector3[SpawnedItems.Count];
+        string[][] vars = new string[SpawnedItems.Count][];
+        for (int i = 0; i < SpawnedItems.Count; i++)
         {
-            Item current = spawnedItems[i];
+            Item current = SpawnedItems[i];
             props[i] = current.properties;
             positions[i] = current.transform.position;
             vars[i] = current.GetValues().ToArray();
@@ -127,7 +141,7 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
                 {
                     if (spawner.Spawn(spawns[i].item, out Item spawned))
                     {
-                        spawnedItems.Add(spawned);
+                        SpawnedItems.Add(spawned);
                         break;
                     }
                 }
@@ -153,7 +167,7 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
         {
             if (spawner.Spawn(item, out Item spawned))
             {
-                spawnedItems.Add(spawned);
+                SpawnedItems.Add(spawned);
                 return;
             }
             spawnerIndex = (spawnerIndex + 1) % spawners.Count;
@@ -161,7 +175,7 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
 
         spawnerIndex = Random.Range(0, spawners.Count);
         spawners[spawnerIndex].ForceSpawn(item, out Item spawned2);
-        spawnedItems.Add(spawned2);
+        SpawnedItems.Add(spawned2);
     }
 
     void SpawnKeycard(int stage)
@@ -176,7 +190,7 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
                 {
                     if (spawner.Spawn(keycard, out Item spawned))
                     {
-                        spawnedItems.Add(spawned);
+                        SpawnedItems.Add(spawned);
                         return;
                     }
                     spawnerIndex = (spawnerIndex + 1) % spawn.points.Length;
@@ -184,7 +198,7 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
 
                 spawnerIndex = Random.Range(0, spawn.points.Length);
                 spawn.points[spawnerIndex].ForceSpawn(keycard, out Item spawned2);
-                spawnedItems.Add(spawned2);
+                SpawnedItems.Add(spawned2);
                 return;
             }
         }
@@ -196,14 +210,14 @@ public class ItemManager : MonoBehaviour, ISaveData<ItemData>
     /// <param name="toAdd">The item to add.</param>
     public static void AddToPhysicalItems(Item toAdd)
     {
-        spawnedItems.Add(toAdd);
+        SpawnedItems.Add(toAdd);
     }
 
     public static void RemoveFromPhysicalItems(Item toRemove)
     {
-        if (spawnedItems.Contains(toRemove))
+        if (SpawnedItems.Contains(toRemove))
         {
-            spawnedItems.Remove(toRemove);
+            SpawnedItems.Remove(toRemove);
         }
     }
 }

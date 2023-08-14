@@ -1,7 +1,10 @@
 using UnityEngine;
+using DeathFloor.SaveSystem;
 
-public class CameraAnimation : MonoBehaviour
+public class CameraAnimation : MonoBehaviour, ISaveData<SaveData>
 {
+    public bool CanSave => !inAnimation;
+
     [SerializeField] Player player;
     [SerializeField] PlayerHUDManager hudManager;
     [SerializeField] new Camera camera;
@@ -26,12 +29,19 @@ public class CameraAnimation : MonoBehaviour
         rotationOnEnter = defaultRotation;
     }
 
-    private void Start()
+    public void OnFirstTimeLoaded()
     {
-        SaveSystem.OnSaveGame += (ref GameData data) =>
-        {
-            SaveSystem.CanSave = !inAnimation;
-        };
+        
+    }
+
+    public SaveData OnSaveData()
+    {
+        return new SaveData();
+    }
+
+    public void LoadData(SaveData data)
+    {
+        
     }
 
     private void Update()

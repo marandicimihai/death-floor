@@ -9,7 +9,7 @@ public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
 
     public bool CanSave => !riding;
 
-    [SerializeField] Player player;
+    [SerializeField] Animator animator;
     [SerializeField] ItemProperties keycard;
     [SerializeField] ItemProperties toolbox;
     [SerializeField] Collider doorCollider;
@@ -30,10 +30,10 @@ public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
     [SerializeField] string repair;
     [SerializeField] string insert;
 
+    Player player;
     VFXManager vfxmanager;
     Inventory inventory;
     AudioJob movejob;
-    Animator animator;
 
     bool riding;
     bool waiting;
@@ -42,7 +42,7 @@ public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        player = FindObjectOfType<Player>();
         inventory = FindObjectOfType<Inventory>();
         vfxmanager = FindObjectOfType<VFXManager>();
 
@@ -179,7 +179,7 @@ public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
     void InitiateElevatorRide()
     {
         riding = true;
-        if (player.Deaths == 0)
+        /*if (player.Deaths == 0)
         {
             movejob = AudioManager.Instance.PlayClip(move1);
         }
@@ -194,7 +194,7 @@ public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
         else if (player.Deaths == 3)
         {
             movejob = AudioManager.Instance.PlayClip(move4);
-        }
+        }*/
         Invoke(nameof(OpenElevatorWithAnimation), elevatorRideTime);
 
         if (vfxmanager != null)
@@ -219,9 +219,9 @@ public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
         {
             Debug.Log("No vfx manager.");
         }
+        riding = false;
         movejob.StopPlaying();
         AudioManager.Instance.PlayClip(stop);
-        riding = false;
     }
 
     void OpenElevatorWithAnimation()

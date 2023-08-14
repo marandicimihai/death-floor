@@ -7,18 +7,25 @@
 public class Singleton<T> : MonoBehaviour 
     where T : Component
 {
+    static object syncLock = new();
     public static T Instance
     {
         get
         {
             if (instance == null)
             {
-                var newobj = new GameObject
+                lock (syncLock)
                 {
-                    name = "Input"
-                };
-                instance = newobj.AddComponent<T>();
-                Debug.Log($"Created instance of {instance.GetType()}.");
+                    if (instance == null)
+                    {
+                        var newobj = new GameObject
+                        {
+                            name = typeof(T).ToString()
+                        };
+                        instance = newobj.AddComponent<T>();
+                        Debug.Log($"Created instance of {instance.GetType()}.");
+                    }
+                }
             }
             return instance;
         }

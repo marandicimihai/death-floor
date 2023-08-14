@@ -22,5 +22,10 @@ namespace DeathFloor.SaveSystem
             PlayerPosition = playerPosition;
             PlayerRotation = playerRotation;
         }
+
+        public PlayerData()
+        {
+
+        }
     }
 }

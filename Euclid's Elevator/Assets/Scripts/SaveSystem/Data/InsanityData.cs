@@ -12,5 +12,10 @@
         {
             Insanity = insanity;
         }
+
+        public InsanityData()
+        {
+
+        }
     }
 }

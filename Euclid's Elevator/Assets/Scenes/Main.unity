@@ -10200,10 +10200,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 847310133}
     m_Modifications:
-    - target: {fileID: -4499297124134026214, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1288032390}
     - target: {fileID: 4860145061060307195, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -10978,10 +10974,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 43122405}
     m_Modifications:
-    - target: {fileID: 9118679017114308150, guid: f8af4398f057a7847a45120889881c3f, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 2086231058}
     - target: {fileID: 9118679017114308153, guid: f8af4398f057a7847a45120889881c3f, type: 3}
       propertyPath: m_RootOrder
       value: 0

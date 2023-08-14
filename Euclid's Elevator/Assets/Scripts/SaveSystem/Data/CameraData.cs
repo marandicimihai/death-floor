@@ -8,12 +8,17 @@ namespace DeathFloor.SaveSystem
         public Vector2 CameraRotation
         {
             get => Converter.FloatArrayToVector2(cameraRotation);
-            set => Converter.Vector2ToFloatArray(value);
+            set => cameraRotation = Converter.Vector2ToFloatArray(value);
         }
 
         public CameraData(Vector2 cameraRotation)
         {
             CameraRotation = cameraRotation;
+        }
+
+        public CameraData()
+        {
+
         }
     }
 }

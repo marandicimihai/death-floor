@@ -120,8 +120,8 @@ public class EnemyNavigation : MonoBehaviour, ISaveData<EnemyData>
 
     public void LoadData(EnemyData data)
     {
-        Spawn(data.EnemyPosition);
         spawned = data.Spawned;
+        if (spawned) Spawn(data.EnemyPosition);
     }
 
     private void Update()

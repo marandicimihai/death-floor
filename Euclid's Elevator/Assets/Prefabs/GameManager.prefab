@@ -195,7 +195,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7324596772840476324}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -269,14 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9831a90033e044ea5265363d50ec49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableobjects:
-  - {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
-  - {fileID: 11400000, guid: 3d7146097d411ba4faea96b9609b64f2, type: 2}
-  - {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  - {fileID: 11400000, guid: 577ccc289259c4c459026e8f185a64ff, type: 2}
-  - {fileID: 11400000, guid: 07a40d532db5b1145b58bc2340e3ebe1, type: 2}
-  - {fileID: 11400000, guid: 7553058d6a16bea43982d75d3ef90cb5, type: 2}
-  - {fileID: 11400000, guid: dda90fce8e9402540bc0b5d0bff786f7, type: 2}
   spawnerGroups:
   - spawners:
     - {fileID: 0}

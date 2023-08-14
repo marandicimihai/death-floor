@@ -36,5 +36,10 @@ namespace DeathFloor.SaveSystem
         {
             Pages = pages;
         }
+
+        public JournalData()
+        {
+
+        }
     }
 }

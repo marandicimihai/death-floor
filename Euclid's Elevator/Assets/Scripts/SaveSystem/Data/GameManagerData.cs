@@ -21,5 +21,10 @@ namespace DeathFloor.SaveSystem
             Stage = stage;
             GameStage = gameStage;
         }
+
+        public GameManagerData()
+        {
+
+        }
     }
 }

@@ -19,5 +19,10 @@
             Broken = broken;
             Waiting = waiting;
         }
+
+        public ElevatorData()
+        {
+
+        }
     }
 }

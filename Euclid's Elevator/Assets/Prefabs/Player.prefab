@@ -2109,14 +2109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea00dc384ea7f4841863aeb592103b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableobjects:
-  - {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
-  - {fileID: 11400000, guid: 3d7146097d411ba4faea96b9609b64f2, type: 2}
-  - {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  - {fileID: 11400000, guid: 577ccc289259c4c459026e8f185a64ff, type: 2}
-  - {fileID: 11400000, guid: 07a40d532db5b1145b58bc2340e3ebe1, type: 2}
-  - {fileID: 11400000, guid: 7553058d6a16bea43982d75d3ef90cb5, type: 2}
-  - {fileID: 11400000, guid: dda90fce8e9402540bc0b5d0bff786f7, type: 2}
   slots: 4
   inventory: {fileID: 9118679017192133673}
   player: {fileID: 9118679017114308159}
@@ -2222,7 +2214,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 9118679017114308159}
   vfx: {fileID: 9118679017114308151}
-  enemy: {fileID: 0}
   insanityTime: 20
   insanityEffectFadeTime: 3
   lowInsanitySoundAppearPercentage: 0.75
@@ -2259,8 +2250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1f616f2518eb14db26ae9b6d976fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableObjects:
-  - {fileID: 0}
   hud: {fileID: 9118679016046322777}
   journalAnimator: {fileID: 1760431683998210419}
   HUDDelay: 1.2

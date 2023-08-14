@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour, ISaveData<InventoryData>
 
     public int Index { get; private set; }
 
-    public bool CanSave => throw new NotImplementedException();
+    public bool CanSave => true;
 
     [SerializeField] int slots;
     [SerializeField] Transform inventory;

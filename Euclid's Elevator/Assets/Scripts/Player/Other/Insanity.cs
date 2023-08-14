@@ -28,7 +28,7 @@ public class Insanity : MonoBehaviour, ISaveData<InsanityData>
 
     private void Start()
     {
-        enemy = FindObjectOfType<EnemyNavigation>();
+        enemy = FindObjectOfType<EnemyNavigation>(true);
     }
 
     public void OnFirstTimeLoaded()

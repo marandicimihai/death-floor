@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour, ISaveData<GameManagerData>
         };*/
         player.PlayerDied += PlayerDeath;
         Stage = 1;
+
+        SaveSystem.LoadGame(0);
     }
 
     public void OnFirstTimeLoaded()

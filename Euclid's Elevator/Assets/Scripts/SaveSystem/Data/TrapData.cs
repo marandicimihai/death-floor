@@ -15,5 +15,10 @@ namespace DeathFloor.SaveSystem
         {
             TrapPositions = positions;
         }
+
+        public TrapData()
+        {
+
+        }
     }
 }

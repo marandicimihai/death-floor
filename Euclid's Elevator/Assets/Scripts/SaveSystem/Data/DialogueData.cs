@@ -36,5 +36,10 @@ namespace DeathFloor.SaveSystem
         {
             UsedLines = lines;
         }
+
+        public DialogueData()
+        {
+
+        }
     }
 }

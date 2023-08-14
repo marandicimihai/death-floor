@@ -1,53 +1,84 @@
+using System.Reflection;
+
 namespace DeathFloor.SaveSystem
 {
-
     [System.Serializable]
     public class SaveData
     {
         #region PlayerData
-        protected float[] playerPosition;
-        protected float[] playerRotation;
+        public float[] playerPosition;
+        public float[] playerRotation;
         #endregion
         #region CameraData
-        protected float[] cameraRotation;
+        public float[] cameraRotation;
         #endregion
         #region InventoryData
-        protected string[] holdingitems;
-        protected int[] holdingLengths;
-        protected string[] holdingVariables;
+        public string[] holdingitems;
+        public int[] holdingLengths;
+        public string[] holdingVariables;
         #endregion
         #region GameManagerData
-        protected int stage;
-        protected int gameStage;
+        public int stage;
+        public int gameStage;
         #endregion
         #region ElevatorData
-        protected bool broken;
-        protected bool waiting;
+        public bool broken;
+        public bool waiting;
         #endregion
         #region EnemyData
-        protected float[] enemyPosition;
-        protected bool enemySpawned;
+        public float[] enemyPosition;
+        public bool enemySpawned;
         #endregion
         #region ItemData
-        protected string[] spawneditems;
-        protected float[] spawneditemPositions;
-        protected int[] spawnedlengths;
-        protected string[] spawnedvariables;
+        public string[] spawneditems;
+        public float[] spawneditemPositions;
+        public int[] spawnedlengths;
+        public string[] spawnedvariables;
         #endregion
         #region TrapData
-        protected float[] trapPositions;
+        public float[] trapPositions;
         #endregion
         #region PopUpData
-        protected string[] usedPopUps;
+        public string[] usedPopUps;
         #endregion
         #region DialogueData
-        protected string[] usedLines;
+        public string[] usedLines;
         #endregion
-        #region JournaldData
-        protected string[] pages;
+        #region JournalData
+        public string[] pages;
         #endregion
         #region InsanityData
-        protected float insanity;
+        public float insanity;
         #endregion
+
+        public SaveData()
+        {
+
+        }
+
+        public void CopyData(SaveData data)
+        {
+            foreach (FieldInfo field in typeof(SaveData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+            {
+                field.SetValue(this, field.GetValue(data));
+            }
+        }
+
+        public static SaveData operator +(SaveData left, SaveData right)
+        {
+            SaveData data = new();
+
+            foreach (FieldInfo field in typeof(SaveData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+            {
+                //Use the new class for default values
+                if (field.GetValue(left) == field.GetValue(data) &&
+                    field.GetValue(right) != field.GetValue(data))
+                {
+                    field.SetValue(left, field.GetValue(right));
+                }
+            }
+
+            return left;
+        }
     }
 }

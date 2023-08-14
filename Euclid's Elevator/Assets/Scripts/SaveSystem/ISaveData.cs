@@ -9,6 +9,5 @@
         public T OnSaveData();
 
         public void LoadData(T data);
-
     }
 }

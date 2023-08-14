@@ -52,6 +52,10 @@
 
         string[][] GetVariables(int[] lengths, string[] vars)
         {
+            if (lengths == null || lengths.Length == 0)
+            {
+                return null;
+            }
             int count = 0;
             int index = 0;
             string[][] strings = new string[lengths.Length][];
@@ -81,10 +85,13 @@
             holdingLengths = new int[values.Length];
             for (int i = 0; i < values.Length; i++)
             {
-                holdingLengths[i] = values[i].Length;
-                for (int j = 0; j < values[i].Length; j++)
+                if (values[i] != null)
                 {
-                    count++;
+                    holdingLengths[i] = values[i].Length;
+                    for (int j = 0; j < values[i].Length; j++)
+                    {
+                        count++;
+                    }
                 }
             }
 
@@ -94,10 +101,13 @@
 
             for (int i = 0; i < values.Length; i++)
             {
-                for (int j = 0; j < values[i].Length; j++)
+                if (values[i] != null)
                 {
-                    holdingVariables[index] = values[i][j];
-                    index++;
+                    for (int j = 0; j < values[i].Length; j++)
+                    {
+                        holdingVariables[index] = values[i][j];
+                        index++;
+                    }
                 }
             }
         }
@@ -106,6 +116,11 @@
         {
             ItemProperties = itemProperties;
             ItemVariables = itemVariables;
+        }
+
+        public InventoryData()
+        {
+
         }
     }
 }
