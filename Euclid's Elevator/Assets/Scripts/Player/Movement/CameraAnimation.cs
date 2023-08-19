@@ -1,15 +1,19 @@
 using UnityEngine;
+using DeathFloor.SaveSystem;
 
-public class CameraAnimation : MonoBehaviour
+public class CameraAnimation : MonoBehaviour, ISaveData<SaveData>
 {
+    public bool CanSave => !inAnimation;
+
     [SerializeField] Player player;
+    [SerializeField] PlayerHUDManager hudManager;
     [SerializeField] new Camera camera;
     [SerializeField] Transform defaultCameraParent;
     [SerializeField] float animationTransitionTime;
 
     Vector3 positionOnEnter;
     Quaternion rotationOnEnter;
-    
+
     Vector3 defaultPosition;
     Quaternion defaultRotation;
 
@@ -25,12 +29,19 @@ public class CameraAnimation : MonoBehaviour
         rotationOnEnter = defaultRotation;
     }
 
-    private void Start()
+    public void OnFirstTimeLoaded()
     {
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            SaveSystem.Instance.CanSave = !inAnimation;
-        };
+        
+    }
+
+    public SaveData OnSaveData()
+    {
+        return new SaveData();
+    }
+
+    public void LoadData(SaveData data)
+    {
+        
     }
 
     private void Update()
@@ -61,13 +72,26 @@ public class CameraAnimation : MonoBehaviour
 
         if (hideHUD)
         {
-            player.HUDManager.HideAllHUD();
+            if (hudManager != null)
+            {
+                hudManager.HideAllHUD();
+            }
+            else
+            {
+                Debug.Log("No hud manager.");
+            }
         }
 
-        Input.InputActions.General.Disable();
+        if (player != null)
+        {
+            player.UnFreeze();
+        }
+        else
+        {
+            Debug.Log("No player class.");
+        }
 
-        player.controller.Disable();
-        player.cameraController.Disable();
+        Input.Instance.InputActions.Disable();
 
         camera.transform.parent = reference;
 
@@ -83,12 +107,25 @@ public class CameraAnimation : MonoBehaviour
         if (!inAnimation)
             return;
 
-        player.HUDManager.DefaultHUD();
+        if (hudManager != null)
+        {
+            hudManager.DefaultHUD();
+        }
+        else
+        {
+            Debug.Log("No hud manager.");
+        }
 
-        Input.InputActions.General.Enable();
+        if (player != null)
+        {
+            player.Freeze();
+        }
+        else
+        {
+            Debug.Log("No player class.");
+        }
 
-        player.controller.Enable();
-        player.cameraController.Enable();
+        Input.Instance.InputActions.Enable();
 
         camera.transform.parent = defaultCameraParent;
 

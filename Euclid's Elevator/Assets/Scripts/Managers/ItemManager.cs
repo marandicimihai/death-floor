@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DeathFloor.SaveSystem;
 using System.Linq;
 using UnityEngine;
 
@@ -22,127 +23,107 @@ struct KeycardSpawn
     public int stage;
 }
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : MonoBehaviour, ISaveData<ItemData>
 {
-    public static List<Item> spawnedItems;
-
-    [SerializeField] ItemProperties[] scriptableobjects;
     [SerializeField] SpawnerGroup[] spawnerGroups;
     [SerializeField] ItemSpawn[] spawns;
     [SerializeField] KeycardSpawn[] keySpawns;
     [SerializeField] ItemProperties toolbox;
     [SerializeField] ItemProperties keycard;
 
+    static List<Item> SpawnedItems
+    {
+        get
+        {
+            if (spawnedItems == null)
+            {
+                spawnedItems = new();
+            }
+            return spawnedItems;
+        }
+        set
+        {
+            spawnedItems = value;
+        }
+    }
+
+    static List<Item> spawnedItems;
+
+    public bool CanSave => true;
+
     private void Start()
     {
-        spawnedItems = new();
-        if (SaveSystem.Instance.currentSaveData != null)
+        if (GameManager.Instance != null)
         {
-            if (SaveSystem.Instance.currentSaveData.spawneditems.Length != 0)
+            GameManager.Instance.OnElevatorDoorClosed += (object caller, System.EventArgs args) =>
             {
-                int i = 0;
-                List<float> positions = SaveSystem.Instance.currentSaveData.spawneditemPositions.ToList();
-                List<string> variables = SaveSystem.Instance.currentSaveData.spawnedvariables.ToList();
-                foreach (string itemName in SaveSystem.Instance.currentSaveData.spawneditems)
-                {
-                    Vector3 position = new Vector3(positions[i*3],
-                                                   positions[i*3 + 1],
-                                                   positions[i*3 + 2]);
-
-                    Item newItem = Instantiate(GetProperties(SaveSystem.Instance.currentSaveData.spawneditems[i]).physicalObject, position, Quaternion.identity).GetComponent<Item>();
-
-                    if (newItem.TryGetComponent(out Rigidbody rb))
-                    {
-                        rb.isKinematic = true;
-                    }
-
-                    List<string> currentvars = new();
-
-                    for (int j = 0; j < SaveSystem.Instance.currentSaveData.spawnedlengths[i]; j++)
-                    {
-                        currentvars.Add(variables[0]);
-                        variables.Remove(variables[0]);
-                    }
-
-                    newItem.LoadValues(currentvars.ToArray());
-                    spawnedItems.Add(newItem);
-                    i++;
-                }
-            }
-        }
-
-        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage < 0)
-        {
-            SpawnKeycard(1);
-        }
-        else if (SaveSystem.Instance.currentSaveData == null)
-        {
-            SpawnKeycard(1);
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            List<string> spawnedItemNames = new();
-            List<float> spawnedItemPositions = new();
-            List<int> spawnedItemLengths = new();
-            List<string> spawnedItemVariables = new();
-
-            foreach (Item item in spawnedItems)
-            {
-                spawnedItemNames.Add(item.properties.name);
-                spawnedItemPositions.Add(item.transform.position.x);
-                spawnedItemPositions.Add(item.transform.position.y);
-                spawnedItemPositions.Add(item.transform.position.z);
-                foreach (object obj in item.GetSaveVariables())
-                {
-                    spawnedItemVariables.Add(obj.ToString());
-                }
-                spawnedItemLengths.Add(item.GetSaveVariables().Count);
-            }
-
-            data.spawneditems = spawnedItemNames.ToArray();
-            data.spawneditemPositions = spawnedItemPositions.ToArray();
-            data.spawnedlengths = spawnedItemLengths.ToArray();
-            data.spawnedvariables = spawnedItemVariables.ToArray();
-        };
-
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
-        {
-            SpawnItems();
-            SpawnKeycard(GameManager.Instance.Stage);
-        };
-
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
-        {
-            if (!GameObject.FindGameObjectWithTag("Toolbox"))
-            {
-                SpawnItem(toolbox);
-            }
-            if (!GameObject.FindGameObjectWithTag("KeyCard") && GameManager.Instance.GameStage != GameStage.WaitForPlayer)
-            {
+                SpawnItems(GameManager.Instance.Stage);
                 SpawnKeycard(GameManager.Instance.Stage);
-            }
-        };
-    }
+            };
 
-    ItemProperties GetProperties(string name)
-    {
-        foreach (ItemProperties prop in scriptableobjects)
-        {
-            if (prop.name == name)
+            GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
             {
-                return prop;
-            }
+                if (!GameObject.FindGameObjectWithTag("Toolbox"))
+                {
+                    SpawnItem(toolbox, GameManager.Instance.Stage);
+                }
+                if (!GameObject.FindGameObjectWithTag("KeyCard") && GameManager.Instance.GameStage != GameStage.WaitForPlayer)
+                {
+                    SpawnKeycard(GameManager.Instance.Stage);
+                }
+            };
         }
-        return null;
+        else
+        {
+            Debug.Log("No game manager.");
+        }
     }
 
-    void SpawnItems()
+    public void OnFirstTimeLoaded()
+    {
+        SpawnKeycard(1);
+    }
+
+    public ItemData OnSaveData()
+    {
+        ItemProperties[] props = new ItemProperties[SpawnedItems.Count];
+        Vector3[] positions = new Vector3[SpawnedItems.Count];
+        string[][] vars = new string[SpawnedItems.Count][];
+        for (int i = 0; i < SpawnedItems.Count; i++)
+        {
+            Item current = SpawnedItems[i];
+            props[i] = current.properties;
+            positions[i] = current.transform.position;
+            vars[i] = current.GetValues().ToArray();
+        }
+
+        return new ItemData(props, positions, vars);
+    }
+
+    public void LoadData(ItemData data)
+    {
+        ItemProperties[] props = data.ItemsProperties;
+        Vector3[] positions = data.ItemPositions;
+        string[][] vars = data.ItemVariables;
+        for (int i = 0; i < props.Length; i++)
+        {
+            Item newItem = Instantiate(props[i].physicalObject, positions[i], Quaternion.identity).GetComponent<Item>();
+            if (newItem.TryGetComponent(out Rigidbody rb))
+            {
+                rb.isKinematic = true;
+            }
+            newItem.LoadValues(vars[i]);
+            AddToPhysicalItems(newItem);
+        }
+    }
+
+    void SpawnItems(int stage)
     {
         List<ItemSpawner> spawners = new();
 
         foreach (SpawnerGroup gr in spawnerGroups)
         {
-            if (gr.activeStage == GameManager.Instance.Stage)
+            if (gr.activeStage == stage)
             {
                 spawners.AddRange(gr.spawners);
             }
@@ -160,7 +141,7 @@ public class ItemManager : MonoBehaviour
                 {
                     if (spawner.Spawn(spawns[i].item, out Item spawned))
                     {
-                        spawnedItems.Add(spawned);
+                        SpawnedItems.Add(spawned);
                         break;
                     }
                 }
@@ -168,13 +149,13 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    void SpawnItem(ItemProperties item)
+    void SpawnItem(ItemProperties item, int stage)
     {
         List<ItemSpawner> spawners = new();
 
         foreach (SpawnerGroup gr in spawnerGroups)
         {
-            if (gr.activeStage == GameManager.Instance.Stage)
+            if (gr.activeStage == stage)
             {
                 spawners.AddRange(gr.spawners);
             }
@@ -182,11 +163,11 @@ public class ItemManager : MonoBehaviour
 
         int spawnerIndex = Random.Range(0, spawners.Count);
 
-        foreach(ItemSpawner spawner in spawners)
+        foreach (ItemSpawner spawner in spawners)
         {
             if (spawner.Spawn(item, out Item spawned))
             {
-                spawnedItems.Add(spawned);
+                SpawnedItems.Add(spawned);
                 return;
             }
             spawnerIndex = (spawnerIndex + 1) % spawners.Count;
@@ -194,7 +175,7 @@ public class ItemManager : MonoBehaviour
 
         spawnerIndex = Random.Range(0, spawners.Count);
         spawners[spawnerIndex].ForceSpawn(item, out Item spawned2);
-        spawnedItems.Add(spawned2);
+        SpawnedItems.Add(spawned2);
     }
 
     void SpawnKeycard(int stage)
@@ -209,7 +190,7 @@ public class ItemManager : MonoBehaviour
                 {
                     if (spawner.Spawn(keycard, out Item spawned))
                     {
-                        spawnedItems.Add(spawned);
+                        SpawnedItems.Add(spawned);
                         return;
                     }
                     spawnerIndex = (spawnerIndex + 1) % spawn.points.Length;
@@ -217,9 +198,26 @@ public class ItemManager : MonoBehaviour
 
                 spawnerIndex = Random.Range(0, spawn.points.Length);
                 spawn.points[spawnerIndex].ForceSpawn(keycard, out Item spawned2);
-                spawnedItems.Add(spawned2);
+                SpawnedItems.Add(spawned2);
                 return;
             }
+        }
+    }
+
+    /// <summary>
+    /// Adds the item passed in to a private array which will be saved using the save system. The list is shared amongst all item managers.
+    /// </summary>
+    /// <param name="toAdd">The item to add.</param>
+    public static void AddToPhysicalItems(Item toAdd)
+    {
+        SpawnedItems.Add(toAdd);
+    }
+
+    public static void RemoveFromPhysicalItems(Item toRemove)
+    {
+        if (SpawnedItems.Contains(toRemove))
+        {
+            SpawnedItems.Remove(toRemove);
         }
     }
 }

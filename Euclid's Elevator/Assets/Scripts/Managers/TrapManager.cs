@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DeathFloor.SaveSystem;
 using System.Linq;
 using UnityEngine;
 
@@ -10,62 +11,61 @@ public struct TrapSpawn
     public int count;
 }
 
-public class TrapManager : MonoBehaviour
+public class TrapManager : MonoBehaviour, ISaveData<TrapData>
 {
     public static List<Transform> spawnedtraps;
+
+    public bool CanSave => true;
 
     [SerializeField] TrapSpawn[] spawns;
     [SerializeField] GameObject trapPrefab;
 
     private void Start()
     {
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) =>
+        GameManager.Instance.OnElevatorDoorClosed += (object caller, System.EventArgs args) =>
         {
             SpawnTraps(GameManager.Instance.Stage);
         };
 
         spawnedtraps = new();
+    }
 
-        if (SaveSystem.Instance.currentSaveData != null)
+    public void OnFirstTimeLoaded()
+    {
+
+    }
+
+    public TrapData OnSaveData()
+    {
+        Vector3[] positions = new Vector3[spawnedtraps.Count];
+
+        for (int i = 0; i < spawnedtraps.Count; i++)
         {
-            if (SaveSystem.Instance.currentSaveData.trapCount > 0 &&
-                SaveSystem.Instance.currentSaveData.trapPositions.Length > 0)
-            {
-                List<float> positions = SaveSystem.Instance.currentSaveData.trapPositions.ToList();
-                for (int i = 0; i < SaveSystem.Instance.currentSaveData.trapCount; i++)
-                {
-                    Vector3 position = new(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-
-                    GameObject newTrap = Instantiate(trapPrefab, position, Quaternion.identity);
-                    spawnedtraps.Add(newTrap.transform);
-                }
-            }
+            positions[i] = spawnedtraps[i].position;
         }
 
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
+        return new TrapData(positions);
+    }
+
+    public void LoadData(TrapData data)
+    {
+        Vector3[] positions = data.TrapPositions;
+
+        for (int i = 0; i < positions.Length; i++)
         {
-            List<float> positions = new();
-
-            foreach (Transform trap in spawnedtraps)
-            {
-                positions.Add(trap.transform.position.x);
-                positions.Add(trap.transform.position.y);
-                positions.Add(trap.transform.position.z);
-            }
-
-            data.trapCount = spawnedtraps.Count;
-            data.trapPositions = positions.ToArray();
-        };
+            GameObject newTrap = Instantiate(trapPrefab, positions[i], Quaternion.identity);
+            spawnedtraps.Add(newTrap.transform);
+        }
     }
 
     void SpawnTraps(int stage)
     {
-        EnemyTrap[] traps = FindObjectsOfType<EnemyTrap>();
-
-        foreach (EnemyTrap tr in traps)
+        foreach (Transform tr in spawnedtraps)
         {
             Destroy(tr.gameObject);
         }
+
+        spawnedtraps = new();
 
         foreach (TrapSpawn spawn in spawns)
         {
@@ -98,6 +98,14 @@ public class TrapManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public static void RemoveFromTraps(Transform tr)
+    {
+        if (spawnedtraps.Contains(tr))
+        {
+            spawnedtraps.Remove(tr);
         }
     }
 }

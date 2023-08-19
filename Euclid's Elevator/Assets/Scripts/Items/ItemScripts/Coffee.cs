@@ -7,21 +7,36 @@ public class Coffee : Item, IUsable
     [SerializeField] [SyncValue] GameObject coffeeTrail;
     [SerializeField] [SyncValue] GameObject coffeeDroplet;
 
-    public bool OnUse(Player player)
+    EnemyNavigation navigation;
+
+    protected override void Start()
     {
-        if (Vector3.Distance(GameManager.Instance.enemy.transform.position, transform.position) <= throwDistance &&
-            GameManager.Instance.enemy.Visible)
+        base.Start();
+        navigation = FindObjectOfType<EnemyNavigation>();
+    }
+
+    public bool OnUse()
+    {
+        if (navigation == null)
         {
-            GameObject instance = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
-            if (instance.TryGetComponent(out Rigidbody rb))
+            Debug.Log("No enemy");
+        }
+        else
+        {
+            if (Vector3.Distance(navigation.transform.position, transform.position) <= throwDistance &&
+                navigation.Visible)
             {
-                rb.velocity = HitTargetByAngle(transform.position, GameManager.Instance.enemy.transform.position, Physics.gravity, 45);
+                GameObject instance = Instantiate(coffeeTrail, transform.position, Quaternion.identity);
+                if (instance.TryGetComponent(out Rigidbody rb))
+                {
+                    rb.velocity = HitTargetByAngle(transform.position, navigation.transform.position, Physics.gravity, 45);
+                }
+                if (instance.TryGetComponent(out CoffeeTrail trail))
+                {
+                    trail.stunTime = stunTime;
+                }
+                return true;
             }
-            if (instance.TryGetComponent(out CoffeeTrail trail))
-            {
-                trail.stunTime = stunTime;
-            }
-            return true;
         }
 
         GameObject instance2 = Instantiate(coffeeTrail, transform.position, Quaternion.identity);

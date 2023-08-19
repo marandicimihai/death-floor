@@ -6,10 +6,25 @@ public class Soda : Item, IUsable
     [SerializeField] [SyncValue] float lockpickBoost;
     [SerializeField] [SyncValue] float time;
 
-    public bool OnUse(Player player)
+    FirstPersonController controller;
+
+    protected override void Start()
     {
-        player.controller.BoostForTime(speedBoost, time);
-        player.lockpick.BoostForTime(lockpickBoost, time);
+        base.Start();
+        controller = FindObjectOfType<FirstPersonController>();
+    }
+
+    public bool OnUse()
+    {
+        if (controller != null)
+        {
+            controller.BoostForTime(speedBoost, time);
+        }
+        else
+        {
+            Debug.Log("No controller.");
+        }
+        //player.lockpick.BoostForTime(lockpickBoost, time);
         return true;
     }
 }

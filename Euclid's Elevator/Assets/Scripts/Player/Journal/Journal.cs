@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using DeathFloor.SaveSystem;
 using UnityEngine;
 using System;
 
-public class Journal : MonoBehaviour
+public class Journal : MonoBehaviour, ISaveData<JournalData>
 {
     public EventHandler OnPagesChanged;
-    public List<JournalPage> pages;
-    public int page;
+    public int Page { get => page; }
+    public List<JournalPage> Pages { get => pages; private set => pages = value; }
+    public bool CanSave => true;
 
-    [SerializeField] JournalPage scriptableObjects;
-    [SerializeField] Player player;
+    [SerializeField] PlayerHUDManager hud;
     [SerializeField] Animator journalAnimator;
     [SerializeField] float HUDDelay;
 
@@ -20,83 +21,71 @@ public class Journal : MonoBehaviour
     [SerializeField] string scribble;
     [SerializeField] string[] pageFlip;
 
+    List<JournalPage> pages;
+    int page;
     bool open;
 
     private void Awake()
     {
-        pages = new();
+        Pages = new();
         page = 1;
     }
 
     private void Start()
     {
-        Input.InputActions.Realtime.Journal.performed += ToggleJournal;
-        Input.InputActions.Realtime.PageLeft.performed += PageLeft;
-        Input.InputActions.Realtime.PageRight.performed += PageRight;
-        PauseGame.Instance.OnUnPause += (object caller, EventArgs args) =>
-        {
-            if (open)
-            {
-                ToggleJournal(new InputAction.CallbackContext());
-            }
-        };
+        Input.Instance.InputActions.Realtime.Journal.performed += ToggleJournal;
+        Input.Instance.InputActions.Realtime.PageLeft.performed += PageLeft;
+        Input.Instance.InputActions.Realtime.PageRight.performed += PageRight;
+
         journalAnimator.gameObject.SetActive(open);
-
-        if (SaveSystem.Instance.currentSaveData != null &&
-            SaveSystem.Instance.currentSaveData.pages.Length > 0)
-        {
-            foreach(string name in SaveSystem.Instance.currentSaveData.pages)
-            {
-                pages.Add(GetPage(name));
-            }
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            List<string> names = new();
-
-            foreach (JournalPage page in pages)
-            {
-                names.Add(page.name);
-            }
-
-            data.pages = names.ToArray();
-        };
     }
 
-    JournalPage GetPage(string name)
+    public void OnFirstTimeLoaded()
     {
-        foreach (JournalPage page in pages)
-        {
-            if (page.name == name)
-            {
-                return page;
-            }
-        }
-        return null;
+
+    }
+
+    public JournalData OnSaveData()
+    {
+        return new JournalData(Pages);
+    }
+
+    public void LoadData(JournalData data)
+    {
+        Pages = data.Pages;
     }
 
     void ToggleJournal(InputAction.CallbackContext context)
     {
-        if (player.Dead || (PauseGame.Instance.Paused && !open))
-        {
-            return;
-        }
-
         open = !open;
         journalAnimator.gameObject.SetActive(true);
         journalAnimator.SetBool("Open", open);
         OnPagesChanged?.Invoke(this, new EventArgs());
-        player.HUDManager.ToggleJournalView(open, HUDDelay);
+
+        if (hud != null)
+        {
+            hud.ToggleJournalView(open, HUDDelay);
+        }
+        else
+        {
+            Debug.Log("No hud class.");
+        }
 
         if (open)
         {
-            PauseGame.Instance.Pause();
             AudioManager.Instance.PlayClip(openJournal);
         }
         else
         {
-            PauseGame.Instance.Unpause();
             AudioManager.Instance.PlayClip(closeJournal);
+        }
+    }
+
+    public void CloseJournal()
+    {
+        if (open)
+        {
+            ToggleJournal(new InputAction.CallbackContext());
         }
     }
 
@@ -104,7 +93,7 @@ public class Journal : MonoBehaviour
     {
         if (open)
         {
-            if (pages.Count >= page + 2)
+            if (Pages.Count >= page + 2)
             {
                 page += 2;
                 AudioManager.Instance.PlayRandomClip(pageFlip);
@@ -131,9 +120,9 @@ public class Journal : MonoBehaviour
         if (newPage == null)
             return;
 
-        if (!pages.Contains(newPage))
+        if (!Pages.Contains(newPage))
         {
-            pages.Add(newPage);
+            Pages.Add(newPage);
             AudioManager.Instance.PlayClip(scribble);
         }
     }

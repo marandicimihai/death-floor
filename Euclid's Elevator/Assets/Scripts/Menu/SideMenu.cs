@@ -1,4 +1,5 @@
 using UnityEngine.SceneManagement;
+using DeathFloor.SaveSystem;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -18,19 +19,33 @@ public class SideMenu : MonoBehaviour
         thisCanvas = GetComponent<Canvas>();
         thisCanvas.enabled = false;
 
-        PauseGame.Instance.OnTogglePause += (bool value) => OpenMenu(value);
-
-        GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
+        if (PauseGame.Instance != null)
         {
-            SaveSystem.Instance.ClearData(0);
-            SceneManager.LoadScene("Menu");
-        };
-
-        GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
+            PauseGame.Instance.OnTogglePause += (bool value) => OpenMenu(value);
+        }
+        else
         {
-            isDeathMenu = true;
-            OpenMenu(true);
-        };
+            Debug.Log("No pause game.");
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameWin += (object caller, System.EventArgs args) =>
+            {
+                SaveSystem.ClearSlotData(0);
+                SceneManager.LoadScene("Menu");
+            };
+
+            GameManager.Instance.OnGameOver += (object caller, System.EventArgs args) =>
+            {
+                isDeathMenu = true;
+                OpenMenu(true);
+            };
+        }
+        else
+        {
+            Debug.Log("No game manager.");
+        }
     }
 
     public void SetMenuType(bool type)
@@ -56,7 +71,14 @@ public class SideMenu : MonoBehaviour
         }
         else
         {
-            MenuSettings.Instance.OpenSettings(value);
+            if (MenuSettings.Instance != null)
+            {
+                MenuSettings.Instance.OpenSettings(value);
+            }
+            else
+            {
+                Debug.Log("No settings menu.");
+            }
             thisAnim.SetTrigger("SlideOut");
         }
     }
@@ -75,6 +97,12 @@ public class SideMenu : MonoBehaviour
 
     public void OpenSettings(bool value)
     {
+        if (MenuSettings.Instance == null)
+        {
+            Debug.Log("No settings menu.");
+            return;
+        }
+
         OpenMenu(!value);
         MenuSettings.Instance.OpenSettings(value);
     }
@@ -82,24 +110,39 @@ public class SideMenu : MonoBehaviour
     public void Resume()
     {
         OpenMenu(false);
-        PauseGame.Instance.Unpause();
+
+        if (PauseGame.Instance == null)
+        {
+            Debug.Log("No pause class.");
+        }
+        else
+        {
+            PauseGame.Instance.Unpause();
+        }
     }
 
     public void Restart()
     {
-        SaveSystem.Instance.ClearData(0);
+        SaveSystem.ClearSlotData(0);
         SceneManager.LoadScene("Main");
     }
 
     public void LoadMainMenu()
     {
-        if (GameManager.Instance.GameStage == GameStage.End)
+        if (GameManager.Instance != null)
         {
-            SaveSystem.Instance.ClearData(0);
+            if (GameManager.Instance.GameStage == GameStage.End)
+            {
+                SaveSystem.ClearSlotData(0);
+            }
+            else
+            {
+                SaveSystem.SaveGame(0);
+            }
         }
         else
         {
-            SaveSystem.Instance.SaveGame();
+            Debug.Log("No game manager.");
         }
         SceneManager.LoadScene("Menu");
     }

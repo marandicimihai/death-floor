@@ -1,11 +1,10 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviour
 {
     #region Private Serialized
-
-    [SerializeField] Player player;
 
     [Header("Input Movement Speed")]
     [SerializeField] float forwardScale;
@@ -22,7 +21,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] LayerMask ground;
     [SerializeField] float checkRadius;
     [SerializeField] float checkExtension;
-        
+
     [Header("Gravity")]
     [SerializeField] float gravityForce;
 
@@ -30,7 +29,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] float stepLength;
     [SerializeField] string[] carpetStepNames;
     [SerializeField] string[] concreteStepNames;
-    
+
     #endregion
 
     #region Private
@@ -39,11 +38,11 @@ public class FirstPersonController : MonoBehaviour
 
     Vector3 moveDirection, forces, velocity, gravity;
 
-    float speed, speedMultiplier;
+    float speed, speedMultiplier = 1;
     float accel;
     float stepElapsed;
 
-    bool canMove, sneaking;
+    bool canMove = true, sneaking;
     bool Grounded
     {
         get
@@ -56,21 +55,13 @@ public class FirstPersonController : MonoBehaviour
 
     private void Awake()
     {
-        player.OnSpawn += (SpawnArgs args) =>
-        {
-            Spawn(args.position, args.freezeTime);
-        };
-
         controller = GetComponent<CharacterController>();
-
-        speedMultiplier = 1;
-        Enable();
     }
 
     private void Start()
     {
-        Input.InputActions.General.Sneak.started += (InputAction.CallbackContext context) => sneaking = true;
-        Input.InputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => sneaking = false;
+        Input.Instance.InputActions.General.Sneak.started += (InputAction.CallbackContext context) => sneaking = true;
+        Input.Instance.InputActions.General.Sneak.canceled += (InputAction.CallbackContext context) => sneaking = false;
     }
 
     private void Update()
@@ -114,7 +105,8 @@ public class FirstPersonController : MonoBehaviour
 
     private void ComputeVelocity()
     {
-        Vector2 inputVec = Input.InputActions.General.Movement.ReadValue<Vector2>();
+        Vector2 inputVec = Vector2.zero;
+        inputVec = Input.Instance.InputActions.General.Movement.ReadValue<Vector2>();
         inputVec.x *= strafeScale;
         inputVec.y *= forwardScale;
         inputVec.Normalize();
@@ -211,14 +203,6 @@ public class FirstPersonController : MonoBehaviour
     public void AddForce(Vector3 direction, float forceStrength)
     {
         forces += Vector3.ProjectOnPlane(direction, Vector3.up).normalized * forceStrength;
-    }
-
-    public void Spawn(Vector3 spawnPoint, float freezeTime)
-    {
-        transform.position = spawnPoint;
-        canMove = false;
-
-        Invoke(nameof(Enable), freezeTime);
     }
 
     public void BoostForTime(float multiplier, float time)

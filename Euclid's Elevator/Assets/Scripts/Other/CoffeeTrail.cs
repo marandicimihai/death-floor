@@ -12,6 +12,12 @@ public class CoffeeTrail : MonoBehaviour
 
     bool done;
     Collider other;
+    EnemyNavigation enemy;
+
+    private void Start()
+    {
+        enemy = FindObjectOfType<EnemyNavigation>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,7 +40,14 @@ public class CoffeeTrail : MonoBehaviour
                 {
                     Invoke(nameof(SpawnParticle), Random.Range(0f, 2f));
                 }
-                GameManager.Instance.enemy.StopForTime(stunTime);
+                if (enemy != null)
+                {
+                    enemy.StopForTime(stunTime);
+                }
+                else
+                {
+                    Debug.Log("No enemy.");
+                }
             }
         }
     }

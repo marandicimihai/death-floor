@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DeathFloor.SaveSystem;
 
 public enum GameStage
 {
@@ -17,11 +18,13 @@ struct EnemySpawn
     public int stage;
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISaveData<GameManagerData>
 {
     public static GameManager Instance { get; private set; }
     public int Stage { get; private set; }
     public GameStage GameStage { get; private set; }
+
+    public bool CanSave => true;
 
     public Transform playerTransform;
     public Player player;
@@ -30,44 +33,47 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform playerSpawn;
     [SerializeField] EnemySpawn[] enemySpawns;
 
-    public EventHandler OnStageStart;
+    public EventHandler OnElevatorDoorClosed;
     public EventHandler OnDeath;
     public EventHandler OnGameOver;
-    public EventHandler OnGameEnd;
+    public EventHandler OnGameWin;
 
 
     void Awake()
     {
         Instance = this;
-        Inventory.OnPickUpKeycard += (object caller, EventArgs args) =>
+        /*Inventory.OnPickUpKeycard += (object caller, EventArgs args) =>
         {
             if (GameStage == GameStage.Tutorial && player.Deaths == 0)
             {
                 SpawnEnemy();
             }
-        };
+        };*/
         player.PlayerDied += PlayerDeath;
         Stage = 1;
+
+        SaveSystem.LoadGame(0);
     }
 
-    private void Start()
+    public void OnFirstTimeLoaded()
     {
-        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage >= 0)
-        {
-            if (SaveSystem.Instance.currentSaveData.gameStage >= 0)
-            {
-                GameStage = (GameStage)SaveSystem.Instance.currentSaveData.gameStage;
-            }
-        }
-        else
-        {
-            StartTutorial();
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.stage = Stage;
-            data.gameStage = (int)GameStage;
-        };
+        StartTutorial();
+    }
+
+    public GameManagerData OnSaveData()
+    {
+        return new GameManagerData(Stage, (int)GameStage);
+    }
+
+    public void LoadData(GameManagerData data)
+    {
+        Stage = data.Stage;
+        GameStage = (GameStage)data.GameStage;
+    }
+
+    void HideEnemy()
+    {
+        enemy.gameObject.SetActive(false);
     }
 
     #region GameLevel
@@ -77,7 +83,7 @@ public class GameManager : MonoBehaviour
         GameStage = GameStage.Tutorial;
         Stage = 1;
 
-        OnStageStart?.Invoke(this, new EventArgs());
+        OnElevatorDoorClosed?.Invoke(this, new EventArgs());
 
         HideEnemy();
         SpawnPlayer();
@@ -94,7 +100,7 @@ public class GameManager : MonoBehaviour
         {
             OnDeath?.Invoke(this, new EventArgs());
             SpawnPlayer();
-            
+
             if (GameStage == GameStage.GameLevel)
             {
                 SpawnEnemy();
@@ -125,12 +131,12 @@ public class GameManager : MonoBehaviour
         Stage++;
         if (Stage > stageCount)
         {
-            OnGameEnd?.Invoke(this, new EventArgs());
+            OnGameWin?.Invoke(this, new EventArgs());
             GameStage = GameStage.End;
         }
         else
         {
-            OnStageStart?.Invoke(this, new EventArgs());
+            OnElevatorDoorClosed?.Invoke(this, new EventArgs());
             SpawnEnemy();
         }
     }
@@ -161,11 +167,6 @@ public class GameManager : MonoBehaviour
 
         enemy.gameObject.SetActive(true);
         enemy.Spawn(spawns[UnityEngine.Random.Range(0, spawns.Count)].spawn.position);
-    }
-
-    void HideEnemy()
-    {
-        enemy.gameObject.SetActive(false);
     }
 
     #endregion

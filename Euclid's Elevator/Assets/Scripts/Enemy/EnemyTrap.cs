@@ -21,8 +21,11 @@ public class EnemyTrap : MonoBehaviour
     [SerializeField] string ambience;
     [SerializeField] string whoosh;
 
+    Transform cam;
     AudioJob ambiencejob;
     Player player;
+    EnemyNavigation nav;
+    FirstPersonController controller;
 
     Quaternion initial;
 
@@ -32,12 +35,22 @@ public class EnemyTrap : MonoBehaviour
 
     private void Start()
     {
-        player = GameManager.Instance.player;
+        controller = FindObjectOfType<FirstPersonController>();
+        nav = FindObjectOfType<EnemyNavigation>();
+        cam = FindObjectOfType<Camera>().transform;
+        player = FindObjectOfType<Player>();
 
         initial = baseBone.rotation;
 
-        GameManager.Instance.OnDeath += OnClosed;
-        GameManager.Instance.OnStageStart += OnClosed;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnDeath += OnClosed;
+            GameManager.Instance.OnElevatorDoorClosed += OnClosed;
+        }
+        else
+        {
+            Debug.Log("Game manager is absent");
+        }
 
         ambiencejob = AudioManager.Instance.PlayClip(gameObject, ambience);
     }
@@ -46,9 +59,6 @@ public class EnemyTrap : MonoBehaviour
     {
         if (used)
             return;
-
-        Transform cam = player.cameraController.camera;
-
 
         if (Physics.Raycast(ray.position, cam.position - ray.position, out RaycastHit hitInfo, triggerRadius, playerMask) 
             && hitInfo.collider.CompareTag("Player"))
@@ -59,21 +69,41 @@ public class EnemyTrap : MonoBehaviour
 
             if (Vector3.ProjectOnPlane(ray.position - cam.position, Vector3.up).magnitude >= minRadius)
             {
-                GameManager.Instance.player.controller.AddForce(transform.position - cam.position, forceStrength);
+                if (controller != null)
+                {
+                    controller.AddForce(transform.position - cam.position, forceStrength);
+                }
+                else
+                {
+                    Debug.Log("No controller.");
+                }
             }
-            GameManager.Instance.enemy.InspectNoise(transform.position, true);
+
+            if (nav != null)
+            {
+                nav.InspectNoise(transform.position, true);
+            }
+            else
+            {
+                Debug.Log("No enemy navigation.");
+            }
 
             if (!hasPulled)
             {
                 AudioManager.Instance.PlayClip(gameObject, screech);
             }
 
-            if (Vector3.Distance(cam.position, ray.position) < deathRadius && !GameManager.Instance.player.Dead)
+            if (player != null && Vector3.Distance(cam.position, ray.position) < deathRadius && !player.Dead)
             {
                 AudioManager.Instance.PlayClip(gameObject, groundhit);
                 AudioManager.Instance.StopClip(ambiencejob);
-                GameManager.Instance.player.Die(false);
+
+                player.Die(false);
                 anim.SetTrigger("Kill");
+            }
+            else if (player == null)
+            {
+                Debug.Log("No player.");
             }
 
             hasPulled = true;
@@ -117,16 +147,23 @@ public class EnemyTrap : MonoBehaviour
         if (used)
         {
             Destroy(this.gameObject);
-            GameManager.Instance.OnDeath -= OnClosed;
-            GameManager.Instance.OnStageStart -= OnClosed;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnDeath -= OnClosed;
+                GameManager.Instance.OnElevatorDoorClosed -= OnClosed;
+            }
+            else
+            {
+                Debug.Log("No game manager.");
+            }
         }
     }
 
     private void OnDestroy()
     {
-        if (TrapManager.spawnedtraps.Contains(transform))
+        try
         {
-            TrapManager.spawnedtraps.Remove(transform);
-        }
+            TrapManager.RemoveFromTraps(transform);
+        } catch { Debug.Log("Trap manager issue"); }
     }
 }

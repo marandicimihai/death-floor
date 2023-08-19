@@ -5,6 +5,10 @@ using UnityEngine;
 
 public abstract class SyncValues : MonoBehaviour
 {
+    /// <summary>
+    /// Strings also work.
+    /// </summary>
+    /// <param name="values"></param>
     public void LoadValues(object[] values)
     {
         FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
@@ -19,26 +23,26 @@ public abstract class SyncValues : MonoBehaviour
         }
     }
 
-    public List<object> GetSaveVariables()
+    public IEnumerable<string> GetValues()
     {
         FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
-        List<object> values = new();
+        List<string> values = new();
 
         foreach (FieldInfo field in fields)
         {
             if (field.GetCustomAttribute<SaveValueAttribute>() != null)
             {
-                values.Add(field.GetValue(this));
+                values.Add(field.GetValue(this).ToString());
             }
         }
 
         return values;
     }
 
-    public void SetValues(SyncValues variables)
+    public void SetValuesRuntime(SyncValues variables)
     {
         FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
-        List<object> values = variables.GetValues();
+        List<object> values = variables.GetValuesRuntime();
         int i = 0;
         foreach (FieldInfo field in fields)
         {
@@ -50,7 +54,7 @@ public abstract class SyncValues : MonoBehaviour
         }
     }
 
-    public List<object> GetValues()
+    public List<object> GetValuesRuntime()
     {
         FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
         List<object> values = new();

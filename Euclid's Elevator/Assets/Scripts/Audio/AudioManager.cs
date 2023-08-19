@@ -1,3 +1,4 @@
+using DeathFloor.SaveSystem;
 using System.Collections.Generic;
 using System.Collections;
 using System;
@@ -45,12 +46,12 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        TryPauseEvents();
+        TryPauseEvents(() => Debug.Log("Pause instance absent"));
         SceneManager.activeSceneChanged += (Scene first, Scene second) =>
         {
-            TryPauseEvents();
+            TryPauseEvents(() => Debug.Log("Pause instance absent"));
         };
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
             SetVolume(settings.EffectsVolume, settings.AmbienceVolume);
         };
@@ -66,7 +67,7 @@ public class AudioManager : MonoBehaviour
         main.SetFloat("ambienceVolume", ambienceVolume);
     }
 
-    void TryPauseEvents()
+    void TryPauseEvents(Action OnCatch = null)
     {
         try
         {
@@ -81,7 +82,7 @@ public class AudioManager : MonoBehaviour
         }
         catch
         {
-            
+            OnCatch?.Invoke();
         }
     }
 

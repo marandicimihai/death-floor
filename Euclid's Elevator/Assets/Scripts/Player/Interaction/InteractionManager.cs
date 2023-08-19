@@ -1,4 +1,5 @@
 using UnityEngine.InputSystem;
+using DeathFloor.SaveSystem;
 using UnityEngine;
 
 public enum CallType
@@ -7,109 +8,94 @@ public enum CallType
     Canceled
 }
 
-[RequireComponent(typeof(Interactions))]
-[RequireComponent(typeof(ActionText))]
 public class InteractionManager : MonoBehaviour
 {
+    [SerializeField] ActionInfoHUD info;
     [SerializeField] new Camera camera;
     [SerializeField] LayerMask interactionLayerMask;
     [SerializeField] float interactionDistance;
 
-    Player player;
-    delegate bool interaction(CallType type, Player player, RaycastHit hit);
-    interaction[] interactions;
+    IInteractable currentInteracting;
 
-    delegate bool action(Player player, RaycastHit hit);
-    action[] actions;
+    string interactInput;
 
     private void Awake()
     {
-        player = GetComponent<Player>();
-
-        if (player == null)
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
-            Debug.LogError("Interactions cannot be executed without the presence of the player script!");
-        }
-
-        //sorted by priority
-        ActionText acte = GetComponent<ActionText>();
-        actions = new action[]
-        {
-            acte.LockDoor,
-            acte.OpenDoor,
-            acte.CloseDoor,
-            acte.UnlockDoor,
-            acte.PickLock,
-            acte.Repair,
-            acte.InsertKeycard,
-            acte.PickUpItem,
-            acte.Hide
+            interactInput = Input.Instance.InputActions.General.Interact.controls[0].displayName;
         };
 
-        Interactions inter = GetComponent<Interactions>();
-        interactions = new interaction[]
-        {
-            inter.PickUp,
-            inter.ToggleDoor,
-            inter.InsertInElevator,
-            inter.EnterBox
-        };
-    }
-
-    private void Start()
-    {
-        Input.InputActions.General.Interact.performed += Interact;
-        Input.InputActions.General.Interact.canceled += InteractionCanceled;
+        Input.Instance.InputActions.General.Interact.performed += Interact;
+        Input.Instance.InputActions.General.Interact.canceled += CancelInteract;
     }
 
     private void Update()
     {
         if (GetInteractionRaycast(out RaycastHit hit))
         {
-            bool gate = false;
-            foreach (action ac in actions)
+            if (info != null)
             {
-                if (ac.Invoke(player, hit))
+                if (hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable) && interactable.IsInteractable)
                 {
-                    gate = true;
-                    break;
+                    string toDisplay = interactable.InteractionPrompt();
+                    if (interactInput != string.Empty)
+                    {
+                        toDisplay += $" ({interactInput})";
+                    }
+                    info.SetActionText(toDisplay);
                 }
             }
-            if (!gate)
+            else
             {
-                player.HUDManager.actionInfo.SetActionText(string.Empty);
+                Debug.Log("No hud.");
+            }
+            if (currentInteracting != null)
+            {
+                if (!hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
+                {
+                    CancelInteract(new InputAction.CallbackContext());
+                }
+                else if (interactable != currentInteracting)
+                {
+                    CancelInteract(new InputAction.CallbackContext());
+                }
             }
         }
         else
         {
-            player.HUDManager.actionInfo.SetActionText(string.Empty);
+            if (currentInteracting != null && currentInteracting.IsInteractable)
+            {
+                CancelInteract(new InputAction.CallbackContext());
+            }
+            if (info != null)
+            {
+                info.SetActionText(string.Empty);
+            }
+            else
+            {
+                Debug.Log("No hud.");
+            }
         }
     }
 
     void Interact(InputAction.CallbackContext context)
     {
-        if (GetInteractionRaycast(out RaycastHit hit))
+        if (GetInteractionRaycast(out RaycastHit hit) &&
+            hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable) &&
+            interactable.IsInteractable)
         {
-            foreach (interaction t in interactions)
-            {
-                if (t.Invoke(CallType.Started, player, hit))
-                {
-                    break;
-                }
-            }
+            CancelInteract(new InputAction.CallbackContext());
+            interactable.OnInteractPerformed();
+            currentInteracting = interactable;
         }
     }
 
-    void InteractionCanceled(InputAction.CallbackContext context)
+    void CancelInteract(InputAction.CallbackContext context)
     {
-        GetInteractionRaycast(out RaycastHit hit);
-        
-        foreach (interaction t in interactions)
+        if (currentInteracting != null && currentInteracting.IsInteractable)
         {
-            if (t.Invoke(CallType.Canceled, player, hit))
-            {
-                break;
-            }
+            currentInteracting.OnInteractCanceled();
         }
     }
 

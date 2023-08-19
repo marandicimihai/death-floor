@@ -4,14 +4,12 @@ using System.Linq;
 
 public class PopUpHUD : MonoBehaviour
 {
-    [System.NonSerialized] public bool hideHUD;
     [SerializeField] RectTransform rect;
     [SerializeField] GameObject popUp;
     [SerializeField] float timePerPopUp;
     [SerializeField] float slideOutTime;
 
     List<RectTransform> popups;
-    List<string> used;
     float slideTimeElapsed;
     float timeElapsed;
 
@@ -23,40 +21,10 @@ public class PopUpHUD : MonoBehaviour
     {
         center = new Vector3(-rect.rect.width / 2, rect.rect.height / 2, 0);
         popups = new();
-        used = new();
-    }
-
-    private void Start()
-    {
-        if (SaveSystem.Instance.currentSaveData != null &&
-            SaveSystem.Instance.currentSaveData.usedPopUps.Length > 0)
-        {
-            used = SaveSystem.Instance.currentSaveData.usedPopUps.ToList();
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.usedPopUps = used.ToArray();
-        };
     }
 
     private void Update()
     {
-        if (hideHUD)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                popups[i].gameObject.SetActive(false);
-            }
-            return;
-        }
-        else
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                popups[i].gameObject.SetActive(true);
-            }
-        }
-
         if (transform.childCount > 0)
         {
             if (slideIn)
@@ -131,11 +99,6 @@ public class PopUpHUD : MonoBehaviour
 
     public void PopUp(PopUpProperties popUp)
     {
-        if ((used.Contains(popUp.name) && popUp.oneTime) || popUp == null)
-        {
-            return;
-        }
-
         GameObject newpop = Instantiate(this.popUp, this.transform);
         popups.Add(newpop.GetComponent<RectTransform>());
         
@@ -147,11 +110,25 @@ public class PopUpHUD : MonoBehaviour
 
         if (newpop.TryGetComponent(out PopUp popUpScript))
         {
-            if (popUp.oneTime)
-            {
-                used.Add(popUp.name);
-            }
             popUpScript.AssignProperties(popUp);
+        }
+    }
+
+    public void HideHUD(bool value)
+    {
+        if (value)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                popups[i].gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                popups[i].gameObject.SetActive(true);
+            }
         }
     }
 }

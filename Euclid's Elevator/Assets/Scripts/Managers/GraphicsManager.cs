@@ -1,10 +1,11 @@
+using DeathFloor.SaveSystem;
 using UnityEngine;
 
 public class GraphicsManager : MonoBehaviour
 {
     private void Start()
     {
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
             QualitySettings.vSyncCount = settings.VSync ? 1 : 0;
             QualitySettings.SetQualityLevel(settings.QualityIndex);

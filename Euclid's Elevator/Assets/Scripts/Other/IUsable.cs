@@ -1,4 +1,4 @@
 public interface IUsable
 {
-    bool OnUse(Player player);
+    bool OnUse();
 }

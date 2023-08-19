@@ -1,20 +1,24 @@
 ﻿using UnityEngine.SceneManagement;
-using UnityEngine;
 using System;
 
-public class Input : MonoBehaviour
+public class Input : Singleton<Input>
 {
-    public static PlayerInputActions InputActions { get; private set; }
+    public PlayerInputActions InputActions 
+    {
+        get
+        {
+            if (actions == null)
+            {
+                actions = new PlayerInputActions();
+                actions.Enable();
+            }
+            return actions;
+        }
+    }
+
+    PlayerInputActions actions;
 
     bool eventsDone;
-
-    public static void Init()
-    {
-        InputActions = new PlayerInputActions();
-
-        InputActions.Enable();
-        InputActions.Box.Disable();
-    }
 
     private void Start()
     {
@@ -48,7 +52,7 @@ public class Input : MonoBehaviour
             {
                 InputActions.Disable();
             };
-            GameManager.Instance.OnGameEnd += (object caller, EventArgs args) =>
+            GameManager.Instance.OnGameWin += (object caller, EventArgs args) =>
             {
                 InputActions.Disable();
             };

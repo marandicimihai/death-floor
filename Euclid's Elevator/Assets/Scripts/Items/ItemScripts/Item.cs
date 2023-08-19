@@ -1,20 +1,41 @@
 using UnityEngine;
 
-public class Item : SyncValues
+public class Item : SyncValues, IInteractable
 {
+    public bool IsInteractable { get => isInteractable; }
     [SyncValue] public ItemProperties properties;
     [SyncValue] [SaveValue] public int uses;
+    [SyncValue] [SaveValue] [SerializeField] bool isInteractable = true;
 
     bool visible = true;
+    Inventory playerInventory;
 
-    private void Start()
+    protected virtual void Start()
     {
-        SetVisible(visible);
+        playerInventory = FindObjectOfType<Inventory>();
     }
 
     private void OnValidate()
     {
         uses = properties.uses;
+    }
+
+    protected virtual void OnBreak()
+    {
+        try
+        {
+            ItemManager.RemoveFromPhysicalItems(this);
+        }
+        catch { Debug.Log("Item manager issue"); }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        try
+        {
+            ItemManager.RemoveFromPhysicalItems(this);
+        }
+        catch { Debug.Log("Item manager issue"); }
     }
 
     public void DecreaseDurability()
@@ -48,19 +69,30 @@ public class Item : SyncValues
         }
     }
 
-    protected virtual void OnBreak()
+    public bool OnInteractPerformed()
     {
-        if (ItemManager.spawnedItems.Contains(this))
+        if (!IsInteractable) return false;
+
+        if (playerInventory != null)
         {
-            ItemManager.spawnedItems.Remove(this);
+            playerInventory.PickUpItem(this);
         }
+        else
+        {
+            Debug.Log("No inventory");
+        }
+        
+        return true;
     }
 
-    private void OnDestroy()
+    public bool OnInteractCanceled()
     {
-        if (ItemManager.spawnedItems.Contains(this))
-        {
-            ItemManager.spawnedItems.Remove(this);
-        }
+        if (!IsInteractable) return false;
+        return true;
+    }
+
+    public string InteractionPrompt()
+    {
+        return !IsInteractable ? string.Empty : "Pick up";
     }
 }

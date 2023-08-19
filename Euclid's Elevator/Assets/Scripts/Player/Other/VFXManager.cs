@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine.Rendering;
+using DeathFloor.SaveSystem;
 using UnityEngine;
 
 public enum AnimationAction
@@ -43,13 +43,11 @@ public class VFXManager : MonoBehaviour
         shakeTime = 0.001f;
         lowInsanityTime = 0.001f;
 
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
+        SaveSystem.OnSettingsChanged += (Settings settings) =>
         {
             bloom.weight = settings.Bloom ? 1 : 0;
             blur.weight = settings.Blur ? 1 : 0;
         };
-
-        player.OnSpawn += (SpawnArgs args) => ResetEffects();
         initialPosition = camera.transform.localPosition;
     }
 
@@ -162,7 +160,7 @@ public class VFXManager : MonoBehaviour
         lowInsanityTime = time;
     }
 
-    void ResetEffects()
+    public void ResetEffects()
     {
         isBlackScreen = false;
         hasVisualContact = false;

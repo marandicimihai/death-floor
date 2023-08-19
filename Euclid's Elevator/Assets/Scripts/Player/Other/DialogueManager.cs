@@ -1,51 +1,59 @@
 using System.Collections.Generic;
+using DeathFloor.SaveSystem;
 using UnityEngine;
 using System.Linq;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, ISaveData<DialogueData>
 {
-    public static DialogueManager Instance;
+    public bool CanSave => true;
+
+    [SerializeField] DialogueHUD hud;
 
     static Line currentLine;
-    static List<string> used;
-
-    public delegate void SayLineHUD(Line line);
-    public SayLineHUD OnSayLine;
-
-    private void Awake()
-    {
-        Instance = this;
-        used = new();
-    }
+    static List<Line> used;
 
     private void Start()
     {
-        if (SaveSystem.Instance.currentSaveData != null &&
-            SaveSystem.Instance.currentSaveData.usedLines.Length > 0)
-        {
-            used = SaveSystem.Instance.currentSaveData.usedLines.ToList();
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.usedLines = used.ToArray();
-        };
+        used = new();
     }
 
+    public void OnFirstTimeLoaded()
+    {
+        
+    }
+
+    public DialogueData OnSaveData()
+    {
+        return new DialogueData(used);
+    }
+
+    public void LoadData(DialogueData data)
+    {
+        used = data.UsedLines;
+    }
+
+    /// <summary>
+    /// Handles requests. The event is fired and the HUD class displays the line. When it is finished it will call FinishedLine().
+    /// </summary>
+    /// <param name="line"></param>
     public void SayLine(Line line)
     {
-        if (line.oneTime && used.Contains(line.name))
+        if (line.oneTime && used.Contains(line))
             return;
 
         if (currentLine == null || line.name != currentLine.name)
         {
-            OnSayLine?.Invoke(line);
+            if (hud != null)
+            {
+                hud.StartSaying(line);
+            }
             currentLine = line;
         }
     }
 
     public void FinishedLine(Line line)
     {
-        used.Add(line.name);
+        used.Add(line);
         currentLine = null;
     }
 }

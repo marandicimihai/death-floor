@@ -4,13 +4,32 @@ public class VFXAnimation : MonoBehaviour
 {
     [SerializeField] float blackScreenFadeTime;
 
+    VFXManager vfxmanager;
+
+    private void Start()
+    {
+        vfxmanager = FindObjectOfType<VFXManager>();
+    }
+
     public void BlackScreenAppear()
     {
-        GameManager.Instance.player.vfxmanager.BlackScreen(AnimationAction.FadeAppear, blackScreenFadeTime);
+        if (vfxmanager == null)
+        {
+            Debug.Log("No vfx manager.");
+            return;
+        }
+
+        vfxmanager.BlackScreen(AnimationAction.FadeAppear, blackScreenFadeTime);
     }
 
     public void BlackScreenDisappear()
     {
-        GameManager.Instance.player.vfxmanager.BlackScreen(AnimationAction.FadeDisappear, blackScreenFadeTime);
+        if (vfxmanager == null)
+        {
+            Debug.Log("No vfx manager.");
+            return;
+        }
+
+        vfxmanager.BlackScreen(AnimationAction.FadeDisappear, blackScreenFadeTime);
     }
 }

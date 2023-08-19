@@ -1,9 +1,15 @@
 using UnityEngine;
+using DeathFloor.SaveSystem;
 
-public class Elevator : MonoBehaviour
+public class Elevator : MonoBehaviour, IInteractable, ISaveData<ElevatorData>
 {
     public bool Broken { get; private set; }
-    [SerializeField] Player player;
+
+    public bool IsInteractable => isInteractable;
+
+    public bool CanSave => !riding;
+
+    [SerializeField] Animator animator;
     [SerializeField] ItemProperties keycard;
     [SerializeField] ItemProperties toolbox;
     [SerializeField] Collider doorCollider;
@@ -11,6 +17,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] float waitForPlayerRadius;
     [SerializeField] float elevatorRideTime;
     [SerializeField] float elevatorAccelTime;
+    [SerializeField] bool isInteractable;
 
     [Header("Sounds")]
     [SerializeField] string close;
@@ -23,57 +30,53 @@ public class Elevator : MonoBehaviour
     [SerializeField] string repair;
     [SerializeField] string insert;
 
+    Player player;
+    VFXManager vfxmanager;
+    Inventory inventory;
     AudioJob movejob;
-    Animator animator;
 
     bool riding;
     bool waiting;
     bool canClose;
     bool elevatorDoorClosed;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
-
     private void Start()
     {
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
-        {
-            Broken = true;
-            CloseElevator(true);
-            InitiateElevatorRide();
-        };
+        player = FindObjectOfType<Player>();
+        inventory = FindObjectOfType<Inventory>();
+        vfxmanager = FindObjectOfType<VFXManager>();
 
-        if (SaveSystem.Instance.currentSaveData != null)
+        if (GameManager.Instance != null)
         {
-
-            if (SaveSystem.Instance.currentSaveData.stage < 0)
+            GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
             {
+                Broken = true;
+                CloseElevator(true);
                 InitiateElevatorRide();
-            }
-            else
-            {
-                OpenElevator(true);
-            }
-            Broken = SaveSystem.Instance.currentSaveData.broken;
-            waiting = SaveSystem.Instance.currentSaveData.waiting;
-            canClose = SaveSystem.Instance.currentSaveData.canClose;
+            };
         }
         else
         {
-            InitiateElevatorRide();
+            Debug.Log("No game manager.");
         }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.broken = Broken;
-            data.waiting = waiting;
-            if (waiting)
-            {
-                data.canClose = true;
-            }
-            SaveSystem.Instance.CanSave = !riding;
-        };
+    }
+
+    public void OnFirstTimeLoaded()
+    {
+        InitiateElevatorRide();
+    }
+
+    public ElevatorData OnSaveData()
+    {
+        return new ElevatorData(Broken, waiting);
+    }
+
+    public void LoadData(ElevatorData data)
+    {
+        OpenElevator(true);
+        Broken = data.Broken;
+        waiting = data.Waiting;
+        canClose = waiting;
     }
 
     private void Update()
@@ -88,7 +91,14 @@ public class Elevator : MonoBehaviour
             }
             if (elevatorDoorClosed)
             {
-                GameManager.Instance.ElevatorRideInitialized();
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.ElevatorRideInitialized();
+                }
+                else
+                {
+                    Debug.Log("No game manager.");
+                }
 
                 InitiateElevatorRide();
 
@@ -97,44 +107,65 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    public bool TryInsert(Player player)
+    public string InteractionPrompt()
     {
-        if (player.inventory.Items[player.inventory.Index] != null)
+        return "Insert keycard";
+    }
+
+    public bool OnInteractPerformed()
+    {
+        if (inventory == null)
+        {
+            Debug.Log("No inventory.");
+            return true;
+        }
+
+        if (inventory.Items[inventory.Index] != null)
         {
             if (Broken)
             {
-                bool b = player.inventory.Items[player.inventory.Index].properties.name == toolbox.name;
+                bool b = inventory.Items[inventory.Index].properties.name == toolbox.name;
                 if (b)
                 {
                     Broken = false;
                     AudioManager.Instance.PlayClip(repair);
-                    player.inventory.DecreaseDurability(player.inventory.Index);
+                    inventory.DecreaseDurability(inventory.Index);
                 }
-                return b;
+                return true;
             }
 
-            bool a = player.inventory.Items[player.inventory.Index].properties.name == keycard.name;
+            bool a = inventory.Items[inventory.Index].properties.name == keycard.name;
             if (a)
             {
                 animator.SetTrigger("Keycard");
                 AudioManager.Instance.PlayClip(insert);
                 InsertKeycard();
-                player.inventory.DecreaseDurability(player.inventory.Index);
+                inventory.DecreaseDurability(inventory.Index);
             }
-            return a;
         }
-        return false;
+        return true;
+    }
+
+    public bool OnInteractCanceled()
+    {
+        return true;
     }
 
     public bool MatchesRequirement(Player player)
     {
-        if (player.inventory.Items[player.inventory.Index] != null)
+        if (inventory == null)
+        {
+            Debug.Log("No inventory.");
+            return false;
+        }
+
+        if (inventory.Items[inventory.Index] != null)
         {
             if (Broken)
             {
-                return player.inventory.Items[player.inventory.Index].properties.name == toolbox.name;
+                return inventory.Items[inventory.Index].properties.name == toolbox.name;
             }
-            return player.inventory.Items[player.inventory.Index].properties.name == keycard.name;
+            return inventory.Items[inventory.Index].properties.name == keycard.name;
         }
         return false;
     }
@@ -148,7 +179,7 @@ public class Elevator : MonoBehaviour
     void InitiateElevatorRide()
     {
         riding = true;
-        if (player.Deaths == 0)
+        /*if (player.Deaths == 0)
         {
             movejob = AudioManager.Instance.PlayClip(move1);
         }
@@ -163,18 +194,34 @@ public class Elevator : MonoBehaviour
         else if (player.Deaths == 3)
         {
             movejob = AudioManager.Instance.PlayClip(move4);
-        }
+        }*/
         Invoke(nameof(OpenElevatorWithAnimation), elevatorRideTime);
-        player.vfxmanager.CameraShake(AnimationAction.FadeAppear, elevatorAccelTime);
+
+        if (vfxmanager != null)
+        {
+            vfxmanager.CameraShake(AnimationAction.FadeAppear, elevatorAccelTime);
+        }
+        else
+        {
+            Debug.Log("No vfx manager.");
+        }
+
         Invoke(nameof(DeaccelerateElevator), elevatorRideTime - elevatorAccelTime);
     }
 
     void DeaccelerateElevator()
     {
-        player.vfxmanager.CameraShake(AnimationAction.FadeDisappear, elevatorAccelTime);
+        if (vfxmanager != null)
+        {
+            vfxmanager.CameraShake(AnimationAction.FadeDisappear, elevatorAccelTime);
+        }
+        else
+        {
+            Debug.Log("No vfx manager.");
+        }
+        riding = false;
         movejob.StopPlaying();
         AudioManager.Instance.PlayClip(stop);
-        riding = false;
     }
 
     void OpenElevatorWithAnimation()

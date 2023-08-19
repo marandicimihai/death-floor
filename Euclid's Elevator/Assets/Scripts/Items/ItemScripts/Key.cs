@@ -10,10 +10,10 @@ public class Key : Item
 
     protected override void OnBreak()
     {
-        GameObject firstkey = Instantiate(key1, GameManager.Instance.player.HUDManager.inventoryHUD.holdPos.position, Quaternion.identity);
+        GameObject firstkey = Instantiate(key1, transform.position, Quaternion.identity);
         firstkey.AddComponent<Lifetime>().Initiate(timeLasting);
         firstkey.GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * force, ForceMode.Impulse);
-        GameObject secondkey = Instantiate(key2, GameManager.Instance.player.HUDManager.inventoryHUD.holdPos.position, Quaternion.identity);
+        GameObject secondkey = Instantiate(key2, transform.position, Quaternion.identity);
         secondkey.AddComponent<Lifetime>().Initiate(timeLasting);
         secondkey.GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * force, ForceMode.Impulse);
 

@@ -1,12 +1,14 @@
+using DeathFloor.SaveSystem;
 using UnityEngine;
 
-public class Insanity : MonoBehaviour
+public class Insanity : MonoBehaviour, ISaveData<InsanityData>
 {
-    public delegate void InsanityDel(InsanityArgs args);
-    public InsanityDel OnInsanityChanged;
+    public float InsanityValue { get => insanity; }
+
+    public bool CanSave => true;
 
     [SerializeField] Player player;
-    [SerializeField] EnemyNavigation enemy;
+    [SerializeField] VFXManager vfx;
     [SerializeField] float insanityTime;
     [SerializeField] float insanityEffectFadeTime;
 
@@ -20,47 +22,86 @@ public class Insanity : MonoBehaviour
     [Header("Animation")]
     [SerializeField] Animator sanityDeath;
 
+    EnemyNavigation enemy;
     AudioJob verylowsanity;
     float insanity;
 
     private void Start()
     {
-        GameManager.Instance.OnStageStart += (object caller, System.EventArgs args) => insanity = 0;
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) => insanity = 0;
+        enemy = FindObjectOfType<EnemyNavigation>(true);
+    }
 
-        if (SaveSystem.Instance.currentSaveData != null)
-        {
-            insanity = SaveSystem.Instance.currentSaveData.insanity;
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.insanity = insanity;
-        };
+    public void OnFirstTimeLoaded()
+    {
+
+    }
+
+    public InsanityData OnSaveData()
+    {
+        return new InsanityData(insanity);
+    }
+
+    public void LoadData(InsanityData data)
+    {
+        insanity = data.Insanity;
     }
 
     private void Update()
     {
-        float insanityold = insanity;
-
-        if (enemy.Visible)
+        if (enemy != null)
         {
-            player.vfxmanager.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
-            insanity += Time.deltaTime / insanityTime;
+            if (enemy.Visible)
+            {
+                if (vfx != null)
+                {
+                    vfx.VisualContact(AnimationAction.FadeAppear, insanityEffectFadeTime);
+                }
+                else
+                {
+                    Debug.Log("No vfx class.");
+                }
+                insanity += Time.deltaTime / insanityTime;
+            }
+            else
+            {
+                if (vfx != null)
+                {
+                    vfx.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+                }
+                else
+                {
+                    Debug.Log("No vfx class.");
+                }
+            }
         }
         else
         {
-            player.vfxmanager.VisualContact(AnimationAction.FadeDisappear, insanityEffectFadeTime);
+            Debug.Log("No enemy!");
         }
 
         #region Effects
 
         if (insanity >= lowInsanityEffectAppearPercentage)
         {
-            player.vfxmanager.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
+            if (vfx != null)
+            {
+                vfx.LowInsanity(AnimationAction.FadeAppear, lowInsanityEffectFadeTime);
+            }
+            else
+            {
+                Debug.Log("No vfx class.");
+            }
         }
         else
         {
-            player.vfxmanager.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
+            if (vfx != null)
+            {
+                vfx.LowInsanity(AnimationAction.FadeDisappear, lowInsanityEffectFadeTime);
+            }
+            else
+            {
+                Debug.Log("No vfx class.");
+            };
         }
         if (insanity >= lowInsanitySoundAppearPercentage && verylowsanity == null)
         {
@@ -73,19 +114,25 @@ public class Insanity : MonoBehaviour
 
         #endregion
 
-        if (insanity >= 1 && !player.Dead)
+        if (player != null)
         {
-            player.Die(false);
-            sanityDeath.SetBool("Dead", true);
-            Invoke(nameof(ResetAnimation), 1);
+            if (insanity >= 1 && !player.Dead)
+            {
+                player.Die(false);
+                sanityDeath.SetBool("Dead", true);
+                Invoke(nameof(ResetAnimation), 1);
+            }
         }
-
-        if (insanity != insanityold)
+        else
         {
-            OnInsanityChanged?.Invoke(new InsanityArgs(insanity));
+            Debug.Log("No player class.");
         }
     }
 
+    /// <summary>
+    /// Use 1 to reset it.
+    /// </summary>
+    /// <param name="delta"></param>
     public void ReduceSanity(float delta)
     {
         insanity -= delta;
@@ -95,15 +142,5 @@ public class Insanity : MonoBehaviour
     void ResetAnimation()
     {
         sanityDeath.SetBool("Dead", false);
-    }
-}
-
-public class InsanityArgs : System.EventArgs
-{
-    public float insanity;
-
-    public InsanityArgs(float insanity)
-    {
-        this.insanity = insanity;
     }
 }

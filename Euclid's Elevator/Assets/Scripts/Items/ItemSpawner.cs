@@ -24,6 +24,10 @@ public class ItemSpawner : MonoBehaviour
 
     public void ForceSpawn(ItemProperties item, out Item spawned)
     {
+        if (hasItem)
+        {
+            Debug.Log("Spawned on top of another object");
+        }
         spawned = null;
         if (Instantiate(item.physicalObject, transform.position, Quaternion.identity).TryGetComponent<Item>(out Item itemc))
         {

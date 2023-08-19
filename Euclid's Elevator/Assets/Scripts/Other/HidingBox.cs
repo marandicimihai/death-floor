@@ -11,11 +11,18 @@ public class HidingBox : MonoBehaviour
 
     private void Start()
     {
-        Input.InputActions.Box.ExitBox.performed += (InputAction.CallbackContext context) => ExitBox();
-        GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
+        Input.Instance.InputActions.Box.ExitBox.performed += (InputAction.CallbackContext context) => ExitBox();
+        if (GameManager.Instance != null)
         {
-            animator.SetTrigger("Reset");
-        };
+            GameManager.Instance.OnDeath += (object caller, System.EventArgs args) =>
+            {
+                animator.SetTrigger("Reset");
+            };
+        }
+        else
+        {
+            Debug.Log("No game manager.");
+        }
     }
 
     public void EnterBox(Player player)
@@ -35,7 +42,7 @@ public class HidingBox : MonoBehaviour
 
         hasPlayer = false;
         animator.SetTrigger("GetOut");
-        Input.InputActions.Box.Disable();
+        Input.Instance.InputActions.Box.Disable();
     }
 
     public void TriggerDeath(Vector3 enemyPos)

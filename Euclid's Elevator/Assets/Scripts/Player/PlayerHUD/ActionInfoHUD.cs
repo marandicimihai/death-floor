@@ -10,7 +10,6 @@ public enum SliderType
 
 public class ActionInfoHUD : MonoBehaviour
 {
-    [System.NonSerialized] public bool hideHUD;
     [SerializeField] Text text;
     [SerializeField] GameObject circleSliderObject;
     [SerializeField] Image circleSlider;
@@ -26,15 +25,6 @@ public class ActionInfoHUD : MonoBehaviour
 
     private void Update()
     {
-        if (hideHUD)
-        {
-            SetChildrenActive(false);
-        }
-        else
-        {
-            SetChildrenActive(true);
-        }
-
         if (active)
         {
             text.text = string.Empty;
@@ -99,7 +89,7 @@ public class ActionInfoHUD : MonoBehaviour
         }
     }
 
-    void SetChildrenActive(bool active)
+    public void HideHUD(bool active)
     {
         for(int i = 0; i < transform.childCount; i++)
         {
