@@ -5,15 +5,18 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class UnityServicesTests
+namespace DeathFloor.Tests
 {
-    [Test]
-    public void GetDeltaTime_Returns_ANonZeroValue()
+    public class UnityServicesTests
     {
-        IUnityService service = new UnityService();
+        [Test]
+        public void GetDeltaTime_Returns_ANonZeroValue()
+        {
+            IUnityService service = new UnityService();
 
-        float value = service.GetDeltaTime();
+            float value = service.GetDeltaTime();
 
-        Assert.AreNotEqual(value, 0);
+            Assert.AreNotEqual(value, 0);
+        }
     }
 }

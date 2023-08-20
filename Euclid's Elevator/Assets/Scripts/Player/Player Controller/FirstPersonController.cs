@@ -1,5 +1,3 @@
-using DeathFloor.Input;
-using DeathFloor.UnityServices;
 using DeathFloor.Utilities;
 using UnityEngine;
 
@@ -8,38 +6,18 @@ namespace DeathFloor.Movement
     [RequireComponent(typeof(CharacterController))]
     internal class FirstPersonController : MonoBehaviour, IToggleable
     {
-        [Header("Input Reader")]
-        [SerializeField] private InputReader _inputReader;
+        [SerializeField] private Optional<MonoBehaviour> _movementApplierBehaviour;
 
-        [Header("Optional")]
-        [SerializeField] private Optional<MonoBehaviour> _movementProviderBehaviour;
-        [SerializeField] private Optional<MonoBehaviour> _sneakProviderBehaviour;
-
-        private Vector3 _velocity = Vector3.zero;
-        private IMovementProvider _movementProvider;
-        private ISneakProvider _sneakProvider;
         private CharacterController _controller;
+        private IMovementApplier _movementApplier;
+        private IOptionalAssigner _optionalAssigner;
         private bool _canMove;
 
         private void Start()
         {
-            if (_movementProviderBehaviour.Enabled)
-            {
-                _movementProvider = _movementProviderBehaviour.Value as IMovementProvider;
-            }
-            else
-            {
-                _movementProvider = GetComponent<IMovementProvider>();
-            }
-            if (_sneakProviderBehaviour.Enabled)
-            {
-                _sneakProvider = _sneakProviderBehaviour.Value as ISneakProvider;
-            }
-            else
-            {
-                _sneakProvider = GetComponent<ISneakProvider>();
-            }
+            _optionalAssigner ??= new OptionalAssigner(this);
 
+            _movementApplier = _optionalAssigner.AssignUsingGetComponent<IMovementApplier>(_movementApplierBehaviour);
             _controller = GetComponent<CharacterController>();
 
             Enable();
@@ -50,22 +28,7 @@ namespace DeathFloor.Movement
             if (_canMove &&
                 _controller != null)
             {
-                var movement = Vector3.zero;
-                if (_inputReader.Sneaking)
-                {
-                    if (_sneakProvider != null)
-                    {
-                        movement = _sneakProvider.CalculateMovement(_inputReader.Move, ref _velocity);
-                    }
-                }
-                else
-                {
-                    if (_movementProvider != null)
-                    {
-                        movement = _movementProvider.CalculateMovement(_inputReader.Move, ref _velocity);
-                    }
-                }
-                _controller.Move(movement);
+                _controller.Move(_movementApplier.GetMoveVector());
             }
         }
 

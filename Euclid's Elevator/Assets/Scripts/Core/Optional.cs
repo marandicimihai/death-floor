@@ -17,5 +17,11 @@ namespace DeathFloor.Utilities
             _value = value;
             _enabled = enabled;
         }
+
+        public Optional(T value)
+        {
+            _value = value;
+            _enabled = true;
+        }
     }
 }
