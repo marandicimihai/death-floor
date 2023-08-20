@@ -4,7 +4,7 @@ using DeathFloor.Utilities;
 
 namespace DeathFloor.Camera.Rotation
 {
-    public class CameraController : MonoBehaviour, IToggleable
+    internal class CameraController : MonoBehaviour, IToggleable
     {
         [Header("Input")]
         [SerializeField] private InputReader _inputReader;
@@ -14,6 +14,7 @@ namespace DeathFloor.Camera.Rotation
         [SerializeField] private Transform _playerCamera;
 
         private ICameraRotationProvider _rotationProvider;
+        private Vector2 _rotation;
         private bool _canLook;
 
         private void Start()
@@ -29,10 +30,10 @@ namespace DeathFloor.Camera.Rotation
             if (_rotationProvider != null &&
                 _canLook)
             {
-                Vector2 rotation = _rotationProvider.CalculateRotation(_inputReader.Look);
+                _rotation = _rotationProvider.CalculateRotation(_inputReader.Look, _rotation);
 
-                _playerCamera.localEulerAngles = new Vector3(rotation.x, 0, 0);
-                _player.localEulerAngles = new Vector3(0, rotation.y, 0);
+                _playerCamera.localEulerAngles = new Vector3(_rotation.x, 0, 0);
+                _player.localEulerAngles = new Vector3(0, _rotation.y, 0);
             }
         }
 
@@ -40,10 +41,10 @@ namespace DeathFloor.Camera.Rotation
         {
             if (_rotationProvider == null) return;
 
-            Vector2 rotation = _rotationProvider.ResetAngle();
+            _rotation = _rotationProvider.ResetAngle();
 
-            _playerCamera.localEulerAngles = new Vector3(rotation.x, 0, 0);
-            _player.localEulerAngles = new Vector3(0, rotation.y, 0);
+            _playerCamera.localEulerAngles = new Vector3(_rotation.x, 0, 0);
+            _player.localEulerAngles = new Vector3(0, _rotation.y, 0);
         }
 
         public void Disable()
