@@ -9,10 +9,12 @@ namespace DeathFloor.Input
         public delegate void InputDetected();
         public delegate void ScrollDetected(float value);
 
-        public Vector2 Look { get => _inputActions.General.Look.ReadValue<Vector2>(); }
-        public Vector2 Move { get => _inputActions.General.Movement.ReadValue<Vector2>(); }
+        public Vector2 Look => _inputActions.General.Look.ReadValue<Vector2>();
+        public Vector2 Move => _inputActions.General.Movement.ReadValue<Vector2>();
 
         public ScrollDetected Scrolled;
+
+        public bool Sneaking => _sneaking;
 
         public event InputDetected Dropped;
         public event InputDetected Used;
@@ -23,8 +25,6 @@ namespace DeathFloor.Input
         public event InputDetected BoxExited;
 
         public event InputDetected Interacted;
-        public event InputDetected SneakStarted;
-        public event InputDetected SneakCanceled;
 
         public event InputDetected Inventory1;
         public event InputDetected Inventory2;
@@ -32,6 +32,7 @@ namespace DeathFloor.Input
         public event InputDetected Inventory4;
 
         private PlayerInputActions _inputActions;
+        private bool _sneaking;
 
         void OnEnable()
         {
@@ -196,16 +197,14 @@ namespace DeathFloor.Input
 
         public void OnSneak(InputAction.CallbackContext context)
         {
-            if (SneakStarted != null &&
-                context.phase == InputActionPhase.Started)
+            if (context.phase == InputActionPhase.Started)
             {
-                SneakStarted.Invoke();
+                _sneaking = true;
             }
 
-            if (SneakCanceled != null &&
-                context.phase == InputActionPhase.Canceled)
+            if (context.phase == InputActionPhase.Canceled)
             {
-                SneakCanceled.Invoke();
+                _sneaking = false;
             }
         }
 

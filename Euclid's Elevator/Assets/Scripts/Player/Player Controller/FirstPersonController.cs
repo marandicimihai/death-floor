@@ -6,18 +6,40 @@ using UnityEngine;
 namespace DeathFloor.Movement
 {
     [RequireComponent(typeof(CharacterController))]
-    public class FirstPersonController : MonoBehaviour, IToggleable
+    internal class FirstPersonController : MonoBehaviour, IToggleable
     {
         [Header("Input Reader")]
         [SerializeField] private InputReader _inputReader;
 
+        [Header("Optional")]
+        [SerializeField] private Optional<MonoBehaviour> _movementProviderBehaviour;
+        [SerializeField] private Optional<MonoBehaviour> _sneakProviderBehaviour;
+
+        private Vector3 _velocity = Vector3.zero;
         private IMovementProvider _movementProvider;
+        private ISneakProvider _sneakProvider;
         private CharacterController _controller;
         private bool _canMove;
 
         private void Start()
         {
-            _movementProvider = GetComponent<IMovementProvider>();
+            if (_movementProviderBehaviour.Enabled)
+            {
+                _movementProvider = _movementProviderBehaviour.Value as IMovementProvider;
+            }
+            else
+            {
+                _movementProvider = GetComponent<IMovementProvider>();
+            }
+            if (_sneakProviderBehaviour.Enabled)
+            {
+                _sneakProvider = _sneakProviderBehaviour.Value as ISneakProvider;
+            }
+            else
+            {
+                _sneakProvider = GetComponent<ISneakProvider>();
+            }
+
             _controller = GetComponent<CharacterController>();
 
             Enable();
@@ -25,11 +47,24 @@ namespace DeathFloor.Movement
 
         private void Update()
         {
-            if (_movementProvider != null &&
-                _controller != null &&
-                _canMove)
+            if (_canMove &&
+                _controller != null)
             {
-                Vector3 movement = _movementProvider.CalculateMovement(_inputReader.Move);
+                var movement = Vector3.zero;
+                if (_inputReader.Sneaking)
+                {
+                    if (_sneakProvider != null)
+                    {
+                        movement = _sneakProvider.CalculateMovement(_inputReader.Move, ref _velocity);
+                    }
+                }
+                else
+                {
+                    if (_movementProvider != null)
+                    {
+                        movement = _movementProvider.CalculateMovement(_inputReader.Move, ref _velocity);
+                    }
+                }
                 _controller.Move(movement);
             }
         }
@@ -37,11 +72,13 @@ namespace DeathFloor.Movement
         public void Disable()
         {
             _canMove = false;
+            _controller.enabled = false;
         }
 
         public void Enable()
         {
             _canMove = true;
+            _controller.enabled = true;
         }
     }
 }
