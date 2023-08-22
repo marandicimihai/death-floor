@@ -12,10 +12,12 @@ namespace DeathFloor.Movement
         [Header("Optional")]
         [SerializeField] private Optional<MonoBehaviour> _movementProviderBehaviour;
         [SerializeField] private Optional<MonoBehaviour> _sneakProviderBehaviour;
+        [SerializeField] private Optional<MonoBehaviour> _gravityProviderBehaviour;
 
         private Vector3 _velocity = Vector3.zero;
         private IMovementProvider _movementProvider;
         private ISneakProvider _sneakProvider;
+        private IGravityProvider _gravityProvider;
         private IOptionalAssigner _optionalAssigner;
 
 
@@ -25,6 +27,7 @@ namespace DeathFloor.Movement
 
             _movementProvider = _optionalAssigner.AssignUsingGetComponent<IMovementProvider>(_movementProviderBehaviour);
             _sneakProvider = _optionalAssigner.AssignUsingGetComponent<ISneakProvider>(_sneakProviderBehaviour);
+            _gravityProvider = _optionalAssigner.AssignUsingGetComponent<IGravityProvider>(_gravityProviderBehaviour);
         }
 
         public Vector3 GetMoveVector()
@@ -43,6 +46,10 @@ namespace DeathFloor.Movement
                 {
                     movement = _movementProvider.CalculateMovement(_inputReader.Move, ref _velocity);
                 }
+            }
+            if (_gravityProvider != null)
+            {
+                movement += _gravityProvider.ComputeGravity();
             }
             return movement;
         }

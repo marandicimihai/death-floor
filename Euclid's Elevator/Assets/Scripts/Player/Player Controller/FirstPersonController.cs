@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
-    [RequireComponent(typeof(CharacterController))]
     internal class FirstPersonController : MonoBehaviour, IToggleable
     {
+        [SerializeField] private Optional<CharacterController> _characterController;
         [SerializeField] private Optional<MonoBehaviour> _movementApplierBehaviour;
 
         private CharacterController _controller;
@@ -18,7 +18,7 @@ namespace DeathFloor.Movement
             _optionalAssigner ??= new OptionalAssigner(this);
 
             _movementApplier = _optionalAssigner.AssignUsingGetComponent<IMovementApplier>(_movementApplierBehaviour);
-            _controller = GetComponent<CharacterController>();
+            _controller = _optionalAssigner.AssignUsingGetComponent(_characterController);
 
             Enable();
         }
@@ -26,7 +26,8 @@ namespace DeathFloor.Movement
         private void Update()
         {
             if (_canMove &&
-                _controller != null)
+                _controller != null &&
+                _movementApplier != null)
             {
                 _controller.Move(_movementApplier.GetMoveVector());
             }
