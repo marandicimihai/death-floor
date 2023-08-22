@@ -12,14 +12,18 @@ namespace DeathFloor.Camera.Rotation
         [Header("Variables")]
         [SerializeField] private Transform _player;
         [SerializeField] private Transform _playerCamera;
+        [SerializeField] private Optional<MonoBehaviour> _rotationProviderBehaviour;
 
         private ICameraRotationProvider _rotationProvider;
+        private IOptionalAssigner _optionalAssinger;
         private Vector2 _rotation;
         private bool _canLook;
 
         private void Start()
         {
-            _rotationProvider = GetComponent<ICameraRotationProvider>();
+            _optionalAssinger ??= new OptionalAssigner(this);
+
+            _rotationProvider = _optionalAssinger.AssignUsingGetComponent<ICameraRotationProvider>(_rotationProviderBehaviour);
 
             ResetAngle();
             Enable();

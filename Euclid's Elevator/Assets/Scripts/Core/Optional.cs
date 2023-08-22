@@ -12,16 +12,10 @@ namespace DeathFloor.Utilities
         [SerializeField] bool _enabled;
         [SerializeField] T _value;
 
-        public Optional(T value, bool enabled)
+        public Optional(T value, bool enabled = true)
         {
             _value = value;
             _enabled = enabled;
-        }
-
-        public Optional(T value)
-        {
-            _value = value;
-            _enabled = true;
         }
     }
 }

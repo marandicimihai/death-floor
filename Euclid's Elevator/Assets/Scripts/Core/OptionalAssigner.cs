@@ -24,5 +24,18 @@ namespace DeathFloor.Utilities
             }
             catch { return default; }
         }
+
+        public T AssignUsingGetComponent<T>(Optional<T> assignFrom) where T : class
+        {
+            if (assignFrom.Enabled)
+            {
+                return assignFrom.Value as T;
+            }
+            try
+            {
+                return _classInstance.GetComponent<T>();
+            }
+            catch { return default; }
+        }
     }
 }
