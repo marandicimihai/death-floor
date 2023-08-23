@@ -3,18 +3,22 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
-    public enum RayType
-    {
-        Transform = 0,
-        CharacterController = 1
-    }
-
-    public class GroundedRaycastProvider : MonoBehaviour, IRaycastProvider
+    internal class GroundedRaycastProvider : MonoBehaviour, IRaycastProvider
     {
         [SerializeField] CharacterController _controller;
         [SerializeField] float _extraLength;
 
         [SerializeField] LayerMask _layerMask;
+
+        public RaycastHit GetRaycastHit()
+        {
+            Physics.Raycast(_controller.transform.position + _controller.center,
+                            Vector3.down,
+                            out RaycastHit hitInfo,
+                            _controller.height / 2 + _extraLength,
+                            _layerMask);
+            return hitInfo;
+        }
 
         public bool GetRaycast()
         {
@@ -25,14 +29,14 @@ namespace DeathFloor.Movement
 
         }
 
-        public RaycastHit GetRaycastHit()
+        public bool GetRaycast(out RaycastHit hitInfo)
         {
-            Physics.Raycast(_controller.transform.position + _controller.center,
-                            Vector3.down,
-                            out RaycastHit hitInfo,
-                            _controller.height / 2 + _extraLength,
-                            _layerMask);
-            return hitInfo;
+            return Physics.Raycast(_controller.transform.position + _controller.center,
+                                   Vector3.down,
+                                   out hitInfo,
+                                   _controller.height / 2 + _extraLength,
+                                   _layerMask);
+
         }
     }
 }

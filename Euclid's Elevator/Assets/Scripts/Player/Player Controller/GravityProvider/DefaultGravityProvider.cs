@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
-    public class DefaultGravityProvider : MonoBehaviour, IGravityProvider
+    internal class DefaultGravityProvider : MonoBehaviour, IGravityProvider
     {
         [Header("Gravity Properties")]
         [SerializeField] private float _gravityForce;
@@ -13,12 +13,10 @@ namespace DeathFloor.Movement
 
         private IOptionalAssigner _optionalAssigner;
         private IRaycastProvider _groundedProvider;
-        private IUnityService _service;
         private Vector3 gravity;
 
         private void Start()
         {
-            _service ??= new UnityService();
             _optionalAssigner ??= new OptionalAssigner(this);
 
             _groundedProvider = _optionalAssigner.AssignUsingGetComponent<IRaycastProvider>(_groundedProviderBehaviour);
@@ -29,11 +27,11 @@ namespace DeathFloor.Movement
             if (_groundedProvider != null &&
                 _groundedProvider.GetRaycast())
             {
-                gravity.y = -1f * _service.GetDeltaTime();
+                gravity.y = -1f * Time.deltaTime;
             }
             else
             {
-                gravity.y += _gravityForce * _service.GetDeltaTime() * _service.GetDeltaTime();
+                gravity.y += _gravityForce * Time.deltaTime * Time.deltaTime;
             }
         }
 
