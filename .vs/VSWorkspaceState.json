@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Euclid's Elevator",
+    "\\Euclid's Elevator\\Assets",
+    "\\Euclid's Elevator\\Assets\\Scripts",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Core",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Interfaces",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Interfaces\\Utilities",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Interfaces\\Utilities\\Logger",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Player",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Interactions"
+  ],
+  "SelectedNode": "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Interactions\\InteractionRedirector.cs",
+  "PreviewInSolutionExplorer": false
+}

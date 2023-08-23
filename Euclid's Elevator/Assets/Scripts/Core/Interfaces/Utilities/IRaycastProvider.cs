@@ -6,5 +6,6 @@ namespace DeathFloor.Utilities
     {
         public RaycastHit GetRaycastHit();
         public bool GetRaycast();
+        public bool GetRaycast(out RaycastHit hitInfo);
     }
 }

@@ -7,9 +7,11 @@ namespace DeathFloor.Input
     public class InputReader : ScriptableObject, PlayerInputActions.IGeneralActions, PlayerInputActions.IRealtimeActions, PlayerInputActions.IBoxActions
     {
         public delegate void InputDetected();
+        public delegate void InventoryDetected(int index);
         public delegate void ScrollDetected(float value);
 
         public Vector2 Look => _inputActions.General.Look.ReadValue<Vector2>();
+
         public Vector2 Move => _inputActions.General.Movement.ReadValue<Vector2>();
 
         public ScrollDetected Scrolled;
@@ -26,30 +28,27 @@ namespace DeathFloor.Input
 
         public event InputDetected Interacted;
 
-        public event InputDetected Inventory1;
-        public event InputDetected Inventory2;
-        public event InputDetected Inventory3;
-        public event InputDetected Inventory4;
+        public event InventoryDetected Inventory;
 
         private PlayerInputActions _inputActions;
         private bool _sneaking;
 
-        void OnEnable()
+        private void OnEnable()
         {
             _inputActions = new PlayerInputActions();
 
             _inputActions.General.SetCallbacks(this);
             _inputActions.Realtime.SetCallbacks(this);
             _inputActions.Box.SetCallbacks(this);
-
-            _inputActions.Enable();
-            _inputActions.Box.Disable();
+            DefaultInput();
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             _inputActions.Disable();
         }
+
+        #region Input Presets
 
         public void DefaultInput()
         {
@@ -76,6 +75,10 @@ namespace DeathFloor.Input
             _inputActions.Realtime.Enable();
             _inputActions.Box.Disable();
         }
+
+        #endregion
+
+        #region Events
 
         public void OnDrop(InputAction.CallbackContext context)
         {
@@ -106,37 +109,37 @@ namespace DeathFloor.Input
 
         public void OnInventory1(InputAction.CallbackContext context)
         {
-            if (Inventory1 != null &&
+            if (Inventory != null &&
                 context.phase == InputActionPhase.Performed)
             {
-                Inventory1.Invoke();
+                Inventory.Invoke(0);
             }
         }
 
         public void OnInventory2(InputAction.CallbackContext context)
         {
-            if (Inventory2 != null &&
+            if (Inventory != null &&
                 context.phase == InputActionPhase.Performed)
             {
-                Inventory2.Invoke();
+                Inventory.Invoke(1);
             }
         }
 
         public void OnInventory3(InputAction.CallbackContext context)
         {
-            if (Inventory3 != null &&
+            if (Inventory != null &&
                 context.phase == InputActionPhase.Performed)
             {
-                Inventory3.Invoke();
+                Inventory.Invoke(2);
             }
         }
 
         public void OnInventory4(InputAction.CallbackContext context)
         {
-            if (Inventory4 != null &&
+            if (Inventory != null &&
                 context.phase == InputActionPhase.Performed)
             {
-                Inventory4.Invoke();
+                Inventory.Invoke(3);
             }
         }
 
@@ -215,6 +218,13 @@ namespace DeathFloor.Input
             {
                 Used.Invoke();
             }
+        }
+
+        #endregion
+
+        public string GetInteractionInputString()
+        {
+            return _inputActions.General.Interact.GetBindingDisplayString();
         }
     }
 }
