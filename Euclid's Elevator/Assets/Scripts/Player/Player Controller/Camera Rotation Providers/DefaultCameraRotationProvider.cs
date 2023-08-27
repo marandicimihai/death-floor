@@ -8,9 +8,16 @@ namespace DeathFloor.Camera.Rotation
         [Header("Settings")]
         [SerializeField, Range(1, 100)] float _sensitivity = 25f;
 
+        private IUnityService _service;
+
+        private void Start()
+        {
+            _service = new UnityService();
+        }
+
         public Vector2 CalculateRotation(Vector2 delta, Vector2 rotation)
         {
-            delta *= Time.deltaTime;
+            delta *= _service.GetDeltaTime();
 
             rotation.x -= delta.y * _sensitivity;
             rotation.y += delta.x * _sensitivity;

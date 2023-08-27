@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace DeathFloor.Utilities.Logger
 {
-    public class DefaultLogger : ILogger
+    internal class DefaultLogger : ILogger
     {
         public bool EnableLogging { set => _enableLogging = value; }
 
-        private static bool _canLog = true;
         private readonly LoggerProfile _profile = new()
         {
             MessageColor = "teal",
@@ -21,6 +20,7 @@ namespace DeathFloor.Utilities.Logger
             SuccessTextColor = "green",
         };
 
+        private static bool _canLog = true;
         private bool _enableLogging = true;
 
         public DefaultLogger()
@@ -38,6 +38,12 @@ namespace DeathFloor.Utilities.Logger
             _profile = profile;
         }
 
+        public DefaultLogger(LoggerProfile profile, bool enableLogging)
+        {
+            _enableLogging = enableLogging;
+            _profile = profile;
+        }
+
         public void Log(string message)
         {
             if (!_enableLogging || !_canLog) return;
@@ -45,7 +51,7 @@ namespace DeathFloor.Utilities.Logger
             Debug.Log($"<size=14><color={_profile.MessageColor}>Message: </color></size><color={_profile.MessageTextColor}>{message}</color>");
         }
 
-        public void LogWarning(string message = null)
+        public void LogWarning(string message)
         {
             if (!_enableLogging || !_canLog) return;
 
@@ -59,7 +65,7 @@ namespace DeathFloor.Utilities.Logger
             }
         }
 
-        public void LogError(string message = null)
+        public void LogError(string message)
         {
             if (!_enableLogging || !_canLog) return;
 

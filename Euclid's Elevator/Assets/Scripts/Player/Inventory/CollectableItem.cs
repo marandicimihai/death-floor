@@ -1,5 +1,4 @@
 using DeathFloor.Interactions;
-using DeathFloor.Utilities.Logger;
 using UnityEngine;
 
 namespace DeathFloor.Inventory

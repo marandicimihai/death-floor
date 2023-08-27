@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
-    public interface IMovementApplier
+    internal interface IMovementApplier
     {
         public Vector3 GetMoveVector();
     }

@@ -5,29 +5,37 @@ using UnityEngine;
 
 namespace DeathFloor.Interactions
 {
-    internal class InteractionManager : MonoBehaviour
+    internal class InteractionManager : MonoBehaviour, IToggleable
     {
         [Header("Input")]
         [SerializeField] private InputReader _inputReader;
 
         [Header("Logger")]
-        [SerializeField, Tooltip("Updates on Start")] private bool _enableLogging;
+        [SerializeField] private bool _enableLogging;
 
         [Header("Optional")]
         [SerializeField] private Optional<MonoBehaviour> _raycastProviderBehaviour;
+        [SerializeField] private Optional<MonoBehaviour> _loggerFactoryBehaviour;
 
+        private bool _canInteract;
+
+        private ILoggerFactory _loggerFactory;
         private IOptionalAssigner _optionalAssigner;
         private IRaycastProvider _raycastProvider;
         private Utilities.Logger.ILogger _logger;
 
         private void Start()
         {
-            _logger ??= new DefaultLogger(_enableLogging);
             _optionalAssigner ??= new OptionalAssigner(this);
+
+            _loggerFactory = _optionalAssigner.AssignUsingGetComponent<ILoggerFactory>(_loggerFactoryBehaviour);
+            _logger ??= _loggerFactory.CreateLogger(_enableLogging);
 
             _raycastProvider = _optionalAssigner.AssignUsingGetComponent<IRaycastProvider>(_raycastProviderBehaviour);
 
             _inputReader.Interacted += Interact;
+
+            Enable();
         }
 
         private void OnDisable()
@@ -61,14 +69,29 @@ namespace DeathFloor.Interactions
 
         private void Interact()
         {
+            if (!_canInteract) return;
+
             if (_raycastProvider.GetRaycast(out RaycastHit hitInfo) &&
                 hitInfo.transform.TryGetComponent(out IInteractable interactable) &&
                 interactable.IsInteractable)
             {
                 _logger.ToggleLogging(_enableLogging)
                        .Log($"Interacted with {hitInfo.transform.name}");
+                
+                
+
                 interactable.Interact();
             }
+        }
+
+        public void Enable()
+        {
+            _canInteract = true;
+        }
+
+        public void Disable()
+        {
+            _canInteract = false;
         }
     }
 }

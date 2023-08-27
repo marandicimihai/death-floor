@@ -6,9 +6,9 @@ namespace DeathFloor.Utilities.Logger
 
         public void Log(string message);
 
-        public void LogWarning(string message = null);
+        public void LogWarning(string message);
 
-        public void LogError(string message = null);
+        public void LogError(string message);
 
         public void Ping();
 

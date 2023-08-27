@@ -22,9 +22,9 @@ namespace DeathFloor.Inventory
                 if (_items[i] == null)
                 {
                     var newItem = Instantiate(item.Properties.HoldingModel, _itemParent);
-                    newItem.transform.SetPositionAndRotation(item.Properties.offsetPosition, Quaternion.Euler(item.Properties.offsetRotation));
+                    newItem.transform.SetPositionAndRotation(item.Properties.OffsetPosition, Quaternion.Euler(item.Properties.OffsetRotation));
                     newItem.GetComponent<CollectableItem>().SetValuesRuntime(item);
-                    
+
                     Destroy(item.gameObject);
 
                     break;
