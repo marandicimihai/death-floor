@@ -531,7 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f74eff7f03f05c4cb124856c5b336fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  animator: {fileID: 6287981321349059628}
   keycard: {fileID: 11400000, guid: 577ccc289259c4c459026e8f185a64ff, type: 2}
   toolbox: {fileID: 11400000, guid: dda90fce8e9402540bc0b5d0bff786f7, type: 2}
   doorCollider: {fileID: 3921013585228813346}
@@ -539,6 +539,7 @@ MonoBehaviour:
   waitForPlayerRadius: 1.3
   elevatorRideTime: 15
   elevatorAccelTime: 3
+  isInteractable: 0
   close: elevatorclose
   open: elevatoropen
   move1: elevator1

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3874139844166113642}
   - component: {fileID: 3868699406102402541}
   - component: {fileID: 4117719501304263065}
+  - component: {fileID: 5727533958209171751}
   m_Layer: 6
   m_Name: Model
   m_TagString: Toolbox
@@ -98,6 +99,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6158486, y: 0.4014655, z: 0.34518856}
   m_Center: {x: -0.00000008940697, y: 0.017828241, z: 0.0021639615}
+--- !u!114 &5727533958209171751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310942346226703413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54dd7bf41ae11164b94c20bf732b40af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redirectTo: {fileID: -680586041008456430}
 --- !u!1 &5082355359761784416
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: dda90fce8e9402540bc0b5d0bff786f7, type: 2}
+  uses: 1
+  isInteractable: 1
 --- !u!95 &4670552293329444951
 Animator:
   serializedVersion: 5

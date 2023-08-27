@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3909408516394762284}
   - component: {fileID: 2526993941413901568}
   - component: {fileID: 8097894580758016342}
+  - component: {fileID: 6227621188967713751}
   m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
@@ -97,6 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.14814082, y: 0.20604998, z: 0.17105824}
   m_Center: {x: 0, y: -0.000000040978193, z: 0}
+--- !u!114 &6227621188967713751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667318000965266809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54dd7bf41ae11164b94c20bf732b40af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redirectTo: {fileID: 1838876990961155924}
 --- !u!1 &4024848576558708582
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 5060c6b20ac00534d83926854d6173c7, type: 2}
+  uses: 1
+  isInteractable: 1
   throwDistance: 5
   stunTime: 8
   coffeeTrail: {fileID: 4975129853458525291, guid: 3e286b5edb5ca1f46aee52615e3738e6, type: 3}
