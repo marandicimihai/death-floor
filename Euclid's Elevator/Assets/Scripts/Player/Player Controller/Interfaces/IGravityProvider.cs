@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
-    public interface IGravityProvider
+    internal interface IGravityProvider
     {
         public Vector3 ComputeGravity();
     }

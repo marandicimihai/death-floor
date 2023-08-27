@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Project
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 1538
+  controlID: 184
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -64,9 +64,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1104.8
+    x: 1105.6
     y: 0
-    width: 431.19995
+    width: 430.40002
     height: 730.8
   m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
@@ -93,10 +93,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 271.2
-    height: 432
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+    width: 272
+    height: 430.4
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -118,9 +118,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 432
-    width: 1104.8
-    height: 298.8
+    y: 430.4
+    width: 1105.6
+    height: 300.4
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 13}
@@ -219,12 +219,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1104.8
+    width: 1105.6
     height: 730.8
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 1539
+  controlID: 44
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -244,12 +244,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1104.8
-    height: 432
+    width: 1105.6
+    height: 430.4
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 53
+  controlID: 45
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -265,10 +265,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 271.2
+    x: 272
     y: 0
-    width: 833.60004
-    height: 432
+    width: 833.6
+    height: 430.4
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
@@ -297,21 +297,21 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 3008.8
+    x: 1105.6
     y: 73.6
-    width: 574.19995
-    height: 997.80005
+    width: 429.40002
+    height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 3457
+    ID: 133
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
-    - 696
-    - 232
+    - 480
+    - 160
     relativeSizes:
     - 0.75
     - 0.25
@@ -321,7 +321,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 928
+    lastTotalSize: 640
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -337,8 +337,8 @@ MonoBehaviour:
       uniqueId: '[DeathFloor][suite]'
       name: DeathFloor
       fullName: DeathFloor
-      resultStatus: 0
-      duration: 0.1620955
+      resultStatus: 1
+      duration: 0.3746779
       messages: 
       output: 
       stacktrace: 
@@ -353,8 +353,8 @@ MonoBehaviour:
       uniqueId: '[PlayMode.dll][suite]'
       name: PlayMode.dll
       fullName: C:/My Files/Projects/GitHub/laughing-rotary-phone/Euclid's Elevator/Library/ScriptAssemblies/PlayMode.dll
-      resultStatus: 0
-      duration: 0.0750198
+      resultStatus: 1
+      duration: 0.2499013
       messages: 
       output: 
       stacktrace: 
@@ -369,8 +369,8 @@ MonoBehaviour:
       uniqueId: PlayMode.dll/[DeathFloor][suite]
       name: DeathFloor
       fullName: DeathFloor
-      resultStatus: 0
-      duration: 0.0715961
+      resultStatus: 1
+      duration: 0.2440148
       messages: 
       output: 
       stacktrace: 
@@ -385,8 +385,8 @@ MonoBehaviour:
       uniqueId: PlayMode.dll/DeathFloor/[PlayMode][DeathFloor.Tests][suite]
       name: Tests
       fullName: DeathFloor.Tests
-      resultStatus: 0
-      duration: 0.0693639
+      resultStatus: 1
+      duration: 0.2424168
       messages: 
       output: 
       stacktrace: 
@@ -401,8 +401,8 @@ MonoBehaviour:
       uniqueId: PlayMode.dll/DeathFloor/Tests/[PlayMode][DeathFloor.Tests.OptionalAssignerTests][suite]
       name: OptionalAssignerTests
       fullName: DeathFloor.Tests.OptionalAssignerTests
-      resultStatus: 0
-      duration: 0.0667337
+      resultStatus: 1
+      duration: 0.2401354
       messages: 
       output: 
       stacktrace: 
@@ -417,8 +417,8 @@ MonoBehaviour:
       uniqueId: PlayMode.dll/DeathFloor/Tests/OptionalAssignerTests/[PlayMode][DeathFloor.Tests.OptionalAssignerTests.AssignUsingGetComponent_ReturnsGetComponent_WhenDisabled]
       name: AssignUsingGetComponent_ReturnsGetComponent_WhenDisabled
       fullName: DeathFloor.Tests.OptionalAssignerTests.AssignUsingGetComponent_ReturnsGetComponent_WhenDisabled
-      resultStatus: 0
-      duration: 0.046535
+      resultStatus: 1
+      duration: 0.1229752
       messages: 
       output: 
       stacktrace: 
@@ -434,8 +434,8 @@ MonoBehaviour:
       uniqueId: PlayMode.dll/DeathFloor/Tests/OptionalAssignerTests/[PlayMode][DeathFloor.Tests.OptionalAssignerTests.AssignUsingGetComponent_ReturnsNull_WhenClassIsNotPresent]
       name: AssignUsingGetComponent_ReturnsNull_WhenClassIsNotPresent
       fullName: DeathFloor.Tests.OptionalAssignerTests.AssignUsingGetComponent_ReturnsNull_WhenClassIsNotPresent
-      resultStatus: 0
-      duration: 0.0071841
+      resultStatus: 1
+      duration: 0.0073514
       messages: 
       output: 
       stacktrace: 
@@ -447,7 +447,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1011
       parentUniqueId: PlayMode.dll/DeathFloor/Tests/[PlayMode][DeathFloor.Tests.OptionalAssignerTests][suite]
-    m_ResultText: 
+    m_ResultText: DeathFloor (0.375s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
@@ -487,8 +487,8 @@ MonoBehaviour:
       uniqueId: '[DeathFloor][suite]'
       name: DeathFloor
       fullName: DeathFloor
-      resultStatus: 0
-      duration: 0.082144
+      resultStatus: 1
+      duration: 0.2802475
       messages: 
       output: 
       stacktrace: 
@@ -503,8 +503,8 @@ MonoBehaviour:
       uniqueId: '[EditMode.dll][suite]'
       name: EditMode.dll
       fullName: C:/My Files/Projects/GitHub/laughing-rotary-phone/Euclid's Elevator/Library/ScriptAssemblies/EditMode.dll
-      resultStatus: 0
-      duration: 0.0348109
+      resultStatus: 1
+      duration: 0.2416913
       messages: 
       output: 
       stacktrace: 
@@ -519,8 +519,8 @@ MonoBehaviour:
       uniqueId: EditMode.dll/[DeathFloor][suite]
       name: DeathFloor
       fullName: DeathFloor
-      resultStatus: 0
-      duration: 0.0330905
+      resultStatus: 1
+      duration: 0.2411724
       messages: 
       output: 
       stacktrace: 
@@ -535,8 +535,8 @@ MonoBehaviour:
       uniqueId: EditMode.dll/DeathFloor/[EditMode][DeathFloor.Tests][suite]
       name: Tests
       fullName: DeathFloor.Tests
-      resultStatus: 0
-      duration: 0.0320622
+      resultStatus: 1
+      duration: 0.2407506
       messages: 
       output: 
       stacktrace: 
@@ -551,8 +551,8 @@ MonoBehaviour:
       uniqueId: EditMode.dll/DeathFloor/Tests/[EditMode][DeathFloor.Tests.OptionalVarTests][suite]
       name: OptionalVarTests
       fullName: DeathFloor.Tests.OptionalVarTests
-      resultStatus: 0
-      duration: 0.0145065
+      resultStatus: 1
+      duration: 0.2217282
       messages: 
       output: 
       stacktrace: 
@@ -567,8 +567,8 @@ MonoBehaviour:
       uniqueId: EditMode.dll/DeathFloor/Tests/OptionalVarTests/[EditMode][DeathFloor.Tests.OptionalVarTests.Value_ReturnsDefault_WhenDisabled]
       name: Value_ReturnsDefault_WhenDisabled
       fullName: DeathFloor.Tests.OptionalVarTests.Value_ReturnsDefault_WhenDisabled
-      resultStatus: 0
-      duration: 0.0086324
+      resultStatus: 1
+      duration: 0.1076464
       messages: 
       output: 
       stacktrace: 
@@ -584,8 +584,8 @@ MonoBehaviour:
       uniqueId: EditMode.dll/DeathFloor/Tests/[EditMode][DeathFloor.Tests.UnityServicesTests][suite]
       name: UnityServicesTests
       fullName: DeathFloor.Tests.UnityServicesTests
-      resultStatus: 0
-      duration: 0.0156058
+      resultStatus: 1
+      duration: 0.0134169
       messages: 
       output: 
       stacktrace: 
@@ -600,8 +600,8 @@ MonoBehaviour:
       uniqueId: EditMode.dll/DeathFloor/Tests/UnityServicesTests/[EditMode][DeathFloor.Tests.UnityServicesTests.GetDeltaTime_Returns_ANonZeroValue]
       name: GetDeltaTime_Returns_ANonZeroValue
       fullName: DeathFloor.Tests.UnityServicesTests.GetDeltaTime_Returns_ANonZeroValue
-      resultStatus: 0
-      duration: 0.0009209
+      resultStatus: 1
+      duration: 0.0022952
       messages: 
       output: 
       stacktrace: 
@@ -666,9 +666,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 505.6
-    width: 1103.8
-    height: 277.8
+    y: 504
+    width: 1104.6
+    height: 279.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -686,22 +686,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Player/Inventory
+    - Assets/Scripts/Player/Dialogue
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Player/Inventory
+  - Assets/Scripts/Player/Dialogue
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\My Files\Projects\GitHub\laughing-rotary-phone\Euclid's Elevator
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 381.39996}
-    m_SelectedIDs: a0a50100
-    m_LastClickedID: 107936
-    m_ExpandedIDs: 00000000e61d00003ab300003cb300003eb3000040b3000042b3000044b3000046b3000048b300004ab300004cb300004eb3000050b3000052b3000054b3000056b3000058b300005ab300005cb300005eb3000060b3000062b3000064b3000066b3000068b300006ab300006cb300006eb30000aeb5000000ca9a3b
+    scrollPos: {x: 0, y: 336.6}
+    m_SelectedIDs: b6b80000
+    m_LastClickedID: 47286
+    m_ExpandedIDs: 00000000fa1d000084b3000086b3000088b300008ab300008cb300008eb3000090b3000098b300009ab300009cb300009eb30000a0b30000a2b30000a4b30000a6b30000a8b30000aab30000acb30000aeb30000b0b30000b2b30000b4b30000b6b30000b0b5000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -729,7 +729,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e61d00003ab300003cb300003eb3000040b3000042b3000044b3000046b3000048b300004ab300004cb300004eb3000050b3000052b3000054b3000056b3000058b300005ab300005cb300005eb3000060b3000062b3000064b3000066b3000068b300006ab300006cb300006eb30000
+    m_ExpandedIDs: 00000000fa1d000084b3000086b3000088b300008ab300008cb300008eb3000090b3000092b3000094b3000096b3000098b300009ab300009cb300009eb30000a0b30000a2b30000a4b30000a6b30000a8b30000aab30000acb30000aeb30000b0b30000b2b30000b4b30000b6b30000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -760,18 +760,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Item
-      m_OriginalName: Item
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 107946
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 5}
     m_CreateAssetUtility:
@@ -805,9 +805,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1104.8
+    x: 1105.6
     y: 73.6
-    width: 430.19995
+    width: 429.40002
     height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -848,8 +848,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 270.2
-    height: 411
+    width: 271
+    height: 409.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -857,9 +857,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: a6a50100
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 6424ffffa224ffff6675ffff0a76ffffce78ffff26fbffff1c5a0000bea40100
+      m_ExpandedIDs: 2aacffff58acffff26fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -875,7 +875,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 3}
+        m_ClientGUIView: {fileID: 11}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -903,10 +903,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 271.2
+    x: 272
     y: 73.6
-    width: 831.60004
-    height: 411
+    width: 831.6
+    height: 409.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -916,7 +916,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: -100, y: -25.600006}
+      snapOffset: {x: -101, y: -26}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Tool Settings
@@ -982,9 +982,9 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 67.5, y: 86}
+      snapOffset: {x: 67.5, y: -196.4}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 0
+      snapCorner: 2
       id: Orientation
       index: 0
       layout: 4
@@ -1004,7 +1004,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 0
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 24.8}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: Scene View/Camera
@@ -1163,9 +1163,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 4.671602, y: 5.938711, z: 2.981316}
+    m_Target: {x: 47.000984, y: 20.389944, z: -35.968094}
     speed: 2
-    m_Value: {x: 4.671602, y: 5.938711, z: 2.981316}
+    m_Value: {x: 47.000984, y: 20.389944, z: -35.968094}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1212,9 +1212,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.20943996, y: 0.70154583, z: -0.22907886, w: 0.6415063}
+    m_Target: {x: -0.2019, y: 0.31360433, z: -0.068350755, w: -0.9253546}
     speed: 2
-    m_Value: {x: 0.20943587, y: 0.7015321, z: -0.22907437, w: 0.6414938}
+    m_Value: {x: -0.20189354, y: 0.31359428, z: -0.068348564, w: -0.9253249}
   m_Size:
     m_Target: 1.2247449
     speed: 2
@@ -1236,7 +1236,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_LastSceneViewRotation: {x: 0.21590413, y: 0.2548789, z: -0.058515284, w: 0.94076604}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -1263,10 +1263,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1897.6
+    x: 272
     y: 73.6
-    width: 1109.2001
-    height: 582.2
+    width: 831.6
+    height: 409.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1277,7 +1277,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1109.2001, y: 561.2}
+  m_TargetSize: {x: 831.6, y: 388.4}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1292,10 +1292,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -443.68002
-    m_HBaseRangeMax: 443.68002
-    m_VBaseRangeMin: -224.48001
-    m_VBaseRangeMax: 224.48001
+    m_HBaseRangeMin: -332.63998
+    m_HBaseRangeMax: 332.63998
+    m_VBaseRangeMin: -155.36
+    m_VBaseRangeMax: 155.36
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1304,7 +1304,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -1313,23 +1313,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 1109.2001
-      height: 561.2
+      width: 831.6
+      height: 388.4
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 554.60004, y: 280.6}
+    m_Translation: {x: 415.8, y: 194.2}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -554.60004
-      y: -280.6
-      width: 1109.2001
-      height: 561.2
+      x: -415.8
+      y: -194.2
+      width: 831.6
+      height: 388.4
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1386.5001, y: 727.75}
+  m_LastWindowPixelSize: {x: 1039.5, y: 511.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1355,10 +1355,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1536
-    y: 676.8
-    width: 1471.8
-    height: 394.60004
+    x: 0
+    y: 504
+    width: 1104.6
+    height: 279.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default

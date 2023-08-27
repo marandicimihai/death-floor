@@ -7,7 +7,7 @@ namespace DeathFloor.Inventory
         public int Uses;
         public GameObject HoldingModel;
         public GameObject PhysicalModel;
-        public Vector3 offsetPosition;
-        public Vector3 offsetRotation;
+        public Vector3 OffsetPosition;
+        public Vector3 OffsetRotation;
     }
 }
