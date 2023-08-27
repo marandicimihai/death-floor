@@ -21,7 +21,7 @@ MonoBehaviour:
     m_Value: 12
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   red:
     m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 2
+      <length>k__BackingField: 3
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -141,6 +141,15 @@ MonoBehaviour:
           time: 0
           value: 0
           inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.68609524
+          value: 0.7674604
+          inSlope: 1
           outSlope: 1
           tangentMode: 0
           weightedMode: 0
@@ -266,8 +275,8 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.19847618
-          value: 0.75396824
+          time: 0.18323809
+          value: 0.5769842
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -285,7 +294,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0.8492063
+          value: 0.6285715
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -388,7 +397,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.05
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,7 +533,7 @@ MonoBehaviour:
     m_Value: 0.284
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.213
+    m_Value: 0.279
   rounded:
     m_OverrideState: 1
     m_Value: 0
