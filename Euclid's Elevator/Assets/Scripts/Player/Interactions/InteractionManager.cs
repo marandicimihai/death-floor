@@ -19,6 +19,8 @@ namespace DeathFloor.Interactions
 
         private bool _canInteract;
 
+        private IInteractionHelper[] _helpers;
+
         private ILoggerFactory _loggerFactory;
         private IOptionalAssigner _optionalAssigner;
         private IRaycastProvider _raycastProvider;
@@ -27,6 +29,8 @@ namespace DeathFloor.Interactions
         private void Start()
         {
             _optionalAssigner ??= new OptionalAssigner(this);
+
+            _helpers = GetComponents<IInteractionHelper>();
 
             _loggerFactory = _optionalAssigner.AssignUsingGetComponent<ILoggerFactory>(_loggerFactoryBehaviour);
             _logger ??= _loggerFactory.CreateLogger(_enableLogging);
@@ -78,7 +82,13 @@ namespace DeathFloor.Interactions
                 _logger.ToggleLogging(_enableLogging)
                        .Log($"Interacted with {hitInfo.transform.name}");
                 
-                
+                foreach(IInteractionHelper helper in _helpers)
+                {
+                    if (interactable.Tag == helper.TargetInteractionTag)
+                    {
+                        helper.InteractionExtension(interactable.GetRoot());
+                    }
+                }
 
                 interactable.Interact();
             }
