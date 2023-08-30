@@ -6,8 +6,8 @@ namespace DeathFloor.Movement
     internal class DefaultMovementProvider : MonoBehaviour, IMovementProvider, ISneakProvider
     {
         [Header("Movement Properties")]
-        [SerializeField] private float _acceleration;
-        [SerializeField] private float _maxSpeed;
+        [SerializeField] private float _acceleration = 0.2f;
+        [SerializeField] private float _maxSpeed = 5f;
 
         private IUnityService _service;
 

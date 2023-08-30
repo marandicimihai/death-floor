@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DeathFloor.Inventory
 {
-    internal class Inventory : MonoBehaviour
+    internal class InventoryManager : MonoBehaviour, IInventoryManager
     {
         [SerializeField] private Transform _itemParent;
         [SerializeField] private int _itemCount;
@@ -22,7 +22,7 @@ namespace DeathFloor.Inventory
                 if (_items[i] == null)
                 {
                     var newItem = Instantiate(item.Properties.HoldingModel, _itemParent);
-                    newItem.transform.SetPositionAndRotation(item.Properties.OffsetPosition, Quaternion.Euler(item.Properties.OffsetRotation));
+                    newItem.transform.SetLocalPositionAndRotation(item.Properties.OffsetPosition, Quaternion.Euler(item.Properties.OffsetRotation));
                     newItem.GetComponent<CollectableItem>().SetValuesRuntime(item);
 
                     Destroy(item.gameObject);

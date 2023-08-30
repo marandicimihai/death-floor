@@ -4,6 +4,8 @@ namespace DeathFloor.Interactions
 {
     internal class InteractionRedirector : MonoBehaviour, IInteractable
     {
+        public InteractionTag Tag { get => _redirectTo.Tag; }
+
         public bool IsInteractable => true;
 
         public string InteractionPrompt => _redirectTo?.InteractionPrompt;
@@ -18,5 +20,7 @@ namespace DeathFloor.Interactions
         }
 
         public void Interact() => _redirectTo?.Interact();
+
+        public GameObject GetRoot() => _redirectTo.GetRoot();
     }
 }

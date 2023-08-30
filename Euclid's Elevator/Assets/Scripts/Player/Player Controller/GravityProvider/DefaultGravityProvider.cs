@@ -7,7 +7,7 @@ namespace DeathFloor.Movement
     internal class DefaultGravityProvider : MonoBehaviour, IGravityProvider
     {
         [Header("Gravity Properties")]
-        [SerializeField] private float _gravityForce;
+        [SerializeField] private float _gravityForce = -9.81f;
         [Header("Optional")]
         [SerializeField] private Optional<MonoBehaviour> _groundedProviderBehaviour;
 

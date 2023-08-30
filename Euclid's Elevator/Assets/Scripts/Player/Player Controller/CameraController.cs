@@ -41,6 +41,12 @@ namespace DeathFloor.Camera.Rotation
             }
         }
 
+        public void SyncRotation()
+        {
+            _rotation.x = _playerCamera.localEulerAngles.x;
+            _rotation.y = _player.localEulerAngles.y;
+        }
+
         public void ResetAngle()
         {
             if (_rotationProvider == null) return;
