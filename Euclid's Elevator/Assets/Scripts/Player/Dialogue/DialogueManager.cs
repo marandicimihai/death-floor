@@ -1,6 +1,7 @@
 using DeathFloor.Utilities;
 using DeathFloor.Utilities.Logger;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace DeathFloor.Dialogue
@@ -9,7 +10,7 @@ namespace DeathFloor.Dialogue
     {
         [SerializeField] private Optional<MonoBehaviour> _dialogueDisplayerBehaviour;
         [SerializeField] private Optional<MonoBehaviour> _loggerFactoryBehaviour;
-
+        [SerializeField] LineProperties aline;
         private bool _canSay;
 
         private IOptionalAssigner _optionalAssigner;
@@ -42,7 +43,20 @@ namespace DeathFloor.Dialogue
                 return;
             }
 
-            _dialogueDisplayer.DisplayDialogue(lineProperties, AddToUsed);
+            _dialogueDisplayer.DisplayDialogue(lineProperties, lineProperties.OneTime ? AddToUsed : null);
+        }
+
+        public void SayAdditive(LineProperties lineProperties)
+        {
+            if (!_canSay) return;
+
+            if (_usedLines.Contains(lineProperties))
+            {
+                _logger.Log($"The line {lineProperties.Name} has already been used.");
+                return;
+            }
+
+            _dialogueDisplayer.DisplayAdditive(lineProperties, lineProperties.OneTime ? AddToUsed : null);
         }
 
         private void AddToUsed(LineProperties lineProperties)

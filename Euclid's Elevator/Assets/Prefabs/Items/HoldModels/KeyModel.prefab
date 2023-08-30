@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8646261294423177919}
   - component: {fileID: 8546495623429068283}
   - component: {fileID: 1152267571975243729}
-  - component: {fileID: 2898480938190271595}
+  - component: {fileID: 3938420388125998152}
   m_Layer: 16
   m_Name: KeyModel
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2898480938190271595
+--- !u!114 &3938420388125998152
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,13 +93,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1668860761680531593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e3204e85b9d7864e83e57f2e5278b7c, type: 3}
+  m_Script: {fileID: 11500000, guid: d68feda4f0858c64492f6d31ceade5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  properties: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  uses: 2
-  key1: {fileID: 4987082097754390101, guid: d7f45d2b3f9f97744ab2fe8e36df8483, type: 3}
-  key2: {fileID: 5334123188023769081, guid: 702828c57fd614248a723903c9432c6e, type: 3}
-  timeLasting: 5
-  force: 4
-  keybreak: keybreak
+  _properties: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
+  _interactionTag: 1
+  _isInteractable: 1
+  _interactionPrompt: Pick Up

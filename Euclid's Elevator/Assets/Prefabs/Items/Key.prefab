@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2560858230843620376}
   - component: {fileID: 6552477709957819954}
   - component: {fileID: 5968818748849870281}
-  - component: {fileID: 5820957403000190083}
+  - component: {fileID: 803074727}
   m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.38891098, y: 0.03880089, z: 0.18789601}
   m_Center: {x: 0.11309413, y: 0.012154733, z: -0.00000015563486}
---- !u!114 &5820957403000190083
+--- !u!114 &803074727
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,10 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4772199904937539946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54dd7bf41ae11164b94c20bf732b40af, type: 3}
+  m_Script: {fileID: 11500000, guid: 71260ef785ec347489480a7581175a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redirectTo: {fileID: -5136908597957787455}
+  _redirectToBehaviour: {fileID: 803074725}
 --- !u!1 &7178980861119937168
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 149570376882749410}
   - component: {fileID: 5299632002399296052}
   - component: {fileID: -5850298805374714409}
-  - component: {fileID: -5136908597957787455}
+  - component: {fileID: 803074725}
   m_Layer: 18
   m_Name: Key
   m_TagString: Untagged
@@ -184,7 +184,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!114 &-5136908597957787455
+--- !u!114 &803074725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,14 +193,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7178980861119937168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e3204e85b9d7864e83e57f2e5278b7c, type: 3}
+  m_Script: {fileID: 11500000, guid: d68feda4f0858c64492f6d31ceade5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  properties: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
-  uses: 2
-  isInteractable: 1
-  key1: {fileID: 4987082097754390101, guid: d7f45d2b3f9f97744ab2fe8e36df8483, type: 3}
-  key2: {fileID: 5334123188023769081, guid: 702828c57fd614248a723903c9432c6e, type: 3}
-  timeLasting: 5
-  force: 4
-  keybreak: keybreak
+  _properties: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
+  _interactionTag: 1
+  _isInteractable: 1
+  _interactionPrompt: Pick Up

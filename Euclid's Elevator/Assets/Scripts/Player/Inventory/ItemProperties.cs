@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace DeathFloor.Inventory
 {
+    [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
     internal class ItemProperties : ScriptableObject
     {
         public int Uses;
