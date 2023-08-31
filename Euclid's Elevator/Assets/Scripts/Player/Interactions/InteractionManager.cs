@@ -15,13 +15,11 @@ namespace DeathFloor.Interactions
 
         [Header("Optional")]
         [SerializeField] private Optional<MonoBehaviour> _raycastProviderBehaviour;
-        [SerializeField] private Optional<MonoBehaviour> _loggerFactoryBehaviour;
 
         private bool _canInteract;
 
         private IInteractionHelper[] _helpers;
 
-        private ILoggerFactory _loggerFactory;
         private IOptionalAssigner _optionalAssigner;
         private IRaycastProvider _raycastProvider;
         private Utilities.Logger.ILogger _logger;
@@ -32,8 +30,7 @@ namespace DeathFloor.Interactions
 
             _helpers = GetComponents<IInteractionHelper>();
 
-            _loggerFactory = _optionalAssigner.AssignUsingGetComponent<ILoggerFactory>(_loggerFactoryBehaviour);
-            _logger ??= _loggerFactory.CreateLogger(_enableLogging);
+            _logger ??= new DefaultLogger();
 
             _raycastProvider = _optionalAssigner.AssignUsingGetComponent<IRaycastProvider>(_raycastProviderBehaviour);
 

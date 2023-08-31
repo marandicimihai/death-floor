@@ -9,12 +9,10 @@ namespace DeathFloor.Dialogue
     internal class DialogueManager : MonoBehaviour, IToggleable, IDialogueManager
     {
         [SerializeField] private Optional<MonoBehaviour> _dialogueDisplayerBehaviour;
-        [SerializeField] private Optional<MonoBehaviour> _loggerFactoryBehaviour;
         
         private bool _canSay;
 
         private IOptionalAssigner _optionalAssigner;
-        private ILoggerFactory _loggerFactory;
         private Utilities.Logger.ILogger _logger;
         private IDialogueDisplayer _dialogueDisplayer;
 
@@ -25,8 +23,7 @@ namespace DeathFloor.Dialogue
         {
             _optionalAssigner ??= new OptionalAssigner(this);
 
-            _loggerFactory ??= _optionalAssigner.AssignUsingGetComponent<ILoggerFactory>(_loggerFactoryBehaviour);
-            _logger ??= _loggerFactory.CreateLogger();
+            _logger ??= new DefaultLogger();
 
             _usedLines ??= new List<LineProperties>();
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DeathFloor.Utilities.Logger
 {
-    internal class DefaultLogger : ILogger
+    public class DefaultLogger : ILogger
     {
         public bool EnableLogging { set => _enableLogging = value; }
 

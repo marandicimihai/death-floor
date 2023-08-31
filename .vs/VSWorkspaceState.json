@@ -5,12 +5,12 @@
     "\\Euclid's Elevator\\Assets",
     "\\Euclid's Elevator\\Assets\\Scripts",
     "\\Euclid's Elevator\\Assets\\Scripts\\Core",
-    "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Interactions",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Audio",
     "\\Euclid's Elevator\\Assets\\Scripts\\Player",
     "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Dialogue",
     "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Interactions",
     "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Inventory"
   ],
-  "SelectedNode": "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Inventory\\ItemProperties.cs",
+  "SelectedNode": "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Audio\\IAudioPlayer.cs",
   "PreviewInSolutionExplorer": false
 }
