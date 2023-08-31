@@ -7,6 +7,12 @@ using UnityEngine.UI;
 
 namespace DeathFloor.Dialogue
 {
+    internal struct LineQueueObject
+    {
+        public LineProperties Line;
+        public Action<LineProperties> Callback;
+    }
+
     internal class DefaultDialogueDisplayer : MonoBehaviour, IDialogueDisplayer, IToggleable
     {
         [SerializeField] private Text _textContainer;
@@ -19,8 +25,7 @@ namespace DeathFloor.Dialogue
 
         private bool _typing;
         private bool _lasting;
-        private Queue<LineProperties> _linesToDisplay;
-        private Queue<Action<LineProperties>> _callbacks;
+        private Queue<LineQueueObject> _lineQueue;
         private int _currentLetter;
         private float _letterTimeElapsed;
         private float _lastingTimeElapsed;
@@ -43,15 +48,19 @@ namespace DeathFloor.Dialogue
                     {
                         try
                         {
-                            _textContainer.text += _linesToDisplay?.Peek().Text[_currentLetter];
+                            _textContainer.text += _lineQueue?.Peek().Line.Text[_currentLetter];
                             _currentLetter++;
                         }
                         catch
                         {
-                            _callbacks?.Dequeue()?.Invoke(_linesToDisplay?.Dequeue());
-                            if (_callbacks.Count == 0)
+                            if (_lineQueue.Count > 0)
                             {
-                                _linesToDisplay.Dequeue();
+                                LineQueueObject queueObject = _lineQueue.Dequeue();
+                                queueObject.Callback?.Invoke(queueObject.Line);
+                            }
+
+                            if (_lineQueue.Count == 0)
+                            {
                                 _typing = false;
                                 _lasting = true;
                             }
@@ -76,8 +85,11 @@ namespace DeathFloor.Dialogue
             Clear();
 
             _typing = true;
-            _linesToDisplay.Enqueue(lineProperties);
-            _callbacks.Enqueue(cb);
+            _lineQueue.Enqueue(new LineQueueObject() 
+            {
+                Line = lineProperties, 
+                Callback = cb 
+            });
         }
 
         public void DisplayAdditive(LineProperties lineProperties, Action<LineProperties> cb)
@@ -85,8 +97,11 @@ namespace DeathFloor.Dialogue
             _typing = true;
             _lasting = false;
 
-            _linesToDisplay.Enqueue(lineProperties);
-            _callbacks.Enqueue(cb);
+            _lineQueue.Enqueue(new LineQueueObject()
+            {
+                Line = lineProperties,
+                Callback = cb
+            });
         }
 
         private void Clear()
@@ -94,8 +109,7 @@ namespace DeathFloor.Dialogue
             _textContainer.text = string.Empty;
             _typing = false;
             _lasting = false;
-            _linesToDisplay?.Clear();
-            _callbacks?.Clear();
+            _lineQueue?.Clear();
             _currentLetter = 0;
             _letterTimeElapsed = 0;
             _lastingTimeElapsed = 0;
@@ -103,8 +117,7 @@ namespace DeathFloor.Dialogue
 
         public void Enable()
         {
-            _linesToDisplay = new();
-            _callbacks = new();
+            _lineQueue = new();
             _canDisplay = true;
         }
 
