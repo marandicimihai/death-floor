@@ -299,6 +299,7 @@ MonoBehaviour:
   _loggerFactoryBehaviour:
     _enabled: 1
     _value: {fileID: 2120629393487651996}
+  aline: {fileID: 11400000, guid: bc1fc823a4ff1da40ae6aa2f74b0c442, type: 2}
 --- !u!1 &1337528472
 GameObject:
   m_ObjectHideFlags: 0
