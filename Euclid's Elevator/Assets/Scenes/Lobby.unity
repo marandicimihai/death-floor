@@ -4067,6 +4067,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathFloor_cutsceneStuff
       objectReference: {fileID: 0}
+    - target: {fileID: 829725384465239730, guid: f1edbca66e2ebe44eafe4438dcf22428, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4100215991783929637, guid: f1edbca66e2ebe44eafe4438dcf22428, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
