@@ -5,21 +5,15 @@ namespace DeathFloor.Movement
 {
     internal class FirstPersonController : MonoBehaviour, IToggleable
     {
-        [SerializeField] private Optional<CharacterController> _characterController;
-        [SerializeField] private Optional<MonoBehaviour> _movementApplierBehaviour;
+        [SerializeField] private CharacterController _controller;
+        [SerializeField, RequireInterface(typeof(IMovementApplier))] private Object _movementApplier;
 
-        private CharacterController _controller;
-        private IMovementApplier _movementApplier;
-        private IOptionalAssigner _optionalAssigner;
+        private IMovementApplier _movementApplierInterface;
         private bool _canMove;
 
         private void Start()
         {
-            _optionalAssigner ??= new OptionalAssigner(this);
-
-            _movementApplier = _optionalAssigner.AssignUsingGetComponent<IMovementApplier>(_movementApplierBehaviour);
-            _controller = _optionalAssigner.AssignUsingGetComponent(_characterController);
-
+            _movementApplierInterface = _movementApplier as IMovementApplier;
             Enable();
         }
 
@@ -27,9 +21,9 @@ namespace DeathFloor.Movement
         {
             if (_canMove &&
                 _controller != null &&
-                _movementApplier != null)
+                _movementApplierInterface != null)
             {
-                _controller.Move(_movementApplier.GetMoveVector());
+                _controller.Move(_movementApplierInterface.GetMoveVector());
             }
         }
 

@@ -5,12 +5,13 @@
     "\\Euclid's Elevator\\Assets",
     "\\Euclid's Elevator\\Assets\\Scripts",
     "\\Euclid's Elevator\\Assets\\Scripts\\Core",
-    "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Audio",
-    "\\Euclid's Elevator\\Assets\\Scripts\\Player",
-    "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Dialogue",
-    "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Interactions",
-    "\\Euclid's Elevator\\Assets\\Scripts\\Player\\Inventory"
+    "\\Euclid's Elevator\\Assets\\Scripts\\Core\\RequireInterface",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Editor",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Tests",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Tests\\EditMode",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Tests\\PlayMode",
+    "\\Euclid's Elevator\\Assets\\Scripts\\Tests\\PlayMode\\TestResources"
   ],
-  "SelectedNode": "\\Euclid's Elevator\\Assets\\Scripts\\Core\\Audio\\IAudioPlayer.cs",
+  "SelectedNode": "\\Euclid's Elevator\\Assets\\Scripts\\Tests\\PlayMode\\ControllerProviderTests.cs",
   "PreviewInSolutionExplorer": false
 }

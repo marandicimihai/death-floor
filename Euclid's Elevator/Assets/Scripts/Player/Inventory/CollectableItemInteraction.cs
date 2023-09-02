@@ -9,23 +9,20 @@ namespace DeathFloor.Interactions
         public InteractionTag TargetInteractionTag => _targetInteractionTag;
 
         [SerializeField] private InteractionTag _targetInteractionTag;
-        [SerializeField] private Optional<MonoBehaviour> _inventoryBehaviour;
+        [SerializeField, RequireInterface(typeof(IInventoryManager))] private Object _inventory;
 
-        private IOptionalAssigner _optionalAssigner;
-        private IInventoryManager _inventory;
+        private IInventoryManager _inventoryInterface;
 
         private void Start()
         {
-            _optionalAssigner = new OptionalAssigner(this);
-
-            _inventory = _optionalAssigner.AssignUsingGetComponent<IInventoryManager>(_inventoryBehaviour);
+            _inventoryInterface = _inventory as IInventoryManager;
         }
 
         public void InteractionExtension(GameObject rootObject)
         {
             if (rootObject.TryGetComponent(out CollectableItem item))
             {
-                _inventory.PickUp(item);
+                _inventoryInterface.PickUp(item);
             }
         }
     }
