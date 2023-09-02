@@ -14,25 +14,22 @@ namespace DeathFloor.Interactions
         [SerializeField] private bool _enableLogging;
 
         [Header("Optional")]
-        [SerializeField] private Optional<MonoBehaviour> _raycastProviderBehaviour;
+        [SerializeField, RequireInterface(typeof(IRaycastProvider))] private Object _raycastProvider;
 
         private bool _canInteract;
 
         private IInteractionHelper[] _helpers;
 
-        private IOptionalAssigner _optionalAssigner;
-        private IRaycastProvider _raycastProvider;
+        private IRaycastProvider _raycastProviderInterface;
         private Utilities.Logger.ILogger _logger;
 
         private void Start()
         {
-            _optionalAssigner ??= new OptionalAssigner(this);
-
             _helpers = GetComponents<IInteractionHelper>();
 
             _logger ??= new DefaultLogger();
 
-            _raycastProvider = _optionalAssigner.AssignUsingGetComponent<IRaycastProvider>(_raycastProviderBehaviour);
+            _raycastProviderInterface = _raycastProvider as IRaycastProvider;
 
             _inputReader.Interacted += Interact;
 
@@ -47,7 +44,7 @@ namespace DeathFloor.Interactions
         private void Update()
         {
             //EXTRACT TO SEPARATE CLASS
-            if (_raycastProvider.GetRaycast(out RaycastHit hitInfo))
+            if (_raycastProviderInterface.GetRaycast(out RaycastHit hitInfo))
             {
                 if (hitInfo.transform.TryGetComponent(out IInteractable interactable) && interactable.IsInteractable)
                 {
@@ -72,7 +69,7 @@ namespace DeathFloor.Interactions
         {
             if (!_canInteract) return;
 
-            if (_raycastProvider.GetRaycast(out RaycastHit hitInfo) &&
+            if (_raycastProviderInterface.GetRaycast(out RaycastHit hitInfo) &&
                 hitInfo.transform.TryGetComponent(out IInteractable interactable) &&
                 interactable.IsInteractable)
             {

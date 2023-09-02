@@ -660,10 +660,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 650499696285706564, guid: f8af4398f057a7847a45120889881c3f, type: 3}
-      propertyPath: aSound
-      value: 
-      objectReference: {fileID: 11400000, guid: 863f9b22976fa5042b713c5af6212911, type: 2}
     - target: {fileID: 650499696285706568, guid: f8af4398f057a7847a45120889881c3f, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -712,6 +708,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2120629393487651996, guid: f8af4398f057a7847a45120889881c3f, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8af4398f057a7847a45120889881c3f, type: 3}

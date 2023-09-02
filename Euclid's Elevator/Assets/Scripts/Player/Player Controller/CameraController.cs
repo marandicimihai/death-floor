@@ -12,18 +12,15 @@ namespace DeathFloor.Camera.Rotation
         [Header("Variables")]
         [SerializeField] private Transform _player;
         [SerializeField] private Transform _playerCamera;
-        [SerializeField] private Optional<MonoBehaviour> _rotationProviderBehaviour;
+        [SerializeField, RequireInterface(typeof(ICameraRotationProvider))] private Object _rotationProvider;
 
-        private ICameraRotationProvider _rotationProvider;
-        private IOptionalAssigner _optionalAssinger;
+        private ICameraRotationProvider _rotationProviderInterface;
         private Vector2 _rotation;
         private bool _canLook;
 
         private void Start()
         {
-            _optionalAssinger ??= new OptionalAssigner(this);
-
-            _rotationProvider = _optionalAssinger.AssignUsingGetComponent<ICameraRotationProvider>(_rotationProviderBehaviour);
+            _rotationProviderInterface = _rotationProvider as ICameraRotationProvider;
 
             ResetAngle();
             Enable();
@@ -31,10 +28,10 @@ namespace DeathFloor.Camera.Rotation
 
         private void Update()
         {
-            if (_rotationProvider != null &&
+            if (_rotationProviderInterface != null &&
                 _canLook)
             {
-                _rotation = _rotationProvider.CalculateRotation(_inputReader.Look, _rotation);
+                _rotation = _rotationProviderInterface.CalculateRotation(_inputReader.Look, _rotation);
 
                 _playerCamera.localEulerAngles = new Vector3(_rotation.x, 0, 0);
                 _player.localEulerAngles = new Vector3(0, _rotation.y, 0);
@@ -49,9 +46,9 @@ namespace DeathFloor.Camera.Rotation
 
         public void ResetAngle()
         {
-            if (_rotationProvider == null) return;
+            if (_rotationProviderInterface == null) return;
 
-            _rotation = _rotationProvider.ResetAngle();
+            _rotation = _rotationProviderInterface.ResetAngle();
 
             _playerCamera.localEulerAngles = new Vector3(_rotation.x, 0, 0);
             _player.localEulerAngles = new Vector3(0, _rotation.y, 0);

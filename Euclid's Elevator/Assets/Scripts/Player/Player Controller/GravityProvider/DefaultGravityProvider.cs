@@ -9,19 +9,17 @@ namespace DeathFloor.Movement
         [Header("Gravity Properties")]
         [SerializeField] private float _gravityForce = -9.81f;
         [Header("Optional")]
-        [SerializeField] private Optional<MonoBehaviour> _groundedProviderBehaviour;
+        [SerializeField, RequireInterface(typeof(IRaycastProvider))] private Object _groundedRaycastProvider;
 
         private IUnityService _service;
-        private IOptionalAssigner _optionalAssigner;
         private IRaycastProvider _groundedProvider;
         private Vector3 gravity;
 
         private void Start()
         {
-            _optionalAssigner ??= new OptionalAssigner(this);
             _service = new UnityService();
 
-            _groundedProvider = _optionalAssigner.AssignUsingGetComponent<IRaycastProvider>(_groundedProviderBehaviour);
+            _groundedProvider = _groundedRaycastProvider as IRaycastProvider;
         }
 
         private void Update()

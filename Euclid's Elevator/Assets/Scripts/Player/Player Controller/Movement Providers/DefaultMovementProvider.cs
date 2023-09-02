@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
-    internal class DefaultMovementProvider : MonoBehaviour, IMovementProvider, ISneakProvider
+    internal class DefaultMovementProvider : MonoBehaviour, IMovementProvider
     {
         [Header("Movement Properties")]
         [SerializeField] private float _acceleration = 0.2f;
