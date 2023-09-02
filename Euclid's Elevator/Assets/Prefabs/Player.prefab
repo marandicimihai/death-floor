@@ -293,13 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e2a944d33784b43906c69d18c1e7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogueDisplayerBehaviour:
-    _enabled: 1
-    _value: {fileID: 384225591}
-  _loggerFactoryBehaviour:
-    _enabled: 1
-    _value: {fileID: 2120629393487651996}
-  aline: {fileID: 11400000, guid: bc1fc823a4ff1da40ae6aa2f74b0c442, type: 2}
+  _dialogueDisplayer: {fileID: 384225591}
 --- !u!1 &1337528472
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,12 +444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
   _enableLogging: 1
-  _raycastProviderBehaviour:
-    _enabled: 0
-    _value: {fileID: 0}
-  _loggerFactoryBehaviour:
-    _enabled: 1
-    _value: {fileID: 2120629393487651996}
+  _raycastProvider: {fileID: 650499694521052858}
 --- !u!114 &650499694521052858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,9 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetInteractionTag: 1
-  _inventoryBehaviour:
-    _enabled: 1
-    _value: {fileID: 776324681}
+  _inventory: {fileID: 776324681}
 --- !u!1 &650499695270092488
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,12 +644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72bff661690d0a348b76d77ce3f52abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController:
-    _enabled: 1
-    _value: {fileID: 650499696285706570}
-  _movementApplierBehaviour:
-    _enabled: 0
-    _value: {fileID: 0}
+  _controller: {fileID: 650499696285706570}
+  _movementApplier: {fileID: 650499695422743616}
 --- !u!114 &650499695422743616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,15 +659,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
-  _movementProviderBehaviour:
-    _enabled: 1
-    _value: {fileID: 650499695422743623}
-  _sneakProviderBehaviour:
-    _enabled: 1
-    _value: {fileID: 650499695422743622}
-  _gravityProviderBehaviour:
-    _enabled: 0
-    _value: {fileID: 0}
+  _movementProvider: {fileID: 650499695422743623}
+  _sneakMovementProvider: {fileID: 650499695422743622}
+  _gravityProvider: {fileID: 650499695422743620}
 --- !u!114 &650499695422743623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,9 +703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gravityForce: -9.81
-  _groundedProviderBehaviour:
-    _enabled: 0
-    _value: {fileID: 0}
+  _groundedRaycastProvider: {fileID: 650499695422743621}
 --- !u!114 &650499695422743621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,7 +734,6 @@ GameObject:
   - component: {fileID: 650499696285706570}
   - component: {fileID: 1934122106}
   - component: {fileID: 1934122105}
-  - component: {fileID: 2120629393487651996}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -833,9 +807,7 @@ MonoBehaviour:
   _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
   _player: {fileID: 650499696285706568}
   _playerCamera: {fileID: 650499695270092489}
-  _rotationProviderBehaviour:
-    _enabled: 0
-    _value: {fileID: 0}
+  _rotationProvider: {fileID: 1934122105}
 --- !u!114 &1934122105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -849,15 +821,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sensitivity: 19
---- !u!114 &2120629393487651996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650499696285706575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc8c17e6f2f457d44b5813fe30d7d301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

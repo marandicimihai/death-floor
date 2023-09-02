@@ -1,33 +1,29 @@
 using DeathFloor.Utilities;
 using DeathFloor.Utilities.Logger;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace DeathFloor.Dialogue
 {
     internal class DialogueManager : MonoBehaviour, IToggleable, IDialogueManager
     {
-        [SerializeField] private Optional<MonoBehaviour> _dialogueDisplayerBehaviour;
+        [SerializeField, RequireInterface(typeof(IDialogueDisplayer))] private Object _dialogueDisplayer;
         
         private bool _canSay;
 
-        private IOptionalAssigner _optionalAssigner;
         private Utilities.Logger.ILogger _logger;
-        private IDialogueDisplayer _dialogueDisplayer;
+        private IDialogueDisplayer _dialogueDisplayerInterface;
 
         private List<LineProperties> _usedLines;
         private Queue<LineProperties> _displaying;
 
         private void Start()
         {
-            _optionalAssigner ??= new OptionalAssigner(this);
-
-            _logger ??= new DefaultLogger();
+            _logger = new DefaultLogger();
 
             _usedLines ??= new List<LineProperties>();
 
-            _dialogueDisplayer ??= _optionalAssigner.AssignUsingGetComponent<IDialogueDisplayer>(_dialogueDisplayerBehaviour);
+            _dialogueDisplayerInterface = _dialogueDisplayer as IDialogueDisplayer;
 
             Enable();
         }
@@ -46,7 +42,7 @@ namespace DeathFloor.Dialogue
             }
 
             _displaying.Enqueue(lineProperties);
-            _dialogueDisplayer.DisplayDialogue(lineProperties, FinishedDisplaying);
+            _dialogueDisplayerInterface.DisplayDialogue(lineProperties, FinishedDisplaying);
         }
 
         public void SayAdditive(LineProperties lineProperties)
@@ -69,7 +65,7 @@ namespace DeathFloor.Dialogue
             }
 
             _displaying.Enqueue(lineProperties);
-            _dialogueDisplayer.DisplayAdditive(lineProperties, FinishedDisplaying);
+            _dialogueDisplayerInterface.DisplayAdditive(lineProperties, FinishedDisplaying);
         }
 
         private void FinishedDisplaying(LineProperties properties)

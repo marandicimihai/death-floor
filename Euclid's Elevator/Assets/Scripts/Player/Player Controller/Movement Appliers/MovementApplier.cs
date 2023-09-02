@@ -10,24 +10,21 @@ namespace DeathFloor.Movement
         [SerializeField] private InputReader _inputReader;
 
         [Header("Optional")]
-        [SerializeField] private Optional<MonoBehaviour> _movementProviderBehaviour;
-        [SerializeField] private Optional<MonoBehaviour> _sneakProviderBehaviour;
-        [SerializeField] private Optional<MonoBehaviour> _gravityProviderBehaviour;
+        [SerializeField, RequireInterface(typeof(IMovementProvider))] private Object _movementProvider;
+        [SerializeField, RequireInterface(typeof(IMovementProvider))] private Object _sneakMovementProvider;
+        [SerializeField, RequireInterface(typeof(IGravityProvider))] private Object _gravityProvider;
 
         private Vector3 _velocity = Vector3.zero;
-        private IMovementProvider _movementProvider;
-        private ISneakProvider _sneakProvider;
-        private IGravityProvider _gravityProvider;
-        private IOptionalAssigner _optionalAssigner;
+        private IMovementProvider _movementProviderInterface;
+        private IMovementProvider _sneakMovementProviderInterface;
+        private IGravityProvider _gravityProviderInterface;
 
 
         private void Start()
         {
-            _optionalAssigner ??= new OptionalAssigner(this);
-
-            _movementProvider = _optionalAssigner.AssignUsingGetComponent<IMovementProvider>(_movementProviderBehaviour);
-            _sneakProvider = _optionalAssigner.AssignUsingGetComponent<ISneakProvider>(_sneakProviderBehaviour);
-            _gravityProvider = _optionalAssigner.AssignUsingGetComponent<IGravityProvider>(_gravityProviderBehaviour);
+            _movementProviderInterface = _movementProvider as IMovementProvider;
+            _sneakMovementProviderInterface = _sneakMovementProvider as IMovementProvider;
+            _gravityProviderInterface = _gravityProvider as IGravityProvider;
         }
 
         public Vector3 GetMoveVector()
@@ -35,21 +32,21 @@ namespace DeathFloor.Movement
             var movement = Vector3.zero;
             if (_inputReader.Sneaking)
             {
-                if (_sneakProvider != null)
+                if (_sneakMovementProviderInterface != null)
                 {
-                    movement = _sneakProvider.CalculateMovement(_inputReader.Move, ref _velocity);
+                    movement = _sneakMovementProviderInterface.CalculateMovement(_inputReader.Move, ref _velocity);
                 }
             }
             else
             {
-                if (_movementProvider != null)
+                if (_movementProviderInterface != null)
                 {
-                    movement = _movementProvider.CalculateMovement(_inputReader.Move, ref _velocity);
+                    movement = _movementProviderInterface.CalculateMovement(_inputReader.Move, ref _velocity);
                 }
             }
-            if (_gravityProvider != null)
+            if (_gravityProviderInterface != null)
             {
-                movement += _gravityProvider.ComputeGravity();
+                movement += _gravityProviderInterface.ComputeGravity();
             }
             return movement;
         }
