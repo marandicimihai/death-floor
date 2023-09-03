@@ -20,10 +20,9 @@ namespace DeathFloor.Movement
         private void Update()
         {
             if (_canMove &&
-                _controller != null &&
-                _movementApplierInterface != null)
+                _controller != null)
             {
-                _controller.Move(_movementApplierInterface.GetMoveVector());
+                _controller.Move(_movementApplierInterface?.GetMoveVector() ?? Vector3.zero);
             }
         }
 

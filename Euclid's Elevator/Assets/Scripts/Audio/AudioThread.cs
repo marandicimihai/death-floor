@@ -1,4 +1,3 @@
-using DeathFloor.UnityServices;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,6 @@ namespace DeathFloor.Audio
 {
     internal class AudioThread : MonoBehaviour, IAudioThread
     {
-        private IUnityService _unityService;
         private Queue<SoundProperties> _soundQueue;
         private AudioSource _currentSource;
         private bool _destroy;
@@ -47,11 +45,11 @@ namespace DeathFloor.Audio
                     {
                         if (_soundQueue.Peek().PlayPaused)
                         {
-                            _timeElapsed += _unityService.GetUnscaledDeltaTime();
+                            _timeElapsed += Time.unscaledDeltaTime;
                         }
                         else
                         {
-                            _timeElapsed += _unityService.GetDeltaTime();
+                            _timeElapsed += Time.deltaTime;
                         }
                     }
                 }
@@ -65,15 +63,18 @@ namespace DeathFloor.Audio
             return this;
         }
 
+        public void SetVolume(float volume)
+        {
+            if (_currentSource != null)
+            {
+                _currentSource.volume = volume;
+            }
+        }
+
         public void Clear()
         {
             _soundQueue.Clear();
             Destroy();
-        }
-
-        public void Initialize(IUnityService service)
-        {
-            _unityService = service;
         }
 
         private void Destroy()

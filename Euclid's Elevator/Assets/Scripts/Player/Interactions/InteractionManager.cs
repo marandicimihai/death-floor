@@ -1,7 +1,6 @@
 using DeathFloor.HUD;
 using DeathFloor.Input;
 using DeathFloor.Utilities;
-using DeathFloor.Utilities.Logger;
 using UnityEngine;
 
 namespace DeathFloor.Interactions
@@ -44,7 +43,8 @@ namespace DeathFloor.Interactions
 
         private void Update()
         {
-            if (_raycastProviderInterface.GetRaycast(out RaycastHit hitInfo))
+            if (_raycastProviderInterface != null && 
+                _raycastProviderInterface.GetRaycast(out RaycastHit hitInfo))
             {
                 if (hitInfo.transform.TryGetComponent(out IInteractable interactable) && interactable.IsInteractable)
                 {

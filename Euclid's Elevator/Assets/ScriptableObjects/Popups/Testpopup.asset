@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f00674586b9c345bcdee7d4dbdeffe, type: 3}
+  m_Name: Testpopup
+  m_EditorClassIdentifier: 
+  _oneTime: 0
+  _title: A test...
+  _subtitle: Does it work?
+  _icon: {fileID: 21300000, guid: 5ff469c51ac9dde44a8378b979f4ab3f, type: 3}
+  _prefab: {fileID: 6599524089018078356, guid: 391a327e8698d3a4aa1e42a89fd59d98, type: 3}

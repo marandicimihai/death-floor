@@ -2,11 +2,12 @@ namespace DeathFloor.Audio
 {
     public interface IAudioThread
     {
-        public void DestroyObjectWhenFinished();
+        public IAudioThread AddToQueue(SoundProperties properties);
+        public void SetVolume(float volume);
         /// <summary>
         /// Gets destroyed.
         /// </summary>
         public void Clear();
-        public IAudioThread AddToQueue(SoundProperties properties);
+        public void DestroyObjectWhenFinished();
     }
 }

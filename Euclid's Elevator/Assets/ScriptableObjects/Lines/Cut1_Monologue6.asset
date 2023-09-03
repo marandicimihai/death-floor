@@ -15,3 +15,6 @@ MonoBehaviour:
   Name: BlaBla6
   Text: ' but be swift.'
   OneTime: 0
+  _name: BlaBla6
+  _text: ' but be swift.'
+  _oneTime: 0

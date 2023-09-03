@@ -15,3 +15,6 @@ MonoBehaviour:
   Name: BlaBla4
   Text: ' Don''t worry,'
   OneTime: 0
+  _name: BlaBla4
+  _text: ' Don''t worry,'
+  _oneTime: 0

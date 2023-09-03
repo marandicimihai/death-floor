@@ -1,4 +1,3 @@
-using DeathFloor.UnityServices;
 using DeathFloor.Utilities;
 using System;
 using System.Collections.Generic;
@@ -18,9 +17,6 @@ namespace DeathFloor.Dialogue
         [SerializeField] private Text _textContainer;
         [SerializeField] private float _timeBetweenLetters;
         [SerializeField] private float _timeLasting;
-        [SerializeField, RequireInterface(typeof(IUnityService))] private UnityEngine.Object _unityService;
-
-        private IUnityService _service;
 
         private bool _canDisplay;
 
@@ -33,8 +29,6 @@ namespace DeathFloor.Dialogue
 
         private void Start()
         {
-            _service = _unityService as IUnityService;
-
             Enable();
         }
 
@@ -44,7 +38,7 @@ namespace DeathFloor.Dialogue
             {
                 if (_typing)
                 {
-                    _letterTimeElapsed += _service.GetDeltaTime();
+                    _letterTimeElapsed += Time.deltaTime;
                     if (_letterTimeElapsed >= _timeBetweenLetters)
                     {
                         try
@@ -72,7 +66,7 @@ namespace DeathFloor.Dialogue
                 }
                 else if (_lasting)
                 {
-                    _lastingTimeElapsed += _service.GetDeltaTime();
+                    _lastingTimeElapsed += Time.deltaTime;
                     if (_lastingTimeElapsed >= _timeLasting)
                     {
                         Clear();

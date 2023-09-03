@@ -660,6 +660,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1432039083, guid: f8af4398f057a7847a45120889881c3f, type: 3}
+      propertyPath: _slideTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432039083, guid: f8af4398f057a7847a45120889881c3f, type: 3}
+      propertyPath: _displayTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1512495665, guid: f8af4398f057a7847a45120889881c3f, type: 3}
+      propertyPath: apopu
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e355b991379b884a9044ac520f6393f, type: 2}
     - target: {fileID: 650499696285706568, guid: f8af4398f057a7847a45120889881c3f, type: 3}
       propertyPath: m_RootOrder
       value: 2

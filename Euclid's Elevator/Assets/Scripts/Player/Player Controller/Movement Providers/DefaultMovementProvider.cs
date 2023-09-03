@@ -1,4 +1,3 @@
-using DeathFloor.UnityServices;
 using DeathFloor.Utilities;
 using UnityEngine;
 
@@ -9,15 +8,6 @@ namespace DeathFloor.Movement
         [Header("Movement Properties")]
         [SerializeField] private float _acceleration = 0.2f;
         [SerializeField] private float _maxSpeed = 5f;
-        [Header("Other")]
-        [SerializeField, RequireInterface(typeof(IUnityService))] private Object _unityService;
-
-        private IUnityService _service;
-
-        private void Start()
-        {
-            _service = _unityService as IUnityService;
-        }
 
         public Vector3 CalculateMovement(Vector2 input, ref Vector3 velocity)
         {
@@ -40,7 +30,7 @@ namespace DeathFloor.Movement
                 velocity = velocity.normalized * wishVel.magnitude;
             }
 
-            return velocity * _service.GetDeltaTime();
+            return velocity * Time.deltaTime;
         }
     }
 }

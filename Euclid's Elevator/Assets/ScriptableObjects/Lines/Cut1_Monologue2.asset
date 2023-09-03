@@ -15,3 +15,6 @@ MonoBehaviour:
   Name: BlaBla2
   Text: ' didn''t mean to scare you there,'
   OneTime: 0
+  _name: BlaBla2
+  _text: ' didn''t mean to scare you there,'
+  _oneTime: 0

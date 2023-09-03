@@ -1,4 +1,3 @@
-using DeathFloor.UnityServices;
 using DeathFloor.Utilities;
 using UnityEngine;
 
@@ -10,16 +9,12 @@ namespace DeathFloor.Movement
         [SerializeField] private float _gravityForce = -9.81f;
         [Header("Other")]
         [SerializeField, RequireInterface(typeof(IRaycastProvider))] private Object _groundedRaycastProvider;
-        [SerializeField, RequireInterface(typeof(IUnityService))] private Object _unityService;
-
-        private IUnityService _service;
+        
         private IRaycastProvider _groundedProvider;
         private Vector3 gravity;
 
         private void Start()
         {
-            _service = _unityService as IUnityService;
-
             _groundedProvider = _groundedRaycastProvider as IRaycastProvider;
         }
 
@@ -28,11 +23,11 @@ namespace DeathFloor.Movement
             if (_groundedProvider != null &&
                 _groundedProvider.GetRaycast())
             {
-                gravity.y = -1f * _service.GetDeltaTime();
+                gravity.y = -1f * Time.deltaTime;
             }
             else
             {
-                gravity.y += _gravityForce * _service.GetDeltaTime() * _service.GetDeltaTime();
+                gravity.y += _gravityForce * Time.deltaTime * Time.deltaTime;
             }
         }
 
