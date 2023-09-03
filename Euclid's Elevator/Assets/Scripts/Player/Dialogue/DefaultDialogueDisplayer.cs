@@ -13,13 +13,14 @@ namespace DeathFloor.Dialogue
         public Action<LineProperties> Callback;
     }
 
-    internal class DefaultDialogueDisplayer : MonoBehaviour, IDialogueDisplayer, IToggleable
+    internal class DefaultDialogueDisplayer : MonoBehaviour, IDialogueDisplayer
     {
         [SerializeField] private Text _textContainer;
         [SerializeField] private float _timeBetweenLetters;
         [SerializeField] private float _timeLasting;
+        [SerializeField, RequireInterface(typeof(IUnityService))] private UnityEngine.Object _unityService;
 
-        private IUnityService _unityService;
+        private IUnityService _service;
 
         private bool _canDisplay;
 
@@ -32,7 +33,7 @@ namespace DeathFloor.Dialogue
 
         private void Start()
         {
-            _unityService = new UnityService();
+            _service = _unityService as IUnityService;
 
             Enable();
         }
@@ -43,7 +44,7 @@ namespace DeathFloor.Dialogue
             {
                 if (_typing)
                 {
-                    _letterTimeElapsed += _unityService.GetDeltaTime();
+                    _letterTimeElapsed += _service.GetDeltaTime();
                     if (_letterTimeElapsed >= _timeBetweenLetters)
                     {
                         try
@@ -71,7 +72,7 @@ namespace DeathFloor.Dialogue
                 }
                 else if (_lasting)
                 {
-                    _lastingTimeElapsed += _unityService.GetDeltaTime();
+                    _lastingTimeElapsed += _service.GetDeltaTime();
                     if (_lastingTimeElapsed >= _timeLasting)
                     {
                         Clear();

@@ -1,3 +1,4 @@
+using DeathFloor.HUD;
 using DeathFloor.Input;
 using DeathFloor.Utilities;
 using DeathFloor.Utilities.Logger;
@@ -10,16 +11,15 @@ namespace DeathFloor.Interactions
         [Header("Input")]
         [SerializeField] private InputReader _inputReader;
 
-        [Header("Logger")]
-        [SerializeField] private bool _enableLogging;
-
-        [Header("Optional")]
+        [Header("Other")]
         [SerializeField, RequireInterface(typeof(IRaycastProvider))] private Object _raycastProvider;
+        [SerializeField, RequireInterface(typeof(IActionInfo))] private Object _actionInfo;
 
         private bool _canInteract;
 
         private IInteractionHelper[] _helpers;
 
+        private IActionInfo _actionInfoInterface;
         private IRaycastProvider _raycastProviderInterface;
         private Utilities.Logger.ILogger _logger;
 
@@ -27,8 +27,9 @@ namespace DeathFloor.Interactions
         {
             _helpers = GetComponents<IInteractionHelper>();
 
-            _logger ??= new DefaultLogger();
+            Debug.LogError("Fix logger here.");
 
+            _actionInfoInterface = _actionInfo as IActionInfo;
             _raycastProviderInterface = _raycastProvider as IRaycastProvider;
 
             _inputReader.Interacted += Interact;
@@ -43,7 +44,6 @@ namespace DeathFloor.Interactions
 
         private void Update()
         {
-            //EXTRACT TO SEPARATE CLASS
             if (_raycastProviderInterface.GetRaycast(out RaycastHit hitInfo))
             {
                 if (hitInfo.transform.TryGetComponent(out IInteractable interactable) && interactable.IsInteractable)
@@ -52,16 +52,16 @@ namespace DeathFloor.Interactions
 
                     toDisplay += $" ({_inputReader.GetInteractionInputString()})";
 
-                    //DISPLAY ON HUD
+                    _actionInfoInterface?.DisplayText(toDisplay);
                 }
                 else
                 {
-                    //CLEAR THE HUD
+                    _actionInfoInterface?.ClearText();
                 }
             }
             else
             {
-                //CLEAR THE HUD
+                _actionInfoInterface?.ClearText();
             }
         }
 
@@ -73,8 +73,7 @@ namespace DeathFloor.Interactions
                 hitInfo.transform.TryGetComponent(out IInteractable interactable) &&
                 interactable.IsInteractable)
             {
-                _logger.ToggleLogging(_enableLogging)
-                       .Log($"Interacted with {hitInfo.transform.name}");
+                _logger.Debug($"{_logger.Color("Interacted", "orange")} with {_logger.Italic(hitInfo.transform.name)}");
                 
                 foreach(IInteractionHelper helper in _helpers)
                 {

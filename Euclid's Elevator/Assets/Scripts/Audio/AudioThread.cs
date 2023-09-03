@@ -1,6 +1,5 @@
 using DeathFloor.UnityServices;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace DeathFloor.Audio
@@ -15,7 +14,6 @@ namespace DeathFloor.Audio
 
         private void Start()
         {
-            _unityService = new UnityService();
             _soundQueue ??= new();
         }
 
@@ -64,7 +62,6 @@ namespace DeathFloor.Audio
         {
             _soundQueue ??= new();
             _soundQueue.Enqueue(properties);
-            Debug.Log("a");
             return this;
         }
 
@@ -72,6 +69,11 @@ namespace DeathFloor.Audio
         {
             _soundQueue.Clear();
             Destroy();
+        }
+
+        public void Initialize(IUnityService service)
+        {
+            _unityService = service;
         }
 
         private void Destroy()

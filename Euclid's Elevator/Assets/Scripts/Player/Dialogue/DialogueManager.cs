@@ -1,11 +1,10 @@
 using DeathFloor.Utilities;
-using DeathFloor.Utilities.Logger;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DeathFloor.Dialogue
 {
-    internal class DialogueManager : MonoBehaviour, IToggleable, IDialogueManager
+    internal class DialogueManager : MonoBehaviour, IDialogueManager
     {
         [SerializeField, RequireInterface(typeof(IDialogueDisplayer))] private Object _dialogueDisplayer;
         
@@ -19,7 +18,7 @@ namespace DeathFloor.Dialogue
 
         private void Start()
         {
-            _logger = new DefaultLogger();
+            Debug.LogError("Fix the logger here");
 
             _usedLines ??= new List<LineProperties>();
 
@@ -36,7 +35,7 @@ namespace DeathFloor.Dialogue
             {
                 if (_usedLines.Contains(lineProperties))
                 {
-                    _logger.Log($"The line {lineProperties.Name} has already been used.");
+                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("used")}.");
                     return;
                 }
             }
@@ -53,13 +52,13 @@ namespace DeathFloor.Dialogue
             {
                 if (_displaying.Contains(lineProperties))
                 {
-                    _logger.Log($"The line {lineProperties.Name} is in display queue.");
+                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} is in {_logger.Italic("display queue")}.");
                     return;
                 }
 
                 if (_usedLines.Contains(lineProperties))
                 {
-                    _logger.Log($"The line {lineProperties.Name} has already been used.");
+                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("used")}.");
                     return;
                 }
             }
@@ -81,7 +80,7 @@ namespace DeathFloor.Dialogue
         {
             if (_usedLines.Contains(lineProperties))
             {
-                _logger.LogWarning($"Line {lineProperties.Name} is already used.");
+                _logger.Debug($"Line {_logger.Bold(lineProperties.Name)} is already {_logger.Italic("used")}.");
                 return;
             }
 
@@ -96,7 +95,7 @@ namespace DeathFloor.Dialogue
             }
             else
             {
-                _logger.Log("The line that has finished being displayed is not the first in display queue.");
+                _logger.Debug("The line that has finished being displayed is not the first in display queue.");
             }
         }
 

@@ -1,19 +1,14 @@
 namespace DeathFloor.Utilities.Logger
 {
-    public interface ILogger
+    public interface ILogger : IToggleable
     {
-        public bool EnableLogging { set; }
+        public void Debug(string message);
+        public void Warning(string message);
+        public void Error(string message);
+        public void Fatal(string message);
 
-        public void Log(string message);
-
-        public void LogWarning(string message);
-
-        public void LogError(string message);
-
-        public void Ping();
-
-        public void Success(string message = null);
-
-        public ILogger ToggleLogging(bool value);
+        public string Bold(string message);
+        public string Italic(string message);
+        public string Color(string message, string color);
     }
 }

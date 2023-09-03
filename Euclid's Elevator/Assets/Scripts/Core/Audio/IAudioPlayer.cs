@@ -1,9 +1,10 @@
+using DeathFloor.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DeathFloor.Audio
 {
-    public interface IAudioPlayer
+    public interface IAudioPlayer : IToggleable
     {
         public IAudioThread PlayAtAudioPlayer(SoundProperties properties);
         public IAudioThread PlayAtPosition(SoundProperties properties, Vector3 position);
