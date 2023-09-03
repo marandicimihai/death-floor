@@ -6,14 +6,19 @@ using UnityEngine;
 
 namespace DeathFloor.Audio
 {
-    internal class AudioPlayer : MonoBehaviour, IAudioPlayer, IToggleable
+    internal class AudioPlayer : MonoBehaviour, IAudioPlayer
     {
+        [SerializeField, RequireInterface(typeof(IAudioThreadFactory))] private Object _audioThreadFactory;
+        [SerializeField, RequireInterface(typeof(IUnityService))] private Object _unityService;
+
+        private IAudioThreadFactory _factory;
         private IUnityService _service;
         private bool _canPlay;
 
         private void Start()
         {
-            _service = new UnityService();
+            _service = _unityService as IUnityService;
+            _factory = _audioThreadFactory as IAudioThreadFactory;
 
             Enable();
         }
@@ -32,7 +37,7 @@ namespace DeathFloor.Audio
         {
             if (_canPlay)
             {
-                IAudioThread thread = gameObject.AddComponent<AudioThread>();
+                IAudioThread thread = _factory.CreateThread(gameObject, _service);
                 thread.AddToQueue(properties);
                 return thread;
             }
@@ -48,7 +53,7 @@ namespace DeathFloor.Audio
             {
                 GameObject obj = new();
                 obj.transform.position = position;
-                IAudioThread thread = obj.AddComponent<AudioThread>();
+                IAudioThread thread = _factory.CreateThread(obj, _service);
                 thread.AddToQueue(properties);
                 thread.DestroyObjectWhenFinished();
                 return thread;
@@ -63,7 +68,7 @@ namespace DeathFloor.Audio
         {
             if (_canPlay)
             {
-                IAudioThread thread = parent.gameObject.AddComponent<AudioThread>();
+                IAudioThread thread = _factory.CreateThread(parent.gameObject, _service);
                 thread.AddToQueue(properties);
                 return thread;
             }
@@ -77,7 +82,7 @@ namespace DeathFloor.Audio
         {
             if (_canPlay)
             {
-                IAudioThread thread = gameObject.AddComponent<AudioThread>();
+                IAudioThread thread = _factory.CreateThread(gameObject, _service);
                 thread.AddToQueue(properties.ElementAt(_service.GetRandomInt(0, properties.Count())));
                 return thread;
             }
@@ -93,7 +98,7 @@ namespace DeathFloor.Audio
             {
                 GameObject obj = new();
                 obj.transform.position = position;
-                IAudioThread thread = obj.AddComponent<AudioThread>();
+                IAudioThread thread = _factory.CreateThread(obj, _service);
                 thread.AddToQueue(properties.ElementAt(_service.GetRandomInt(0, properties.Count())));
                 thread.DestroyObjectWhenFinished();
                 return thread;
@@ -108,7 +113,7 @@ namespace DeathFloor.Audio
         {
             if (_canPlay)
             {
-                IAudioThread thread = parent.gameObject.AddComponent<AudioThread>();
+                IAudioThread thread = _factory.CreateThread(parent.gameObject, _service);
                 thread.AddToQueue(properties.ElementAt(_service.GetRandomInt(0, properties.Count())));
                 return thread;
             }
