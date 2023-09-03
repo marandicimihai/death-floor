@@ -35,13 +35,13 @@ namespace DeathFloor.Dialogue
             {
                 if (_usedLines.Contains(lineProperties))
                 {
-                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("used")}.");
+                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("_used")}.");
                     return;
                 }
             }
 
             _displaying.Enqueue(lineProperties);
-            _dialogueDisplayerInterface.DisplayDialogue(lineProperties, FinishedDisplaying);
+            _dialogueDisplayerInterface?.DisplayDialogue(lineProperties, FinishedDisplaying);
         }
 
         public void SayAdditive(LineProperties lineProperties)
@@ -58,13 +58,13 @@ namespace DeathFloor.Dialogue
 
                 if (_usedLines.Contains(lineProperties))
                 {
-                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("used")}.");
+                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("_used")}.");
                     return;
                 }
             }
 
             _displaying.Enqueue(lineProperties);
-            _dialogueDisplayerInterface.DisplayAdditive(lineProperties, FinishedDisplaying);
+            _dialogueDisplayerInterface?.DisplayAdditive(lineProperties, FinishedDisplaying);
         }
 
         private void FinishedDisplaying(LineProperties properties)
@@ -80,7 +80,7 @@ namespace DeathFloor.Dialogue
         {
             if (_usedLines.Contains(lineProperties))
             {
-                _logger.Debug($"Line {_logger.Bold(lineProperties.Name)} is already {_logger.Italic("used")}.");
+                _logger.Debug($"Line {_logger.Bold(lineProperties.Name)} is already {_logger.Italic("_used")}.");
                 return;
             }
 
@@ -101,12 +101,14 @@ namespace DeathFloor.Dialogue
 
         public void Enable()
         {
+            _dialogueDisplayerInterface?.Enable();
             _displaying = new();
             _canSay = true;
         }
 
         public void Disable()
         {
+            _dialogueDisplayerInterface?.Disable();
             _displaying?.Clear();
             _canSay = false;
         }

@@ -15,3 +15,6 @@ MonoBehaviour:
   Name: BlaBla5
   Text: ' it''s nothing bad i presume,'
   OneTime: 0
+  _name: BlaBla5
+  _text: ' it''s nothing bad i presume,'
+  _oneTime: 0

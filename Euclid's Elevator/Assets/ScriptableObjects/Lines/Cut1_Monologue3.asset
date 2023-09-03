@@ -15,3 +15,6 @@ MonoBehaviour:
   Name: BlaBla3
   Text: ' but the boss wants to see you.'
   OneTime: 0
+  _name: BlaBla3
+  _text: ' but the boss wants to see you.'
+  _oneTime: 0

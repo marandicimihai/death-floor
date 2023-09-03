@@ -22,16 +22,14 @@ namespace DeathFloor.Camera.Rotation
         {
             _rotationProviderInterface = _rotationProvider as ICameraRotationProvider;
 
-            ResetAngle();
             Enable();
         }
 
         private void Update()
         {
-            if (_rotationProviderInterface != null &&
-                _canLook)
+            if (_canLook)
             {
-                _rotation = _rotationProviderInterface.CalculateRotation(_inputReader.Look, _rotation);
+                _rotation = _rotationProviderInterface?.CalculateRotation(_inputReader.Look, _rotation) ?? _rotation;
 
                 _playerCamera.localEulerAngles = new Vector3(_rotation.x, 0, 0);
                 _player.localEulerAngles = new Vector3(0, _rotation.y, 0);

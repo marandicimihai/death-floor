@@ -15,3 +15,6 @@ MonoBehaviour:
   Name: BlaBla1
   Text: -Hi!
   OneTime: 0
+  _name: BlaBla1
+  _text: -Hi!
+  _oneTime: 0

@@ -22,7 +22,7 @@ namespace DeathFloor.Interactions
         {
             if (rootObject.TryGetComponent(out CollectableItem item))
             {
-                _inventoryInterface.PickUp(item);
+                _inventoryInterface?.PickUp(item);
             }
         }
     }

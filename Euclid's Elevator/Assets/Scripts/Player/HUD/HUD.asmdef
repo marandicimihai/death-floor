@@ -1,5 +1,5 @@
 {
-    "name": "UnityService",
+    "name": "HUD",
     "rootNamespace": "",
     "references": [
         "GUID:6b099572953839f459ac390e52cf08e0"
