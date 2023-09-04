@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DeathFloor.Inventory
 {
-    public abstract class SyncValues : MonoBehaviour
+    internal abstract class SyncValues : MonoBehaviour
     {
         /// <summary>
         /// Strings also work.

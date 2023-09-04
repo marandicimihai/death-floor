@@ -1,10 +1,11 @@
+using DeathFloor.Dialogue;
 using DeathFloor.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DeathFloor.Dialogue
+namespace DeathFloor.HUD
 {
     internal struct LineQueueObject
     {

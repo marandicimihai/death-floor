@@ -105,7 +105,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7902007163430204143}
   - component: {fileID: 7413559450468427862}
-  - component: {fileID: 2698120927752268285}
   m_Layer: 15
   m_Name: Journal
   m_TagString: Untagged
@@ -150,18 +149,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &2698120927752268285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7413559450468427861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b858de07241f2e4a9f4d697e9358fd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7752921038834474639
 GameObject:
   m_ObjectHideFlags: 0

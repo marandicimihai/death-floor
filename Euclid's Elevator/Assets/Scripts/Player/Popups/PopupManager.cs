@@ -1,8 +1,9 @@
 using DeathFloor.Utilities;
 using System.Collections.Generic;
+using DeathFloor.HUD;
 using UnityEngine;
 
-namespace DeathFloor.HUD
+namespace DeathFloor.Popups
 {
     internal class PopupManager : MonoBehaviour, IPopupManager
     {
