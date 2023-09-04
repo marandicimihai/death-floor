@@ -1,8 +1,9 @@
+using DeathFloor.Popups;
 using DeathFloor.Utilities;
 
 namespace DeathFloor.HUD
 {
-    public interface IPopupDisplayer : IToggleable
+    internal interface IPopupDisplayer : IToggleable
     {
         public void DisplayPopup(PopupProperties popupProperties);
     }

@@ -1,5 +1,5 @@
 {
-    "name": "HUD",
+    "name": "Journal",
     "rootNamespace": "",
     "references": [
         "GUID:6b099572953839f459ac390e52cf08e0"

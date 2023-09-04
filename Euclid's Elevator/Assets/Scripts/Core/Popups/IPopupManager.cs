@@ -1,6 +1,6 @@
 using DeathFloor.Utilities;
 
-namespace DeathFloor.HUD
+namespace DeathFloor.Popups
 {
     public interface IPopupManager : IToggleable
     {

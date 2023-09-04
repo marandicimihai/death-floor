@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DeathFloor.HUD
+namespace DeathFloor.Popups
 {
     [CreateAssetMenu(fileName = "New Popup", menuName = "Popup")]
     public class PopupProperties : ScriptableObject
