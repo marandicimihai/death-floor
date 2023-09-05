@@ -13,8 +13,6 @@ namespace DeathFloor.HUD
         [SerializeField] private GameObject _unlockedSliderObject;
         [SerializeField] private Image _unlockedSlider;
 
-        private Utilities.Logger.ILogger _logger;
-
         private bool _canDisplay;
         private bool _active;
         private object _currentUser;
@@ -23,8 +21,6 @@ namespace DeathFloor.HUD
 
         private void Start()
         {
-            Debug.LogError("Fix logger here.");
-
             Enable();
         }
 
@@ -63,7 +59,6 @@ namespace DeathFloor.HUD
         {
             if (_active)
             {
-                _logger.Debug("A slider is already active!");
                 return;
             }
 
@@ -96,7 +91,6 @@ namespace DeathFloor.HUD
         {
             if (caller != _currentUser)
             {
-                _logger.Debug($"Someone else {_logger.Italic("is already using a slider")}.");
                 return;
             }
 
@@ -107,7 +101,6 @@ namespace DeathFloor.HUD
         {
             if (caller != _currentUser)
             {
-                _logger.Debug($"Someone else attempted to stop the slider!");
                 return;
             }
 

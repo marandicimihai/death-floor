@@ -11,7 +11,6 @@ namespace DeathFloor.Popups
 
         private List<PopupProperties> _used;
         private IPopupDisplayer _displayer;
-        private Utilities.Logger.ILogger _logger;
         private bool _canDisplay;
 
         private void Start()
@@ -21,8 +20,6 @@ namespace DeathFloor.Popups
             _used ??= new List<PopupProperties>();
 
             Enable();
-
-            Debug.LogError("Fix logger here.");
         }
 
         public void ShowPopup(PopupProperties popupProperties)
@@ -31,7 +28,6 @@ namespace DeathFloor.Popups
 
             if (popupProperties.OneTime && _used.Contains(popupProperties))
             {
-                _logger.Debug($"The popup {_logger.Bold(popupProperties.Title)} has already been {_logger.Italic("displayed")}.");
                 return;
             }
 

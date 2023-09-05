@@ -20,13 +20,9 @@ namespace DeathFloor.Interactions
 
         private IActionInfo _actionInfoInterface;
         private IRaycastProvider _raycastProviderInterface;
-        private Utilities.Logger.ILogger _logger;
-
         private void Start()
         {
             _helpers = GetComponents<IInteractionHelper>();
-
-            Debug.LogError("Fix logger here.");
 
             _actionInfoInterface = _actionInfo as IActionInfo;
             _raycastProviderInterface = _raycastProvider as IRaycastProvider;
@@ -73,8 +69,6 @@ namespace DeathFloor.Interactions
                 hitInfo.transform.TryGetComponent(out IInteractable interactable) &&
                 interactable.IsInteractable)
             {
-                _logger.Debug($"{_logger.Color("Interacted", "orange")} with {_logger.Italic(hitInfo.transform.name)}");
-                
                 foreach(IInteractionHelper helper in _helpers)
                 {
                     if (interactable.Tag == helper.TargetInteractionTag)
