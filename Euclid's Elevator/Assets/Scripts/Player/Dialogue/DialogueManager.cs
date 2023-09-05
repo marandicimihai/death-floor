@@ -11,7 +11,6 @@ namespace DeathFloor.Dialogue
         
         private bool _canSay;
 
-        private Utilities.Logger.ILogger _logger;
         private IDialogueDisplayer _dialogueDisplayerInterface;
 
         private List<LineProperties> _usedLines;
@@ -19,8 +18,6 @@ namespace DeathFloor.Dialogue
 
         private void Start()
         {
-            Debug.LogError("Fix the logger here");
-
             _usedLines ??= new List<LineProperties>();
 
             _dialogueDisplayerInterface = _dialogueDisplayer as IDialogueDisplayer;
@@ -36,7 +33,6 @@ namespace DeathFloor.Dialogue
             {
                 if (_usedLines.Contains(lineProperties))
                 {
-                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("_used")}.");
                     return;
                 }
             }
@@ -53,13 +49,11 @@ namespace DeathFloor.Dialogue
             {
                 if (_displaying.Contains(lineProperties))
                 {
-                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} is in {_logger.Italic("display queue")}.");
                     return;
                 }
 
                 if (_usedLines.Contains(lineProperties))
                 {
-                    _logger.Debug($"The line {_logger.Bold(lineProperties.Name)} has already been {_logger.Italic("_used")}.");
                     return;
                 }
             }
@@ -81,7 +75,6 @@ namespace DeathFloor.Dialogue
         {
             if (_usedLines.Contains(lineProperties))
             {
-                _logger.Debug($"Line {_logger.Bold(lineProperties.Name)} is already {_logger.Italic("_used")}.");
                 return;
             }
 
@@ -93,10 +86,6 @@ namespace DeathFloor.Dialogue
             if (_displaying.Peek() == lineProperties)
             {
                 _displaying.Dequeue();
-            }
-            else
-            {
-                _logger.Debug("The line that has finished being displayed is not the first in display queue.");
             }
         }
 

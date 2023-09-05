@@ -18,12 +18,12 @@ namespace DeathFloor.Journal
         private bool _isOpen;
 
         private List<PageProperties> _pages;
-        private int _currentPage = 1;
+        private int _currentPage = 1;//1, 3, 5 (left page basically, substract 1 for index)
 
         private void Start()
         {
             _pages ??= new();
-
+            
             _managerInterface = _hudManager as IHUDManager;
             _displayer = _journalDisplayer as IJournalDisplayer;
 
@@ -46,13 +46,13 @@ namespace DeathFloor.Journal
             if (_currentPage <= _pages.Count - 2)
             {
                 _currentPage += 2;
-                if (_currentPage + 1 < _pages.Count)
+                if (_currentPage < _pages.Count)
                 {
-                    _displayer.DisplayPages(_pages[_currentPage], _pages[_currentPage + 1], _currentPage, _currentPage + 1);
+                    _displayer.DisplayPages(_pages[_currentPage - 1], _pages[_currentPage], _currentPage, _currentPage + 1);
                 }
-                else
+                else if (_currentPage - 1 < _pages.Count)
                 {
-                    _displayer.DisplayPages(_pages[_currentPage], null, _currentPage, _currentPage + 1);
+                    _displayer.DisplayPages(_pages[_currentPage - 1], null, _currentPage, _currentPage + 1);
                 }
             }
         }
@@ -64,11 +64,11 @@ namespace DeathFloor.Journal
                 _currentPage -= 2;
                 if (_currentPage + 1 < _pages.Count)
                 {
-                    _displayer.DisplayPages(_pages[_currentPage], _pages[_currentPage + 1], _currentPage, _currentPage + 1);
+                    _displayer.DisplayPages(_pages[_currentPage - 1], _pages[_currentPage], _currentPage, _currentPage + 1);
                 }
-                else
+                else if (_currentPage < _pages.Count)
                 {
-                    _displayer.DisplayPages(_pages[_currentPage], null, _currentPage, _currentPage + 1);
+                    _displayer.DisplayPages(_pages[_currentPage - 1], null, _currentPage, _currentPage + 1);
                 }
             }
         }
@@ -84,8 +84,22 @@ namespace DeathFloor.Journal
             else
             {
                 _managerInterface.DisableHUD();
+
+                _inputReader.PauseInput();
                 _displayer.OpenJournal();
-                _displayer.DisplayPages(_pages[_currentPage], _pages[_currentPage + 1], _currentPage, _currentPage + 1);
+                if (_currentPage + 1 < _pages.Count)
+                {
+                    _displayer.DisplayPages(_pages[_currentPage - 1], _pages[_currentPage], _currentPage, _currentPage + 1);
+                }
+                else if (_currentPage < _pages.Count)
+                {
+                    _displayer.DisplayPages(_pages[_currentPage - 1], null, _currentPage, _currentPage + 1);
+                }
+                else
+                {
+                    _displayer.DisplayPages(null, null, 1, 2);
+                }
+
                 _isOpen = true;
             }
         }
@@ -94,6 +108,7 @@ namespace DeathFloor.Journal
         {
             if (_isOpen)
             {
+                _inputReader.DefaultInput();
                 _displayer.CloseJournal();
                 _isOpen = false;
             }

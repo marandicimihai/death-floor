@@ -19,6 +19,7 @@ namespace DeathFloor.HUD
 
         private void Start()
         {
+            _journalAnimator.gameObject.SetActive(false);
             CloseJournal();
             Clear();
         }
@@ -53,7 +54,7 @@ namespace DeathFloor.HUD
         public void DisplayPages(PageProperties left, PageProperties right, int leftPageIndex, int rightPageIndex)
         {
             Clear();
-            Instantiate(left.Prefab, _leftPage.transform);
+            if (left != null) Instantiate(left.Prefab, _leftPage.transform);
             if (right != null) Instantiate(right.Prefab, _rightPage.transform);
 
             _leftNumber.text = leftPageIndex.ToString();

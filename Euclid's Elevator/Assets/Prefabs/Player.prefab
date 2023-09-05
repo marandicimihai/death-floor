@@ -757,7 +757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1524185393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -942,13 +942,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f297317bb25ca5e4c9cc4584620a5375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pages:
-  - {fileID: 11400000, guid: bb87a55a11489cf4fb49923e1670275a, type: 2}
-  - {fileID: 11400000, guid: 7ef44d5f2f35d6d40af169e02b30a9c9, type: 2}
-  - {fileID: 11400000, guid: 7c7bdbfa4918a84418db4af7cf0da0ad, type: 2}
-  - {fileID: 11400000, guid: d4dcd42c3f53b6f4fb3292c02a944b72, type: 2}
-  - {fileID: 11400000, guid: 12f6f9989ca4b2e43bf3c06e332e0e84, type: 2}
-  - {fileID: 11400000, guid: fea0d27b287a249428b5eeef3e514d5a, type: 2}
   _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
   _hudManager: {fileID: 650499694359983425}
   _journalDisplayer: {fileID: 8715544024196887570}
