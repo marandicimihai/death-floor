@@ -79,6 +79,7 @@ namespace DeathFloor.Journal
             {
                 _displayer.CloseJournal();
                 _managerInterface.EnableHUD();
+                _inputReader.DefaultInput();
                 _isOpen = false;
             }
             else

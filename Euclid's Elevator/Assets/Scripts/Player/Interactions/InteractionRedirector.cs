@@ -1,26 +1,27 @@
+using DeathFloor.Utilities;
 using UnityEngine;
 
 namespace DeathFloor.Interactions
 {
     internal class InteractionRedirector : MonoBehaviour, IInteractable
     {
-        public InteractionTag Tag { get => _redirectTo.Tag; }
+        public InteractionTag Tag { get => _redirectToInterface.Tag; }
 
         public bool IsInteractable => true;
 
-        public string InteractionPrompt => _redirectTo?.InteractionPrompt;
+        public string InteractionPrompt => _redirectToInterface?.InteractionPrompt;
 
-        [SerializeField] private MonoBehaviour _redirectToBehaviour;
+        [SerializeField, RequireInterface(typeof(IInteractable))] private Object _redirectTo;
 
-        private IInteractable _redirectTo;
+        private IInteractable _redirectToInterface;
 
         private void Start()
         {
-            _redirectTo = _redirectToBehaviour as IInteractable;
+            _redirectToInterface = _redirectTo as IInteractable;
         }
 
-        public void Interact() => _redirectTo?.Interact();
+        public void Interact() => _redirectToInterface?.Interact();
 
-        public GameObject GetRoot() => _redirectTo.GetRoot();
+        public GameObject GetRoot() => _redirectToInterface.GetRoot();
     }
 }

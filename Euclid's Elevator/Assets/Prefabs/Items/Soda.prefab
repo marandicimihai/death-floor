@@ -126,15 +126,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6503248264520234454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e8a05ac1fdbf954fa005fda35c93465, type: 3}
+  m_Script: {fileID: 11500000, guid: 08680f43f3d30fc488d1fb71637687d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  properties: {fileID: 11400000, guid: 3d7146097d411ba4faea96b9609b64f2, type: 2}
-  uses: 1
-  isInteractable: 1
-  speedBoost: 2
-  lockpickBoost: 2
-  time: 8
+  _properties: {fileID: 11400000, guid: b76a06caa85a45e4f946a79844eb88e0, type: 2}
+  _interactionTag: 1
+  _isInteractable: 1
+  _interactionPrompt: Pick Up
+  _useTag: 1
+  _multiplier: 1.5
+  _time: 8
 --- !u!95 &6244381491192702300
 Animator:
   serializedVersion: 5
@@ -263,10 +264,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7189721585576316567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54dd7bf41ae11164b94c20bf732b40af, type: 3}
+  m_Script: {fileID: 11500000, guid: 71260ef785ec347489480a7581175a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redirectTo: {fileID: 1151343952478062497}
+  _redirectTo: {fileID: 1151343952478062497}
 --- !u!1 &8960882808628035993
 GameObject:
   m_ObjectHideFlags: 0
