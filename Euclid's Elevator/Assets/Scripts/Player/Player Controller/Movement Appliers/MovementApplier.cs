@@ -15,6 +15,8 @@ namespace DeathFloor.Movement
         [SerializeField, RequireInterface(typeof(IGravityProvider))] private Object _gravityProvider;
 
         private Vector3 _velocity = Vector3.zero;
+
+        private float _movementMutltiplier = 1;
         private IMovementProvider _movementProviderInterface;
         private IMovementProvider _sneakMovementProviderInterface;
         private IGravityProvider _gravityProviderInterface;
@@ -44,11 +46,24 @@ namespace DeathFloor.Movement
                     movement = _movementProviderInterface.CalculateMovement(_inputReader.Move, ref _velocity);
                 }
             }
+            movement *= _movementMutltiplier;
             if (_gravityProviderInterface != null)
             {
                 movement += _gravityProviderInterface.ComputeGravity();
             }
             return movement;
+        }
+
+        public void BoostForTime(float time, float multiplier)
+        {
+            _movementMutltiplier = multiplier;
+            CancelInvoke(nameof(ResetBoost));
+            Invoke(nameof(ResetBoost), time);
+        }
+
+        private void ResetBoost()
+        {
+            _movementMutltiplier = 1;
         }
     }
 }

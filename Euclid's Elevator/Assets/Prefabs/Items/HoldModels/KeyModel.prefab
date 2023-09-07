@@ -98,5 +98,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _properties: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
   _interactionTag: 1
-  _isInteractable: 1
+  _isInteractable: 0
   _interactionPrompt: Pick Up

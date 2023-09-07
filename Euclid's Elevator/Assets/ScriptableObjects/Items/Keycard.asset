@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d67f476f583fe5a4cb62a7166e98c1fb, type: 3}
-  m_Name: Key
+  m_Name: Keycard
   m_EditorClassIdentifier: 
-  _uses: 2
-  _holdingModel: {fileID: 1668860761680531593, guid: 2c51d40c79ccff04196bc0d14c16f7a1, type: 3}
-  _physicalModel: {fileID: 7178980861119937168, guid: 728d0a79cb6a36c44afaaa188b24ba9b, type: 3}
+  _uses: 1
+  _holdingModel: {fileID: 6420132037335156090, guid: c1ee47a8b1ac1c74f82f3385d202da86, type: 3}
+  _physicalModel: {fileID: 7906055416897973875, guid: 09d72d0bb74e5894a9d71655368de661, type: 3}
   _offsetPosition: {x: 0, y: 0, z: 0}
   _offsetRotation: {x: 0, y: 0, z: 0}
-  _icon: {fileID: 21300000, guid: 2200dcd6377c0cd468b11881202ca654, type: 3}
+  _icon: {fileID: 21300000, guid: 2d350027a16374543bcd8e3111d907fa, type: 3}

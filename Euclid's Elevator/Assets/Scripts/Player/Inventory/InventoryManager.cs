@@ -8,9 +8,13 @@ namespace DeathFloor.Inventory
     {
         [SerializeField] private InputReader _inputReader;
         [SerializeField] private int _itemCount;
+        [SerializeField, RequireInterface(typeof(IInventoryDisplayer))] private Object _inventoryDisplayer;
+        [SerializeField, RequireInterface(typeof(ISwayHandler))] private Object _swayHandler;
         [SerializeField, RequireInterface(typeof(IPickupHandler))] private Object _pickupHandler;
         [SerializeField, RequireInterface(typeof(IDropHandler))] private Object _dropHandler;
 
+        private IInventoryDisplayer _displayer;
+        private ISwayHandler _sway;
         private IPickupHandler _pickup;
         private IDropHandler _drop;
 
@@ -23,6 +27,8 @@ namespace DeathFloor.Inventory
             _items = new CollectableItem[_itemCount];
 
             _helpers = GetComponents<IUseHelper>();
+            _displayer = _inventoryDisplayer as IInventoryDisplayer;
+            _sway = _swayHandler as ISwayHandler;
             _pickup = _pickupHandler as IPickupHandler;
             _drop = _dropHandler as IDropHandler;
 
@@ -40,9 +46,18 @@ namespace DeathFloor.Inventory
             _inputReader.Used -= UseItem;
         }
 
+        private void Update()
+        {
+            if (_items[_index] != null)
+            {
+                _sway?.PerformSway(_items[_index].gameObject, _items[_index].Properties);
+            }
+        }
+
         private void SetActiveSlot(int slot)
         {
             _index = slot;
+            _displayer.RefreshView(_items, _index);
         }
 
         private void Scroll(float amount)
@@ -51,6 +66,8 @@ namespace DeathFloor.Inventory
 
             _index += (int)amount;
             _index = Mathf.Clamp(_index, 0, _itemCount - 1);
+
+            _displayer.RefreshView(_items, _index);
         }
 
         public void PickUp(CollectableItem item)
@@ -60,6 +77,8 @@ namespace DeathFloor.Inventory
                 if (_items[i] == null)
                 {
                     _items[i] = _pickup?.PickUp(item);
+
+                    _displayer.RefreshView(_items, _index);
 
                     break;
                 }
@@ -73,6 +92,8 @@ namespace DeathFloor.Inventory
                 _drop?.DropItem(_items[_index]);
 
                 _items[_index] = null;
+
+                _displayer.RefreshView(_items, _index);
             }
         }
 
@@ -103,6 +124,7 @@ namespace DeathFloor.Inventory
                 if (destroyed)
                 {
                     _items[_index] = null;
+                    _displayer.RefreshView(_items, _index);
                 }
             }
         }
@@ -110,6 +132,7 @@ namespace DeathFloor.Inventory
         public void ClearInventory()
         {
             _items = new CollectableItem[_itemCount];
+            _displayer.RefreshView(_items, _index);
         }
 
         public void DecreaseDurability()
@@ -121,6 +144,7 @@ namespace DeathFloor.Inventory
                 if (destroyed)
                 {
                     _items[_index] = null;
+                    _displayer.RefreshView(_items, _index);
                 }
             }
         }

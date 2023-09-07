@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71260ef785ec347489480a7581175a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _redirectToBehaviour: {fileID: 803074725}
+  _redirectTo: {fileID: 803074725}
 --- !u!1 &7178980861119937168
 GameObject:
   m_ObjectHideFlags: 0
