@@ -40,7 +40,7 @@ namespace DeathFloor.Inventory
             _canDisplay = true;
         }
 
-        public void RefreshView(CollectableItem[] items, int selectedIndex)
+        public void RefreshView(IItem[] items, int selectedIndex)
         {
             if (!_canDisplay) return;
 

@@ -1,0 +1,18 @@
+{
+    "name": "DefaultInteractions",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6b099572953839f459ac390e52cf08e0",
+        "GUID:a248f4d621b011747b0d4b4c6a8d6b44",
+        "GUID:902aa164bf39deb4abcdd6c755d0ed02"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

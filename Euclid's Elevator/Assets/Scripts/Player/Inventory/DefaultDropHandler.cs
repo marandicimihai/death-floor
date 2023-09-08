@@ -7,7 +7,7 @@ namespace DeathFloor.Inventory
         [SerializeField] private Transform _dropPointAndDirection;
         [SerializeField] private float _dropForce;
 
-        public void DropItem(CollectableItem itemToDrop)
+        public void DropItem(IItem itemToDrop)
         {
             GameObject dropped = Instantiate(itemToDrop.Properties.PhysicalModel, _dropPointAndDirection.position, Quaternion.identity);
 
@@ -15,12 +15,12 @@ namespace DeathFloor.Inventory
             {
                 rb.AddForce(_dropPointAndDirection.forward * _dropForce, ForceMode.Impulse);
             }
-            if (dropped.TryGetComponent(out CollectableItem item))
+            if (dropped.TryGetComponent(out IItem item))
             {
                 item.SetValuesRuntime(itemToDrop);
             }
 
-            Destroy(itemToDrop.gameObject);
+            Destroy(itemToDrop.GetRoot());
         }
     }
 }

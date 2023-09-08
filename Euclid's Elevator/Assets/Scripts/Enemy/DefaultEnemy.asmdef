@@ -1,0 +1,17 @@
+{
+    "name": "DefaultEnemy",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6b099572953839f459ac390e52cf08e0",
+        "GUID:f280efbf764c17747b5859bb6ded9079"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

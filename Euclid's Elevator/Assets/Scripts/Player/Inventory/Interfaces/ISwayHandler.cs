@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DeathFloor.Inventory
 {
-    internal interface ISwayHandler
+    public interface ISwayHandler
     {
         public void PerformSway(GameObject itemRootObject, ItemProperties properties);
     }
