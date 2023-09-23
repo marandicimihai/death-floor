@@ -15111,11 +15111,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3068876454251326863, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5993021150812277677, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 8.592991e-31
+      value: 8.593194e-31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d320aa07c729d3409544fe8172d1f2e, type: 3}
