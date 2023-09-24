@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 1160015079}
   - component: {fileID: 1160015080}
   - component: {fileID: 1160015081}
+  - component: {fileID: 1160015084}
   m_Layer: 3
   m_Name: Inventory
   m_TagString: Untagged
@@ -303,6 +304,7 @@ MonoBehaviour:
   _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
   _itemCount: 4
   _inventoryDisplayer: {fileID: 966171703}
+  _swayHandler: {fileID: 1160015084}
   _pickupHandler: {fileID: 1160015079}
   _dropHandler: {fileID: 1160015080}
 --- !u!114 &1160015079
@@ -346,6 +348,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementApplier: {fileID: 650499695422743616}
   _targetTag: 1
+--- !u!114 &1160015084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776324679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e09bf3c7a21fe4fa17775cc01ad748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
+  _swayStep: 0.01
+  _swayMaxStep: 0.06
+  _swaySmooth: 10
+  _swayRotStep: 4
+  _swayMaxRotStep: 5
+  _swaySmoothRot: 12
 --- !u!1 &966171701
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,6 +2777,10 @@ PrefabInstance:
     - target: {fileID: 7413559450468427861, guid: 3884391b724c8414caff8acdf4df6bc8, type: 3}
       propertyPath: m_Name
       value: Journal
+      objectReference: {fileID: 0}
+    - target: {fileID: 7413559450468427861, guid: 3884391b724c8414caff8acdf4df6bc8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7902007163430204143, guid: 3884391b724c8414caff8acdf4df6bc8, type: 3}
       propertyPath: m_RootOrder
