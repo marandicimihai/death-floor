@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -61,6 +62,22 @@ namespace DeathFloor.Enemy
             _timeToReenable = Time.time + time;
             CancelInvoke(nameof(Enable));
             Invoke(nameof(Enable), time);
+        }
+
+        public float GetPathLength(Vector3 destination)
+        {
+            NavMeshPath path = new();
+            _agent.CalculatePath(destination, path);
+            float length = 0;
+            Vector3[] corners = path.corners;
+            if (corners.Length >= 2)
+            {
+                for (int i = 1; i < corners.Length; i++)
+                {
+                    length += Vector3.Distance(corners[i], corners[i - 1]);
+                }
+            }
+            return length;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace DeathFloor.Enemy
         private Transform _currentDestination = null;
 
         private Func<Vector3, Vector3> _mappingFunc;
-        private Transform _target;
+        private Func<Vector3, float> _lengthFunc;
 
         private void Start()
         {
@@ -33,14 +33,14 @@ namespace DeathFloor.Enemy
             InvokeRepeating(nameof(RaiseAll), _priorityRaiseTimeInterval, _priorityRaiseTimeInterval);
         }
 
+        public void SetLengthFunction(Func<Vector3, float> lengthFunc)
+        {
+            _lengthFunc = lengthFunc;
+        }
+
         public void SetMappingFunction(Func<Vector3, Vector3> mappingFunc)
         {
             _mappingFunc = mappingFunc;
-        }
-
-        public void SetTargetTransform(Transform transform)
-        {
-            _target = transform;
         }
 
         public void UpdatePosition(Vector3 position)
@@ -87,17 +87,11 @@ namespace DeathFloor.Enemy
 
         private Transform ChooseClosest(IEnumerable<Transform> transforms)
         {
-            if (_target == null)
-            {
-                Debug.LogError("Target null"); 
-                return null;
-            }
-
             float closest = Mathf.Infinity;
             Transform closestT = null;
             foreach (Transform transform in transforms)
             {
-                float curr = Vector3.Distance(_target.position, transform.position);
+                float curr = _lengthFunc(transform.position);
                 if (curr < closest)
                 {
                     closest = curr;

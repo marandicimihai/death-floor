@@ -10,5 +10,6 @@ namespace DeathFloor.Enemy
         public void DisableForTime(float time);
         public Vector3 GetPointOnNavMesh(Vector3 point);
         public Vector3 GetPosition();
+        public float GetPathLength(Vector3 position);
     }
 }

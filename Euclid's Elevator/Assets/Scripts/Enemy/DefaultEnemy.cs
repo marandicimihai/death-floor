@@ -25,7 +25,7 @@ namespace DeathFloor.Enemy
             _visibility = _visibilityRaycast as IVisibilityRaycastProvider;
 
             _patrolHandler.SetMappingFunction(_movement.GetPointOnNavMesh);
-            _patrolHandler.SetTargetTransform(transform);
+            _patrolHandler.SetLengthFunction(_movement.GetPathLength);
             _inspectHandler.SetMappingFunction(_movement.GetPointOnNavMesh);
             _chaseHandler.SetMappingFunction(_movement.GetPointOnNavMesh);
 
