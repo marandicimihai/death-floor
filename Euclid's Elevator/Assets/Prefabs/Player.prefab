@@ -266,7 +266,10 @@ GameObject:
   - component: {fileID: 1160015079}
   - component: {fileID: 1160015080}
   - component: {fileID: 1160015081}
+<<<<<<< HEAD
   - component: {fileID: 1160015084}
+=======
+>>>>>>> 6d314ccd3f29cae2f1d72801cd9770ae2961f0f2
   m_Layer: 3
   m_Name: Inventory
   m_TagString: Untagged
@@ -304,7 +307,10 @@ MonoBehaviour:
   _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
   _itemCount: 4
   _inventoryDisplayer: {fileID: 966171703}
+<<<<<<< HEAD
   _swayHandler: {fileID: 1160015084}
+=======
+>>>>>>> 6d314ccd3f29cae2f1d72801cd9770ae2961f0f2
   _pickupHandler: {fileID: 1160015079}
   _dropHandler: {fileID: 1160015080}
 --- !u!114 &1160015079
@@ -348,6 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementApplier: {fileID: 650499695422743616}
   _targetTag: 1
+<<<<<<< HEAD
 --- !u!114 &1160015084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +374,8 @@ MonoBehaviour:
   _swayRotStep: 4
   _swayMaxRotStep: 5
   _swaySmoothRot: 12
+=======
+>>>>>>> 6d314ccd3f29cae2f1d72801cd9770ae2961f0f2
 --- !u!1 &966171701
 GameObject:
   m_ObjectHideFlags: 0
