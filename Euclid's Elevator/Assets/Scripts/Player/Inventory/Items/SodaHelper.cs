@@ -21,7 +21,6 @@ namespace DeathFloor.Inventory
         public void UseExtension(GameObject rootObject)
         {
             if (!rootObject.TryGetComponent(out Soda soda)) return;
-            Debug.Log("used soda");
             _applier.BoostForTime(soda.Time, soda.Multiplier);
         }
     }

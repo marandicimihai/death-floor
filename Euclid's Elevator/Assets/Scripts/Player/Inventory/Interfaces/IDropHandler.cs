@@ -1,7 +1,7 @@
 namespace DeathFloor.Inventory
 {
-    internal interface IDropHandler
+    public interface IDropHandler
     {
-        public void DropItem(CollectableItem item);
+        public void DropItem(IItem item);
     }
 }

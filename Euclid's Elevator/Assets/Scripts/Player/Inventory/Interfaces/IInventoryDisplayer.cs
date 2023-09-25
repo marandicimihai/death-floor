@@ -2,8 +2,8 @@ using DeathFloor.Utilities;
 
 namespace DeathFloor.Inventory
 {
-    internal interface IInventoryDisplayer : IToggleable
+    public interface IInventoryDisplayer : IToggleable
     {
-        public void RefreshView(CollectableItem[] items, int selectedIndex);
+        public void RefreshView(IItem[] items, int selectedIndex);
     }
 }

@@ -6,17 +6,17 @@ namespace DeathFloor.Inventory
     {
         [SerializeField] private Transform _itemParent;
 
-        public CollectableItem PickUp(CollectableItem item)
+        public IItem PickUp(IItem item)
         {
             var newItem = Instantiate(item.Properties.HoldingModel, _itemParent);
             newItem.transform.SetLocalPositionAndRotation(item.Properties.OffsetPosition, Quaternion.Euler(item.Properties.OffsetRotation));
 
-            if (newItem.TryGetComponent(out CollectableItem collectable))
+            if (newItem.TryGetComponent(out IItem collectable))
             {
                 collectable.SetValuesRuntime(item);
             }
 
-            Destroy(item.gameObject);
+            Destroy(item.GetRoot());
             return collectable;
         }
     }

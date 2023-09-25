@@ -19,12 +19,12 @@ namespace DeathFloor.Inventory
         private IDropHandler _drop;
 
         private IUseHelper[] _helpers;
-        private CollectableItem[] _items;
+        private IItem[] _items;
         private int _index;
 
         private void Start()
         {
-            _items = new CollectableItem[_itemCount];
+            _items = new IItem[_itemCount];
 
             _helpers = GetComponents<IUseHelper>();
             _displayer = _inventoryDisplayer as IInventoryDisplayer;
@@ -50,7 +50,7 @@ namespace DeathFloor.Inventory
         {
             if (_items[_index] != null)
             {
-                _sway?.PerformSway(_items[_index].gameObject, _items[_index].Properties);
+                _sway?.PerformSway(_items[_index].GetRoot(), _items[_index].Properties);
             }
         }
 
@@ -70,7 +70,7 @@ namespace DeathFloor.Inventory
             _displayer.RefreshView(_items, _index);
         }
 
-        public void PickUp(CollectableItem item)
+        public void PickUp(IItem item)
         {
             for (int i = 0; i < _items.Length; i++)
             {
@@ -108,13 +108,13 @@ namespace DeathFloor.Inventory
 
         private void UseItem()
         {
-            if (_items != null && _items[_index] != null && _items[_index].TryGetComponent(out IUsable usable))
+            if (_items != null && _items[_index] != null && _items[_index].GetRoot().TryGetComponent(out IUsable usable))
             {
                 foreach (IUseHelper helper in _helpers)
                 {
                     if (helper.TargetUseTag == usable.UseTag)
                     {
-                        helper.UseExtension(_items[_index].gameObject);
+                        helper.UseExtension(_items[_index].GetRoot());
                     }
                 }
 
@@ -131,7 +131,7 @@ namespace DeathFloor.Inventory
 
         public void ClearInventory()
         {
-            _items = new CollectableItem[_itemCount];
+            _items = new IItem[_itemCount];
             _displayer.RefreshView(_items, _index);
         }
 

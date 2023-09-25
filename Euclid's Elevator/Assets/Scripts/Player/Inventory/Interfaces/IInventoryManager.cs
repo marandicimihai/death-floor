@@ -1,8 +1,8 @@
 ﻿namespace DeathFloor.Inventory
 {
-    internal interface IInventoryManager
+    public interface IInventoryManager
     {
-        public void PickUp(CollectableItem item);
+        public void PickUp(IItem item);
         public ItemProperties GetActiveItem();
         public void DecreaseDurability();
         public void ClearInventory();
