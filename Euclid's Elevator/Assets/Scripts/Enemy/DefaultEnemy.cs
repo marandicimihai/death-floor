@@ -46,6 +46,12 @@ namespace DeathFloor.Enemy
                 {
                     _movement.Disable();
                 }
+
+                if (Vector3.Distance(target, _movement.GetPosition()) < _chaseHandler.KillDistance)
+                {
+                    _chaseHandler.GetPlayerInterface()?.Die();
+                }
+
                 _wasChasing = true;
             }
             else if (_wasChasing)

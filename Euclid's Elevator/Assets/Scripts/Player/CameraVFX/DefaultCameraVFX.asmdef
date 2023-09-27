@@ -1,0 +1,17 @@
+{
+    "name": "DefaultCameraVFX",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6b099572953839f459ac390e52cf08e0",
+        "GUID:5cd7e1d40a09f224fb50366919946c95"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,20 @@
+{
+    "name": "DefaultPlayer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6b099572953839f459ac390e52cf08e0",
+        "GUID:a2534bc11c92923448585fdc1b38f55e",
+        "GUID:dcfc7864ba75f194b820df6299bb9365",
+        "GUID:a7f6c4a043ce6c6418f03e6ee2f69061",
+        "GUID:9baa1dc52d5c44c46b5f6964d47ccc06"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
