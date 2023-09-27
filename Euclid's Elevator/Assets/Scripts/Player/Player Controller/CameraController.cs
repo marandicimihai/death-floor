@@ -1,10 +1,11 @@
 using UnityEngine;
 using DeathFloor.Input;
 using DeathFloor.Utilities;
+using DeathFloor.Movement;
 
 namespace DeathFloor.Camera.Rotation
 {
-    internal class CameraController : MonoBehaviour, IToggleable
+    internal class CameraController : MonoBehaviour, ICameraController
     {
         [Header("Input")]
         [SerializeField] private InputReader _inputReader;
@@ -21,8 +22,6 @@ namespace DeathFloor.Camera.Rotation
         private void Start()
         {
             _rotationProviderInterface = _rotationProvider as ICameraRotationProvider;
-
-            Enable();
         }
 
         private void Update()

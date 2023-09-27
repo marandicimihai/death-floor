@@ -1,3 +1,4 @@
+using DeathFloor.Player;
 using System;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ namespace DeathFloor.Enemy
 {
     internal class ChaseHandler : MonoBehaviour
     {
+        public float KillDistance { get => _killDistance; }
+
+        [SerializeField] private float _killDistance;
         [SerializeField] private string _targetName;
 
         private Transform _target;
@@ -19,6 +23,11 @@ namespace DeathFloor.Enemy
         private void Start()
         {
             _target = GameObject.Find(_targetName).transform;
+        }
+
+        public IPlayer GetPlayerInterface()
+        {
+            return _target.GetComponent<IPlayer>();
         }
 
         public Vector3 GetDestination()

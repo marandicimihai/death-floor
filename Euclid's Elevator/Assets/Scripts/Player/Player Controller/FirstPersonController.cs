@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
-    internal class FirstPersonController : MonoBehaviour, IToggleable
+    internal class FirstPersonController : MonoBehaviour, IFirstPersonController
     {
         [SerializeField] private CharacterController _controller;
         [SerializeField, RequireInterface(typeof(IMovementApplier))] private Object _movementApplier;
@@ -14,7 +14,6 @@ namespace DeathFloor.Movement
         private void Start()
         {
             _movementApplierInterface = _movementApplier as IMovementApplier;
-            Enable();
         }
 
         private void Update()
