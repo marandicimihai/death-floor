@@ -4,10 +4,16 @@ using UnityEngine;
 
 namespace DeathFloor.Movement
 {
+    [RequireComponent(typeof(CharacterController))]
     internal class MovementApplier : MonoBehaviour, IMovementApplier
     {
         [Header("Input Reader")]
         [SerializeField] private InputReader _inputReader;
+
+        [Header("Other")]
+        [SerializeField] private LayerMask _walls;
+        [SerializeField] private float _maxSlopeAngle;
+        [SerializeField, RequireInterface(typeof(IRaycastProvider))] private Object _slopeRaycastProvider;
 
         [Header("Optional")]
         [SerializeField, RequireInterface(typeof(IMovementProvider))] private Object _movementProvider;
@@ -20,13 +26,14 @@ namespace DeathFloor.Movement
         private IMovementProvider _movementProviderInterface;
         private IMovementProvider _sneakMovementProviderInterface;
         private IGravityProvider _gravityProviderInterface;
-
+        private IRaycastProvider _slopeProvider;
 
         private void Start()
         {
             _movementProviderInterface = _movementProvider as IMovementProvider;
             _sneakMovementProviderInterface = _sneakMovementProvider as IMovementProvider;
             _gravityProviderInterface = _gravityProvider as IGravityProvider;
+            _slopeProvider = _slopeRaycastProvider as IRaycastProvider;
         }
 
         public Vector3 GetMoveVector()
@@ -64,6 +71,36 @@ namespace DeathFloor.Movement
         private void ResetBoost()
         {
             _movementMutltiplier = 1;
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (((1 << hit.collider.gameObject.layer) & _walls.value) > 0)
+            {
+                float angle = Vector3.Angle(Vector3.up, hit.normal);
+                if (angle >= _maxSlopeAngle)
+                {
+                    _velocity = Vector3.ProjectOnPlane(_velocity, hit.normal);
+                }
+            }
+
+            if (_slopeProvider.GetRaycast(out RaycastHit slopeHit))
+            {
+                float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+
+                if (angle < _maxSlopeAngle)
+                {
+                    if (angle != 0)
+                    {
+                        _velocity = Vector3.ProjectOnPlane(_velocity, slopeHit.normal);
+                        return;
+                    }
+                    else
+                    {
+                        _velocity = Vector3.ProjectOnPlane(_velocity, Vector3.up);
+                    }
+                }
+            }
         }
     }
 }

@@ -21,6 +21,14 @@ namespace DeathFloor.Inventory
             Enable();
         }
 
+        private void OnValidate()
+        {
+            for (int i = 0; i < _frames.Length; i++)
+            {
+                _frames[i].sprite = _unselectedFrame;
+            }
+        }
+
         public void Disable()
         {
             for (int i = 0; i < _frames.Length; i++)

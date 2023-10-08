@@ -8,9 +8,11 @@ namespace DeathFloor.Dialogue
         public string Name { get => _name; }
         public string Text { get => _text; }
         public bool OneTime { get => _oneTime; }
+        public bool Sound { get => _sound; }
 
         [SerializeField] private string _name;
         [SerializeField] private string _text;
         [SerializeField] private bool _oneTime;
+        [SerializeField] private bool _sound;
     }
 }

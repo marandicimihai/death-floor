@@ -2,6 +2,7 @@ using DeathFloor.Dialogue;
 using DeathFloor.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,9 @@ namespace DeathFloor.HUD
         [SerializeField] private float _timeBetweenLetters;
         [SerializeField] private float _timeLasting;
 
+        [Header("Optional fields")]
+        [SerializeField, RequireInterface(typeof(IDialogueLetterHandler))] private UnityEngine.Object _letterHandlerObject;
+
         private bool _canDisplay;
 
         private bool _typing;
@@ -28,8 +32,12 @@ namespace DeathFloor.HUD
         private float _letterTimeElapsed;
         private float _lastingTimeElapsed;
 
+        private IDialogueLetterHandler _letterHandler;
+
         private void Start()
         {
+            _letterHandler = _letterHandlerObject as IDialogueLetterHandler;
+
             Enable();
         }
 
@@ -44,7 +52,12 @@ namespace DeathFloor.HUD
                     {
                         try
                         {
-                            _textContainer.text += _lineQueue?.Peek().Line.Text[_currentLetter];
+                            LineProperties line = _lineQueue?.Peek().Line;
+                            var next = line.Text[_currentLetter];
+
+                            _letterHandler?.OnLetter(next, line);
+
+                            _textContainer.text += next;
                             _currentLetter++;
                         }
                         catch

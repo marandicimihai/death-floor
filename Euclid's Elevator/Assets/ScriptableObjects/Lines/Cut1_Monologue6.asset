@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b0cf5c155ac124f96080f651b8421d, type: 3}
   m_Name: Cut1_Monologue6
   m_EditorClassIdentifier: 
-  Name: BlaBla6
-  Text: ' but be swift.'
-  OneTime: 0
   _name: BlaBla6
   _text: ' but be swift.'
   _oneTime: 0
+  _sound: 1
