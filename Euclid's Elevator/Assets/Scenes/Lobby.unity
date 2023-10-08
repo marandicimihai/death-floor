@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6572,6 +6572,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 989225862}
     m_Modifications:
+    - target: {fileID: 6287981321349059631, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
+      propertyPath: m_Name
+      value: ElevatorMain
+      objectReference: {fileID: 0}
     - target: {fileID: 7742321438939009924, guid: e266516a2954aa349b0526939a33d857, type: 3}
       propertyPath: m_Name
       value: FileTray (1)
@@ -6619,10 +6623,6 @@ PrefabInstance:
     - target: {fileID: 7772139685502959125, guid: e266516a2954aa349b0526939a33d857, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6287981321349059631, guid: 0616a6424ab43fe4b8058c15aea3fc28, type: 3}
-      propertyPath: m_Name
-      value: ElevatorMain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e266516a2954aa349b0526939a33d857, type: 3}
@@ -6735,10 +6735,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 966171701, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 650499696285706568, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
       propertyPath: m_RootOrder
       value: 14

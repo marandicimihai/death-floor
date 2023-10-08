@@ -24,7 +24,6 @@ namespace DeathFloor.Movement
                 _controller.Move(_movementApplierInterface?.GetMoveVector() ?? Vector3.zero);
             }
         }
-
         public void Disable()
         {
             _canMove = false;
