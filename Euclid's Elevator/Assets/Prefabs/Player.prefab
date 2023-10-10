@@ -1170,11 +1170,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerObject: {fileID: 650499696285706564}
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
   _vfxObject: {fileID: 4445431999908709016}
   _cameraAnimationObject: {fileID: 5562122179016205655}
   _animator: {fileID: 5112995358951310247}
   _cameraReference: {fileID: 7131387924861774966}
+<<<<<<< Updated upstream
   _maxInsanity: 5
+=======
+>>>>>>> Stashed changes
+  _maxInsanity: 60
+>>>>>>> Stashed changes
   _sanityDrainPerSec: 1
   _visibilityRaycastProviderParentName: Enemy
   _deathBlackScreenDelay: 2

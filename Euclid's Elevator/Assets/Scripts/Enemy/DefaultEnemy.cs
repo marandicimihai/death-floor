@@ -1,6 +1,7 @@
+using DeathFloor.Animation.Triggers;
 using DeathFloor.Utilities;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 namespace DeathFloor.Enemy
 {
@@ -10,12 +11,17 @@ namespace DeathFloor.Enemy
 
         [SerializeField, RequireInterface(typeof(IEnemyMovementHandler))] private Object _movementHandler;
         [SerializeField, RequireInterface(typeof(IRaycastProvider))] private Object _visibilityRaycast;
+        [SerializeField, RequireInterface(typeof(IEnemyAnimationHandler))] private Object _animationHandler;
+        [SerializeField, RequireInterface(typeof(IPlayerSpawnTrigger))] private Object _spawnTriggerObject;
         [SerializeField] private PatrolHandler _patrolHandler;
         [SerializeField] private InspectHandler _inspectHandler;
         [SerializeField] private ChaseHandler _chaseHandler;
+        [SerializeField] private float _spawnDelay;
 
         private IEnemyMovementHandler _movement;
         private IVisibilityRaycastProvider _visibility;
+        private IEnemyAnimationHandler _animation;
+        private IPlayerSpawnTrigger _spawnTrigger;
 
         private bool _wasChasing;
 
@@ -23,6 +29,8 @@ namespace DeathFloor.Enemy
         {
             _movement = _movementHandler as IEnemyMovementHandler;
             _visibility = _visibilityRaycast as IVisibilityRaycastProvider;
+            _animation = _animationHandler as IEnemyAnimationHandler;
+            _spawnTrigger = _spawnTriggerObject as IPlayerSpawnTrigger;
 
             _patrolHandler.SetMappingFunction(_movement.GetPointOnNavMesh);
             _patrolHandler.SetLengthFunction(_movement.GetPathLength);
@@ -47,12 +55,19 @@ namespace DeathFloor.Enemy
                     _movement.Disable();
                 }
 
+                _wasChasing = true;
+
                 if (Vector3.Distance(target, _movement.GetPosition()) < _chaseHandler.KillDistance)
                 {
-                    _chaseHandler.GetPlayerInterface()?.Die();
-                }
+                    _wasChasing = false;
 
-                _wasChasing = true;
+                    if ((!_chaseHandler.GetPlayerInterface()?.Dead ?? false))
+                    {
+                        _chaseHandler.GetPlayerInterface()?.Die();
+                        _animation?.Execute(_visibility?.IsVisible() ?? true);
+                        StartCoroutine(InvokeSpawn());
+                    }
+                }
             }
             else if (_wasChasing)
             {
@@ -86,6 +101,13 @@ namespace DeathFloor.Enemy
             }
 
             _inspectHandler.Inspect(position, playerInspect);
+        }
+
+        private IEnumerator InvokeSpawn()
+        {
+            yield return new WaitForSeconds(_spawnDelay);
+
+            _spawnTrigger?.Spawn();
         }
 
         public void Disable()

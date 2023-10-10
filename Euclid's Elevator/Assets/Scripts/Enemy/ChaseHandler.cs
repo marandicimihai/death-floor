@@ -15,6 +15,8 @@ namespace DeathFloor.Enemy
 
         private Func<Vector3, Vector3> _mappingFunc;
 
+        private IPlayer _player;
+
         public void SetMappingFunction(Func<Vector3, Vector3> mappingFunc)
         {
             _mappingFunc = mappingFunc;
@@ -27,7 +29,8 @@ namespace DeathFloor.Enemy
 
         public IPlayer GetPlayerInterface()
         {
-            return _target.GetComponent<IPlayer>();
+            _player ??= _target.GetComponent<IPlayer>();
+            return _player;
         }
 
         public Vector3 GetDestination()

@@ -47,10 +47,20 @@ namespace DeathFloor.Insanity
                 _insanity < _maxInsanity)
             {
                 _insanity += Time.deltaTime * _sanityDrainPerSec;
+<<<<<<< Updated upstream
 
                 _vfx.InsanityEffect(true, _insanityEffectFadeTime);
 
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
                 if (_insanity >= _maxInsanity)
+=======
+
+                _vfx.InsanityEffect(true, _insanityEffectFadeTime);
+
+                if (_insanity >= _maxInsanity && (!_player?.Dead ?? false))
+>>>>>>> Stashed changes
                 {
                     _player?.Die();
                     _cameraAnimation?.EnterAnimation(_cameraReference);
