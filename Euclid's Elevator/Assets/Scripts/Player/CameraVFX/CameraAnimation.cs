@@ -18,7 +18,7 @@ namespace DeathFloor.Camera
         private Quaternion _initialRotation;
         private Quaternion _finalRotation;
 
-        private float t;
+        private float t = 1;
 
         private void Start()
         {
@@ -37,11 +37,11 @@ namespace DeathFloor.Camera
 
         private void Update()
         {
-            if (t < 0)
+            if (t < 1)
             {
                 t += Time.deltaTime / _transitionTime;
-                _camera.position = Vector3.Lerp(_initialPosition, _finalPosition, t);
-                _camera.rotation = Quaternion.Lerp(_initialRotation, _finalRotation, t);
+                _camera.localPosition = Vector3.Lerp(_initialPosition, _finalPosition, t);
+                _camera.localRotation = Quaternion.Lerp(_initialRotation, _finalRotation, t);
             }
         }
 
@@ -82,6 +82,8 @@ namespace DeathFloor.Camera
         public void TransitionToAnimation(Transform parent)
         {
             if (!_enabled) return;
+
+            _inAnimation = true;
 
             _camera.SetParent(parent);
 
