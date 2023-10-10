@@ -50,7 +50,7 @@ namespace DeathFloor.Insanity
 
                 _vfx.InsanityEffect(true, _insanityEffectFadeTime);
 
-                if (_insanity >= _maxInsanity)
+                if (_insanity >= _maxInsanity && (!_player?.Dead ?? false))
                 {
                     _player?.Die();
                     _cameraAnimation?.EnterAnimation(_cameraReference);

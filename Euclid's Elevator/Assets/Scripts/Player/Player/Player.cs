@@ -10,6 +10,8 @@ namespace DeathFloor.Player
     [SelectionBase]
     internal class Player : MonoBehaviour, IPlayer
     {
+        public bool Dead { get => _dead; }
+
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private bool _autoSpawn;
 
