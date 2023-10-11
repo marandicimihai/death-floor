@@ -10,9 +10,13 @@ namespace DeathFloor.Camera
 
         public IVFX GetInterface()
         {
-            GameObject obj = GameObject.Find(_vfxObjectName);
-            if (obj != null)
-                _vfx ??= obj.GetComponent<IVFX>();
+            if (_vfx == null)
+            {
+                var obj = GameObject.Find(_vfxObjectName);
+                
+                if (obj != null)
+                    _vfx = obj.GetComponent<IVFX>();
+            }
 
             return _vfx;
         }

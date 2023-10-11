@@ -4,21 +4,23 @@ using UnityEngine;
 
 namespace DeathFloor.Animation.Triggers
 {
-    enum ReferenceType
+    internal class PlayerSpawnTriggers : MonoBehaviour, IPlayerSpawnTrigger
     {
-        ParentName,
-        ObjectReference
-    }
-
-    internal class PlayerSpawnTriggers : MonoBehaviour
-    {
-        [SerializeField] private ReferenceType _referenceType;
         [SerializeField] private string _parentName;
-        [SerializeField, RequireInterface(typeof(IPlayer))] private Object _playerObject;
 
-        public void InvokeSpawn(float delay)
+        private IPlayer _player;
+
+        public void Spawn()
         {
+            if (_player == null)
+            {
+                var obj = GameObject.Find(_parentName);
 
+                if (obj != null)
+                    _player = obj.GetComponent<IPlayer>();
+            }
+
+            _player.Spawn();
         }
     }
 }
