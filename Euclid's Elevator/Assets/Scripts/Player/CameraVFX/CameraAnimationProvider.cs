@@ -8,14 +8,15 @@ namespace DeathFloor.Camera
 
         private ICameraAnimation _provider;
 
-        private void Start()
-        {
-            _provider ??= GameObject.Find(_objectName).GetComponent<ICameraAnimation>();
-        }
-
         public ICameraAnimation GetInterface()
         {
-            _provider ??= GameObject.Find(_objectName).GetComponent<ICameraAnimation>();
+            if (_provider == null)
+            {
+                var obj = GameObject.Find(_objectName);
+                
+                if (obj != null)
+                    _provider = obj.GetComponent<ICameraAnimation>();
+            }
             
             return _provider;
         }
