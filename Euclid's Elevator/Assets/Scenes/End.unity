@@ -1720,7 +1720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &502774330
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2180,6 +2180,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 384225588, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 760
+      objectReference: {fileID: 0}
+    - target: {fileID: 384225588, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 68.833
+      objectReference: {fileID: 0}
+    - target: {fileID: 384225588, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384225588, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -111.19256
+      objectReference: {fileID: 0}
+    - target: {fileID: 384225589, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 650499696285706564, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
+      propertyPath: _spawnPoint
+      value: 
+      objectReference: {fileID: 2107871917}
     - target: {fileID: 650499696285706568, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2218,7 +2242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 650499696285706568, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 90.99993
       objectReference: {fileID: 0}
     - target: {fileID: 650499696285706568, guid: eac9429fbeb9c854b95ba9562e59ae63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4065,6 +4089,18 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0d503f33ea384d54faedd68130c4bfe2, type: 2}
     - {fileID: 11400000, guid: efeba2065257a4c4596207cae748dfcd, type: 2}
     - {fileID: 11400000, guid: 04a324905001c754d89794e12424b3c3, type: 2}
+    - {fileID: 11400000, guid: c346b2de2349dc346a9017b438457f9b, type: 2}
+    - {fileID: 11400000, guid: 49f709519e8b9824fabc25387ad6a840, type: 2}
+    - {fileID: 11400000, guid: ae700c815a857e34a81e90d5d581111f, type: 2}
+    - {fileID: 11400000, guid: 36a788d03ec0c7f44b2008de72fa0b7f, type: 2}
+    - {fileID: 11400000, guid: 44978b9918b92834d8780253a2db9f61, type: 2}
+    - {fileID: 11400000, guid: 860dee86baea76145a8db2bb4bb7a72e, type: 2}
+    - {fileID: 11400000, guid: 70a516cd612ebe348b615ca9a99c8915, type: 2}
+    - {fileID: 11400000, guid: 9226211aa8c82524582df12a47251b49, type: 2}
+    - {fileID: 11400000, guid: 85c52ce4fd813034c8d2db6966b6eb93, type: 2}
+    - {fileID: 11400000, guid: f8142948f39da97488e43766d90eff86, type: 2}
+    - {fileID: 11400000, guid: c7fcabb22e5e90d479ba6a070c77fc85, type: 2}
+    - {fileID: 11400000, guid: 718482764b4f84444bf704264d8b9c1d, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -4314,6 +4350,186 @@ MonoBehaviour:
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 11400000, guid: cd30a7c1a49b59943aaf5cfcb8c71766, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 0741b53dea025ca47be88b114bf5d156, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 81d489a406dccd641899dbf0d229e658, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 5ac12fa20c24af347803702491bf5f5d, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 72596b3423c0f8a409a2a0dd832fb222, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: c3c5443a8f22bc24dbc454045b6083dd, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 77c43b991af7e234bb7ca4eca12fa357, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: a1493586e3ec85a4e9df1befe68fd55e, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 6a027a42b066f2a4c8ebb8fb5b470099, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: SayAdditive
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: cdb3c7d1e4b2b0d409c8f799e06f0fad, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 7620a64584844f743a3714c0d818a436, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: SayAdditive
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 97dac83e901420e4490bc8583ab78d43, type: 2}
+            m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
+              Dialogue
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 287853330}
+          m_TargetAssemblyTypeName: DeathFloor.Dialogue.DialogueManager, DefaultDialogue
+          m_MethodName: Say
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: c7bc9f3f7858fd149a4b5b4416f2088a, type: 2}
             m_ObjectArgumentAssemblyTypeName: DeathFloor.Dialogue.LineProperties,
               Dialogue
             m_IntArgument: 0
@@ -4682,6 +4898,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2107871916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2107871917}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2107871917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107871916}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3210816972974964845
 MeshFilter:
