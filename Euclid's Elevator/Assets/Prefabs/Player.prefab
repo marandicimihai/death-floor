@@ -2359,6 +2359,7 @@ GameObject:
   - component: {fileID: 5112995358951310247}
   - component: {fileID: 226430830}
   - component: {fileID: 226430833}
+  - component: {fileID: 1195164260}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2507,12 +2508,25 @@ MonoBehaviour:
   _inputReader: {fileID: 11400000, guid: 2b00be57250ce5945911c391383f2973, type: 2}
   _walls:
     serializedVersion: 2
-    m_Bits: 1065985
+    m_Bits: 1049601
   _maxSlopeAngle: 60
   _slopeRaycastProvider: {fileID: 1442966291}
   _movementProvider: {fileID: 650499695422743623}
   _sneakMovementProvider: {fileID: 650499695422743622}
   _gravityProvider: {fileID: 650499695422743620}
+--- !u!114 &1195164260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650499696285706575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5a4eb7f0b64dd4380b14f214189da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pushPower: 5
 --- !u!1 &1192692083735983810
 GameObject:
   m_ObjectHideFlags: 0
