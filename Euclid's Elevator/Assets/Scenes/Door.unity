@@ -559,6 +559,7 @@ GameObject:
   - component: {fileID: 6853805056379721220}
   - component: {fileID: 6853805056379721222}
   - component: {fileID: 6853805056379721221}
+  - component: {fileID: 6853805056379721223}
   m_Layer: 14
   m_Name: DoorPanel
   m_TagString: Untagged
@@ -712,3 +713,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!208 &6853805056379721223
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216303930918205801}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.51500005, y: 0.95000005, z: 0.038000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.51500005, y: 0.95000005, z: 0}
+  m_TimeToStationary: 0.5
