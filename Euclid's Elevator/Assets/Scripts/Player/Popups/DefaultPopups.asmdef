@@ -2,8 +2,7 @@
     "name": "DefaultPopups",
     "rootNamespace": "",
     "references": [
-        "GUID:6b099572953839f459ac390e52cf08e0",
-        "GUID:4b0ed46335504524aaf77eec78adfa2e"
+        "GUID:6b099572953839f459ac390e52cf08e0"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

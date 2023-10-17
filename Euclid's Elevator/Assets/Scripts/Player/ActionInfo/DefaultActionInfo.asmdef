@@ -2,7 +2,6 @@
     "name": "DefaultActionInfo",
     "rootNamespace": "",
     "references": [
-        "GUID:a248f4d621b011747b0d4b4c6a8d6b44",
         "GUID:6b099572953839f459ac390e52cf08e0"
     ],
     "includePlatforms": [],
