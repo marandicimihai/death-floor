@@ -2040,6 +2040,7 @@ GameObject:
   - component: {fileID: 650499694521052859}
   - component: {fileID: 650499694521052858}
   - component: {fileID: 650499694359983424}
+  - component: {fileID: 620000187}
   m_Layer: 3
   m_Name: Interaction
   m_TagString: Untagged
@@ -2108,6 +2109,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetInteractionTag: 1
   _inventory: {fileID: 776324681}
+--- !u!114 &620000187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650499694521052856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84180dd760a3464083d0abbbd854381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTag: 2
+  _inventoryManager: {fileID: 776324681}
 --- !u!1 &650499695270092488
 GameObject:
   m_ObjectHideFlags: 0

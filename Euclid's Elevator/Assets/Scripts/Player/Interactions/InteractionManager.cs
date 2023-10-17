@@ -46,9 +46,16 @@ namespace DeathFloor.Interactions
                 {
                     string toDisplay = interactable.InteractionPrompt;
 
-                    toDisplay += $" ({_inputReader.GetInteractionInputString()})";
+                    if (!string.IsNullOrEmpty(toDisplay))
+                    {
+                        toDisplay += $" ({_inputReader.GetInteractionInputString()})";
 
-                    _actionInfoInterface?.DisplayText(toDisplay);
+                        _actionInfoInterface?.DisplayText(toDisplay);
+                    }
+                    else
+                    {
+                        _actionInfoInterface?.ClearText();
+                    }
                 }
                 else
                 {
