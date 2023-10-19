@@ -1,14 +1,15 @@
+using DeathFloor.Utilities;
 using UnityEngine;
 
 namespace DeathFloor.Camera
 {
-    internal class VFXProvider : MonoBehaviour, IVFXProvider
+    internal class VFXProvider : MonoBehaviour, IProvider<IVFX>
     {
         [SerializeField] private string _vfxObjectName;
 
         private IVFX _vfx;
 
-        public IVFX GetInterface()
+        public IVFX Get()
         {
             if (_vfx == null)
             {

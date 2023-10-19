@@ -1,14 +1,15 @@
+using DeathFloor.Utilities;
 using UnityEngine;
 
 namespace DeathFloor.Camera
 {
-    internal class CameraAnimationProvider : MonoBehaviour, ICameraAnimationProvider
+    internal class CameraAnimationProvider : MonoBehaviour, IProvider<ICameraAnimation>
     {
         [SerializeField] private string _objectName;
 
         private ICameraAnimation _provider;
 
-        public ICameraAnimation GetInterface()
+        public ICameraAnimation Get()
         {
             if (_provider == null)
             {

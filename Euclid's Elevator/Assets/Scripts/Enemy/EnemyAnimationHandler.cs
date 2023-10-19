@@ -10,8 +10,8 @@ namespace DeathFloor.Enemy
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _cameraRef;
         [SerializeField, RequireInterface(typeof(IVisibilityRaycastProvider))] private Object _raycastProvider;
-        [SerializeField, RequireInterface(typeof(ICameraAnimationProvider))] private Object _cameraAnimationProvider;
-        [SerializeField, RequireInterface(typeof(IVFXProvider))] private Object _vfxProviderObject;
+        [SerializeField, RequireInterface(typeof(IProvider<ICameraAnimation>))] private Object _cameraAnimationProvider;
+        [SerializeField, RequireInterface(typeof(IProvider<IVFX>))] private Object _vfxProviderObject;
         [SerializeField] private string _targetName;
         [SerializeField] private float _frontExecEADelay;
         [SerializeField] private float _backExecEADelay;
@@ -24,8 +24,8 @@ namespace DeathFloor.Enemy
         [SerializeField] private int _lastNormalPose;
 
         private IVisibilityRaycastProvider _raycast;
-        private ICameraAnimationProvider _provider;
-        private IVFXProvider _vfxProvider;
+        private IProvider<ICameraAnimation> _provider;
+        private IProvider<IVFX> _vfxProvider;
         private IVFX _vfx;
         private bool _switch;
         private Transform _target;
@@ -33,9 +33,9 @@ namespace DeathFloor.Enemy
         private void Start()
         {
             _raycast = _raycastProvider as IVisibilityRaycastProvider;
-            _provider = _cameraAnimationProvider as ICameraAnimationProvider;
-            _vfxProvider = _vfxProviderObject as IVFXProvider;
-            _vfx = _vfxProvider?.GetInterface();
+            _provider = _cameraAnimationProvider as IProvider<ICameraAnimation>;
+            _vfxProvider = _vfxProviderObject as IProvider<IVFX>;
+            _vfx = _vfxProvider?.Get();
             
             GameObject obj = GameObject.Find(_targetName);
 
@@ -110,14 +110,14 @@ namespace DeathFloor.Enemy
         {
             yield return new WaitForSeconds(delay);
 
-            _provider?.GetInterface()?.ExitAnimation();
+            _provider?.Get()?.ExitAnimation();
         }
 
         private IEnumerator EnterAnimationNextFrame()
         {
             yield return new WaitForEndOfFrame();
 
-            _provider?.GetInterface()?.EnterAnimation(_cameraRef);
+            _provider?.Get()?.EnterAnimation(_cameraRef);
         }
     }
 }
