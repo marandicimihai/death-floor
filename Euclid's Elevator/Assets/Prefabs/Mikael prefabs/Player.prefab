@@ -2123,6 +2123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetTag: 2
   _inventoryManager: {fileID: 776324681}
+  _interactionRaycast: {fileID: 650499694521052858}
+  _actionInfo: {fileID: 2823348879225275459}
 --- !u!1 &650499695270092488
 GameObject:
   m_ObjectHideFlags: 0
