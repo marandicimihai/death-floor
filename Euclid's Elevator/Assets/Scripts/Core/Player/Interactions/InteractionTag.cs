@@ -4,6 +4,7 @@ namespace DeathFloor.Interactions
     {
         Default = 0,
         ItemPickUp,
-        Door
+        Door,
+        ElevatorKeycard
     }
 }

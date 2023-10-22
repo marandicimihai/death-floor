@@ -26,7 +26,8 @@ namespace DeathFloor.Input
         public event InputDetected PauseToggled;
         public event InputDetected BoxExited;
 
-        public event InputDetected Interacted;
+        public event InputDetected StartInteract;
+        public event InputDetected EndInteract;
 
         public event InventoryDetected Inventory;
 
@@ -100,10 +101,15 @@ namespace DeathFloor.Input
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (Interacted != null &&
+            if (StartInteract != null &&
                 context.phase == InputActionPhase.Started)
             {
-                Interacted.Invoke();
+                StartInteract.Invoke();
+            }
+            else if (EndInteract != null &&
+                context.phase == InputActionPhase.Canceled)
+            {
+                EndInteract.Invoke();
             }
         }
 

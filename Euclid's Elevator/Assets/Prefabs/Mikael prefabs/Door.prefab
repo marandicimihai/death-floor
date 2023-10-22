@@ -184,6 +184,8 @@ MonoBehaviour:
   _isInteractable: 0
   _lockedInteractionPrompt: Unlock
   _stageLockedInteractionPrompt: Blocked
+  _lockpickTime: 5
+  _lockTime: 1
   _key: {fileID: 11400000, guid: 1712f3418c9a1474890e0dc501553cb4, type: 2}
   _rigidbody: {fileID: 8568441739593439356}
   _locked: 1

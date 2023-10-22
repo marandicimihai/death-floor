@@ -25,5 +25,9 @@ namespace DeathFloor.Interactions
                 _inventoryInterface?.PickUp(item);
             }
         }
+
+        public void EndInteractionExtension(GameObject rootObject)
+        {
+        }
     }
 }
