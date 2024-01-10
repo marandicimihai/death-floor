@@ -18,19 +18,6 @@ public class DialogueManager : MonoBehaviour
         used = new();
     }
 
-    private void Start()
-    {
-        if (SaveSystem.Instance.currentSaveData != null &&
-            SaveSystem.Instance.currentSaveData.usedLines.Length > 0)
-        {
-            used = SaveSystem.Instance.currentSaveData.usedLines.ToList();
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.usedLines = used.ToArray();
-        };
-    }
-
     public void SayLine(Line line)
     {
         if (line.oneTime && used.Contains(line.name))

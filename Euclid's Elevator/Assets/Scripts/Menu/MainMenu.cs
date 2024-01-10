@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -45,15 +46,12 @@ public class MainMenu : MonoBehaviour
     }
     public void QuitGame()
     {
-        Debug.Log("this is it, my final message... [dies]");
-        Application.Quit();
     }
     public void StartGame()
     {
         AudioManager.Instance.FadeAwayClip(humJob, ambienceFadeTime);
         AudioManager.Instance.FadeAwayClip(buzzJob, ambienceFadeTime);
-
-        SaveSystem.Instance.LoadGameData(0);
+        SceneManager.LoadScene(1);
     }
     public void DoClick()
     {

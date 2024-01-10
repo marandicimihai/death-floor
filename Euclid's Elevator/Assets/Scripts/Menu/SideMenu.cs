@@ -22,7 +22,6 @@ public class SideMenu : MonoBehaviour
 
         GameManager.Instance.OnGameEnd += (object caller, System.EventArgs args) =>
         {
-            SaveSystem.Instance.ClearData(0);
             SceneManager.LoadScene("Menu");
         };
 
@@ -87,20 +86,11 @@ public class SideMenu : MonoBehaviour
 
     public void Restart()
     {
-        SaveSystem.Instance.ClearData(0);
         SceneManager.LoadScene("Main");
     }
 
     public void LoadMainMenu()
     {
-        if (GameManager.Instance.GameStage == GameStage.End)
-        {
-            SaveSystem.Instance.ClearData(0);
-        }
-        else
-        {
-            SaveSystem.Instance.SaveGame();
-        }
         SceneManager.LoadScene("Menu");
     }
 }

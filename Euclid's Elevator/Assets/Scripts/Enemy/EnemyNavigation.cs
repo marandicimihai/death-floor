@@ -102,32 +102,6 @@ public class EnemyNavigation : MonoBehaviour
         State = State.Patrol;
     }
 
-    private void Start()
-    {
-        if (SaveSystem.Instance.currentSaveData != null)
-        {
-            if (SaveSystem.Instance.currentSaveData.EnemyPosition.Length != 0)
-            {
-                Spawn(new Vector3(SaveSystem.Instance.currentSaveData.EnemyPosition[0],
-                                  SaveSystem.Instance.currentSaveData.EnemyPosition[1],
-                                  SaveSystem.Instance.currentSaveData.EnemyPosition[2]));
-            }
-            spawned = SaveSystem.Instance.currentSaveData.enemySpawned;
-        }
-
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.EnemyPosition = new float[]
-            {
-                transform.position.x,
-                transform.position.y,
-                transform.position.z
-            };
-            data.enemySpawned = spawned;
-            SaveSystem.Instance.CanSave = !Visible && State == State.Patrol;
-        };
-    }
-
     private void Update()
     {
         if (!spawned)

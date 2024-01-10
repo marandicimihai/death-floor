@@ -318,7 +318,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The
+  m_Text: D
 --- !u!1 &8476606588608439991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,7 +1207,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Milk
+  m_Text: J
 --- !u!1 &8476606588787991657
 GameObject:
   m_ObjectHideFlags: 0
@@ -3350,7 +3350,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Went
+  m_Text: S
 --- !u!1 &8476606589324600230
 GameObject:
   m_ObjectHideFlags: 0
@@ -3531,7 +3531,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.47368422, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4194,7 +4194,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Market
+  m_Text: LShift
 --- !u!1 &8476606589463023669
 GameObject:
   m_ObjectHideFlags: 0
@@ -5939,7 +5939,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: To
+  m_Text: Esc
 --- !u!1 &8476606589728918169
 GameObject:
   m_ObjectHideFlags: 0
@@ -6426,8 +6426,8 @@ RectTransform:
   m_Father: {fileID: 8476606589906343716}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.47368422, y: 0}
-  m_AnchorMax: {x: 0.47368422, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 32, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7584,7 +7584,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Delicous
+  m_Text: Q
 --- !u!1 &8476606589994689187
 GameObject:
   m_ObjectHideFlags: 0
@@ -7976,7 +7976,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Buy
+  m_Text: E
 --- !u!1 &8476606590036016721
 GameObject:
   m_ObjectHideFlags: 0
@@ -8587,7 +8587,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: To
+  m_Text: A
 --- !u!1 &8476606590225288685
 GameObject:
   m_ObjectHideFlags: 0
@@ -10388,7 +10388,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Some
+  m_Text: F
 --- !u!1 &8476606590566492214
 GameObject:
   m_ObjectHideFlags: 0
@@ -10702,7 +10702,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WalterWit
+  m_Text: W
 --- !u!1 &8476606590622858080
 GameObject:
   m_ObjectHideFlags: 0

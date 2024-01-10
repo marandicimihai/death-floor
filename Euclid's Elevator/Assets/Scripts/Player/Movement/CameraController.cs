@@ -21,42 +21,13 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance.LoadSettings() != null)
-        {
-            sensitivity = 0.1f * SaveSystem.Instance.LoadSettings().Sensitivity;
-        }
-        else
-        {
-            sensitivity = 0.1f * 0.1f;
-        }
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
-        {
-            sensitivity = 0.1f * settings.Sensitivity;
-        };
-
-        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.CameraRotation.Length != 0)
-        {
-            rotation = new Vector2(SaveSystem.Instance.currentSaveData.CameraRotation[0],
-                                   SaveSystem.Instance.currentSaveData.CameraRotation[1]);
-
-        }
-        else
-        {
-            ResetAngle();
-        }
-
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.CameraRotation = new float[]
-            {
-                rotation.x,
-                rotation.y
-            };
-        };
+        ResetAngle();
     }
 
     private void Update()
     {
+        sensitivity = MenuSettings.Instance.mouseSensitivity;
+
         if (canLook)
         {
             Vector2 inputVec = Input.InputActions.General.Look.ReadValue<Vector2>() * Time.timeScale;

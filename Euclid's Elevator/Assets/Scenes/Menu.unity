@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.45260894, g: 0.5019951, b: 0.5818987, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6434,6 +6434,20 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1254322027}
+    - target: {fileID: 9123251131058533342, guid: 7d64e37102965c24ea3d5c61dcf37387, type: 3}
+      propertyPath: m_Text
+      value: 'Made by:
+
+        -Dragos Lupsa
+
+        -Marandici Mihai
+
+
+        Extra
+        thanks:
+
+        -My grandma. :)'
+      objectReference: {fileID: 0}
     - target: {fileID: 9123251131910567246, guid: 7d64e37102965c24ea3d5c61dcf37387, type: 3}
       propertyPath: m_Camera
       value: 

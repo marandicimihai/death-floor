@@ -26,19 +26,6 @@ public class PopUpHUD : MonoBehaviour
         used = new();
     }
 
-    private void Start()
-    {
-        if (SaveSystem.Instance.currentSaveData != null &&
-            SaveSystem.Instance.currentSaveData.usedPopUps.Length > 0)
-        {
-            used = SaveSystem.Instance.currentSaveData.usedPopUps.ToList();
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.usedPopUps = used.ToArray();
-        };
-    }
-
     private void Update()
     {
         if (hideHUD)

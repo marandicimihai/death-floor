@@ -48,31 +48,8 @@ public class Door : MonoBehaviour
                 OpenDoor(true);
             }
         };
-    }
 
-    //CALLED BY DOOR MANAGER
-    public void Init(bool locked, bool open, int stage)
-    {
-        Locked = locked;
-
-        Open = open;
-        if (open)
-        {
-            interpolation = 1;
-        }
-        else
-        {
-            interpolation = 0;
-        }
-
-        if (unlockStage > stage)
-        {
-            StageLocked = true;
-        }
-        else
-        {
-            StageLocked = false;
-        }
+        StartedGame();
     }
 
     public void StartedGame()

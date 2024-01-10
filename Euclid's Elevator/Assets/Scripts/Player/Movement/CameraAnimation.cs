@@ -25,14 +25,6 @@ public class CameraAnimation : MonoBehaviour
         rotationOnEnter = defaultRotation;
     }
 
-    private void Start()
-    {
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            SaveSystem.Instance.CanSave = !inAnimation;
-        };
-    }
-
     private void Update()
     {
         interpolation = Mathf.Clamp01(interpolation);

@@ -25,37 +25,6 @@ public class TrapManager : MonoBehaviour
         };
 
         spawnedtraps = new();
-
-        if (SaveSystem.Instance.currentSaveData != null)
-        {
-            if (SaveSystem.Instance.currentSaveData.trapCount > 0 &&
-                SaveSystem.Instance.currentSaveData.trapPositions.Length > 0)
-            {
-                List<float> positions = SaveSystem.Instance.currentSaveData.trapPositions.ToList();
-                for (int i = 0; i < SaveSystem.Instance.currentSaveData.trapCount; i++)
-                {
-                    Vector3 position = new(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-
-                    GameObject newTrap = Instantiate(trapPrefab, position, Quaternion.identity);
-                    spawnedtraps.Add(newTrap.transform);
-                }
-            }
-        }
-
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            List<float> positions = new();
-
-            foreach (Transform trap in spawnedtraps)
-            {
-                positions.Add(trap.transform.position.x);
-                positions.Add(trap.transform.position.y);
-                positions.Add(trap.transform.position.z);
-            }
-
-            data.trapCount = spawnedtraps.Count;
-            data.trapPositions = positions.ToArray();
-        };
     }
 
     void SpawnTraps(int stage)

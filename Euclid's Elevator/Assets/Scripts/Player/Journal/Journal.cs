@@ -41,26 +41,6 @@ public class Journal : MonoBehaviour
             }
         };
         journalAnimator.gameObject.SetActive(open);
-
-        if (SaveSystem.Instance.currentSaveData != null &&
-            SaveSystem.Instance.currentSaveData.pages.Length > 0)
-        {
-            foreach(string name in SaveSystem.Instance.currentSaveData.pages)
-            {
-                pages.Add(GetPage(name));
-            }
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            List<string> names = new();
-
-            foreach (JournalPage page in pages)
-            {
-                names.Add(page.name);
-            }
-
-            data.pages = names.ToArray();
-        };
     }
 
     JournalPage GetPage(string name)

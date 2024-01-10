@@ -45,35 +45,7 @@ public class Elevator : MonoBehaviour
             InitiateElevatorRide();
         };
 
-        if (SaveSystem.Instance.currentSaveData != null)
-        {
-
-            if (SaveSystem.Instance.currentSaveData.stage < 0)
-            {
-                InitiateElevatorRide();
-            }
-            else
-            {
-                OpenElevator(true);
-            }
-            Broken = SaveSystem.Instance.currentSaveData.broken;
-            waiting = SaveSystem.Instance.currentSaveData.waiting;
-            canClose = SaveSystem.Instance.currentSaveData.canClose;
-        }
-        else
-        {
-            InitiateElevatorRide();
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.broken = Broken;
-            data.waiting = waiting;
-            if (waiting)
-            {
-                data.canClose = true;
-            }
-            SaveSystem.Instance.CanSave = !riding;
-        };
+        InitiateElevatorRide();
     }
 
     private void Update()

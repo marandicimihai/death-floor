@@ -52,22 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveSystem.Instance.currentSaveData != null && SaveSystem.Instance.currentSaveData.stage >= 0)
-        {
-            if (SaveSystem.Instance.currentSaveData.gameStage >= 0)
-            {
-                GameStage = (GameStage)SaveSystem.Instance.currentSaveData.gameStage;
-            }
-        }
-        else
-        {
-            StartTutorial();
-        }
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.stage = Stage;
-            data.gameStage = (int)GameStage;
-        };
+        StartTutorial();
     }
 
     #region GameLevel

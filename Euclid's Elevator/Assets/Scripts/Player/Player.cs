@@ -24,45 +24,6 @@ public class Player : MonoBehaviour
     [SerializeField] float spawnFreezeTime;
     [SerializeField] int maxDeaths;
 
-    private void Start()
-    {
-        if (SaveSystem.Instance.currentSaveData != null)
-        {
-            if (SaveSystem.Instance.currentSaveData.PlayerPosition.Length != 0)
-            {
-                transform.position = new Vector3(SaveSystem.Instance.currentSaveData.PlayerPosition[0],
-                                                 SaveSystem.Instance.currentSaveData.PlayerPosition[1],
-                                                 SaveSystem.Instance.currentSaveData.PlayerPosition[2]);
-            }
-
-            if (SaveSystem.Instance.currentSaveData.PlayerRotation.Length != 0)
-            {
-                transform.rotation = new Quaternion(SaveSystem.Instance.currentSaveData.PlayerRotation[0],
-                                                    SaveSystem.Instance.currentSaveData.PlayerRotation[1],
-                                                    SaveSystem.Instance.currentSaveData.PlayerRotation[2],
-                                                    SaveSystem.Instance.currentSaveData.PlayerRotation[3]);
-            }
-        }
-
-        SaveSystem.Instance.OnSaveGame += (ref GameData data) =>
-        {
-            data.PlayerPosition = new float[]
-            {
-                transform.position.x,
-                transform.position.y,
-                transform.position.z
-            };
-            data.PlayerRotation = new float[]
-            {
-                transform.rotation.x,
-                transform.rotation.y,
-                transform.rotation.z,
-                transform.rotation.w
-            };
-            SaveSystem.Instance.CanSave = !Dead;
-        };
-    }
-
     public void Die(bool callDeath)
     {
         if (!Dead)

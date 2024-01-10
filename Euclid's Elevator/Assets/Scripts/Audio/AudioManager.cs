@@ -50,10 +50,6 @@ public class AudioManager : MonoBehaviour
         {
             TryPauseEvents();
         };
-        SaveSystem.Instance.OnSettingsChanged += (Settings settings) =>
-        {
-            SetVolume(settings.EffectsVolume, settings.AmbienceVolume);
-        };
     }
 
     void SetVolume(float effectsVolume, float ambienceVolume)
