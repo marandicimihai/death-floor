@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        sensitivity = MenuSettings.Instance.mouseSensitivity;
+        sensitivity = MenuSettings.Instance.mouseSensitivity / 8;
 
         if (canLook)
         {
